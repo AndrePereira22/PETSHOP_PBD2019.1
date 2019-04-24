@@ -36,12 +36,18 @@ public class Profissional implements EntidadeBase {
     @Column
     private Date nascimento;
     @Column
+    private String cpf;
+    @Column
+    private String rg;
+    @Column
     private String sexo;
     @Column
     private String crmv;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Dados dados;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Login login;
 
     @Override
     public Long getId() {
@@ -137,6 +143,48 @@ public class Profissional implements EntidadeBase {
      */
     public void setDados(Dados dados) {
         this.dados = dados;
+    }
+
+    /**
+     * @return the cpf
+     */
+    public String getCpf() {
+        return cpf;
+    }
+
+    /**
+     * @param cpf the cpf to set
+     */
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    /**
+     * @return the rg
+     */
+    public String getRg() {
+        return rg;
+    }
+
+    /**
+     * @param rg the rg to set
+     */
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+    /**
+     * @return the login
+     */
+    public Login getLogin() {
+        return login;
+    }
+
+    /**
+     * @param login the login to set
+     */
+    public void setLogin(Login login) {
+        this.login = login;
     }
 
 }

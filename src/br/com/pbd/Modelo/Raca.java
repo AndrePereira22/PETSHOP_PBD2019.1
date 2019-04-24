@@ -6,8 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @SequenceGenerator(name="raca_seq",sequenceName="raca_seq", initialValue=1,allocationSize=1)
@@ -22,6 +24,9 @@ public class Raca implements EntidadeBase  {
      private String nome;
      @Column
      private String descricao;
+     
+     @ManyToOne
+     private Especie especie;
      
   
     @Override
@@ -62,6 +67,20 @@ public class Raca implements EntidadeBase  {
      */
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    /**
+     * @return the especie
+     */
+    public Especie getEspecie() {
+        return especie;
+    }
+
+    /**
+     * @param especie the especie to set
+     */
+    public void setEspecie(Especie especie) {
+        this.especie = especie;
     }
     
     

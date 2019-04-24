@@ -34,13 +34,16 @@ public class Animal implements EntidadeBase {
      @Column
      private Double pesokg;
      @Column
-     private String especie;
+     private String observacao;
+     
+     
+     @OneToOne
+     private Raca raca;
      
      @ManyToOne
      private Cliente cliente;
      
-    @OneToOne(cascade=CascadeType.ALL)
-     private Raca raca;
+    
 
     @Override
     public Long getId() {
@@ -138,19 +141,7 @@ public class Animal implements EntidadeBase {
         this.pesokg = pesokg;
     }
 
-    /**
-     * @return the especie
-     */
-    public String getEspecie() {
-        return especie;
-    }
-
-    /**
-     * @param especie the especie to set
-     */
-    public void setEspecie(String especie) {
-        this.especie = especie;
-    }
+    
 
     /**
      * @return the Cliente
@@ -180,7 +171,23 @@ public class Animal implements EntidadeBase {
         this.raca = raca;
     }
 
+    /**
+     * @return the observacao
+     */
+    public String getObservacao() {
+        return observacao;
+    }
+
+    /**
+     * @param observacao the observacao to set
+     */
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+   
     
+   
     
     
 }

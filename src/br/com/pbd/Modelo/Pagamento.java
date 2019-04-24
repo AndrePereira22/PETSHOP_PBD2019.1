@@ -6,12 +6,16 @@
 package br.com.pbd.Modelo;
 
 import java.sql.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -40,6 +44,10 @@ public class Pagamento implements EntidadeBase {
      
      @ManyToOne
      private Caixa caixa;
+     
+     @OneToMany( cascade = CascadeType.ALL, mappedBy = "pagamento")
+     @JoinColumn(name="pagamento_id")
+     private List<Parcela> parcelas;
 
     @Override
     public Long getId() {
@@ -122,6 +130,20 @@ public class Pagamento implements EntidadeBase {
      */
     public void setCaixa(Caixa caixa) {
         this.caixa = caixa;
+    }
+
+    /**
+     * @return the parcelas
+     */
+    public List<Parcela> getParcelas() {
+        return parcelas;
+    }
+
+    /**
+     * @param parcelas the parcelas to set
+     */
+    public void setParcelas(List<Parcela> parcelas) {
+        this.parcelas = parcelas;
     }
     
 }

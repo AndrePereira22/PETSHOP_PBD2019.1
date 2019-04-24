@@ -12,6 +12,15 @@
     <class>br.com.pbd.Modelo.Profissional</class>
     <class>br.com.pbd.Modelo.Caixa</class>
     <class>br.com.pbd.Modelo.Pagamento</class>
+    <class>br.com.pbd.Modelo.Parcela</class>
+    <class>br.com.pbd.Modelo.Servico</class>
+    <class>br.com.pbd.Modelo.Agenda</class>
+    <class>br.com.pbd.Modelo.Funcionario</class>
+    <class>br.com.pbd.Modelo.Login</class>
+    <class>br.com.pbd.Modelo.Venda</class>
+    <class>br.com.pbd.Modelo.ItemVenda</class>
+    <class>br.com.pbd.Modelo.Loja</class>
+    <class>br.com.pbd.Modelo.Especie</class>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/petshop"/>
