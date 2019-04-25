@@ -41,10 +41,6 @@ public class Pagamento implements EntidadeBase {
      @Column
      private Date data ;
      
-     
-     @ManyToOne
-     private Caixa caixa;
-     
      @OneToMany( cascade = CascadeType.ALL, mappedBy = "pagamento")
      @JoinColumn(name="pagamento_id")
      private List<Parcela> parcelas;
@@ -118,19 +114,7 @@ public class Pagamento implements EntidadeBase {
         this.data = data;
     }
 
-    /**
-     * @return the caixa
-     */
-    public Caixa getCaixa() {
-        return caixa;
-    }
-
-    /**
-     * @param caixa the caixa to set
-     */
-    public void setCaixa(Caixa caixa) {
-        this.caixa = caixa;
-    }
+    
 
     /**
      * @return the parcelas

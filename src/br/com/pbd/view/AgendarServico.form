@@ -55,6 +55,13 @@
                   <Component id="jPanel2" min="-2" pref="972" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
               </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="526" max="-2" attributes="0"/>
+                      <Component id="comboHorario1" min="-2" pref="100" max="-2" attributes="0"/>
+                      <EmptySpace pref="526" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -63,6 +70,13 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="539" max="-2" attributes="0"/>
+                      <Component id="comboHorario1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="539" max="32767" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -85,7 +99,7 @@
                       <Component id="btnCancelar" min="-2" pref="87" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="235" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="painelCadastro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -96,7 +110,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="painelCadastro" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCancelar" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                           <Component id="btnSalvar" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
@@ -317,7 +331,21 @@
                     <Component class="javax.swing.JComboBox" name="comboHorario">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="0"/>
+                          <StringArray count="13">
+                            <StringItem index="0" value="07:00"/>
+                            <StringItem index="1" value="08:00"/>
+                            <StringItem index="2" value="09:00"/>
+                            <StringItem index="3" value="10:00"/>
+                            <StringItem index="4" value="11:00"/>
+                            <StringItem index="5" value="12:00"/>
+                            <StringItem index="6" value="13:00"/>
+                            <StringItem index="7" value="14:00"/>
+                            <StringItem index="8" value="15:00"/>
+                            <StringItem index="9" value="16:00"/>
+                            <StringItem index="10" value="17:00"/>
+                            <StringItem index="11" value="18:00"/>
+                            <StringItem index="12" value=" "/>
+                          </StringArray>
                         </Property>
                       </Properties>
                       <AuxValues>
@@ -347,11 +375,7 @@
                     <Component class="javax.swing.JComboBox" name="comboServico">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="3">
-                            <StringItem index="0" value="TOSA"/>
-                            <StringItem index="1" value="BANHO"/>
-                            <StringItem index="2" value="VACINA"/>
-                          </StringArray>
+                          <StringArray count="0"/>
                         </Property>
                       </Properties>
                       <AuxValues>
@@ -377,7 +401,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -477,6 +501,42 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JComboBox" name="comboHorario1">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="25">
+                <StringItem index="0" value="07:00"/>
+                <StringItem index="1" value="07:30"/>
+                <StringItem index="2" value="08:00"/>
+                <StringItem index="3" value="08:30"/>
+                <StringItem index="4" value="09:00"/>
+                <StringItem index="5" value="09:30"/>
+                <StringItem index="6" value="10:00"/>
+                <StringItem index="7" value="10:30"/>
+                <StringItem index="8" value="11:00"/>
+                <StringItem index="9" value="11:30"/>
+                <StringItem index="10" value="12:00"/>
+                <StringItem index="11" value="12:30"/>
+                <StringItem index="12" value="13:00"/>
+                <StringItem index="13" value="13:30"/>
+                <StringItem index="14" value="14:00"/>
+                <StringItem index="15" value="14:30"/>
+                <StringItem index="16" value="15:00"/>
+                <StringItem index="17" value="15:30"/>
+                <StringItem index="18" value="16:00"/>
+                <StringItem index="19" value="16:30"/>
+                <StringItem index="20" value="17:00"/>
+                <StringItem index="21" value="17:30"/>
+                <StringItem index="22" value="18:00"/>
+                <StringItem index="23" value=" "/>
+                <StringItem index="24" value=" "/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

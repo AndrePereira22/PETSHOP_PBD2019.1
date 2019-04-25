@@ -89,7 +89,8 @@ public class Controle implements ActionListener {
     public void cadastrarFuncionario() {
 
         Login login = new Login();
-        login.setSenha(tPrincipal.getcFuncionario().getTxtSenha().getPassword().toString());
+        String senha = new String(tPrincipal.getcFuncionario().getTxtSenha().getPassword());
+        login.setSenha(senha);
         login.setUsuario(tPrincipal.getcFuncionario().getTxtUsuario().getText());
 
         Dados dados = new Dados();
@@ -159,7 +160,8 @@ public class Controle implements ActionListener {
 
         
         Login login = new Login();
-        login.setSenha(tPrincipal.getcProfissioanl().getTxtSenha().getPassword().toString());
+        String senha = new String(tPrincipal.getcProfissioanl().getTxtSenha().getPassword());
+        login.setSenha(senha);
         login.setUsuario(tPrincipal.getcProfissioanl().getTxtUsuario().getText());
 
         Dados dados = new Dados();

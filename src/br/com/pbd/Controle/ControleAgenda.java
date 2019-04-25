@@ -7,18 +7,21 @@ package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Animal;
-import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Servico;
+import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 
 /**
@@ -32,20 +35,22 @@ public class ControleAgenda implements ActionListener {
     Profissional profissional;
     Animal animal;
     List<Animal> animais;
+    List<Servico> servicos;
 
     public ControleAgenda(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
 
         profissionais = new ArrayList<Profissional>();
         animais = new ArrayList<Animal>();
+        servicos = new ArrayList<Servico>();
 
         preencherProfissionais(tPrincipal.getAgenda().getComboProfissional());
 
         tPrincipal.getBtnAgenda().addActionListener(this);
         tPrincipal.getAgenda().getBtnAddEdit().addActionListener(this);
-        tPrincipal.getcServico().getBtnSalvar().addActionListener(this);
-        tPrincipal.getcServico().getComboAnimal().addActionListener(this);
-        tPrincipal.getcServico().getBtnCancelar().addActionListener(this);
+        tPrincipal.getAgenarServico().getBtnSalvar().addActionListener(this);
+        tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
+        tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class ControleAgenda implements ActionListener {
             preencherProfissionais(tPrincipal.getAgenda().getComboProfissional());
         }
 
-        if (e.getSource() == tPrincipal.getcServico().getBtnCancelar()) {
+        if (e.getSource() == tPrincipal.getAgenarServico().getBtnCancelar()) {
             preencherProfissionais(tPrincipal.getAgenda().getComboProfissional());
             tPrincipal.getAgenda().setVisible(true);
 
@@ -63,20 +68,21 @@ public class ControleAgenda implements ActionListener {
         if (e.getSource() == tPrincipal.getAgenda().getBtnAddEdit()) {
 
             preencherAnimais();
+            preencherServicos();
             tPrincipal.getAgenda().setVisible(false);
             int indice = tPrincipal.getAgenda().getComboProfissional().getSelectedIndex();
             profissional = profissionais.get(indice);
-            tPrincipal.getcServico().getComboProfissional().setEnabled(false);
-            tPrincipal.getcServico().getComboProfissional().addItem(profissional.getNome());
+            tPrincipal.getAgenarServico().getComboProfissional().setEnabled(false);
+            tPrincipal.getAgenarServico().getComboProfissional().addItem(profissional.getNome());
 
-            tPrincipal.getcServico().setVisible(true);
+            tPrincipal.getAgenarServico().setVisible(true);
 
         }
-        if (e.getSource() == tPrincipal.getcServico().getBtnSalvar()) {
+        if (e.getSource() == tPrincipal.getAgenarServico().getBtnSalvar()) {
 
             salvarServico();
         }
-        if (e.getSource() == tPrincipal.getcServico().getComboAnimal() && tPrincipal.getcServico().isVisible()) {
+        if (e.getSource() == tPrincipal.getAgenarServico().getComboAnimal() && tPrincipal.getAgenarServico().isVisible()) {
             preencherDadosAnimal();
         }
     }
@@ -90,54 +96,76 @@ public class ControleAgenda implements ActionListener {
         });
     }
 
-    public final void preencherAnimais() {
-
-        animais = new GenericDao<Animal>().getAll(Animal.class);
-        tPrincipal.getcServico().getComboAnimal().removeAllItems();
-        animais.forEach((c) -> {
-            tPrincipal.getcServico().getComboAnimal().addItem(c.getNome());
-        });
-    }
-
     private void salvarServico() {
 
-        int indice = tPrincipal.getcServico().getComboAnimal().getSelectedIndex();
-        Animal animal = animais.get(indice);
-        java.sql.Date data = ConverterData(tPrincipal.getcServico().getData().getDate());
+        Agenda agenda = new Agenda();
 
-        Servico servico = new Servico();
+        int indiceAnimal = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
+        int indiceServico = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
+        Animal animal = animais.get(indiceAnimal);
+        Servico servico = servicos.get(indiceServico);
 
         Date d = new Date(System.currentTimeMillis());
+        java.sql.Date data = ConverterData(tPrincipal.getAgenarServico().getData().getDate());
 
         Pagamento pagamento = new Pagamento();
         pagamento.setValortotal(0.0);
         pagamento.setNumeroparcelas(0);
         pagamento.setStatus(false);
         pagamento.setData(ConverterData(d));
-        // pagamento.setCaixa();
 
-        servico.setAnimal(animal);
-        servico.setData(data);
-        servico.setAnotacao(tPrincipal.getcServico().getAreaObservacao().getText());
-        servico.setDescricao(tPrincipal.getcServico().getComboServico().getSelectedItem().toString());
-        servico.setProfissional(profissional);
-        servico.setHorario(new Time(Integer.MAX_VALUE));
-        servico.setValor(10.0);
-        servico.setPagamento(pagamento);
+        agenda.setData(data);
+        agenda.setAnotacao(tPrincipal.getAgenarServico().getAreaObservacao().getText());
+        agenda.setHorario(ConverterTime(tPrincipal.getAgenarServico().getComboHorario().getSelectedItem().toString()));
 
-        new GenericDao<Servico>().salvar_ou_atualizar(servico);
+        agenda.setPagamento(pagamento);
+        agenda.setAnimal(animal);
+        agenda.setProfissional(profissional);
+        agenda.setServico(servico);
+
+        new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
 
     }
 
     private void preencherDadosAnimal() {
-        int indice = tPrincipal.getcServico().getComboAnimal().getSelectedIndex();
+        int indice = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
         animal = animais.get(indice);
-        tPrincipal.getcServico().getAreaNotasAnimal().setText(animal.getObservacao());
-        tPrincipal.getcServico().getTxtRaca().setText(animal.getRaca().getNome());
-        tPrincipal.getcServico().getTxtDono().setText(animal.getCliente().getNome());
+        tPrincipal.getAgenarServico().getAreaNotasAnimal().setText(animal.getObservacao());
+        tPrincipal.getAgenarServico().getTxtRaca().setText(animal.getRaca().getNome());
+        tPrincipal.getAgenarServico().getTxtDono().setText(animal.getCliente().getNome());
+    }
+
+    public final void preencherAnimais() {
+
+        animais = new GenericDao<Animal>().getAll(Animal.class);
+        tPrincipal.getAgenarServico().getComboAnimal().removeAllItems();
+        animais.forEach((c) -> {
+            tPrincipal.getAgenarServico().getComboAnimal().addItem(c.getNome());
+        });
+    }
+
+    public final void preencherServicos() {
+
+        servicos = new GenericDao<Servico>().getAll(Servico.class);
+        tPrincipal.getAgenarServico().getComboServico().removeAllItems();
+        servicos.forEach((c) -> {
+            tPrincipal.getAgenarServico().getComboServico().addItem(c.getDescricao());
+        });
     }
 
     public java.sql.Date ConverterData(java.util.Date date) {
         return new java.sql.Date(date.getTime());
+    }
+
+    public java.sql.Time ConverterTime(String relogio) {
+        SimpleDateFormat formatador = new SimpleDateFormat("HH:mm");
+        Date data = null;
+        try {
+            data = formatador.parse(relogio);
+        } catch (ParseException ex) {
+            Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new Time(data.getTime());
+
     }
 }

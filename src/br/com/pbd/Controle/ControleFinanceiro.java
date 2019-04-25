@@ -21,7 +21,7 @@ import javax.persistence.NoResultException;
 public class ControleFinanceiro implements ActionListener {
 
     TelaPrincipal tPrincipal;
-    Caixa caixa;
+    private Caixa caixa;
 
     public ControleFinanceiro(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -46,15 +46,23 @@ public class ControleFinanceiro implements ActionListener {
         } catch (NoResultException n) {
         }
 
-        if (caixa == null) {
+        if (getCaixa() == null) {
             caixa = new Caixa();
-            caixa.setData(data);
-            caixa.setStatus(Boolean.TRUE);
-            caixa.setValorabertura(0.0);
-            caixa.setValorfechamento(0.0);
-            caixa.setLucrodia(0.0);
-            new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+            getCaixa().setData(data);
+            getCaixa().setStatus(Boolean.TRUE);
+            getCaixa().setValorabertura(0.0);
+            getCaixa().setValorfechamento(0.0);
+            getCaixa().setLucrodia(0.0);
+            new GenericDao<Caixa>().salvar_ou_atualizar(getCaixa());
         }
 
     }
+
+    /**
+     * @return the caixa
+     */
+    public Caixa getCaixa() {
+        return caixa;
+    }
+
 }

@@ -42,9 +42,7 @@ public class Caixa implements EntidadeBase {
     @Column
     private Date data;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caixa")
-    @JoinColumn(name = "caixa_id")
-    private List<Pagamento> pagamentos;
+    
 
     @Override
     public Long getId() {
@@ -128,18 +126,5 @@ public class Caixa implements EntidadeBase {
         this.data = data;
     }
 
-    /**
-     * @return the pagamentos
-     */
-    public List<Pagamento> getPagamentos() {
-        return pagamentos;
-    }
-
-    /**
-     * @param pagamentos the pagamentos to set
-     */
-    public void setPagamentos(List<Pagamento> pagamentos) {
-        this.pagamentos = pagamentos;
-    }
-
+    
 }

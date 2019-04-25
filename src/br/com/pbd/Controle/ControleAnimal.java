@@ -65,8 +65,7 @@ public class ControleAnimal implements ActionListener {
         animal.setObservacao(tPrincipal.getcAnimal().getAreaObservacao().getText());
         animal.setSexo(tPrincipal.getcAnimal().getComboSexo().getSelectedItem().toString());
         animal.setObservacao(tPrincipal.getcAnimal().getAreaObservacao().getText());
-        java.sql.Date nascimento = ConverterData(tPrincipal.getcAnimal().getNascimento().getDate());
-        animal.setNascimento(nascimento);
+        animal.setNascimento(ConverterData(tPrincipal.getcAnimal().getNascimento().getDate()));
 
         String peso = tPrincipal.getcAnimal().getTxtPeso().getText();
         Double pesokg = 0.0;
@@ -85,7 +84,7 @@ public class ControleAnimal implements ActionListener {
         animal.setCliente(cli);
 
         new GenericDao<Animal>().salvar_ou_atualizar(animal);
-        
+
         tPrincipal.getcAnimal().setVisible(false);
 
     }

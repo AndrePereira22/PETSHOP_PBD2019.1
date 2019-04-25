@@ -5,16 +5,12 @@
  */
 package br.com.pbd.Modelo;
 
-import java.sql.Date;
 import java.sql.Time;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,38 +19,24 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="servico_seq",sequenceName="servico_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "servico_seq", sequenceName = "servico_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "servico")
 public class Servico implements EntidadeBase {
 
     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="servico_seq")
-     private Long id;
-       
-     @Column 
-     private String descricao;
-     @Column
-     private Double valor;
-     @Column
-     private Time horario;
-     @Column
-     private String anotacao;
-     @Column
-     private Date data;
-     
-    @OneToOne
-     private Animal animal;
-    
-    @OneToOne 
-     private Profissional profissional;
-    
-    @OneToOne
-     private Pagamento pagamento;
-   
-    
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "servico_seq")
+    private Long id;
+
+    @Column
+    private String descricao;
+    @Column
+    private Double valor;
+    @Column
+    private Time duracao;
+
     @Override
     public Long getId() {
-    return id;
+        return id;
     }
 
     /**
@@ -92,92 +74,18 @@ public class Servico implements EntidadeBase {
         this.valor = valor;
     }
 
-    
     /**
-     * @return the animal
+     * @return the duracao
      */
-    public Animal getAnimal() {
-        return animal;
+    public Time getDuracao() {
+        return duracao;
     }
 
     /**
-     * @param animal the animal to set
+     * @param duracao the duracao to set
      */
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
+    public void setDuracao(Time duracao) {
+        this.duracao = duracao;
     }
 
-    /**
-     * @return the profissional
-     */
-    public Profissional getProfissional() {
-        return profissional;
-    }
-
-    /**
-     * @param profissional the profissional to set
-     */
-    public void setProfissional(Profissional profissional) {
-        this.profissional = profissional;
-    }
-
-    /**
-     * @return the pagamento
-     */
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    /**
-     * @param pagamento the pagamento to set
-     */
-    public void setPagamento(Pagamento pagamento) {
-        this.pagamento = pagamento;
-    }
-
-   
-
-    /**
-     * @return the horario
-     */
-    public Time getHorario() {
-        return horario;
-    }
-
-    /**
-     * @param horario the horario to set
-     */
-    public void setHorario(Time horario) {
-        this.horario = horario;
-    }
-
-    /**
-     * @return the anotacao
-     */
-    public String getAnotacao() {
-        return anotacao;
-    }
-
-    /**
-     * @param anotacao the anotacao to set
-     */
-    public void setAnotacao(String anotacao) {
-        this.anotacao = anotacao;
-    }
-
-    /**
-     * @return the data
-     */
-    public Date getData() {
-        return data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(Date data) {
-        this.data = data;
-    }
-    
-    
 }

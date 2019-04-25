@@ -9,12 +9,12 @@ package br.com.pbd.view;
  *
  * @author Glenda Alves de Lima
  */
-public class CadastroServico extends javax.swing.JInternalFrame {
+public class AgendarServico extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaCadastroCliente
      */
-    public CadastroServico() {
+    public AgendarServico() {
         initComponents();
     }
 
@@ -54,6 +54,7 @@ public class CadastroServico extends javax.swing.JInternalFrame {
         areaNotasAnimal = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         txtRaca = new javax.swing.JTextField();
+        comboHorario1 = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
 
@@ -91,11 +92,11 @@ public class CadastroServico extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Horario");
 
+        comboHorario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", " " }));
+
         jLabel8.setText("Animal");
 
         jLabel6.setText("Serviços");
-
-        comboServico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TOSA", "BANHO", "VACINA" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -170,7 +171,7 @@ public class CadastroServico extends javax.swing.JInternalFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,12 +275,14 @@ public class CadastroServico extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(painelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(557, Short.MAX_VALUE))
         );
+
+        comboHorario1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", " ", " " }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -289,6 +292,11 @@ public class CadastroServico extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 972, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(170, 170, 170))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(526, 526, 526)
+                    .addComponent(comboHorario1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(526, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,6 +304,11 @@ public class CadastroServico extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(539, 539, 539)
+                    .addComponent(comboHorario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(539, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -332,6 +345,7 @@ public class CadastroServico extends javax.swing.JInternalFrame {
     private javax.swing.JToggleButton btnSalvar;
     private javax.swing.JComboBox<String> comboAnimal;
     private javax.swing.JComboBox<String> comboHorario;
+    private javax.swing.JComboBox<String> comboHorario1;
     private javax.swing.JComboBox<String> comboProfissional;
     private javax.swing.JComboBox<String> comboServico;
     private com.toedter.calendar.JDateChooser data;

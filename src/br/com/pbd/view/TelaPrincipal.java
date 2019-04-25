@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.pbd.view;
 
 import java.awt.event.ActionEvent;
@@ -12,26 +7,26 @@ import java.util.Date;
 import javax.swing.JInternalFrame;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-/**
- *
- * @author Andre-Coude
- */
-public class TelaPrincipal extends javax.swing.JFrame {
+public class TelaPrincipal extends javax.swing.JFrame implements ActionListener {
 
-    private CadastroAnimal cAnimal = new CadastroAnimal();
-    private Clientes clientes = new Clientes();
-    private Cadastros cadastros = new Cadastros();
-    private CadastroCliente cCliente = new CadastroCliente();
-    private CadastroFuncionario cFuncionario = new CadastroFuncionario();
-    private CadastroFornecedor cFornecedor = new CadastroFornecedor();
-    private CadastroProfissional cProfissioanl = new CadastroProfissional();
-    private CadastroServico cServico = new CadastroServico();
-    private Agenda agenda = new Agenda();
-    private Vendas vendas = new Vendas();
+    private final CadastroAnimal cAnimal = new CadastroAnimal();
+    private final Clientes clientes = new Clientes();
+    private final Cadastros cadastros = new Cadastros();
+    private final CadastroCliente cCliente = new CadastroCliente();
+    private final CadastroFuncionario cFuncionario = new CadastroFuncionario();
+    private final CadastroFornecedor cFornecedor = new CadastroFornecedor();
+    private final CadastroProfissional cProfissioanl = new CadastroProfissional();
+    private final CadastroServicos cServicos = new CadastroServicos();
+    private final CadastroProdutos cProdutos = new CadastroProdutos();
+    private final AgendarServico agenarServico = new AgendarServico();
+    private final Servico_Produto servico_Produto = new Servico_Produto();
+    private final Agenda agenda = new Agenda();
+    private final Vendas vendas = new Vendas();
+    private final Financeiro financas = new Financeiro();
 
     public TelaPrincipal() {
         initComponents();
-        setExtendedState(MAXIMIZED_BOTH);
+        this.setExtendedState(MAXIMIZED_BOTH);
 
         ajustarInternalFrame(cAnimal);
         ajustarInternalFrame(clientes);
@@ -40,69 +35,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ajustarInternalFrame(cFuncionario);
         ajustarInternalFrame(cFornecedor);
         ajustarInternalFrame(cProfissioanl);
+        ajustarInternalFrame(cServicos);
+        ajustarInternalFrame(cProdutos);
         ajustarInternalFrame(agenda);
+        ajustarInternalFrame(financas);
         ajustarInternalFrame(vendas);
-        ajustarInternalFrame(cServico);
-        
-       
-        setVisible(false);
+        ajustarInternalFrame(agenarServico);
+        ajustarInternalFrame(servico_Produto);
 
-        cadastros.getBtnProfissional().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getcProfissioanl().setVisible(rootPaneCheckingEnabled);
-            }
-        });
-        cadastros.getBtnFornecedor().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getcFornecedor().setVisible(rootPaneCheckingEnabled);
-            }
-        });
-        cadastros.getBtnAnimal1().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getcAnimal().setVisible(rootPaneCheckingEnabled);
-            }
-        });
-        cadastros.getBtnCliente1().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getcCliente().setVisible(rootPaneCheckingEnabled);
-            }
-        });
-        cadastros.getBtnFuncionario().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getcFuncionario().setVisible(rootPaneCheckingEnabled);
-            }
-        });
-        cadastros.getVoltarMenu().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getPainelMenu().setVisible(true);
-            }
-        });
-        clientes.getVoltarMenu().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getPainelMenu().setVisible(true);
-            }
-        });
-        clientes.getVoltarMenu().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getPainelMenu().setVisible(true);
-            }
-        });
-        agenda.getBtnSair().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getPainelMenu().setVisible(true);
-            }
-        });
-         
-        
+        adicionaEventos();
+
+        this.setVisible(false);
 
     }
 
@@ -203,6 +146,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnProdutos_serv.setBorderPainted(false);
         btnProdutos_serv.setContentAreaFilled(false);
         btnProdutos_serv.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 006.1.png"))); // NOI18N
+        btnProdutos_serv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProdutos_servActionPerformed(evt);
+            }
+        });
         painelMenu.add(btnProdutos_serv);
         btnProdutos_serv.setBounds(20, 440, 280, 75);
 
@@ -211,23 +159,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
         btnFinanceiro.setBorderPainted(false);
         btnFinanceiro.setContentAreaFilled(false);
         btnFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 007.1.png"))); // NOI18N
+        btnFinanceiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinanceiroActionPerformed(evt);
+            }
+        });
         painelMenu.add(btnFinanceiro);
         btnFinanceiro.setBounds(20, 520, 280, 75);
 
-        btnSair.setText("SAIR");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/turn-on.png"))); // NOI18N
         btnSair.setAlignmentX(20.0F);
         btnSair.setAlignmentY(30.0F);
+        btnSair.setBorderPainted(false);
+        btnSair.setContentAreaFilled(false);
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/turn-on.1.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
             }
         });
         painelMenu.add(btnSair);
-        btnSair.setBounds(700, 560, 120, 23);
+        btnSair.setBounds(710, 510, 120, 70);
 
-        btnLogoff.setText("LOGOFF");
+        btnLogoff.setBackground(new java.awt.Color(0, 204, 204));
+        btnLogoff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/logout-outline.png"))); // NOI18N
+        btnLogoff.setBorder(null);
+        btnLogoff.setBorderPainted(false);
+        btnLogoff.setContentAreaFilled(false);
+        btnLogoff.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/logout-outline.1.png"))); // NOI18N
+        btnLogoff.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/logout-outline.1.png"))); // NOI18N
         painelMenu.add(btnLogoff);
-        btnLogoff.setBounds(863, 560, 110, 23);
+        btnLogoff.setBounds(830, 530, 110, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/fundoo1.png"))); // NOI18N
         jLabel1.setToolTipText("");
@@ -287,7 +249,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
         // TODO add your handling code here:
         getPainelMenu().setVisible(false);
-        vendas.setVisible(rootPaneCheckingEnabled);
+        getVendas().setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnCadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrosActionPerformed
@@ -309,19 +271,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
         System.exit(WIDTH);
     }//GEN-LAST:event_btnSairActionPerformed
 
-    public final void ajustarInternalFrame(JInternalFrame frame) {
+    private void btnProdutos_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutos_servActionPerformed
+        getPainelMenu().setVisible(false);
+        getServico_Produto().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_btnProdutos_servActionPerformed
 
-        ((BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
-        frame.setBorder(null);
-        painelDesktop.add(frame);
-    }
-
-    public void mudarVisaoData() {
-        Date d = new Date(System.currentTimeMillis());
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
-        agenda.getLblDatal().setText(formato.format(d));
-    }
+    private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
+        getPainelMenu().setVisible(false);
+        getFinancas().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_btnFinanceiroActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -372,11 +330,86 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel painelMenu;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the cFuncionario
-     */
-    public CadastroFuncionario getcFuncionario() {
-        return cFuncionario;
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == getServico_Produto().getBtnNovoProduto()) {
+            getServico_Produto().setVisible(false);
+            getcProdutos().setVisible(true);
+        }
+        if (e.getSource() == getServico_Produto().getBtnNovoServico()) {
+            getServico_Produto().setVisible(false);
+            getcServicos().setVisible(true);
+        }
+        if (e.getSource() == getClientes().getVoltarMenu()) {
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getAgenda().getBtnSair()) {
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getCadastros().getBtnProfissional()) {
+            getcProfissioanl().setVisible(rootPaneCheckingEnabled);
+        }
+        if (e.getSource() == getCadastros().getBtnFornecedor()) {
+            getcFornecedor().setVisible(rootPaneCheckingEnabled);
+        }
+        if (e.getSource() == getCadastros().getBtnAnimal1()) {
+            getcAnimal().setVisible(rootPaneCheckingEnabled);
+        }
+        if (e.getSource() == getCadastros().getBtnCliente1()) {
+            getcCliente().setVisible(rootPaneCheckingEnabled);
+        }
+        if (e.getSource() == getCadastros().getBtnFuncionario()) {
+            getcFuncionario().setVisible(rootPaneCheckingEnabled);
+        }
+        if (e.getSource() == getCadastros().getVoltarMenu()) {
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getClientes().getVoltarMenu()) {
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getFinancas().getBtnCancelar()) {
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getcProdutos().getBtnCancelar()) {
+          servico_Produto.setVisible(true);
+        }
+        if (e.getSource() == getServico_Produto().getBtnSair()) {
+          painelMenu.setVisible(true);
+        }
+
+        
+    }
+
+    public final void adicionaEventos() {
+        getClientes().getVoltarMenu().addActionListener(this);
+        getCadastros().getVoltarMenu().addActionListener(this);
+        getCadastros().getBtnFuncionario().addActionListener(this);
+        getCadastros().getBtnCliente1().addActionListener(this);
+        getCadastros().getBtnAnimal1().addActionListener(this);
+        getCadastros().getBtnFornecedor().addActionListener(this);
+        getCadastros().getBtnProfissional().addActionListener(this);
+        getAgenda().getBtnSair().addActionListener(this);
+        getClientes().getVoltarMenu().addActionListener(this);
+        getServico_Produto().getBtnNovoServico().addActionListener(this);
+        getServico_Produto().getBtnNovoProduto().addActionListener(this);
+         getServico_Produto().getBtnSair().addActionListener(this);
+        getFinancas().getBtnCancelar().addActionListener(this);
+        getcProdutos().getBtnCancelar().addActionListener(this);
+    }
+
+    public final void ajustarInternalFrame(JInternalFrame frame) {
+
+        ((BasicInternalFrameUI) frame.getUI()).setNorthPane(null);
+        frame.setBorder(null);
+        painelDesktop.add(frame);
+    }
+
+    public final void mudarVisaoData() {
+        Date d = new Date(System.currentTimeMillis());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+        getAgenda().getLblDatal().setText(formato.format(d));
     }
 
     /**
@@ -408,6 +441,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     /**
+     * @return the cFuncionario
+     */
+    public CadastroFuncionario getcFuncionario() {
+        return cFuncionario;
+    }
+
+    /**
      * @return the cFornecedor
      */
     public CadastroFornecedor getcFornecedor() {
@@ -422,10 +462,52 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     /**
+     * @return the cServicos
+     */
+    public CadastroServicos getcServicos() {
+        return cServicos;
+    }
+
+    /**
+     * @return the cProdutos
+     */
+    public CadastroProdutos getcProdutos() {
+        return cProdutos;
+    }
+
+    /**
+     * @return the agenarServico
+     */
+    public AgendarServico getAgenarServico() {
+        return agenarServico;
+    }
+
+    /**
+     * @return the servico_Produto
+     */
+    public Servico_Produto getServico_Produto() {
+        return servico_Produto;
+    }
+
+    /**
      * @return the agenda
      */
     public Agenda getAgenda() {
         return agenda;
+    }
+
+    /**
+     * @return the vendas
+     */
+    public Vendas getVendas() {
+        return vendas;
+    }
+
+    /**
+     * @return the financas
+     */
+    public Financeiro getFinancas() {
+        return financas;
     }
 
     /**
@@ -457,10 +539,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     /**
+     * @return the btnLogoff
+     */
+    public javax.swing.JButton getBtnLogoff() {
+        return btnLogoff;
+    }
+
+    /**
      * @return the btnProdutos_serv
      */
     public javax.swing.JButton getBtnProdutos_serv() {
         return btnProdutos_serv;
+    }
+
+    /**
+     * @return the btnSair
+     */
+    public javax.swing.JButton getBtnSair() {
+        return btnSair;
     }
 
     /**
@@ -475,27 +571,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public javax.swing.JPanel getPainelMenu() {
         return painelMenu;
-    }
-
-    /**
-     * @return the btnLogoff
-     */
-    public javax.swing.JButton getBtnLogoff() {
-        return btnLogoff;
-    }
-
-    /**
-     * @return the btnSair
-     */
-    public javax.swing.JButton getBtnSair() {
-        return btnSair;
-    }
-
-    /**
-     * @return the cServico
-     */
-    public CadastroServico getcServico() {
-        return cServico;
     }
 
 }
