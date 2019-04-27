@@ -10,7 +10,6 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class TelaPrincipal extends javax.swing.JFrame implements ActionListener {
 
     private final CadastroAnimal cAnimal = new CadastroAnimal();
-    private final Clientes clientes = new Clientes();
     private final Cadastros cadastros = new Cadastros();
     private final CadastroCliente cCliente = new CadastroCliente();
     private final CadastroFuncionario cFuncionario = new CadastroFuncionario();
@@ -29,7 +28,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         this.setExtendedState(MAXIMIZED_BOTH);
 
         ajustarInternalFrame(cAnimal);
-        ajustarInternalFrame(clientes);
         ajustarInternalFrame(cadastros);
         ajustarInternalFrame(cCliente);
         ajustarInternalFrame(cFuncionario);
@@ -67,7 +65,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnProdutos_serv = new javax.swing.JButton();
         btnFinanceiro = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
-        btnLogoff = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         paineArea = new javax.swing.JPanel();
         painelDesktop = new javax.swing.JDesktopPane();
@@ -181,16 +178,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         painelMenu.add(btnSair);
         btnSair.setBounds(710, 510, 120, 70);
 
-        btnLogoff.setBackground(new java.awt.Color(0, 204, 204));
-        btnLogoff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/logout-outline.png"))); // NOI18N
-        btnLogoff.setBorder(null);
-        btnLogoff.setBorderPainted(false);
-        btnLogoff.setContentAreaFilled(false);
-        btnLogoff.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/logout-outline.1.png"))); // NOI18N
-        btnLogoff.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/logout-outline.1.png"))); // NOI18N
-        painelMenu.add(btnLogoff);
-        btnLogoff.setBounds(830, 530, 110, 40);
-
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/fundoo1.png"))); // NOI18N
         jLabel1.setToolTipText("");
         painelMenu.add(jLabel1);
@@ -243,7 +230,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
         getPainelMenu().setVisible(false);
-        getClientes().setVisible(rootPaneCheckingEnabled);
+        cCliente.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -319,7 +306,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JButton btnCadastros;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnFinanceiro;
-    private javax.swing.JButton btnLogoff;
     private javax.swing.JButton btnProdutos_serv;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnVendas;
@@ -341,9 +327,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getServico_Produto().setVisible(false);
             getcServicos().setVisible(true);
         }
-        if (e.getSource() == getClientes().getVoltarMenu()) {
-            painelMenu.setVisible(true);
-        }
+
         if (e.getSource() == getAgenda().getBtnSair()) {
             painelMenu.setVisible(true);
         }
@@ -365,24 +349,52 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         if (e.getSource() == getCadastros().getVoltarMenu()) {
             painelMenu.setVisible(true);
         }
-        if (e.getSource() == getClientes().getVoltarMenu()) {
-            painelMenu.setVisible(true);
+        if (e.getSource() == cServicos.getBtnCancelar()) {
+            servico_Produto.setVisible(true);
         }
+
         if (e.getSource() == getFinancas().getBtnCancelar()) {
             painelMenu.setVisible(true);
         }
         if (e.getSource() == getcProdutos().getBtnCancelar()) {
-          servico_Produto.setVisible(true);
+            servico_Produto.setVisible(true);
         }
         if (e.getSource() == getServico_Produto().getBtnSair()) {
-          painelMenu.setVisible(true);
+            getServico_Produto().setVisible(false);
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getAgenarServico().getBtnSalvar()) {
+            agenda.setVisible(true);
+        }
+        if (e.getSource() == getcAnimal().getBtnSair()) {
+
+            getcAnimal().setVisible(false);
+            cadastros.setVisible(true);
+        }
+        if (e.getSource() == getcCliente().getBtnSair()) {
+            getcCliente().setVisible(false);
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getcCliente().getBtnCancelar()) {
+            getcCliente().getPainelItens().setSelectedComponent(getcCliente().getPainelCliente());
+            getcCliente().getPainelCadastro().setEnabled(false);
+        }
+        if (e.getSource() == getcCliente().getBtnCadastrarCliente()) {
+            getcCliente().getPainelItens().setSelectedComponent(getcCliente().getPainelCadastro());
+            getcCliente().getPainelCadastro().setEnabled(true);
+        }
+        if (e.getSource() == getcAnimal().getBtnCancelar()) {
+            getcAnimal().getPainelItens().setSelectedComponent(getcAnimal().getPainelAnimail());
+            getcAnimal().getPainelCadastro().setEnabled(false);
+        }
+        if (e.getSource() == getcAnimal().getBtnCadastrarAnimal()) {
+            getcAnimal().getPainelItens().setSelectedComponent(getcAnimal().getPainelCadastro());
+            getcAnimal().getPainelCadastro().setEnabled(true);
         }
 
-        
     }
 
     public final void adicionaEventos() {
-        getClientes().getVoltarMenu().addActionListener(this);
         getCadastros().getVoltarMenu().addActionListener(this);
         getCadastros().getBtnFuncionario().addActionListener(this);
         getCadastros().getBtnCliente1().addActionListener(this);
@@ -390,12 +402,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getCadastros().getBtnFornecedor().addActionListener(this);
         getCadastros().getBtnProfissional().addActionListener(this);
         getAgenda().getBtnSair().addActionListener(this);
-        getClientes().getVoltarMenu().addActionListener(this);
         getServico_Produto().getBtnNovoServico().addActionListener(this);
         getServico_Produto().getBtnNovoProduto().addActionListener(this);
-         getServico_Produto().getBtnSair().addActionListener(this);
+        getServico_Produto().getBtnSair().addActionListener(this);
         getFinancas().getBtnCancelar().addActionListener(this);
         getcProdutos().getBtnCancelar().addActionListener(this);
+        getAgenarServico().getBtnSalvar().addActionListener(this);
+        cServicos.getBtnCancelar().addActionListener(this);
+        getcCliente().getBtnCadastrarCliente().addActionListener(this);
+        getcCliente().getBtnCancelar().addActionListener(this);
+        getcAnimal().getBtnCadastrarAnimal().addActionListener(this);
+        getcAnimal().getBtnCancelar().addActionListener(this);
+        getcAnimal().getBtnSair().addActionListener(this);
+        getcCliente().getBtnSair().addActionListener(this);
+
     }
 
     public final void ajustarInternalFrame(JInternalFrame frame) {
@@ -417,13 +437,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
      */
     public CadastroAnimal getcAnimal() {
         return cAnimal;
-    }
-
-    /**
-     * @return the clientes
-     */
-    public Clientes getClientes() {
-        return clientes;
     }
 
     /**
@@ -536,13 +549,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
      */
     public javax.swing.JButton getBtnFinanceiro() {
         return btnFinanceiro;
-    }
-
-    /**
-     * @return the btnLogoff
-     */
-    public javax.swing.JButton getBtnLogoff() {
-        return btnLogoff;
     }
 
     /**

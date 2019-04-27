@@ -322,7 +322,7 @@
                 </Container>
                 <Component class="javax.swing.JButton" name="btnCancelar">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="EDITAR"/>
+                    <Property name="text" type="java.lang.String" value="CANCELAR"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSalvar">

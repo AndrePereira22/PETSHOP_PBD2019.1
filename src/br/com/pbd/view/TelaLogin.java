@@ -45,7 +45,7 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        painelPrincipal.setBackground(new java.awt.Color(0, 51, 51));
+        painelPrincipal.setBackground(new java.awt.Color(204, 204, 255));
 
         painelSecundario.setBackground(new java.awt.Color(0, 102, 102));
 

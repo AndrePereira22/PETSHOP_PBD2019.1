@@ -22,13 +22,12 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name = "servA_seq", sequenceName = "servA_seq", initialValue = 1, allocationSize = 1)
-
-@Table(name = "servico_agendado")
+@SequenceGenerator(name = "agenda_seq", sequenceName = "agenda_seq", initialValue = 1, allocationSize = 1)
+@Table(name = "agenda")
 public class Agenda implements EntidadeBase {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "servA_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agenda_seq")
     private Long id;
 
     @OneToOne

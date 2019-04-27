@@ -131,7 +131,7 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        btnCancelar.setText("EDITAR");
+        btnCancelar.setText("CANCELAR");
 
         btnSalvar.setText("SALVAR ");
 

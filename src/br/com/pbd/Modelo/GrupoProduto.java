@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @SequenceGenerator(name="gproduto_seq",sequenceName="gproduto_seq", initialValue=1,allocationSize=1)
-@Table(name = "grupoproduto")
+@Table(name = "grupo_produto")
 public class GrupoProduto implements EntidadeBase {
      @Id
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="gproduto_seq")

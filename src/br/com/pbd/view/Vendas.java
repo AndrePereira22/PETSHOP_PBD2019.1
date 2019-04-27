@@ -59,7 +59,7 @@ public class Vendas extends javax.swing.JInternalFrame {
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jPanel3.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tabelaItens.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -85,7 +85,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("CLIENTE");
 
-        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel6.setBackground(new java.awt.Color(204, 204, 255));
 
         btnNumeroItens.setText("NUMERO DE ITENS");
 
@@ -146,19 +146,27 @@ public class Vendas extends javax.swing.JInternalFrame {
                         .addContainerGap(22, Short.MAX_VALUE))))
         );
 
-        jPanel7.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel7.setBackground(new java.awt.Color(204, 204, 255));
 
+        BtnCancelarItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/remove.png"))); // NOI18N
         BtnCancelarItem.setText("CANCELAR ITEM");
+        BtnCancelarItem.setBorder(null);
+        BtnCancelarItem.setContentAreaFilled(false);
+        BtnCancelarItem.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/remove.1.png"))); // NOI18N
 
         btnFinalizarVenda.setBackground(new java.awt.Color(255, 255, 255));
-        btnFinalizarVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/check-box.png"))); // NOI18N
+        btnFinalizarVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/confirm.png"))); // NOI18N
         btnFinalizarVenda.setText("FECHAR VENDA");
         btnFinalizarVenda.setBorder(null);
         btnFinalizarVenda.setBorderPainted(false);
+        btnFinalizarVenda.setContentAreaFilled(false);
+        btnFinalizarVenda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/confirm.1.png"))); // NOI18N
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/login-arrow.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/out.png"))); // NOI18N
         btnSair.setText("SAIR");
         btnSair.setBorderPainted(false);
+        btnSair.setContentAreaFilled(false);
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/out.1.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -166,12 +174,12 @@ public class Vendas extends javax.swing.JInternalFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(BtnCancelarItem, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                .addComponent(BtnCancelarItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,7 +249,7 @@ public class Vendas extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20))
         );
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnProdutos.setText("PRODUTOS#");

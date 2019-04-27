@@ -27,25 +27,27 @@ import java.util.logging.Logger;
  * @author Andre-Coude
  */
 public class ControleProdutos_Servico implements ActionListener {
-    
+
     TelaPrincipal tPrincipal;
     List<GrupoProduto> gProdutos;
     List<Fornecedor> fornecedores;
-    
+
     public ControleProdutos_Servico(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
         tPrincipal.getServico_Produto().getBtnNovoProduto().addActionListener(this);
         tPrincipal.getcProdutos().getBtnSalvarProduto().addActionListener(this);
         tPrincipal.getcServicos().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcProdutos().getBtnNovoGrupo().addActionListener(this);
+        tPrincipal.getcProdutos().getSalvarGrupo().addActionListener(this);
         
         gProdutos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
-        
+
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         if (e.getSource() == tPrincipal.getServico_Produto().getBtnNovoProduto()) {
             preencherFornecedores();
             preencherGrupo();
@@ -56,72 +58,89 @@ public class ControleProdutos_Servico implements ActionListener {
         if (e.getSource() == tPrincipal.getcServicos().getBtnSalvar()) {
             salvarServico();
         }
+        if (e.getSource() == tPrincipal.getcProdutos().getBtnNovoGrupo()) {
+            tPrincipal.getcProdutos().getPainelGrupoProduto().setVisible(true);
+        }
+        if (e.getSource() == tPrincipal.getcProdutos().getSalvarGrupo()) {
+            salvarGrupoProduto();
+            preencherGrupo();
+            tPrincipal.getcProdutos().getPainelGrupoProduto().setVisible(false);
+        }
+
     }
-    
+
     private void salvarProduto() {
         Produto produto = new Produto();
         produto.setDescricao(tPrincipal.getcProdutos().getTxtDescricao().getText());
         produto.setFabricante(tPrincipal.getcProdutos().getTxtaFabricante().getText());
-        
+
         int intdiceF = tPrincipal.getcProdutos().getComboFornecedor().getSelectedIndex();
         int intdiceG = tPrincipal.getcProdutos().getComboGrupoProduto().getSelectedIndex();
         Fornecedor forn = fornecedores.get(intdiceF);
         GrupoProduto grupo = gProdutos.get(intdiceG);
-        
+
         produto.setFornecedor(forn);
         produto.setGproduto(grupo);
-        
+
         String vCompra = tPrincipal.getcProdutos().getTxtValorCompra().getText();
         String vVenda = tPrincipal.getcProdutos().getTxtValorVenda().getText();
-        
+
         Double valorCompra = 0.0, valorVenda = 0.0;
         try {
             valorCompra = Double.parseDouble(vCompra);
             valorVenda = Double.parseDouble(vVenda);
         } catch (NumberFormatException erro) {
-            
+
         }
         produto.setValorvenda(valorVenda);
         produto.setValorcompra(valorCompra);
-        
+
         new GenericDao<Produto>().salvar_ou_atualizar(produto);
-        
+
     }
 
     private void salvarServico() {
-        
-        Servico servico = new Servico();        
+
+        Servico servico = new Servico();
         servico.setDescricao(tPrincipal.getcServicos().getTxtDescricao().getText());
-        
+
         String valor = tPrincipal.getcServicos().getTxtaValor().getText();
-        
+
         Double valorServico = 0.0;
         try {
             valorServico = Double.parseDouble(valor);
         } catch (NumberFormatException erro) {
         }
-        
+
         servico.setValor(valorServico);
         servico.setDuracao(ConverterTime(tPrincipal.getcServicos().getComboDuracao().getSelectedItem().toString()));
         new GenericDao<Servico>().salvar_ou_atualizar(servico);
     }
-    
+
+    private void salvarGrupoProduto() {
+        GrupoProduto grupo = new GrupoProduto();
+        grupo.setDescricao(tPrincipal.getcProdutos().getTxtDescricaoGrupo().getText());
+
+        new GenericDao<GrupoProduto>().salvar_ou_atualizar(grupo);
+
+    }
+
     private void preencherFornecedores() {
         fornecedores = new GenericDao<Fornecedor>().getAll(Fornecedor.class);
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         fornecedores.forEach((c) -> {
             tPrincipal.getcProdutos().getComboFornecedor().addItem(c.getNomefantasia());
         });
-        
+
     }
-    
+
     private void preencherGrupo() {
         gProdutos = new GenericDao<GrupoProduto>().getAll(GrupoProduto.class);
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         gProdutos.forEach((c) -> {
             tPrincipal.getcProdutos().getComboGrupoProduto().addItem(c.getDescricao());
         });
-        
+
     }
 
     public java.sql.Time ConverterTime(String relogio) {
@@ -133,7 +152,7 @@ public class ControleProdutos_Servico implements ActionListener {
             Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new Time(data.getTime());
-        
+
     }
-    
+
 }
