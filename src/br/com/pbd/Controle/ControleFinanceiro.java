@@ -5,6 +5,7 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoCaixa;
 import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Caixa;
@@ -40,20 +41,35 @@ public class ControleFinanceiro implements ActionListener {
     private void abrirCaixa() {
 
         Date data = new Date(System.currentTimeMillis());
-
+        Caixa caixaAnterior = null;
+        try {
+            caixaAnterior = new DaoCaixa().buscaUltimoCaixa();
+        } catch (NoResultException n) {
+            System.out.println("Caixa anterior nao encontrado");
+        }
         try {
             caixa = new DaoFinanceiro().buscarCaixa(data);
         } catch (NoResultException n) {
+            System.out.println("Caixa do dia nao encontrado");
         }
 
-        if (getCaixa() == null) {
+        if (caixa == null) {
             caixa = new Caixa();
             getCaixa().setData(data);
             getCaixa().setStatus(Boolean.TRUE);
-            getCaixa().setValorabertura(0.0);
-            getCaixa().setValorfechamento(0.0);
             getCaixa().setLucrodia(0.0);
-            new GenericDao<Caixa>().salvar_ou_atualizar(getCaixa());
+            if (caixaAnterior != null) {
+                caixa.setValorabertura(caixaAnterior.getValorfechamento());
+                caixa.setValorfechamento(caixaAnterior.getValorfechamento());
+            } else {
+                getCaixa().setValorabertura(0.0);
+                getCaixa().setValorfechamento(0.0);
+            }
+            new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+            
+        } else {
+            caixa.setStatus(Boolean.TRUE);
+            new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
         }
 
     }

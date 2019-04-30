@@ -5,17 +5,23 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Profissional;
-import br.com.pbd.view.TelaLogin;
+import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,18 +30,25 @@ import java.awt.event.ActionListener;
 public class Controle implements ActionListener {
 
     TelaPrincipal tPrincipal;
+    List<Cliente> clientes;
 
     public Controle(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
+
+        clientes = new ArrayList<Cliente>();
 
         tPrincipal.getcFuncionario().getBtnSalvar().addActionListener(this);
         tPrincipal.getcCliente().getBtnSalvar().addActionListener(this);
         tPrincipal.getcFornecedor().getBtnSalvar().addActionListener(this);
         tPrincipal.getcProfissioanl().getBtnSalvar().addActionListener(this);
+        tPrincipal.getBtnClientes().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == tPrincipal.getBtnClientes()) {
+            listarClientes();
+        }
         if (e.getSource() == tPrincipal.getcFuncionario().getBtnSalvar()) {
             cadastrarFuncionario();
         }
@@ -82,8 +95,19 @@ public class Controle implements ActionListener {
         cliente.setRg(tPrincipal.getcCliente().getTxtRg().getText());
         cliente.setDados(dados);
 
-        new GenericDao<Cliente>().salvar_ou_atualizar(cliente);
-        tPrincipal.getcCliente().setVisible(false);
+        try {
+            new GenericDao<Cliente>().salvar_ou_atualizar(cliente);
+
+            JOptionPane.showMessageDialog(null, "Cliente cadastrado!");
+            tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
+            tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
+            listarClientes();
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+
     }
 
     public void cadastrarFuncionario() {
@@ -124,8 +148,18 @@ public class Controle implements ActionListener {
         func.setDados(dados);
         func.setLogin(login);
 
-        new GenericDao<Funcionario>().salvar_ou_atualizar(func);
-            tPrincipal.getcFuncionario().setVisible(false);
+        try {
+            new GenericDao<Funcionario>().salvar_ou_atualizar(func);
+
+            JOptionPane.showMessageDialog(null, "Funcionario cadastrado!");
+            tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
+            tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
     }
 
     private void cadastrarFornecedor() {
@@ -148,17 +182,25 @@ public class Controle implements ActionListener {
         Fornecedor fornecedor = new Fornecedor();
 
         fornecedor.setDados(dados);
-        fornecedor.setCnpj(tPrincipal.getcFornecedor().getTxtCnpj().getText());
-        fornecedor.setNomefantasia(tPrincipal.getcFornecedor().getTxtNomeFantasia().getText());
-        fornecedor.setRazaosocial(tPrincipal.getcFornecedor().getTxtNome().getText());
+        fornecedor.setCnpj(tPrincipal.getcFornecedor().getTxtCnpjj().getText());
+        fornecedor.setNomefantasia(tPrincipal.getcFornecedor().getTxtNomeFantazia().getText());
+        fornecedor.setRazaosocial(tPrincipal.getcFornecedor().getTxtRazaoSociall().getText());
 
-        new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
-        tPrincipal.getcFornecedor().setVisible(false);
+        try {
+            new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
+            JOptionPane.showMessageDialog(null, "Fornecedor cadastrado!");
+            tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
+            tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
     }
 
     private void cadastrarProfissional() {
 
-        
         Login login = new Login();
         String senha = new String(tPrincipal.getcProfissioanl().getTxtSenha().getPassword());
         login.setSenha(senha);
@@ -192,8 +234,53 @@ public class Controle implements ActionListener {
         java.sql.Date nascimento = ConverterData(tPrincipal.getcProfissioanl().getNascimento().getDate());
 
         profissional.setNascimento(nascimento);
-        new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
-        tPrincipal.getcProfissioanl().setVisible(false);
+
+        try {
+            new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
+
+            JOptionPane.showMessageDialog(null, "Profissional cadastrado!");
+            tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
+            tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+    }
+
+    public void listarClientes() {
+
+        clientes = new GenericDao<Cliente>().getAll(Cliente.class);
+
+        if (!clientes.isEmpty()) {
+
+            tPrincipal.getcCliente().getTabelaCliente().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "CELULAR"};
+                Object[][] dados = new Object[clientes.size()][5];
+                for (Cliente a : clientes) {
+                    dados[i][0] = a.getNome();
+                    dados[i][1] = a.getSexo();
+                    dados[i][2] = a.getNascimento();
+                    dados[i][3] = a.getCpf();
+                    dados[i][4] = a.getDados().getCelular();
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getcCliente().getTabelaCliente().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+        }
     }
 
     public java.sql.Date ConverterData(java.util.Date date) {

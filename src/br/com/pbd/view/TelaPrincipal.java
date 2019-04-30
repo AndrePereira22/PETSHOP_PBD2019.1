@@ -319,6 +319,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        // Eventos da tela Servico e produto
         if (e.getSource() == getServico_Produto().getBtnNovoProduto()) {
             getServico_Produto().setVisible(false);
             getcProdutos().setVisible(true);
@@ -327,10 +328,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getServico_Produto().setVisible(false);
             getcServicos().setVisible(true);
         }
-
-        if (e.getSource() == getAgenda().getBtnSair()) {
+        if (e.getSource() == getServico_Produto().getBtnSair() ) {
+            getServico_Produto().setVisible(false);
             painelMenu.setVisible(true);
         }
+        if ( e.getSource() == getServico_Produto().getBtnSairServico()) {
+            getServico_Produto().setVisible(false);
+            painelMenu.setVisible(true);
+        }
+        // Eventos da tela Cadastros
         if (e.getSource() == getCadastros().getBtnProfissional()) {
             getcProfissioanl().setVisible(rootPaneCheckingEnabled);
         }
@@ -340,13 +346,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         if (e.getSource() == getCadastros().getBtnAnimal1()) {
             getcAnimal().setVisible(rootPaneCheckingEnabled);
         }
-        if (e.getSource() == getCadastros().getBtnCliente1()) {
-            getcCliente().setVisible(rootPaneCheckingEnabled);
-        }
+        
         if (e.getSource() == getCadastros().getBtnFuncionario()) {
             getcFuncionario().setVisible(rootPaneCheckingEnabled);
         }
         if (e.getSource() == getCadastros().getVoltarMenu()) {
+            painelMenu.setVisible(true);
+        }
+
+        if (e.getSource() == getAgenda().getBtnSair()) {
             painelMenu.setVisible(true);
         }
         if (e.getSource() == cServicos.getBtnCancelar()) {
@@ -359,22 +367,22 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         if (e.getSource() == getcProdutos().getBtnCancelar()) {
             servico_Produto.setVisible(true);
         }
-        if (e.getSource() == getServico_Produto().getBtnSair()) {
-            getServico_Produto().setVisible(false);
-            painelMenu.setVisible(true);
-        }
-        if (e.getSource() == getAgenarServico().getBtnSalvar()) {
-            agenda.setVisible(true);
-        }
+
+// Eventos da tela Cadastro Animal
         if (e.getSource() == getcAnimal().getBtnSair()) {
 
             getcAnimal().setVisible(false);
             cadastros.setVisible(true);
         }
-        if (e.getSource() == getcCliente().getBtnSair()) {
-            getcCliente().setVisible(false);
-            painelMenu.setVisible(true);
+        if (e.getSource() == getcAnimal().getBtnCadastrarAnimal()) {
+            getcAnimal().getPainelItens().setSelectedComponent(getcAnimal().getPainelCadastro());
+            getcAnimal().getPainelCadastro().setEnabled(true);
         }
+        if (e.getSource() == getcAnimal().getBtnCancelar()) {
+            getcAnimal().getPainelItens().setSelectedComponent(getcAnimal().getPainelAnimail());
+            getcAnimal().getPainelCadastro().setEnabled(false);
+        }
+        // Eventos da tela Cadastro de Cliente
         if (e.getSource() == getcCliente().getBtnCancelar()) {
             getcCliente().getPainelItens().setSelectedComponent(getcCliente().getPainelCliente());
             getcCliente().getPainelCadastro().setEnabled(false);
@@ -383,38 +391,88 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getcCliente().getPainelItens().setSelectedComponent(getcCliente().getPainelCadastro());
             getcCliente().getPainelCadastro().setEnabled(true);
         }
-        if (e.getSource() == getcAnimal().getBtnCancelar()) {
-            getcAnimal().getPainelItens().setSelectedComponent(getcAnimal().getPainelAnimail());
-            getcAnimal().getPainelCadastro().setEnabled(false);
+        if (e.getSource() == getcCliente().getBtnSair()) {
+            getcCliente().setVisible(false);
+             painelMenu.setVisible(true);
         }
-        if (e.getSource() == getcAnimal().getBtnCadastrarAnimal()) {
-            getcAnimal().getPainelItens().setSelectedComponent(getcAnimal().getPainelCadastro());
-            getcAnimal().getPainelCadastro().setEnabled(true);
+        // Eventos da tela Cadastro de Fornecedor
+        if (e.getSource() == getcFornecedor().getBtnCancelar()) {
+            getcFornecedor().getPainelItens().setSelectedComponent(getcFornecedor().getPainelFornecedor());
+            getcFornecedor().getPainelCadastro().setEnabled(false);
         }
-
+        if (e.getSource() == getcFornecedor().getBtnNovoFornecedor()) {
+            getcFornecedor().getPainelItens().setSelectedComponent(getcFornecedor().getPainelCadastro());
+            getcFornecedor().getPainelCadastro().setEnabled(true);
+        }
+        if (e.getSource() == getcFornecedor().getBtnSair()) {
+            getcFornecedor().setVisible(false);
+            getCadastros().setVisible(true);
+        }
+        // Eventos da tela Cadastro de Funcionario
+        if (e.getSource() == getcFuncionario().getBtnCancelar()) {
+            getcFuncionario().getPainelItens().setSelectedComponent(getcFuncionario().getPainelFuncionario());
+            getcFuncionario().getPainelCadastro().setEnabled(false);
+        }
+        if (e.getSource() == getcFuncionario().getBtnNovoFuncionario()) {
+            getcFuncionario().getPainelItens().setSelectedComponent(getcFuncionario().getPainelCadastro());
+            getcFuncionario().getPainelCadastro().setEnabled(true);
+        }
+        if (e.getSource() == getcFuncionario().getBtnSair()) {
+            getcFuncionario().setVisible(false);
+            getCadastros().setVisible(true);
+        }
+        
+         // Eventos da tela Cadastro de Profissional
+        if (e.getSource() == getcProfissioanl().getBtnCancelar()) {
+           getcProfissioanl().getPainelItens().setSelectedComponent(getcProfissioanl().getPainelProfissional());
+            getcProfissioanl().getPainelCadastro().setEnabled(false);
+        }
+        if (e.getSource() == getcProfissioanl().getBtnNovoProfissional()) {
+            getcProfissioanl().getPainelItens().setSelectedComponent(getcProfissioanl().getPainelCadastro());
+            getcProfissioanl().getPainelCadastro().setEnabled(true);
+        }
+        if (e.getSource() == getcProfissioanl().getBtnSair()  ) {
+            getcProfissioanl().setVisible(false);
+            getCadastros().setVisible(true);
+        }
     }
 
     public final void adicionaEventos() {
         getCadastros().getVoltarMenu().addActionListener(this);
         getCadastros().getBtnFuncionario().addActionListener(this);
-        getCadastros().getBtnCliente1().addActionListener(this);
         getCadastros().getBtnAnimal1().addActionListener(this);
         getCadastros().getBtnFornecedor().addActionListener(this);
         getCadastros().getBtnProfissional().addActionListener(this);
+
         getAgenda().getBtnSair().addActionListener(this);
+        getFinancas().getBtnCancelar().addActionListener(this);
+        getcProdutos().getBtnCancelar().addActionListener(this);
+        cServicos.getBtnCancelar().addActionListener(this);
+
         getServico_Produto().getBtnNovoServico().addActionListener(this);
         getServico_Produto().getBtnNovoProduto().addActionListener(this);
         getServico_Produto().getBtnSair().addActionListener(this);
-        getFinancas().getBtnCancelar().addActionListener(this);
-        getcProdutos().getBtnCancelar().addActionListener(this);
-        getAgenarServico().getBtnSalvar().addActionListener(this);
-        cServicos.getBtnCancelar().addActionListener(this);
+         getServico_Produto().getBtnSairServico().addActionListener(this);
+
         getcCliente().getBtnCadastrarCliente().addActionListener(this);
         getcCliente().getBtnCancelar().addActionListener(this);
-        getcAnimal().getBtnCadastrarAnimal().addActionListener(this);
-        getcAnimal().getBtnCancelar().addActionListener(this);
-        getcAnimal().getBtnSair().addActionListener(this);
         getcCliente().getBtnSair().addActionListener(this);
+
+        getcAnimal().getBtnSair().addActionListener(this);
+        getcAnimal().getBtnCancelar().addActionListener(this);
+        getcAnimal().getBtnCadastrarAnimal().addActionListener(this);
+
+        getcFornecedor().getBtnSair().addActionListener(this);
+        getcFornecedor().getBtnCancelar().addActionListener(this);
+        getcFornecedor().getBtnNovoFornecedor().addActionListener(this);
+
+        getcFuncionario().getBtnSair().addActionListener(this);
+        getcFuncionario().getBtnCancelar().addActionListener(this);
+        getcFuncionario().getBtnNovoFuncionario().addActionListener(this);
+        
+        getcProfissioanl().getBtnSair().addActionListener(this);
+        getcProfissioanl().getBtnCancelar().addActionListener(this);
+        getcProfissioanl().getBtnNovoProfissional().addActionListener(this);
 
     }
 

@@ -32,14 +32,13 @@ public class Cadastros extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnAnimal1 = new javax.swing.JButton();
-        btnCliente1 = new javax.swing.JButton();
         btnFornecedor = new javax.swing.JButton();
         btnProfissional = new javax.swing.JButton();
         btnFuncionario = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         btnRaca = new javax.swing.JButton();
         btnEspecie = new javax.swing.JButton();
-        btnGproduto = new javax.swing.JButton();
+        btnGproduto1 = new javax.swing.JButton();
         voltarMenu = new javax.swing.JButton();
         TITULO = new javax.swing.JLabel();
 
@@ -53,6 +52,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel6.setBackground(new java.awt.Color(204, 204, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("PRINCIPAIS"));
 
         btnAnimal1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -61,14 +61,6 @@ public class Cadastros extends javax.swing.JInternalFrame {
         btnAnimal1.setBorder(null);
         btnAnimal1.setContentAreaFilled(false);
         btnAnimal1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/animal.1.png"))); // NOI18N
-
-        btnCliente1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnCliente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cliente.png"))); // NOI18N
-        btnCliente1.setText("CLIENTE");
-        btnCliente1.setBorder(null);
-        btnCliente1.setBorderPainted(false);
-        btnCliente1.setContentAreaFilled(false);
-        btnCliente1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cliente.1.png"))); // NOI18N
 
         btnFornecedor.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/commerce.png"))); // NOI18N
@@ -102,19 +94,18 @@ public class Cadastros extends javax.swing.JInternalFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAnimal1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(btnFuncionario)
-                        .addGap(23, 23, 23))))
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(btnFornecedor))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnAnimal1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(btnFuncionario))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(btnFornecedor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,15 +114,14 @@ public class Cadastros extends javax.swing.JInternalFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnimal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(50, 50, 50)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnProfissional)
-                    .addComponent(btnCliente1))
-                .addGap(28, 28, 28)
-                .addComponent(btnFornecedor)
-                .addGap(35, 35, 35))
+                    .addComponent(btnFornecedor))
+                .addGap(96, 96, 96))
         );
 
+        jPanel7.setBackground(new java.awt.Color(204, 204, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("OUTROS"));
 
         btnRaca.setText("RAÇA");
@@ -143,33 +133,30 @@ public class Cadastros extends javax.swing.JInternalFrame {
             }
         });
 
-        btnGproduto.setText("GRUPO DE PRODUTOS");
+        btnGproduto1.setText("GRUPO DE PRODUTOS");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
-                .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGproduto)
-                .addGap(85, 85, 85))
+                .addGap(128, 128, 128)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnGproduto1)
+                    .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGproduto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addComponent(btnGproduto1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -215,7 +202,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TITULO)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(voltarMenu)
@@ -285,11 +272,10 @@ public class Cadastros extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TITULO;
     private javax.swing.JButton btnAnimal1;
-    private javax.swing.JButton btnCliente1;
     private javax.swing.JButton btnEspecie;
     private javax.swing.JButton btnFornecedor;
     private javax.swing.JButton btnFuncionario;
-    private javax.swing.JButton btnGproduto;
+    private javax.swing.JButton btnGproduto1;
     private javax.swing.JButton btnProfissional;
     private javax.swing.JButton btnRaca;
     private javax.swing.JPanel jPanel1;
@@ -307,12 +293,6 @@ public class Cadastros extends javax.swing.JInternalFrame {
         return btnAnimal1;
     }
 
-    /**
-     * @return the btnCliente1
-     */
-    public javax.swing.JButton getBtnCliente1() {
-        return btnCliente1;
-    }
 
     /**
      * @return the voltarMenu
@@ -342,6 +322,28 @@ public class Cadastros extends javax.swing.JInternalFrame {
         return btnProfissional;
     }
 
+    /**
+     * @return the btnEspecie
+     */
+    public javax.swing.JButton getBtnEspecie() {
+        return btnEspecie;
+    }
+
+    /**
+     * @return the btnGproduto1
+     */
+    public javax.swing.JButton getBtnGproduto1() {
+        return btnGproduto1;
+    }
+
+    /**
+     * @return the btnRaca
+     */
+    public javax.swing.JButton getBtnRaca() {
+        return btnRaca;
+    }
+
+    
     
    
 }

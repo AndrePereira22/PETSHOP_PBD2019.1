@@ -7,6 +7,7 @@ package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoRaca;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Especie;
@@ -16,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +39,7 @@ public class ControleAnimal implements ActionListener {
 
         tPrincipal.getcAnimal().getBtnSalvar().addActionListener(this);
         tPrincipal.getcAnimal().getComboEspecie().addActionListener(this);
+        tPrincipal.getcAnimal().getBtnCadastrarAnimal().addActionListener(this);
         preencherEspecie();
         preencherClientes();
 
@@ -53,11 +56,14 @@ public class ControleAnimal implements ActionListener {
                 preencherRaca();
             }
         }
+       
     }
 
     public void cadastrarAnimal() {
 
         Animal animal = new Animal();
+        Raca raca = null;
+        Cliente cli = null;
 
         animal.setApelido(tPrincipal.getcAnimal().getTxtaApelido().getText());
         animal.setNome(tPrincipal.getcAnimal().getTxtNome().getText());
@@ -77,15 +83,30 @@ public class ControleAnimal implements ActionListener {
 
         int indiceRaca = tPrincipal.getcAnimal().getComboRaca().getSelectedIndex();
         int indiceCliente = tPrincipal.getcAnimal().getComboDono().getSelectedIndex();
-        Raca raca = racas.get(indiceRaca);
-        Cliente cli = clientes.get(indiceCliente);
 
-        animal.setRaca(raca);
-        animal.setCliente(cli);
+        if (indiceRaca > -1) {
+            raca = racas.get(indiceRaca);
+            animal.setRaca(raca);
+        }
+        if (indiceCliente > -1) {
+            cli = clientes.get(indiceCliente);
+            animal.setCliente(cli);
+        }
 
-        new GenericDao<Animal>().salvar_ou_atualizar(animal);
+        try {
+            new GenericDao<Animal>().salvar_ou_atualizar(animal);
+            JOptionPane.showMessageDialog(null, "Animal cadastrado!");
+            tPrincipal.getcAnimal().setVisible(false);
+            tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
+            tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
+            
 
-        tPrincipal.getcAnimal().setVisible(false);
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+
 
     }
 

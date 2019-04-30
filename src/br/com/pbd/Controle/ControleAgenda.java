@@ -5,12 +5,14 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Servico;
 import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +25,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -36,6 +40,7 @@ public class ControleAgenda implements ActionListener {
     Animal animal;
     List<Animal> animais;
     List<Servico> servicos;
+    List<Agenda> agendas;
 
     public ControleAgenda(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -43,11 +48,11 @@ public class ControleAgenda implements ActionListener {
         profissionais = new ArrayList<Profissional>();
         animais = new ArrayList<Animal>();
         servicos = new ArrayList<Servico>();
-
-        preencherProfissionais(tPrincipal.getAgenda().getComboProfissional());
+        agendas = new ArrayList<Agenda>();
 
         tPrincipal.getBtnAgenda().addActionListener(this);
         tPrincipal.getAgenda().getBtnAddEdit().addActionListener(this);
+        tPrincipal.getAgenda().getComboProfissional().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnSalvar().addActionListener(this);
         tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
@@ -56,54 +61,59 @@ public class ControleAgenda implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == tPrincipal.getBtnAgenda()) {
-            preencherProfissionais(tPrincipal.getAgenda().getComboProfissional());
+            preencherProfissionais();
         }
 
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnCancelar()) {
-            preencherProfissionais(tPrincipal.getAgenda().getComboProfissional());
+
             tPrincipal.getAgenda().setVisible(true);
+
+        }
+
+        if (e.getSource() == tPrincipal.getAgenda().getComboProfissional()) {
+            listarAgenda();
 
         }
 
         if (e.getSource() == tPrincipal.getAgenda().getBtnAddEdit()) {
 
-            preencherAnimais();
-            preencherServicos();
-            tPrincipal.getAgenda().setVisible(false);
-            int indice = tPrincipal.getAgenda().getComboProfissional().getSelectedIndex();
-            profissional = profissionais.get(indice);
-            tPrincipal.getAgenarServico().getComboProfissional().setEnabled(false);
-            tPrincipal.getAgenarServico().getComboProfissional().addItem(profissional.getNome());
+            if (!profissionais.isEmpty()) {
 
-            tPrincipal.getAgenarServico().setVisible(true);
+                preencherAnimais();
+                preencherServicos();
+
+                tPrincipal.getAgenda().setVisible(false);
+                tPrincipal.getAgenarServico().getTxtProfissional().setText(profissional.getNome());
+
+                tPrincipal.getAgenarServico().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "VOCÊ PRECISA CADASTRAR PROFISSIONARIS !");
+            }
 
         }
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnSalvar()) {
 
             salvarServico();
         }
-        if (e.getSource() == tPrincipal.getAgenarServico().getComboAnimal() && tPrincipal.getAgenarServico().isVisible()) {
+        if (e.getSource() == tPrincipal.getAgenarServico().getComboAnimal()) {
             preencherDadosAnimal();
         }
-    }
-
-    private void preencherProfissionais(JComboBox combo) {
-        profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
-
-        tPrincipal.getAgenda().getComboProfissional().removeAllItems();
-        profissionais.forEach((p) -> {
-            combo.addItem(p.getNome());
-        });
     }
 
     private void salvarServico() {
 
         Agenda agenda = new Agenda();
+        Servico servico = null;
+        Animal animal = null;
 
         int indiceAnimal = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
-        int indiceServico = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
-        Animal animal = animais.get(indiceAnimal);
-        Servico servico = servicos.get(indiceServico);
+        int indiceServico = tPrincipal.getAgenarServico().getComboServico().getSelectedIndex();
+
+        try {
+            animal = animais.get(indiceAnimal);
+            servico = servicos.get(indiceServico);
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
 
         Date d = new Date(System.currentTimeMillis());
         java.sql.Date data = ConverterData(tPrincipal.getAgenarServico().getData().getDate());
@@ -123,16 +133,31 @@ public class ControleAgenda implements ActionListener {
         agenda.setProfissional(profissional);
         agenda.setServico(servico);
 
-        new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+        try {
+            new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+            JOptionPane.showMessageDialog(null, "Agendado com Sucesso!");
+            tPrincipal.getAgenarServico().setVisible(false);
+            tPrincipal.getAgenda().setVisible(true);
+            tPrincipal.getAgenda().getComboProfissional();
+            listarAgenda();
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
 
     }
 
     private void preencherDadosAnimal() {
         int indice = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
-        animal = animais.get(indice);
-        tPrincipal.getAgenarServico().getAreaNotasAnimal().setText(animal.getObservacao());
-        tPrincipal.getAgenarServico().getTxtRaca().setText(animal.getRaca().getNome());
-        tPrincipal.getAgenarServico().getTxtDono().setText(animal.getCliente().getNome());
+
+        if (indice >= 0) {
+            animal = animais.get(indice);
+            tPrincipal.getAgenarServico().getAreaNotasAnimal().setText(animal.getObservacao());
+            tPrincipal.getAgenarServico().getTxtRaca().setText(animal.getRaca().getNome());
+            tPrincipal.getAgenarServico().getTxtDono().setText(animal.getCliente().getNome());
+        }
     }
 
     public final void preencherAnimais() {
@@ -151,6 +176,52 @@ public class ControleAgenda implements ActionListener {
         servicos.forEach((c) -> {
             tPrincipal.getAgenarServico().getComboServico().addItem(c.getDescricao());
         });
+    }
+
+    public void listarAgenda() {
+
+        int indice = tPrincipal.getAgenda().getComboProfissional().getSelectedIndex();
+
+        if (!profissionais.isEmpty()) {
+            profissional = profissionais.get(indice);
+            agendas = new DaoAgenda().buscaAgenda(profissional);
+
+            if (!agendas.isEmpty()) {
+
+                tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
+
+                int i = 0;
+                try {
+                    String[] colunas = new String[]{"HORARIO", "SERVICO"};
+                    Object[][] dados = new Object[agendas.size()][2];
+                    for (Agenda a : agendas) {
+                        dados[i][0] = a.getHorario();
+                        dados[i][1] = a.getServico().getDescricao();
+
+                        i++;
+                    }
+
+                    DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                        public boolean isCellEditable(int row, int column) {
+                            return false;
+                        }
+                    };
+                    tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
+                } catch (Exception ex) {
+
+                }
+            }
+        }
+    }
+
+    private void preencherProfissionais() {
+        profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+
+        tPrincipal.getAgenda().getComboProfissional().removeAllItems();
+        profissionais.forEach((p) -> {
+            tPrincipal.getAgenda().getComboProfissional().addItem(p.getNome());
+        });
+        listarAgenda();
     }
 
     public java.sql.Date ConverterData(java.util.Date date) {
