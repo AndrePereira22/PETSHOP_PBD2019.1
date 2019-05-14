@@ -31,11 +31,11 @@ public class Fornecedor implements EntidadeBase {
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="fornecedor_seq")
      private Long id;
        
-     @Column 
+     @Column(name = "nomefantasia", length = 20, nullable = false)
      private String nomefantasia;
-     @Column
+     @Column(name = "razaosocial", length = 20, nullable = false)
      private String razaosocial;
-     @Column
+     @Column(name = "cnpj", length = 18, nullable = false)
      private String cnpj ;
    
      @OneToOne(cascade=CascadeType.ALL)

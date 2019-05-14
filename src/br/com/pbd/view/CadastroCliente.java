@@ -70,8 +70,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         txtCelular = new javax.swing.JFormattedTextField();
         txtTelefone = new javax.swing.JFormattedTextField();
         txtEmail = new javax.swing.JTextField();
-        btnSalvar = new javax.swing.JToggleButton();
-        btnCancelar = new javax.swing.JToggleButton();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
 
@@ -90,17 +90,9 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
         tabelaCliente.setBackground(new java.awt.Color(204, 204, 255));
         tabelaCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        tabelaCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaCliente.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         tabelaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -113,51 +105,49 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 "Nome", "Sexo", "Data Nascimento", "CPF", "RG", "Editar", "Excluir"
             }
         ));
+        tabelaCliente.setRowHeight(40);
         jScrollPane1.setViewportView(tabelaCliente);
 
         btnCadastrarCliente.setText("CADASTRAR CLIENTE");
 
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
         btnSair.setText("SAIR");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
-            }
-        });
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
 
         javax.swing.GroupLayout painelClienteLayout = new javax.swing.GroupLayout(painelCliente);
         painelCliente.setLayout(painelClienteLayout);
         painelClienteLayout.setHorizontalGroup(
             painelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelClienteLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCadastrarCliente)
+                .addGap(43, 43, 43)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
             .addGroup(painelClienteLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(painelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelClienteLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(159, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelClienteLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCadastrarCliente)
-                .addGap(53, 53, 53)
-                .addComponent(btnSair)
-                .addGap(203, 203, 203))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         painelClienteLayout.setVerticalGroup(
             painelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelClienteLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(painelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(painelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSair)
-                    .addComponent(btnCadastrarCliente))
-                .addGap(64, 64, 64))
+                    .addComponent(btnCadastrarCliente)
+                    .addComponent(btnSair))
+                .addGap(32, 32, 32))
         );
 
         painelItens.addTab("CLIENTES", painelCliente);
@@ -425,18 +415,25 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnSalvar.setText("Salvar");
-        btnSalvar.setAlignmentX(0.5F);
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save.png"))); // NOI18N
+        btnSalvar.setText("  SALVAR");
         btnSalvar.setBorderPainted(false);
+        btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save (3).png"))); // NOI18N
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
-        btnCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cancel.png"))); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
-        btnCancelar.setAlignmentX(0.6F);
         btnCancelar.setBorder(null);
         btnCancelar.setBorderPainted(false);
         btnCancelar.setContentAreaFilled(false);
-        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cancel.1.png"))); // NOI18N
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected (1).png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -453,29 +450,30 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 712, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(22, 22, 22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addGroup(painelCadastroLayout.createSequentialGroup()
+                        .addGap(0, 17, Short.MAX_VALUE)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         painelCadastroLayout.setVerticalGroup(
             painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastroLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelCadastroLayout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         painelItens.addTab("CADASTRO", painelCadastro);
@@ -486,15 +484,15 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -523,21 +521,21 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCelularActionPerformed
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSairActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField TxtCep;
     private javax.swing.JButton btnCadastrarCliente;
-    private javax.swing.JToggleButton btnCancelar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSair;
-    private javax.swing.JToggleButton btnSalvar;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboSexo;
     private javax.swing.JComboBox comboUf;
     private javax.swing.JLabel jLabel1;
@@ -581,13 +579,6 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * @return the btnCancelar
-     */
-    public javax.swing.JToggleButton getBtnCancelar() {
-        return btnCancelar;
-    }
-
-    /**
      * @return the TxtCep
      */
     public javax.swing.JFormattedTextField getTxtCep() {
@@ -595,9 +586,30 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }
 
     /**
+     * @return the btnCadastrarCliente
+     */
+    public javax.swing.JButton getBtnCadastrarCliente() {
+        return btnCadastrarCliente;
+    }
+
+    /**
+     * @return the btnCancelar
+     */
+    public javax.swing.JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    /**
+     * @return the btnSair
+     */
+    public javax.swing.JButton getBtnSair() {
+        return btnSair;
+    }
+
+    /**
      * @return the btnSalvar
      */
-    public javax.swing.JToggleButton getBtnSalvar() {
+    public javax.swing.JButton getBtnSalvar() {
         return btnSalvar;
     }
 
@@ -620,6 +632,34 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
      */
     public com.toedter.calendar.JDateChooser getNascimento() {
         return nascimento;
+    }
+
+    /**
+     * @return the painelCadastro
+     */
+    public javax.swing.JPanel getPainelCadastro() {
+        return painelCadastro;
+    }
+
+    /**
+     * @return the painelCliente
+     */
+    public javax.swing.JPanel getPainelCliente() {
+        return painelCliente;
+    }
+
+    /**
+     * @return the painelItens
+     */
+    public javax.swing.JTabbedPane getPainelItens() {
+        return painelItens;
+    }
+
+    /**
+     * @return the tabelaCliente
+     */
+    public javax.swing.JTable getTabelaCliente() {
+        return tabelaCliente;
     }
 
     /**
@@ -679,6 +719,13 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     }
 
     /**
+     * @return the txtPesquisa
+     */
+    public javax.swing.JTextField getTxtPesquisa() {
+        return txtPesquisa;
+    }
+
+    /**
      * @return the txtRg
      */
     public javax.swing.JFormattedTextField getTxtRg() {
@@ -699,55 +746,5 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         return txtTelefone;
     }
 
-    /**
-     * @return the btnCadastrarCliente
-     */
-    public javax.swing.JButton getBtnCadastrarCliente() {
-        return btnCadastrarCliente;
-    }
-
-    
-
-    /**
-     * @return the txtPesquisa
-     */
-    public javax.swing.JTextField getTxtPesquisa() {
-        return txtPesquisa;
-    }
-
-    /**
-     * @return the painelCadastro
-     */
-    public javax.swing.JPanel getPainelCadastro() {
-        return painelCadastro;
-    }
-
-    /**
-     * @return the painelItens
-     */
-    public javax.swing.JTabbedPane getPainelItens() {
-        return painelItens;
-    }
-
-    /**
-     * @return the painelCliente
-     */
-    public javax.swing.JPanel getPainelCliente() {
-        return painelCliente;
-    }
-
-    /**
-     * @return the btnSair
-     */
-    public javax.swing.JButton getBtnSair() {
-        return btnSair;
-    }
-
-    /**
-     * @return the tabelaCliente
-     */
-    public javax.swing.JTable getTabelaCliente() {
-        return tabelaCliente;
-    }
-    
+   
 }

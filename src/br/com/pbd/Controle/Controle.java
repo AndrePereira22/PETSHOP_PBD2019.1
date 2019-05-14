@@ -5,9 +5,7 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.GenericDao;
-import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Fornecedor;
@@ -20,6 +18,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,17 +32,41 @@ public class Controle implements ActionListener {
 
     TelaPrincipal tPrincipal;
     List<Cliente> clientes;
+    List<Funcionario> funcionarios;
+    List<Profissional> profissionais;
+    List<Fornecedor> fornecedores;
+    private JButton btnExcluir, btnEditar;
+    private Icon editar, excluir;
 
     public Controle(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
 
         clientes = new ArrayList<Cliente>();
+        funcionarios = new ArrayList<Funcionario>();
+        profissionais = new ArrayList<Profissional>();
+        fornecedores = new ArrayList<Fornecedor>();
+
+        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/l.png"));
+
+        btnEditar = new JButton(editar);
+        btnEditar.setName("editar");
+        btnEditar.setBorder(null);
+        btnEditar.setContentAreaFilled(false);
+
+        btnExcluir = new JButton(excluir);
+        btnExcluir.setName("excluir");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
 
         tPrincipal.getcFuncionario().getBtnSalvar().addActionListener(this);
         tPrincipal.getcCliente().getBtnSalvar().addActionListener(this);
         tPrincipal.getcFornecedor().getBtnSalvar().addActionListener(this);
         tPrincipal.getcProfissioanl().getBtnSalvar().addActionListener(this);
         tPrincipal.getBtnClientes().addActionListener(this);
+        tPrincipal.getCadastros().getBtnFuncionario().addActionListener(this);
+        tPrincipal.getCadastros().getBtnProfissional().addActionListener(this);
+        tPrincipal.getCadastros().getBtnFornecedor().addActionListener(this);
     }
 
     @Override
@@ -51,6 +76,15 @@ public class Controle implements ActionListener {
         }
         if (e.getSource() == tPrincipal.getcFuncionario().getBtnSalvar()) {
             cadastrarFuncionario();
+        }
+        if (e.getSource() == tPrincipal.getCadastros().getBtnFuncionario()) {
+            listarFuncionarios();
+        }
+        if (e.getSource() == tPrincipal.getCadastros().getBtnProfissional()) {
+            listarProfissionais();
+        }
+        if (e.getSource() == tPrincipal.getCadastros().getBtnFornecedor()) {
+            listarFornecedores();
         }
         if (e.getSource() == tPrincipal.getcCliente().getBtnSalvar()) {
             cadastrarCliente();
@@ -154,7 +188,7 @@ public class Controle implements ActionListener {
             JOptionPane.showMessageDialog(null, "Funcionario cadastrado!");
             tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
             tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
-
+            listarFuncionarios();
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -191,7 +225,7 @@ public class Controle implements ActionListener {
             JOptionPane.showMessageDialog(null, "Fornecedor cadastrado!");
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
-
+            listarFornecedores();
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -241,7 +275,7 @@ public class Controle implements ActionListener {
             JOptionPane.showMessageDialog(null, "Profissional cadastrado!");
             tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
             tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
-
+            listarProfissionais();
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -259,14 +293,16 @@ public class Controle implements ActionListener {
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "CELULAR"};
-                Object[][] dados = new Object[clientes.size()][5];
+                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "CELULAR","EDITAR","EXCLUIR"};
+                Object[][] dados = new Object[clientes.size()][7];
                 for (Cliente a : clientes) {
                     dados[i][0] = a.getNome();
                     dados[i][1] = a.getSexo();
                     dados[i][2] = a.getNascimento();
                     dados[i][3] = a.getCpf();
                     dados[i][4] = a.getDados().getCelular();
+                    dados[i][5] = btnEditar;
+                    dados[i][6] = btnExcluir;
 
                     i++;
                 }
@@ -280,6 +316,114 @@ public class Controle implements ActionListener {
             } catch (Exception ex) {
 
             }
+        }
+    }
+
+    public void listarFuncionarios() {
+
+        funcionarios = new GenericDao<Funcionario>().getAll(Funcionario.class);
+        if (!funcionarios.isEmpty()) {
+            tPrincipal.getcFuncionario().getTabelaFuncionarios().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "FUNÇÃO", "CELULAR","EDITAR","EXCLUIR"};
+                Object[][] dados = new Object[funcionarios.size()][8];
+                for (Funcionario a : funcionarios) {
+                    dados[i][0] = a.getNome();
+                    dados[i][1] = a.getSexo();
+                    dados[i][2] = a.getNascimento();
+                    dados[i][3] = a.getCpf();
+                    dados[i][4] = a.getTipo();
+                    dados[i][5] = a.getDados().getCelular();
+                    dados[i][6] = btnEditar;
+                    dados[i][7] = btnExcluir;
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getcFuncionario().getTabelaFuncionarios().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+
+        }
+    }
+
+    public void listarProfissionais() {
+
+        profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+        if (!profissionais.isEmpty()) {
+            tPrincipal.getcProfissioanl().getTabelaProfissionais().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "FUNÇÃO", "CELULAR","EDITAR","EXCLUIR"};
+                Object[][] dados = new Object[profissionais.size()][9];
+                for (Profissional a : profissionais) {
+                    dados[i][0] = a.getNome();
+                    dados[i][1] = a.getSexo();
+                    dados[i][2] = a.getNascimento();
+                    dados[i][3] = a.getCpf();
+                    dados[i][4] = a.getTipo();
+                    dados[i][5] = a.getDados().getCelular();
+                    dados[i][6] = btnEditar;
+                    dados[i][7] = btnExcluir;
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getcProfissioanl().getTabelaProfissionais().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+
+        }
+    }
+
+    public void listarFornecedores() {
+
+        fornecedores = new GenericDao<Fornecedor>().getAll(Fornecedor.class);
+        if (!fornecedores.isEmpty()) {
+            tPrincipal.getcFornecedor().getTabelaFornecedor().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"NOME", "RAZÃO SOCIAL", "CNPJ", "CIDADE", "EMAIL", "CONTATO","EDITAR","EXCLUIR"};
+                Object[][] dados = new Object[fornecedores.size()][8];
+                for (Fornecedor a : fornecedores) {
+                    dados[i][0] = a.getNomefantasia();
+                    dados[i][1] = a.getRazaosocial();
+                    dados[i][2] = a.getCnpj();
+                    dados[i][3] = a.getDados().getCidade();
+                    dados[i][4] = a.getDados().getEmail();
+                    dados[i][5] = a.getDados().getCelular();
+                    dados[i][6] = btnEditar;
+                    dados[i][7] = btnExcluir;
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getcFornecedor().getTabelaFornecedor().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+
         }
     }
 

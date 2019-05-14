@@ -5,6 +5,8 @@
  */
 package br.com.pbd.Modelo;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.sql.Date;
 import javax.persistence.*;
 
@@ -16,24 +18,27 @@ import javax.persistence.*;
 @SequenceGenerator(name="animal_seq",sequenceName="animal_seq", initialValue=1,allocationSize=1)
 @Table(name = "animal")
 public class Animal implements EntidadeBase {
+
+    @Transient
+    private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
     
      @Id
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="animal_seq")
      private Long id;
        
-     @Column 
+     @Column (name="apelido",length=10,nullable=true)
      private String apelido;
-     @Column
+     @Column (name="nome",length=20,nullable=false)
      private String nome;
-     @Column
+     @Column (name="sexo",length=40,nullable=false)
      private String sexo;
-     @Column
+     @Column (name="cor",length=40,nullable=false)
      private String cor;
-     @Column
+     @Column (name = "nascimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
      private Date nascimento ;
-     @Column
+     @Column  (name = "pesokg", precision = 3, scale = 2, nullable = false)
      private Double pesokg;
-     @Column
+     @Column (name="observacao",length=20,nullable=true)
      private String observacao;
      
      
@@ -54,7 +59,9 @@ public class Animal implements EntidadeBase {
      * @param id the id to set
      */
     public void setId(Long id) {
+        Long oldId = this.id;
         this.id = id;
+        changeSupport.firePropertyChange("id", oldId, id);
     }
 
     /**
@@ -68,7 +75,9 @@ public class Animal implements EntidadeBase {
      * @param apelido the apelido to set
      */
     public void setApelido(String apelido) {
+        String oldApelido = this.apelido;
         this.apelido = apelido;
+        changeSupport.firePropertyChange("apelido", oldApelido, apelido);
     }
 
     /**
@@ -82,7 +91,9 @@ public class Animal implements EntidadeBase {
      * @param nome the nome to set
      */
     public void setNome(String nome) {
+        String oldNome = this.nome;
         this.nome = nome;
+        changeSupport.firePropertyChange("nome", oldNome, nome);
     }
 
     /**
@@ -96,7 +107,9 @@ public class Animal implements EntidadeBase {
      * @param sexo the sexo to set
      */
     public void setSexo(String sexo) {
+        String oldSexo = this.sexo;
         this.sexo = sexo;
+        changeSupport.firePropertyChange("sexo", oldSexo, sexo);
     }
 
     /**
@@ -110,7 +123,9 @@ public class Animal implements EntidadeBase {
      * @param cor the cor to set
      */
     public void setCor(String cor) {
+        String oldCor = this.cor;
         this.cor = cor;
+        changeSupport.firePropertyChange("cor", oldCor, cor);
     }
 
     /**
@@ -124,7 +139,9 @@ public class Animal implements EntidadeBase {
      * @param nascimento the nascimento to set
      */
     public void setNascimento(Date nascimento) {
+        Date oldNascimento = this.nascimento;
         this.nascimento = nascimento;
+        changeSupport.firePropertyChange("nascimento", oldNascimento, nascimento);
     }
 
     /**
@@ -138,7 +155,9 @@ public class Animal implements EntidadeBase {
      * @param pesokg the pesokg to set
      */
     public void setPesokg(Double pesokg) {
+        Double oldPesokg = this.pesokg;
         this.pesokg = pesokg;
+        changeSupport.firePropertyChange("pesokg", oldPesokg, pesokg);
     }
 
     
@@ -154,7 +173,9 @@ public class Animal implements EntidadeBase {
      * @param Cliente the Cliente to set
      */
     public void setCliente(Cliente Cliente) {
+        Cliente oldCliente = this.cliente;
         this.cliente = Cliente;
+        changeSupport.firePropertyChange("cliente", oldCliente, Cliente);
     }
 
     /**
@@ -182,7 +203,17 @@ public class Animal implements EntidadeBase {
      * @param observacao the observacao to set
      */
     public void setObservacao(String observacao) {
+        String oldObservacao = this.observacao;
         this.observacao = observacao;
+        changeSupport.firePropertyChange("observacao", oldObservacao, observacao);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        changeSupport.removePropertyChangeListener(listener);
     }
 
    

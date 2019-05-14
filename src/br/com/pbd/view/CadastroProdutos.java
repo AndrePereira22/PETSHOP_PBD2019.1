@@ -30,7 +30,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         painelCadastro = new javax.swing.JPanel();
         painelItens = new javax.swing.JTabbedPane();
         PanelCadastro = new javax.swing.JPanel();
-        btnCancelar = new javax.swing.JToggleButton();
         painelCadastro1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         txtDescricao = new javax.swing.JTextField();
@@ -51,7 +50,8 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         salvarGrupo = new javax.swing.JButton();
         txtDescricaoGrupo = new javax.swing.JTextField();
-        btnSalvarProduto = new javax.swing.JButton();
+        btnSalvar1 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
 
@@ -94,21 +94,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         PanelCadastro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         PanelCadastro.setPreferredSize(new java.awt.Dimension(1000, 428));
 
-        btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cancel.png"))); // NOI18N
-        btnCancelar.setText("CANCELAR");
-        btnCancelar.setAlignmentX(0.6F);
-        btnCancelar.setBorder(null);
-        btnCancelar.setBorderPainted(false);
-        btnCancelar.setContentAreaFilled(false);
-        btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cancel.1.png"))); // NOI18N
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-
         painelCadastro1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
@@ -134,45 +119,40 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtValorVenda))
-                        .addGap(81, 81, 81)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtValorCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(125, 125, 125)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(comboFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(152, 152, 152))
+                            .addComponent(jLabel4)
+                            .addComponent(txtValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtValorCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblNome)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNome))
-                        .addGap(40, 40, 40)
+                            .addComponent(lblApelido)
+                            .addComponent(jLabel7))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(lblApelido)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(txtaFabricante))
-                        .addGap(189, 189, 189))))
+                            .addComponent(txtaFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(163, 163, 163))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(lblNome)
-                        .addGap(6, 6, 6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblApelido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtaFabricante))
+                    .addComponent(lblNome)
+                    .addComponent(lblApelido))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtaFabricante)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -281,11 +261,24 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
             .addGroup(painelCadastro1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        btnSalvarProduto.setText("SALVAR PRODUTO");
+        btnSalvar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSalvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save.png"))); // NOI18N
+        btnSalvar1.setText("  SALVAR");
+        btnSalvar1.setBorderPainted(false);
+        btnSalvar1.setContentAreaFilled(false);
+        btnSalvar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save (3).png"))); // NOI18N
+
+        btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.setBorder(null);
+        btnCancelar.setBorderPainted(false);
+        btnCancelar.setContentAreaFilled(false);
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected (1).png"))); // NOI18N
 
         javax.swing.GroupLayout PanelCadastroLayout = new javax.swing.GroupLayout(PanelCadastro);
         PanelCadastro.setLayout(PanelCadastroLayout);
@@ -293,29 +286,25 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
             PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCadastroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelCadastroLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSalvarProduto)
-                        .addGap(48, 48, 48)
-                        .addComponent(btnCancelar)
-                        .addGap(120, 120, 120))
-                    .addComponent(painelCadastro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(painelCadastro1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCadastroLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSalvar1)
+                .addGap(43, 43, 43)
+                .addComponent(btnCancelar)
+                .addGap(78, 78, 78))
         );
         PanelCadastroLayout.setVerticalGroup(
             PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCadastroLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(painelCadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelCadastroLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(btnSalvarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelCadastroLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSalvar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         painelItens.addTab("CADASTRO", PanelCadastro);
@@ -359,11 +348,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        setVisible(false);
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void comboGrupoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGrupoProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboGrupoProdutoActionPerformed
@@ -371,9 +355,9 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelCadastro;
-    private javax.swing.JToggleButton btnCancelar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnNovoGrupo;
-    private javax.swing.JButton btnSalvarProduto;
+    private javax.swing.JButton btnSalvar1;
     private javax.swing.JComboBox<String> comboFornecedor;
     private javax.swing.JComboBox<String> comboGrupoProduto;
     private javax.swing.JLabel jLabel3;
@@ -399,19 +383,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtaFabricante;
     // End of variables declaration//GEN-END:variables
 
-    /**
-     * @return the btnCancelar
-     */
-    public javax.swing.JToggleButton getBtnCancelar() {
-        return btnCancelar;
-    }
-
-    /**
-     * @return the btnSalvarProduto
-     */
-    public javax.swing.JButton getBtnSalvarProduto() {
-        return btnSalvarProduto;
-    }
+    
 
     /**
      * @return the comboFornecedor
@@ -481,6 +453,27 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
      */
     public javax.swing.JButton getBtnNovoGrupo() {
         return btnNovoGrupo;
+    }
+
+    /**
+     * @return the PanelCadastro
+     */
+    public javax.swing.JPanel getPanelCadastro() {
+        return PanelCadastro;
+    }
+
+    /**
+     * @return the btnCancelar
+     */
+    public javax.swing.JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    /**
+     * @return the btnSalvar1
+     */
+    public javax.swing.JButton getBtnSalvar1() {
+        return btnSalvar1;
     }
 
 

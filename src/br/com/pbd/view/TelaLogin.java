@@ -43,6 +43,7 @@ public class TelaLogin extends javax.swing.JFrame {
         imagem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login do Sistema");
         setUndecorated(true);
 
         painelPrincipal.setBackground(new java.awt.Color(204, 204, 255));

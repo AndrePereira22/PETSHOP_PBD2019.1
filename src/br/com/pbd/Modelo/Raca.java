@@ -20,9 +20,9 @@ public class Raca implements EntidadeBase  {
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="raca_seq")
      private Long id;
        
-     @Column 
+     @Column(name = "nome", length = 20, nullable = false)
      private String nome;
-     @Column
+    @Column(name = "descricao", length = 30, nullable = false)
      private String descricao;
      
      @ManyToOne

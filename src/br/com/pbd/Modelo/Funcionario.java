@@ -24,39 +24,37 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="funcionario_seq",sequenceName="funcionario_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "funcionario_seq", sequenceName = "funcionario_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "funcionario")
 public class Funcionario implements EntidadeBase {
 
-    
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="funcionario_seq")
-     private Long id;
-       
-     @Column 
-     private String nome;
-     @Column 
-     private String tipo;
-     @Column
-     private String sexo;
-     @Column
-     private Date nascimento;
-     @Column
-     private String cpf ;
-     @Column
-     private String rg ;
-    
-     
-     @OneToOne(cascade=CascadeType.ALL)
-     private Dados dados;
-     
-     @OneToOne(cascade=CascadeType.ALL)
-     private Login login;
-     
-     @OneToMany( cascade = CascadeType.ALL, mappedBy = "funcionario")
-     @JoinColumn(name="funcionario_id")
-     private List<Venda> vendas;
-     
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funcionario_seq")
+    private Long id;
+
+    @Column(name = "nome", length = 40, nullable = false)
+    private String nome;
+    @Column(name = "sexo", length = 9, nullable = false)
+    private String sexo;
+    @Column(name = "nascimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    private Date nascimento;
+    @Column(name = "cpf", length = 15, nullable = false,unique=true)
+    private String cpf;
+    @Column(name = "rg", length = 9, nullable = false,unique=true)
+    private String rg;
+    @Column(name = "tipo", length = 20, nullable = false)
+    private String tipo;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Dados dados;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Login login;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
+    @JoinColumn(name = "funcionario_id")
+    private List<Venda> vendas;
+
     @Override
     public Long getId() {
         return id;
@@ -124,8 +122,6 @@ public class Funcionario implements EntidadeBase {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
-    
 
     /**
      * @return the dados
@@ -196,5 +192,5 @@ public class Funcionario implements EntidadeBase {
     public void setRg(String rg) {
         this.rg = rg;
     }
-    
+
 }

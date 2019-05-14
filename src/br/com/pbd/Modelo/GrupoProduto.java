@@ -25,7 +25,7 @@ public class GrupoProduto implements EntidadeBase {
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="gproduto_seq")
      private Long id;
        
-     @Column 
+     @Column(name = "descricao", length = 9, nullable = false,unique=true)
      private String descricao;
 
     @Override

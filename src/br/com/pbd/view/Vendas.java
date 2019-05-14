@@ -173,10 +173,10 @@ public class Vendas extends javax.swing.JInternalFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(BtnCancelarItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(BtnCancelarItem, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
@@ -200,13 +200,13 @@ public class Vendas extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jTextField2)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -253,6 +253,11 @@ public class Vendas extends javax.swing.JInternalFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnProdutos.setText("PRODUTOS#");
+        btnProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProdutosActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("NOME DO PRODURO");
 
@@ -319,6 +324,11 @@ public class Vendas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_btnProdutosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnCancelarItem;
@@ -347,6 +357,83 @@ public class Vendas extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabelaItens;
     private javax.swing.JTextField txtPesquisarProdutos;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the BtnCancelarItem
+     */
+    public javax.swing.JButton getBtnCancelarItem() {
+        return BtnCancelarItem;
+    }
+
+    /**
+     * @return the btnClientes
+     */
+    public javax.swing.JButton getBtnClientes() {
+        return btnClientes;
+    }
+
+    /**
+     * @return the btnDescontoProduto
+     */
+    public javax.swing.JButton getBtnDescontoProduto() {
+        return btnDescontoProduto;
+    }
+
+    /**
+     * @return the btnDescontoVenda
+     */
+    public javax.swing.JButton getBtnDescontoVenda() {
+        return btnDescontoVenda;
+    }
+
+    /**
+     * @return the btnFinalizarVenda
+     */
+    public javax.swing.JButton getBtnFinalizarVenda() {
+        return btnFinalizarVenda;
+    }
+
+    /**
+     * @return the btnNumeroItens
+     */
+    public javax.swing.JButton getBtnNumeroItens() {
+        return btnNumeroItens;
+    }
+
+    /**
+     * @return the btnProdutos
+     */
+    public javax.swing.JButton getBtnProdutos() {
+        return btnProdutos;
+    }
+
+    /**
+     * @return the btnSair
+     */
+    public javax.swing.JButton getBtnSair() {
+        return btnSair;
+    }
+
+    /**
+     * @return the btnValortotal
+     */
+    public javax.swing.JButton getBtnValortotal() {
+        return btnValortotal;
+    }
+
+    /**
+     * @return the tabelaItens
+     */
+    public javax.swing.JTable getTabelaItens() {
+        return tabelaItens;
+    }
+
+    /**
+     * @return the txtPesquisarProdutos
+     */
+    public javax.swing.JTextField getTxtPesquisarProdutos() {
+        return txtPesquisarProdutos;
+    }
 
 
     

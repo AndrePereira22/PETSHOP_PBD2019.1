@@ -24,31 +24,31 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="pagamento_seq",sequenceName="pagamento_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "pagamento_seq", sequenceName = "pagamento_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "pagamento")
 public class Pagamento implements EntidadeBase {
-    
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="pagamento_seq")
-     private Long id;
-       
-     @Column 
-     private Double valortotal;
-     @Column
-     private Boolean status;
-     @Column
-     private int numeroparcelas;
-     @Column
-     private Date data ;
-     
-     @OneToMany( cascade = CascadeType.ALL, mappedBy = "pagamento")
-     @JoinColumn(name="pagamento_id")
-     private List<Parcela> parcelas;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pagamento_seq")
+    private Long id;
+
+    @Column(name = "valortotal", precision = 3, scale = 2, nullable = false)
+    private Double valortotal;
+    @Column(name = "status", insertable = true, nullable = false)
+    private Boolean status;
+    @Column(name = "numeroparcelas", precision = 2, scale = 0, nullable = false)
+    private int numeroparcelas;
+    @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    private Date data;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagamento")
+    @JoinColumn(name = "pagamento_id")
+    private List<Parcela> parcelas;
 
     @Override
     public Long getId() {
-    return id;
-    
+        return id;
+
     }
 
     /**
@@ -114,8 +114,6 @@ public class Pagamento implements EntidadeBase {
         this.data = data;
     }
 
-    
-
     /**
      * @return the parcelas
      */
@@ -129,5 +127,5 @@ public class Pagamento implements EntidadeBase {
     public void setParcelas(List<Parcela> parcelas) {
         this.parcelas = parcelas;
     }
-    
+
 }

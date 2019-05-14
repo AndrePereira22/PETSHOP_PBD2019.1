@@ -1,4 +1,3 @@
-
 package br.com.pbd.Modelo;
 
 import javax.persistence.CascadeType;
@@ -13,33 +12,32 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name="produto_seq",sequenceName="produto_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "produto_seq", sequenceName = "produto_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "produto")
 public class Produto implements EntidadeBase {
 
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="produto_seq")
-     private Long id;
-       
-     @Column 
-     private String descricao;
-     @Column
-     private String fabricante;
-     @Column
-     private Double valorcompra ;
-     @Column
-     private Double valorvenda ;
-     
-     
-     @OneToOne(cascade=CascadeType.ALL)
-     private GrupoProduto gproduto;
-     
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_seq")
+    private Long id;
+
+    @Column(name = "descricao", length = 20, nullable = false)
+    private String descricao;
+    @Column(name = "fabricante", length = 20, nullable = false)
+    private String fabricante;
+    @Column(name = "valorcompra", precision = 4, scale = 2, nullable = false)
+    private Double valorcompra;
+    @Column(name = "valorvenda", precision = 4, scale = 2, nullable = false)
+    private Double valorvenda;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private GrupoProduto gproduto;
+
     @ManyToOne
     private Fornecedor fornecedor;
-    
+
     @Override
     public Long getId() {
-    return id;
+        return id;
     }
 
     /**
@@ -132,5 +130,5 @@ public class Produto implements EntidadeBase {
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
-    
+
 }

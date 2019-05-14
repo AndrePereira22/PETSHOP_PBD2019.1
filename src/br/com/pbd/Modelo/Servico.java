@@ -27,11 +27,11 @@ public class Servico implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "servico_seq")
     private Long id;
 
-    @Column
+    @Column(name = "descricao", length = 30, nullable = false)
     private String descricao;
-    @Column
+    @Column(name = "valor", precision = 3, scale = 2, nullable = false)
     private Double valor;
-    @Column
+    @Column(name = "duracao", nullable = false)
     private Time duracao;
 
     @Override

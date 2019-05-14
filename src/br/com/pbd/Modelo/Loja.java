@@ -26,23 +26,23 @@ import javax.persistence.Table;
 @Table(name = "loja")
 public class Loja implements EntidadeBase {
 
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loja_seq")
     private Long id;
 
-    @Column 
-     private String nomefantasia;
-     @Column
-     private String razaosocial;
-     @Column
-     private String cnpj ;
-   
-     @OneToOne(cascade=CascadeType.ALL)
-     private Dados dados;
-    
+    @Column(name = "nomefantasia", length = 20, nullable = false)
+    private String nomefantasia;
+    @Column(name = "razaosocial", length = 20, nullable = false)
+    private String razaosocial;
+    @Column(name = "cnpj", length = 18, nullable = false)
+    private String cnpj;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Dados dados;
+
     @Override
     public Long getId() {
-    return id;
+        return id;
     }
 
     /**
@@ -107,5 +107,5 @@ public class Loja implements EntidadeBase {
     public void setDados(Dados dados) {
         this.dados = dados;
     }
-    
+
 }

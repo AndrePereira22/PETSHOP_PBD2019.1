@@ -26,9 +26,9 @@ public class Login  implements EntidadeBase{
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="login_seq")
      private Long id;
        
-     @Column 
+     @Column(name = "usuario", length = 15, nullable = false,unique=true)
      private String usuario;
-     @Column
+     @Column(name = "senha", length = 10, nullable = false)
      private String senha;
      
     @Override

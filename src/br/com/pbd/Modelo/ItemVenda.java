@@ -5,8 +5,6 @@
  */
 package br.com.pbd.Modelo;
 
-import java.sql.Date;
-import java.sql.Time;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,9 +28,9 @@ public class ItemVenda implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_venda_seq")
     private Long id;
 
-    @Column
+    @Column(name = "valor_item", precision = 4, scale = 0, nullable = false)
     private Double valor_item;
-    @Column
+    @Column(name = "quantidade", precision = 3, scale = 0, nullable = false)
     private int quantidade;
     
     @OneToOne

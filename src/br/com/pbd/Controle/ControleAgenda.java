@@ -60,6 +60,7 @@ public class ControleAgenda implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         if (e.getSource() == tPrincipal.getBtnAgenda()) {
             preencherProfissionais();
         }
@@ -186,38 +187,38 @@ public class ControleAgenda implements ActionListener {
             profissional = profissionais.get(indice);
             agendas = new DaoAgenda().buscaAgenda(profissional);
 
-            if (!agendas.isEmpty()) {
+            tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
-                tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"HORARIO", "SERVICO"};
+                Object[][] dados = new Object[agendas.size()][2];
+                for (Agenda a : agendas) {
+                    dados[i][0] = a.getHorario();
+                    dados[i][1] = a.getServico().getDescricao();
 
-                int i = 0;
-                try {
-                    String[] colunas = new String[]{"HORARIO", "SERVICO"};
-                    Object[][] dados = new Object[agendas.size()][2];
-                    for (Agenda a : agendas) {
-                        dados[i][0] = a.getHorario();
-                        dados[i][1] = a.getServico().getDescricao();
-
-                        i++;
-                    }
-
-                    DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
-                        public boolean isCellEditable(int row, int column) {
-                            return false;
-                        }
-                    };
-                    tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
-                } catch (Exception ex) {
-
+                    i++;
                 }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
+            } catch (Exception ex) {
+
             }
         }
     }
 
     private void preencherProfissionais() {
+
         profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
 
-        tPrincipal.getAgenda().getComboProfissional().removeAllItems();
+        if (tPrincipal.getAgenda().getComboProfissional().getSelectedIndex() >= 0) {
+            tPrincipal.getAgenda().getComboProfissional().removeAllItems();
+        }
         profissionais.forEach((p) -> {
             tPrincipal.getAgenda().getComboProfissional().addItem(p.getNome());
         });

@@ -1,9 +1,12 @@
 package br.com.pbd.Dao;
 
 import br.com.pbd.Modelo.EntidadeBase;
+import br.com.pbd.Modelo.Especie;
+import br.com.pbd.Modelo.Raca;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
@@ -56,6 +59,15 @@ public class GenericDao<entidade extends EntidadeBase> {
         CriteriaQuery<entidade> cq = cb.createQuery(clazz);
         return manager.createQuery(cq).getResultList();
         
+    }
+       public List<Object> pesquisarPorNome(String nome, String classe) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  obj FROM "+ classe+" obj where obj.nome =:"+nome+"");
+           
+        } catch (IllegalStateException e) {
+        }
+        return query.getResultList();
     }
     
    }

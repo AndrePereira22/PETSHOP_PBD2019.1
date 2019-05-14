@@ -29,20 +29,21 @@ public class Profissional implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "prof_seq")
     private Long id;
 
-    @Column
-    private String tipo;
-    @Column
+    
+   @Column(name = "nome", length = 40, nullable = false)
     private String nome;
-    @Column
-    private Date nascimento;
-    @Column
-    private String cpf;
-    @Column
-    private String rg;
-    @Column
+    @Column(name = "sexo", length = 9, nullable = false)
     private String sexo;
-    @Column
+    @Column(name = "nascimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    private Date nascimento;
+    @Column(name = "cpf", length = 15, nullable = false,unique=true)
+    private String cpf;
+    @Column(name = "rg", length = 9, nullable = false,unique=true)
+    private String rg;
+    @Column(name = "crmv", length = 20, nullable = false)
     private String crmv;
+   @Column(name = "tipo", length = 15, nullable = false)
+    private String tipo;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Dados dados;

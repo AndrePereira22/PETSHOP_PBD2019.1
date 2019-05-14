@@ -9,6 +9,7 @@ import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
+import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Servico;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
@@ -21,6 +22,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -31,17 +37,36 @@ public class ControleProdutos_Servico implements ActionListener {
     TelaPrincipal tPrincipal;
     List<GrupoProduto> gProdutos;
     List<Fornecedor> fornecedores;
+    List<Produto> produtos;
+    List<Servico> servicos;
+    private JButton btnExcluir, btnEditar;
+    private Icon editar, excluir;
 
     public ControleProdutos_Servico(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
         tPrincipal.getServico_Produto().getBtnNovoProduto().addActionListener(this);
-        tPrincipal.getcProdutos().getBtnSalvarProduto().addActionListener(this);
-        tPrincipal.getcServicos().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcProdutos().getBtnSalvar1().addActionListener(this);
+        tPrincipal.getcServicos().getBtnSalvar1().addActionListener(this);
         tPrincipal.getcProdutos().getBtnNovoGrupo().addActionListener(this);
         tPrincipal.getcProdutos().getSalvarGrupo().addActionListener(this);
-        
+        tPrincipal.getBtnProdutos_serv().addActionListener(this);
+
         gProdutos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
+        produtos = new ArrayList<Produto>();
+
+        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/eraser.png"));
+
+        btnEditar = new JButton(editar);
+        btnEditar.setName("editar");
+        btnEditar.setBorder(null);
+        btnEditar.setContentAreaFilled(false);
+
+        btnExcluir = new JButton(excluir);
+        btnExcluir.setName("excluir");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
 
     }
 
@@ -52,11 +77,16 @@ public class ControleProdutos_Servico implements ActionListener {
             preencherFornecedores();
             preencherGrupo();
         }
-        if (e.getSource() == tPrincipal.getcProdutos().getBtnSalvarProduto()) {
+        if (e.getSource() == tPrincipal.getcProdutos().getBtnSalvar1()) {
             salvarProduto();
         }
-        if (e.getSource() == tPrincipal.getcServicos().getBtnSalvar()) {
+        if (e.getSource() == tPrincipal.getcServicos().getBtnSalvar1()) {
             salvarServico();
+
+        }
+        if (e.getSource() == tPrincipal.getBtnProdutos_serv()) {
+            listarProdutos();
+            listarServicos();
         }
         if (e.getSource() == tPrincipal.getcProdutos().getBtnNovoGrupo()) {
             tPrincipal.getcProdutos().getPainelGrupoProduto().setVisible(true);
@@ -95,8 +125,89 @@ public class ControleProdutos_Servico implements ActionListener {
         produto.setValorvenda(valorVenda);
         produto.setValorcompra(valorCompra);
 
-        new GenericDao<Produto>().salvar_ou_atualizar(produto);
+        try {
+            new GenericDao<Produto>().salvar_ou_atualizar(produto);
 
+            JOptionPane.showMessageDialog(null, "Produto cadastrado!");
+            tPrincipal.getcProdutos().setVisible(false);
+            tPrincipal.getServico_Produto().setVisible(true);
+            listarProdutos();
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+
+    }
+
+    public void listarProdutos() {
+
+        produtos = new GenericDao<Produto>().getAll(Produto.class);
+        if (!produtos.isEmpty()) {
+            tPrincipal.getServico_Produto().getTabelaProdutos().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE COMPRA", "VALOR DE VENDA", "FORNECEDOR", "GRUPO", "EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[produtos.size()][8];
+                for (Produto a : produtos) {
+                    dados[i][0] = a.getDescricao();
+                    dados[i][1] = a.getFabricante();
+                    dados[i][2] = a.getValorcompra();
+                    dados[i][3] = a.getValorvenda();
+                    dados[i][4] = a.getFornecedor().getNomefantasia();
+                    dados[i][5] = a.getGproduto().getDescricao();
+                    dados[i][6] = btnEditar;
+                    dados[i][7] = btnExcluir;
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getServico_Produto().getTabelaProdutos().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+
+        }
+    }
+
+    public void listarServicos() {
+
+        servicos = new GenericDao<Servico>().getAll(Servico.class);
+        if (!servicos.isEmpty()) {
+            tPrincipal.getServico_Produto().getTabelaServicos().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"DESCRIÇÃO", "DURAÇAO MEDIA", "VALOR", "EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[servicos.size()][5];
+                for (Servico a : servicos) {
+                    dados[i][0] = a.getDescricao();
+                    dados[i][1] = a.getDuracao();
+                    dados[i][2] = a.getValor();
+                    dados[i][3] = btnEditar;
+                    dados[i][4] = btnExcluir;
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.getServico_Produto().getTabelaServicos().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+
+        }
     }
 
     private void salvarServico() {
@@ -114,7 +225,20 @@ public class ControleProdutos_Servico implements ActionListener {
 
         servico.setValor(valorServico);
         servico.setDuracao(ConverterTime(tPrincipal.getcServicos().getComboDuracao().getSelectedItem().toString()));
-        new GenericDao<Servico>().salvar_ou_atualizar(servico);
+
+        try {
+            new GenericDao<Servico>().salvar_ou_atualizar(servico);
+
+            JOptionPane.showMessageDialog(null, "Serviço cadastrado!");
+            tPrincipal.getcServicos().setVisible(false);
+            tPrincipal.getServico_Produto().setVisible(true);
+            listarServicos();
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
     }
 
     private void salvarGrupoProduto() {

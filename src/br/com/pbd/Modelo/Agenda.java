@@ -41,11 +41,11 @@ public class Agenda implements EntidadeBase {
     @OneToOne(cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
-    @Column
+    @Column (name="horario",nullable=false)
     private Time horario;
-    @Column
+    @Column (name="anotacao",length=40,nullable=false)
     private String anotacao;
-    @Column
+    @Column (name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
 
     @Override

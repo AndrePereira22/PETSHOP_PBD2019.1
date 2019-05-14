@@ -34,24 +34,24 @@ public class Venda implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "venda_seq")
     private Long id;
 
-    @Column
+    @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
-    @Column
+    @Column(name = "valortotal", precision = 6, scale = 2, nullable = false)
     private Double valortotal;
-    @Column
+    @Column(name = "horario", nullable = false)
     private Time hora;
-   
-     @OneToOne
-     private Cliente cliente;
-     @OneToOne
-     private Pagamento pagamento;
-     
-      @ManyToOne
-     private Funcionario funcionario;
-     
-     @OneToMany( cascade = CascadeType.ALL, mappedBy = "venda")
-     @JoinColumn(name="venda_id")
-     private List<ItemVenda> itens;
+
+    @OneToOne
+    private Cliente cliente;
+    @OneToOne
+    private Pagamento pagamento;
+
+    @ManyToOne
+    private Funcionario funcionario;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "venda")
+    @JoinColumn(name = "venda_id")
+    private List<ItemVenda> itens;
 
     @Override
     public Long getId() {

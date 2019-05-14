@@ -20,30 +20,29 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="parcela_seq",sequenceName="parcela_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "parcela_seq", sequenceName = "parcela_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "parcela")
 public class Parcela implements EntidadeBase {
 
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="parcela_seq")
-     private Long id;
-       
-     @Column 
-     private int numero;
-     @Column
-     private Double valor;
-     @Column
-     private Boolean status;
-     @Column
-     private Date datavencimento ;
-     
-     @ManyToOne
-     private Pagamento pagamento;
-    
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parcela_seq")
+    private Long id;
+
+    @Column(name = "numero", precision = 2, scale = 0, nullable = false)
+    private int numero;
+    @Column(name = "valor", precision = 3, scale = 2, nullable = false)
+    private Double valor;
+    @Column(name = "status", insertable = false, nullable = false)
+    private Boolean status;
+    @Column(name = "datavencimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    private Date datavencimento;
+
+    @ManyToOne
+    private Pagamento pagamento;
+
     @Override
     public Long getId() {
-    return id;
+        return id;
     }
 
     /**
@@ -122,5 +121,5 @@ public class Parcela implements EntidadeBase {
     public void setPagamento(Pagamento pagamento) {
         this.pagamento = pagamento;
     }
-    
+
 }

@@ -12,6 +12,7 @@ public class AgendarServico extends javax.swing.JInternalFrame {
      */
     public AgendarServico() {
         initComponents();
+        comboHorario1.setVisible(false);
     }
 
     /**

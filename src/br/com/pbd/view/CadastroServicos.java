@@ -5,10 +5,7 @@
  */
 package br.com.pbd.view;
 
-/**
- *
- * @author Glenda Alves de Lima
- */
+
 public class CadastroServicos extends javax.swing.JInternalFrame {
 
     /**
@@ -39,8 +36,8 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
         lblApelido1 = new javax.swing.JLabel();
         lblNome1 = new javax.swing.JLabel();
         comboDuracao = new javax.swing.JComboBox<>();
+        btnSalvar1 = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        btnSalvar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
 
@@ -131,42 +128,45 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
+        btnSalvar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSalvar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save.png"))); // NOI18N
+        btnSalvar1.setText("  SALVAR");
+        btnSalvar1.setBorderPainted(false);
+        btnSalvar1.setContentAreaFilled(false);
+        btnSalvar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save (3).png"))); // NOI18N
+
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cancel.png"))); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
         btnCancelar.setBorder(null);
         btnCancelar.setBorderPainted(false);
         btnCancelar.setContentAreaFilled(false);
-        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/cancel.1.png"))); // NOI18N
-
-        btnSalvar.setText("SALVAR ");
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected (1).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(53, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(153, 153, 153))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnSalvar)
-                        .addGap(50, 50, 50)
-                        .addComponent(btnCancelar)
-                        .addGap(170, 170, 170))))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btnSalvar1)
+                        .addGap(43, 43, 43)
+                        .addComponent(btnCancelar))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(153, 153, 153))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelar)
-                    .addComponent(btnSalvar))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnSalvar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout painelCadastroLayout = new javax.swing.GroupLayout(painelCadastro);
@@ -234,7 +234,7 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TITULO;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnSalvar1;
     private javax.swing.JComboBox<String> comboDuracao;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel1;
@@ -273,18 +273,19 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
-    /**
-     * @return the btnSalvar
-     */
-    public javax.swing.JButton getBtnSalvar() {
-        return btnSalvar;
-    }
-
+    
     /**
      * @return the comboDuracao
      */
     public javax.swing.JComboBox<String> getComboDuracao() {
         return comboDuracao;
+    }
+
+    /**
+     * @return the btnSalvar1
+     */
+    public javax.swing.JButton getBtnSalvar1() {
+        return btnSalvar1;
     }
 
     

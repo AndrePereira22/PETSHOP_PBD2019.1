@@ -31,18 +31,16 @@ public class Caixa implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "caixa_seq")
     private Long id;
 
-    @Column
+    @Column(name = "valorabertura", precision = 6, scale = 2, nullable = false)
     private Double valorabertura;
-    @Column
+    @Column(name = "valorfechamento", precision = 6, scale = 2, nullable = false)
     private Double valorfechamento;
-    @Column
+    @Column(name = "lucrodia", precision = 6, scale = 2, nullable = false)
     private Double lucrodia;
-    @Column
+    @Column(name = "status", insertable = true, nullable = false)
     private Boolean status;
-    @Column
+    @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
-
-    
 
     @Override
     public Long getId() {
@@ -126,5 +124,4 @@ public class Caixa implements EntidadeBase {
         this.data = data;
     }
 
-    
 }

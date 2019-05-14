@@ -1,4 +1,3 @@
-
 package br.com.pbd.Modelo;
 
 import javax.persistence.Column;
@@ -14,38 +13,36 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="dados_seq",sequenceName="dados_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "dados_seq", sequenceName = "dados_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "dados")
 public class Dados implements EntidadeBase {
 
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="dados_seq")
-     private Long id;
-       
-     @Column 
-     private String telefone;
-     @Column
-     private String celular;
-     @Column
-     private String email;
-     @Column
-     private String cidade ;
-     @Column
-     private String rua ;
-     @Column
-     private String bairro;
-     @Column
-     private String numero;
-     @Column
-     private String uf ;
-     @Column
-     private String cep ;
-     
-     
-     
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "dados_seq")
+    private Long id;
+
+    @Column(name = "telefone", length = 14, nullable = true)
+    private String telefone;
+    @Column(name = "celular", length = 14, nullable = false)
+    private String celular;
+    @Column(name = "email", length = 35, nullable = false)
+    private String email;
+    @Column(name = "cidade", length = 30, nullable = false)
+    private String cidade;
+    @Column(name = "rua", length = 30, nullable = false)
+    private String rua;
+    @Column(name = "bairro", length = 20, nullable =false)
+    private String bairro;
+    @Column(name = "numero", length = 10, nullable = false)
+    private String numero;
+    @Column(name = "uf", length = 2, nullable =false)
+    private String uf;
+    @Column(name = "cep", length = 9, nullable = false)
+    private String cep;
+
     @Override
     public Long getId() {
-    
+
         return id;
     }
 
@@ -175,7 +172,5 @@ public class Dados implements EntidadeBase {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
-    
-    
+
 }

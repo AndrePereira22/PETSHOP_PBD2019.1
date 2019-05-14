@@ -1,4 +1,3 @@
-
 package br.com.pbd.Modelo;
 
 import java.sql.Date;
@@ -16,37 +15,38 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@SequenceGenerator(name="cliente_seq",sequenceName="cliente_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "cliente_seq", sequenceName = "cliente_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "cliente")
-public class Cliente  implements EntidadeBase {
+public class Cliente implements EntidadeBase {
 
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="cliente_seq")
-     private Long id;
-       
-     @Column 
-     private String nome;
-     @Column
-     private String sexo;
-     @Column
-     private Date nascimento;
-     @Column
-     private String cpf ;
-     @Column
-     private String Rg ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente_seq")
+    private Long id;
 
-     @OneToOne(cascade=CascadeType.ALL)
-     private Dados dados;
-    
-     @OneToMany( cascade = CascadeType.ALL, mappedBy = "cliente")
-     @JoinColumn(name="clinte_id")
-     private List<Animal> animais;
-     
-     public Cliente(){}
- 
+    @Column(name = "nome", length = 40, nullable = false)
+    private String nome;
+    @Column(name = "sexo", length = 9, nullable = false)
+    private String sexo;
+    @Column(name = "nascimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    private Date nascimento;
+    @Column(name = "cpf", length = 15, nullable = false,unique=true)
+    private String cpf;
+    @Column(name = "Rg", length = 9, nullable = false,unique=true)
+    private String Rg;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Dados dados;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    @JoinColumn(name = "clinte_id")
+    private List<Animal> animais;
+
+    public Cliente() {
+    }
+
     @Override
     public Long getId() {
-    return id;
+        return id;
     }
 
     /**
@@ -153,5 +153,5 @@ public class Cliente  implements EntidadeBase {
     public void setAnimais(List<Animal> animais) {
         this.animais = animais;
     }
-  
+
 }

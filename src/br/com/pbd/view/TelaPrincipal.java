@@ -1,5 +1,6 @@
 package br.com.pbd.view;
 
+import br.com.pbd.sql.PostgresBackup_Curso;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -19,9 +20,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     private final CadastroProdutos cProdutos = new CadastroProdutos();
     private final AgendarServico agenarServico = new AgendarServico();
     private final Servico_Produto servico_Produto = new Servico_Produto();
+    private final Raca_especie raca_especie = new Raca_especie();
     private final Agenda agenda = new Agenda();
     private final Vendas vendas = new Vendas();
     private final Financeiro financas = new Financeiro();
+    private final Produtos produtos = new Produtos();
 
     public TelaPrincipal() {
         initComponents();
@@ -40,6 +43,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         ajustarInternalFrame(vendas);
         ajustarInternalFrame(agenarServico);
         ajustarInternalFrame(servico_Produto);
+        ajustarInternalFrame(raca_especie);
+        ajustarInternalFrame(produtos);
 
         adicionaEventos();
 
@@ -71,7 +76,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1024, 600));
 
         painelMenu.setBackground(new java.awt.Color(255, 255, 255));
         painelMenu.setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -164,12 +168,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         painelMenu.add(btnFinanceiro);
         btnFinanceiro.setBounds(20, 520, 280, 75);
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/turn-on.png"))); // NOI18N
         btnSair.setAlignmentX(20.0F);
         btnSair.setAlignmentY(30.0F);
         btnSair.setBorderPainted(false);
         btnSair.setContentAreaFilled(false);
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/turn-on.1.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -230,13 +232,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
         getPainelMenu().setVisible(false);
-        cCliente.setVisible(rootPaneCheckingEnabled);
+        cCliente.setVisible(true);
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
         // TODO add your handling code here:
         getPainelMenu().setVisible(false);
-        getVendas().setVisible(rootPaneCheckingEnabled);
+        getVendas().setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnCadastrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrosActionPerformed
@@ -255,7 +257,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         // TODO add your handling code here:
-        System.exit(WIDTH);
+
+        PostgresBackup_Curso pc = new PostgresBackup_Curso();
+        // System.exit(WIDTH);
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnProdutos_servActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutos_servActionPerformed
@@ -328,11 +332,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getServico_Produto().setVisible(false);
             getcServicos().setVisible(true);
         }
-        if (e.getSource() == getServico_Produto().getBtnSair() ) {
+        if (e.getSource() == getServico_Produto().getBtnSair()) {
             getServico_Produto().setVisible(false);
             painelMenu.setVisible(true);
         }
-        if ( e.getSource() == getServico_Produto().getBtnSairServico()) {
+        if (e.getSource() == getServico_Produto().getBtnSairServico()) {
             getServico_Produto().setVisible(false);
             painelMenu.setVisible(true);
         }
@@ -346,14 +350,23 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         if (e.getSource() == getCadastros().getBtnAnimal1()) {
             getcAnimal().setVisible(rootPaneCheckingEnabled);
         }
-        
+
         if (e.getSource() == getCadastros().getBtnFuncionario()) {
             getcFuncionario().setVisible(rootPaneCheckingEnabled);
         }
         if (e.getSource() == getCadastros().getVoltarMenu()) {
             painelMenu.setVisible(true);
         }
+        if (e.getSource() == getCadastros().getBtnEspecie()) {
+            getRaca_especie().setVisible(true);
+            getRaca_especie().getPainelItens().setSelectedComponent(getRaca_especie().getPainelEspecie());
+        }
+        if (e.getSource() == getCadastros().getBtnRaca()) {
+            getRaca_especie().setVisible(true);
+            getRaca_especie().getPainelItens().setSelectedComponent(getRaca_especie().getPainelRaca());
+        }
 
+        /////////////////////////////////////////////////////
         if (e.getSource() == getAgenda().getBtnSair()) {
             painelMenu.setVisible(true);
         }
@@ -393,7 +406,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         }
         if (e.getSource() == getcCliente().getBtnSair()) {
             getcCliente().setVisible(false);
-             painelMenu.setVisible(true);
+            painelMenu.setVisible(true);
         }
         // Eventos da tela Cadastro de Fornecedor
         if (e.getSource() == getcFornecedor().getBtnCancelar()) {
@@ -421,20 +434,46 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getcFuncionario().setVisible(false);
             getCadastros().setVisible(true);
         }
-        
-         // Eventos da tela Cadastro de Profissional
+
+        // Eventos da tela Cadastro de Profissional
         if (e.getSource() == getcProfissioanl().getBtnCancelar()) {
-           getcProfissioanl().getPainelItens().setSelectedComponent(getcProfissioanl().getPainelProfissional());
+            getcProfissioanl().getPainelItens().setSelectedComponent(getcProfissioanl().getPainelProfissional());
             getcProfissioanl().getPainelCadastro().setEnabled(false);
         }
         if (e.getSource() == getcProfissioanl().getBtnNovoProfissional()) {
             getcProfissioanl().getPainelItens().setSelectedComponent(getcProfissioanl().getPainelCadastro());
             getcProfissioanl().getPainelCadastro().setEnabled(true);
         }
-        if (e.getSource() == getcProfissioanl().getBtnSair()  ) {
+        if (e.getSource() == getcProfissioanl().getBtnSair()) {
             getcProfissioanl().setVisible(false);
             getCadastros().setVisible(true);
         }
+
+        // Eventos da tela Raça e Especie
+        if (e.getSource() == getRaca_especie().getBtnNovaEspecie()) {
+            getRaca_especie().AtivarComponenteEspecie(true);
+            getRaca_especie().getPainelItens().setEnabled(false);
+
+        }
+        if (e.getSource() == getRaca_especie().getBtnNovaRaca()) {
+            getRaca_especie().AtivarComponenteRaca(true);
+            getRaca_especie().getPainelItens().setEnabled(false);
+
+        }
+        if (e.getSource() == getRaca_especie().getBtnCancelarRaca()) {
+            getRaca_especie().getPainelItens().setEnabled(true);
+
+        }
+        if (e.getSource() == getRaca_especie().getBtnCancelarEspecie()) {
+            getRaca_especie().getPainelItens().setEnabled(true);
+
+        }
+
+        if (e.getSource() == getVendas().getBtnProdutos()) {
+            getProdutos().setVisible(true);
+
+        }
+
     }
 
     public final void adicionaEventos() {
@@ -443,6 +482,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getCadastros().getBtnAnimal1().addActionListener(this);
         getCadastros().getBtnFornecedor().addActionListener(this);
         getCadastros().getBtnProfissional().addActionListener(this);
+        getCadastros().getBtnEspecie().addActionListener(this);
+        getCadastros().getBtnRaca().addActionListener(this);
 
         getAgenda().getBtnSair().addActionListener(this);
         getFinancas().getBtnCancelar().addActionListener(this);
@@ -452,7 +493,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getServico_Produto().getBtnNovoServico().addActionListener(this);
         getServico_Produto().getBtnNovoProduto().addActionListener(this);
         getServico_Produto().getBtnSair().addActionListener(this);
-         getServico_Produto().getBtnSairServico().addActionListener(this);
+        getServico_Produto().getBtnSairServico().addActionListener(this);
 
         getcCliente().getBtnCadastrarCliente().addActionListener(this);
         getcCliente().getBtnCancelar().addActionListener(this);
@@ -469,10 +510,17 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getcFuncionario().getBtnSair().addActionListener(this);
         getcFuncionario().getBtnCancelar().addActionListener(this);
         getcFuncionario().getBtnNovoFuncionario().addActionListener(this);
-        
+
         getcProfissioanl().getBtnSair().addActionListener(this);
         getcProfissioanl().getBtnCancelar().addActionListener(this);
         getcProfissioanl().getBtnNovoProfissional().addActionListener(this);
+
+        getRaca_especie().getBtnNovaEspecie().addActionListener(this);
+        getRaca_especie().getBtnNovaRaca().addActionListener(this);
+        getRaca_especie().getBtnCancelarRaca().addActionListener(this);
+        getRaca_especie().getBtnCancelarEspecie().addActionListener(this);
+
+        getVendas().getBtnProdutos().addActionListener(this);
 
     }
 
@@ -635,6 +683,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
      */
     public javax.swing.JPanel getPainelMenu() {
         return painelMenu;
+    }
+
+    /**
+     * @return the raca_especie
+     */
+    public Raca_especie getRaca_especie() {
+        return raca_especie;
+    }
+
+    /**
+     * @return the produtos
+     */
+    public Produtos getProdutos() {
+        return produtos;
     }
 
 }
