@@ -143,7 +143,7 @@ public class ControleAnimal implements ActionListener {
         Double pesokg = 0.0;
         try {
             pesokg = Double.parseDouble(peso);
-        } catch (Exception erro) {
+        } catch (NumberFormatException erro) {
         }
         animal.setPesokg(pesokg);
 

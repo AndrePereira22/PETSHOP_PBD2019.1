@@ -89,11 +89,15 @@ public class ControleProdutos_Servico implements ActionListener {
             listarServicos();
         }
         if (e.getSource() == tPrincipal.getcProdutos().getBtnNovoGrupo()) {
+
+            tPrincipal.getcProdutos().getComboGrupoProduto().removeAllItems();
             tPrincipal.getcProdutos().getPainelGrupoProduto().setVisible(true);
         }
         if (e.getSource() == tPrincipal.getcProdutos().getSalvarGrupo()) {
+
             salvarGrupoProduto();
             preencherGrupo();
+
             tPrincipal.getcProdutos().getPainelGrupoProduto().setVisible(false);
         }
 

@@ -25,6 +25,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     private final Vendas vendas = new Vendas();
     private final Financeiro financas = new Financeiro();
     private final Produtos produtos = new Produtos();
+    private Quantidadee quantidade = new Quantidadee();
+    private Pagamento pagamento = new Pagamento();
 
     public TelaPrincipal() {
         initComponents();
@@ -473,6 +475,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getProdutos().setVisible(true);
 
         }
+        if (e.getSource() == getQuantidade().getBtnConfirmar()) {
+            getProdutos().setVisible(false);
+            getVendas().setVisible(true);
+        }
+        if (e.getSource() == getVendas().getBtnFinalizarVenda()) {
+            getPagamento().setVisible(true);
+        } 
 
     }
 
@@ -521,6 +530,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getRaca_especie().getBtnCancelarEspecie().addActionListener(this);
 
         getVendas().getBtnProdutos().addActionListener(this);
+        getQuantidade().getBtnConfirmar().addActionListener(this);
+        getVendas().getBtnFinalizarVenda().addActionListener(this);
 
     }
 
@@ -697,6 +708,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
      */
     public Produtos getProdutos() {
         return produtos;
+    }
+
+    /**
+     * @return the quantidade
+     */
+    public Quantidadee getQuantidade() {
+        return quantidade;
+    }
+
+    /**
+     * @return the pagamento
+     */
+    public Pagamento getPagamento() {
+        return pagamento;
     }
 
 }

@@ -40,6 +40,8 @@ public class Pagamento implements EntidadeBase {
     private int numeroparcelas;
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
+    @Column(name = "forma_pagamento", length = 30, nullable = false)
+    private String forma_pagamento;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagamento")
     @JoinColumn(name = "pagamento_id")
@@ -126,6 +128,20 @@ public class Pagamento implements EntidadeBase {
      */
     public void setParcelas(List<Parcela> parcelas) {
         this.parcelas = parcelas;
+    }
+
+    /**
+     * @return the forma_pagamento
+     */
+    public String getForma_pagamento() {
+        return forma_pagamento;
+    }
+
+    /**
+     * @param forma_pagamento the forma_pagamento to set
+     */
+    public void setForma_pagamento(String forma_pagamento) {
+        this.forma_pagamento = forma_pagamento;
     }
 
 }

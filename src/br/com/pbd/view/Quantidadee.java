@@ -48,6 +48,11 @@ public class Quantidadee extends javax.swing.JFrame {
         });
 
         btnConfirmar.setText("CONFIRMAR");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,6 +97,10 @@ public class Quantidadee extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantidadeActionPerformed
 
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -133,4 +142,18 @@ public class Quantidadee extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtQuantidade;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the btnConfirmar
+     */
+    public javax.swing.JButton getBtnConfirmar() {
+        return btnConfirmar;
+    }
+
+    /**
+     * @return the txtQuantidade
+     */
+    public javax.swing.JTextField getTxtQuantidade() {
+        return txtQuantidade;
+    }
 }

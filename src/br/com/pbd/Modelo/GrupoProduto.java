@@ -25,8 +25,8 @@ public class GrupoProduto implements EntidadeBase {
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="gproduto_seq")
      private Long id;
        
-     @Column(name = "descricao", length = 9, nullable = false,unique=true)
-     private String descricao;
+     @Column(name = "nome", length = 30, nullable = false,unique=true)
+     private String nome;
 
     @Override
     public Long getId() {
@@ -44,14 +44,14 @@ public class GrupoProduto implements EntidadeBase {
      * @return the descricao
      */
     public String getDescricao() {
-        return descricao;
+        return nome;
     }
 
     /**
      * @param descricao the descricao to set
      */
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        this.nome = descricao;
     }
      
 }

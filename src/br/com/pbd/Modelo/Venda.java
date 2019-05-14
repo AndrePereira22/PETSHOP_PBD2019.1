@@ -40,10 +40,8 @@ public class Venda implements EntidadeBase {
     private Double valortotal;
     @Column(name = "horario", nullable = false)
     private Time hora;
-
-    @OneToOne
-    private Cliente cliente;
-    @OneToOne
+    
+    @OneToOne(cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     @ManyToOne
@@ -108,20 +106,6 @@ public class Venda implements EntidadeBase {
     }
 
     /**
-     * @return the cliente
-     */
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    /**
-     * @param cliente the cliente to set
-     */
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    /**
      * @return the funcionario
      */
     public Funcionario getFuncionario() {
@@ -163,4 +147,5 @@ public class Venda implements EntidadeBase {
         this.itens = itens;
     }
 
+    
 }

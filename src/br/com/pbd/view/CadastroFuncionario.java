@@ -184,7 +184,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         jLabel5.setText("RG :");
 
         try {
-            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.##")));
+            txtRg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#.###.###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

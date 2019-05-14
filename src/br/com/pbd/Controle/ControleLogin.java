@@ -21,9 +21,11 @@ import javax.swing.JOptionPane;
  */
 public class ControleLogin implements ActionListener {
 
-    TelaLogin tLogin;
-    TelaPrincipal tPrincipal;
+    private TelaLogin tLogin;
+    private TelaPrincipal tPrincipal;
+    private static Funcionario funcionario; 
 
+    
     public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
@@ -57,6 +59,7 @@ public class ControleLogin implements ActionListener {
                 }
 
                 if (o != null) {
+                    funcionario = ((Funcionario) o);
                     tLogin.dispose();
                     tPrincipal.setVisible(true);
 
@@ -74,5 +77,8 @@ public class ControleLogin implements ActionListener {
                 }
             }
         }
+    }
+    public static Funcionario getFuncionario() {
+        return funcionario;
     }
 }

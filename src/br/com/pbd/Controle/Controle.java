@@ -399,17 +399,16 @@ public class Controle implements ActionListener {
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"NOME", "RAZÃO SOCIAL", "CNPJ", "CIDADE", "EMAIL", "CONTATO","EDITAR","EXCLUIR"};
-                Object[][] dados = new Object[fornecedores.size()][8];
+                String[] colunas = new String[]{"NOME", "RAZÃO SOCIAL", "CNPJ", "CIDADE","CONTATO","EDITAR","EXCLUIR"};
+                Object[][] dados = new Object[fornecedores.size()][7];
                 for (Fornecedor a : fornecedores) {
                     dados[i][0] = a.getNomefantasia();
                     dados[i][1] = a.getRazaosocial();
                     dados[i][2] = a.getCnpj();
                     dados[i][3] = a.getDados().getCidade();
-                    dados[i][4] = a.getDados().getEmail();
-                    dados[i][5] = a.getDados().getCelular();
-                    dados[i][6] = btnEditar;
-                    dados[i][7] = btnExcluir;
+                    dados[i][4] = a.getDados().getCelular();
+                    dados[i][5] = btnEditar;
+                    dados[i][6] = btnExcluir;
 
                     i++;
                 }

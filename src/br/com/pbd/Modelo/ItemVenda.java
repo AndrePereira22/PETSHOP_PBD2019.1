@@ -28,8 +28,7 @@ public class ItemVenda implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_venda_seq")
     private Long id;
 
-    @Column(name = "valor_item", precision = 4, scale = 0, nullable = false)
-    private Double valor_item;
+    
     @Column(name = "quantidade", precision = 3, scale = 0, nullable = false)
     private int quantidade;
     
@@ -49,20 +48,6 @@ public class ItemVenda implements EntidadeBase {
      */
     public void setId(Long id) {
         this.id = id;
-    }
-
-    /**
-     * @return the valor_item
-     */
-    public Double getValor_item() {
-        return valor_item;
-    }
-
-    /**
-     * @param valor_item the valor_item to set
-     */
-    public void setValor_item(Double valor_item) {
-        this.valor_item = valor_item;
     }
 
     /**
