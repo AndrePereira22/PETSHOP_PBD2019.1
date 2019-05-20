@@ -32,7 +32,7 @@ public class Parcela implements EntidadeBase {
     private int numero;
     @Column(name = "valor", precision = 3, scale = 2, nullable = false)
     private Double valor;
-    @Column(name = "status", insertable = false, nullable = false)
+    @Column(name = "status", nullable = false)
     private Boolean status;
     @Column(name = "datavencimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date datavencimento;

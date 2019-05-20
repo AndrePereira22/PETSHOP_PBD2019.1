@@ -12,6 +12,11 @@ import br.com.pbd.view.TelaLogin;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
@@ -38,12 +43,35 @@ public class ControleLogin implements ActionListener {
 
         if (e.getSource() == tLogin.getBtnAcessar()) {
 
-            Login login = new Login();
+                Login login = new Login();
 
-            String usuario = new String(tLogin.getLogin().getText());
-            String senha = new String(tLogin.getSenha().getPassword());
-            login.setSenha(senha);
-            login.setUsuario(usuario);
+                String usuario = new String(tLogin.getLogin().getText());
+                String senha = new String(tLogin.getSenha().getPassword());
+                login.setUsuario(usuario);
+                String senhaHex="";
+                StringBuilder ab = null;
+
+                try {
+                    MessageDigest  md = MessageDigest.getInstance("SHA-256");
+                     byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
+
+                 ab = new StringBuilder();
+
+                for (byte b : messageDigest) {
+                    ab.append(String.format("%02X", 0xFF & b));
+
+                }
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(ControleLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(ControleLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                senhaHex = ab.toString();
+
+
+                login.setSenha(senhaHex );
+
 
             if (senha.equals("admin") && usuario.equals("admin")) {
 

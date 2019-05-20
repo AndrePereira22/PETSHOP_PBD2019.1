@@ -30,9 +30,6 @@ public class Main {
         ControleFinanceiro cFinanceiro = new ControleFinanceiro(tPrincipal);
         ControleProdutos_Servico cProduto_Servico = new ControleProdutos_Servico(tPrincipal);
         ControleVendas cVendas = new ControleVendas(tPrincipal);
-        
-        Time a = new Time(Long.SIZE);
-        System.out.println(a);
-
+       
     }
 }

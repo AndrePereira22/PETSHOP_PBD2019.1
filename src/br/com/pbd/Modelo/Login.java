@@ -28,7 +28,7 @@ public class Login  implements EntidadeBase{
        
      @Column(name = "usuario", length = 15, nullable = false,unique=true)
      private String usuario;
-     @Column(name = "senha", length = 10, nullable = false)
+     @Column(name = "senha", length = 100, nullable = false)
      private String senha;
      
     @Override

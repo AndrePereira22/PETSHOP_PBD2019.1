@@ -15,6 +15,8 @@ import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.Icon;
@@ -34,8 +36,10 @@ public class ControleAnimal implements ActionListener {
     private List<Raca> racas;
     private List<Cliente> clientes;
     private List<Animal> animais;
+    private Animal animal;
     private JButton btnExcluir, btnEditar;
     private Icon editar, excluir;
+    private boolean salvar_editar;  /// true = salvar , false=editar
 
     public ControleAnimal(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -44,6 +48,8 @@ public class ControleAnimal implements ActionListener {
         racas = new ArrayList<Raca>();
         clientes = new ArrayList<Cliente>();
         animais = new ArrayList<Animal>();
+        animal = new Animal();
+        salvar_editar = true;
 
         editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
         excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/eraser.png"));
@@ -69,8 +75,39 @@ public class ControleAnimal implements ActionListener {
         tPrincipal.getRaca_especie().getBtnNovaRaca().addActionListener(this);
         tPrincipal.getRaca_especie().getBtnSairE().addActionListener(this);
         tPrincipal.getRaca_especie().getBtnSairR().addActionListener(this);
-        preencherEspecie();
-        preencherClientes();
+
+        tPrincipal.getcAnimal().getTabelaAnimais().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int column = tPrincipal.getcAnimal().getTabelaAnimais().getColumnModel().getColumnIndexAtX(e.getX());
+                int row = e.getY() / tPrincipal.getcAnimal().getTabelaAnimais().getRowHeight();
+
+                if (row < tPrincipal.getProdutos().getTabelaItens().getRowCount() && row >= 0 && column < tPrincipal.getcAnimal().getTabelaAnimais().getColumnCount() && column >= 0) {
+                    Object value = tPrincipal.getcAnimal().getTabelaAnimais().getValueAt(row, column);
+                    if (value instanceof JButton) {
+                        ((JButton) value).doClick();
+                        JButton boton = (JButton) value;
+
+                        if (boton.getName().equals("editar")) {
+                            int ro = tPrincipal.getcAnimal().getTabelaAnimais().getSelectedRow();
+                            animal = animais.get(ro);
+                            preencherEspecie();
+                            preencherClientes();
+                            tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelCadastro());
+                            tPrincipal.getcAnimal().getPainelCadastro().setEnabled(true);
+                            preencherDadosEdicaoAnimal(animal);
+                            salvar_editar = false;
+                        }
+                        if (boton.getName().equals("excluir")) {
+                            int ro = tPrincipal.getcAnimal().getTabelaAnimais().getSelectedRow();
+                            animal = animais.get(ro);
+                            new GenericDao<Animal>().remover(Animal.class, animal.getId());
+
+                        }
+                    }
+                }
+            }
+        });
 
     }
 
@@ -87,7 +124,18 @@ public class ControleAnimal implements ActionListener {
         }
 
         if (e.getSource() == tPrincipal.getcAnimal().getBtnSalvar()) {
-            cadastrarAnimal();
+
+            if (salvar_editar) {
+                cadastrarAnimal();
+            } else {
+                editarAnimal(animal);
+            }
+            listarTabelaAnimais();
+        }
+        if (e.getSource() == tPrincipal.getcAnimal().getBtnCadastrarAnimal()) {
+            preencherEspecie();
+            preencherClientes();
+            salvar_editar=true;
         }
         if (e.getSource() == tPrincipal.getcAnimal().getComboEspecie()) {
 
@@ -96,14 +144,17 @@ public class ControleAnimal implements ActionListener {
             }
         }
         if (e.getSource() == tPrincipal.getCadastros().getBtnAnimal1()) {
+
             listarTabelaAnimais();
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnSalvarEspecie()) {
             salvarEspecie();
+            listarTabelaEspecie();
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnSavlarRaca()) {
             salvarRaca();
             tPrincipal.getRaca_especie().getPainelItens().setEnabled(true);
+            listarTabelaRaca();
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnNovaRaca()) {
             preencherComboEspecie();
@@ -127,7 +178,7 @@ public class ControleAnimal implements ActionListener {
 
     public void cadastrarAnimal() {
 
-        Animal animal = new Animal();
+        animal = new Animal();
         Raca raca = null;
         Cliente cli = null;
 
@@ -150,19 +201,14 @@ public class ControleAnimal implements ActionListener {
         int indiceRaca = tPrincipal.getcAnimal().getComboRaca().getSelectedIndex();
         int indiceCliente = tPrincipal.getcAnimal().getComboDono().getSelectedIndex();
 
-        if (indiceRaca > -1) {
+        try {
             raca = racas.get(indiceRaca);
-            animal.setRaca(raca);
-        }
-        if (indiceCliente > -1) {
             cli = clientes.get(indiceCliente);
             animal.setCliente(cli);
-        }
+            animal.setRaca(raca);
 
-        try {
             new GenericDao<Animal>().salvar_ou_atualizar(animal);
             JOptionPane.showMessageDialog(null, "Animal cadastrado!");
-            tPrincipal.getcAnimal().setVisible(false);
             tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
             tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
 
@@ -340,16 +386,20 @@ public class ControleAnimal implements ActionListener {
 
     public final void preencherRaca() {
 
-        int indice = tPrincipal.getcAnimal().getComboEspecie().getSelectedIndex();
+        try {
+            int indice = tPrincipal.getcAnimal().getComboEspecie().getSelectedIndex();
 
-        Especie e = especies.get(indice);
+            Especie e = especies.get(indice);
 
-        racas = new DaoRaca().usandoID(e);
+            racas = new DaoRaca().usandoID(e);
 
-        tPrincipal.getcAnimal().getComboRaca().removeAllItems();
-        racas.forEach((ra) -> {
-            tPrincipal.getcAnimal().getComboRaca().addItem(ra.getNome());
-        });
+            tPrincipal.getcAnimal().getComboRaca().removeAllItems();
+            racas.forEach((ra) -> {
+                tPrincipal.getcAnimal().getComboRaca().addItem(ra.getNome());
+            });
+        } catch (ArrayIndexOutOfBoundsException e) {
+        }
+
     }
 
     public final void preencherClientes() {
@@ -368,5 +418,77 @@ public class ControleAnimal implements ActionListener {
         especies.forEach((c) -> {
             tPrincipal.getRaca_especie().getComboEspecie().addItem(c.getNome());
         });
+    }
+
+    public void editarAnimal(Animal animal) {
+
+        Raca raca = null;
+        Cliente cli = null;
+
+        animal.setApelido(tPrincipal.getcAnimal().getTxtaApelido().getText());
+        animal.setNome(tPrincipal.getcAnimal().getTxtNome().getText());
+        animal.setCor(tPrincipal.getcAnimal().getTxtCor().getText());
+        animal.setObservacao(tPrincipal.getcAnimal().getAreaObservacao().getText());
+        animal.setSexo(tPrincipal.getcAnimal().getComboSexo().getSelectedItem().toString());
+        animal.setObservacao(tPrincipal.getcAnimal().getAreaObservacao().getText());
+        animal.setNascimento(ConverterData(tPrincipal.getcAnimal().getNascimento().getDate()));
+
+        String peso = tPrincipal.getcAnimal().getTxtPeso().getText();
+        Double pesokg = 0.0;
+        try {
+            pesokg = Double.parseDouble(peso);
+        } catch (NumberFormatException erro) {
+        }
+        animal.setPesokg(pesokg);
+
+        int indiceRaca = tPrincipal.getcAnimal().getComboRaca().getSelectedIndex();
+        int indiceCliente = tPrincipal.getcAnimal().getComboDono().getSelectedIndex();
+
+        try {
+            if (indiceRaca > -1) {
+                raca = racas.get(indiceRaca);
+                animal.setRaca(raca);
+            }
+
+            cli = clientes.get(indiceCliente);
+            animal.setCliente(cli);
+
+            new GenericDao<Animal>().salvar_ou_atualizar(animal);
+            JOptionPane.showMessageDialog(null, "Edição finalizada!");
+            tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
+            tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
+            salvar_editar = true;
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+
+    }
+
+    public void preencherDadosEdicaoAnimal(Animal animal) {
+
+        tPrincipal.getcAnimal().getTxtaApelido().setText(animal.getApelido());
+        tPrincipal.getcAnimal().getTxtNome().setText(animal.getNome());
+        tPrincipal.getcAnimal().getTxtCor().setText(animal.getCor());
+        tPrincipal.getcAnimal().getAreaObservacao().setText(animal.getObservacao());
+        tPrincipal.getcAnimal().getAreaObservacao().setText(animal.getObservacao());
+        tPrincipal.getcAnimal().getNascimento().setDate(animal.getNascimento());
+        tPrincipal.getcAnimal().getTxtPeso().setText(animal.getPesokg() + "");
+
+        for (int c = 0; c < tPrincipal.getcAnimal().getComboDono().getItemCount(); c++) {
+
+            if (tPrincipal.getcAnimal().getComboDono().getItemAt(c).equals(animal.getCliente().getNome())) {
+                tPrincipal.getcAnimal().getComboDono().setSelectedItem(tPrincipal.getcAnimal().getComboDono().getItemAt(c));
+            }
+        }
+
+        for (int c = 0; c < tPrincipal.getcAnimal().getComboSexo().getItemCount(); c++) {
+
+            if (tPrincipal.getcAnimal().getComboSexo().getItemAt(c).equals(animal.getSexo())) {
+                tPrincipal.getcAnimal().getComboSexo().setSelectedItem(tPrincipal.getcAnimal().getComboSexo().getItemAt(c));
+            }
+        }
     }
 }
