@@ -5,7 +5,6 @@
  */
 package br.com.pbd.view;
 
-
 public class CadastroFornecedor extends javax.swing.JInternalFrame {
 
     /**
@@ -620,6 +619,22 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes() {
+        txtNomeFantazia.setText("");
+        txtRazaoSociall.setText("");
+        txtCnpjj.setText("");
+        txtCidade.setText("");
+        txtBairro.setText("");
+        txtRua.setText("");
+        txtCep.setText("");
+        txtNumero.setText("");
+
+        txtComplemento.setText("");
+        txtTelefone.setText("");
+        txtCelular.setText("");
+        txtEmail.setText("");
+
+    }
 
     /**
      * @return the btnNovoFornecedor
@@ -635,7 +650,6 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         return btnSair;
     }
 
-       
     /**
      * @return the comboUf
      */
@@ -783,5 +797,4 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         return btnSalvar;
     }
 
-    
 }

@@ -6,6 +6,7 @@
 package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoCaixa;
+import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Caixa;

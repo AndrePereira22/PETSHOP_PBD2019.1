@@ -30,6 +30,6 @@ public class Main {
         ControleFinanceiro cFinanceiro = new ControleFinanceiro(tPrincipal);
         ControleProdutos_Servico cProduto_Servico = new ControleProdutos_Servico(tPrincipal);
         ControleVendas cVendas = new ControleVendas(tPrincipal);
-       
+       //AutoCompleteDecorator.decorate(comboAluno);
     }
 }

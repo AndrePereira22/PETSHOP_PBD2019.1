@@ -578,6 +578,23 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes() {
+        txtNome.setText("");
+        txtCpf.setText("");
+        txtRg.setText("");
+        txtCidade.setText("");
+        txtBairro.setText("");
+        txtRua.setText("");
+        TxtCep.setText("");
+        txtNumero.setText("");
+
+        txtComplemento.setText("");
+        txtTelefone.setText("");
+        txtCelular.setText("");
+        txtEmail.setText("");
+
+    }
+
     /**
      * @return the TxtCep
      */
@@ -746,5 +763,4 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         return txtTelefone;
     }
 
-   
 }

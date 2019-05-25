@@ -3,12 +3,15 @@ package br.com.pbd.view;
 import br.com.pbd.sql.PostgresBackup_Curso;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.JInternalFrame;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-public class TelaPrincipal extends javax.swing.JFrame implements ActionListener {
+public class TelaPrincipal extends javax.swing.JFrame implements ActionListener, KeyListener {
 
     private final CadastroAnimal cAnimal = new CadastroAnimal();
     private final Cadastros cadastros = new Cadastros();
@@ -20,13 +23,17 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
     private final CadastroProdutos cProdutos = new CadastroProdutos();
     private final AgendarServico agenarServico = new AgendarServico();
     private final Servico_Produto servico_Produto = new Servico_Produto();
+    private final CadastroLoja cLoja = new CadastroLoja();
     private final Raca_especie raca_especie = new Raca_especie();
     private final Agenda agenda = new Agenda();
     private final Vendas vendas = new Vendas();
     private final Financeiro financas = new Financeiro();
     private final Produtos produtos = new Produtos();
-    private Quantidadee quantidade = new Quantidadee();
-    private Pagamento pagamento = new Pagamento();
+    private final Quantidadee quantidade = new Quantidadee();
+    private final Pagamento pagamento = new Pagamento();
+    private final CadastroGrupo cGrupo = new CadastroGrupo();
+    private HashMap<Integer, Boolean> keyEventos;
+    private int start;
 
     public TelaPrincipal() {
         initComponents();
@@ -47,6 +54,12 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         ajustarInternalFrame(servico_Produto);
         ajustarInternalFrame(raca_especie);
         ajustarInternalFrame(produtos);
+        ajustarInternalFrame(cGrupo);
+        ajustarInternalFrame(cLoja);
+
+        start = 0;
+
+        keyEventos = new HashMap<Integer, Boolean>();
 
         adicionaEventos();
 
@@ -88,6 +101,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnClientes.setBorderPainted(false);
         btnClientes.setContentAreaFilled(false);
         btnClientes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 001.1.png"))); // NOI18N
+        btnClientes.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 001.1.png"))); // NOI18N
         btnClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClientesActionPerformed(evt);
@@ -101,6 +115,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnAgenda.setBorderPainted(false);
         btnAgenda.setContentAreaFilled(false);
         btnAgenda.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 002.1.png"))); // NOI18N
+        btnAgenda.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 002.1.png"))); // NOI18N
         btnAgenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgendaActionPerformed(evt);
@@ -114,6 +129,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnVendas.setBorderPainted(false);
         btnVendas.setContentAreaFilled(false);
         btnVendas.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 003.1.png"))); // NOI18N
+        btnVendas.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 003.1.png"))); // NOI18N
         btnVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVendasActionPerformed(evt);
@@ -136,6 +152,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnCadastros.setBorderPainted(false);
         btnCadastros.setContentAreaFilled(false);
         btnCadastros.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 005.1.png"))); // NOI18N
+        btnCadastros.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 005.1.png"))); // NOI18N
         btnCadastros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrosActionPerformed(evt);
@@ -149,6 +166,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnProdutos_serv.setBorderPainted(false);
         btnProdutos_serv.setContentAreaFilled(false);
         btnProdutos_serv.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 006.1.png"))); // NOI18N
+        btnProdutos_serv.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 006.1.png"))); // NOI18N
         btnProdutos_serv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProdutos_servActionPerformed(evt);
@@ -162,6 +180,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         btnFinanceiro.setBorderPainted(false);
         btnFinanceiro.setContentAreaFilled(false);
         btnFinanceiro.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 007.1.png"))); // NOI18N
+        btnFinanceiro.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 007.1.png"))); // NOI18N
         btnFinanceiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFinanceiroActionPerformed(evt);
@@ -367,9 +386,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
             getRaca_especie().setVisible(true);
             getRaca_especie().getPainelItens().setSelectedComponent(getRaca_especie().getPainelRaca());
         }
+        if (e.getSource() == getCadastros().getBtnGrupo()) {
+            cGrupo.setVisible(true);
+        }
 
         /////////////////////////////////////////////////////
         if (e.getSource() == getAgenda().getBtnSair()) {
+            getAgenda().setVisible(false);
             painelMenu.setVisible(true);
         }
         if (e.getSource() == cServicos.getBtnCancelar()) {
@@ -481,7 +504,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         }
         if (e.getSource() == getVendas().getBtnFinalizarVenda()) {
             getPagamento().setVisible(true);
-        } 
+        }
+        if (e.getSource() == getVendas().getBtnSair()) {
+            getVendas().setVisible(false);
+            painelMenu.setVisible(true);
+        }
+
+        if (e.getSource() == cGrupo.getBtnSair()) {
+            cGrupo.setVisible(false);
+            cadastros.setVisible(true);
+        }
+         if (e.getSource() == cLoja.getBtnCancelar()) {
+            cLoja.setVisible(false);
+            painelMenu.setVisible(true);
+        }
 
     }
 
@@ -493,11 +529,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getCadastros().getBtnProfissional().addActionListener(this);
         getCadastros().getBtnEspecie().addActionListener(this);
         getCadastros().getBtnRaca().addActionListener(this);
+        getCadastros().getBtnGrupo().addActionListener(this);
 
         getAgenda().getBtnSair().addActionListener(this);
         getFinancas().getBtnCancelar().addActionListener(this);
         getcProdutos().getBtnCancelar().addActionListener(this);
         cServicos.getBtnCancelar().addActionListener(this);
+        cGrupo.getBtnSair().addActionListener(this);
 
         getServico_Produto().getBtnNovoServico().addActionListener(this);
         getServico_Produto().getBtnNovoProduto().addActionListener(this);
@@ -532,6 +570,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         getVendas().getBtnProdutos().addActionListener(this);
         getQuantidade().getBtnConfirmar().addActionListener(this);
         getVendas().getBtnFinalizarVenda().addActionListener(this);
+        getVendas().getBtnSair().addActionListener(this);
+        getcLoja().getBtnCancelar().addActionListener(this);
+
+        btnAgenda.addKeyListener(this);
+        btnClientes.addKeyListener(this);
+        btnCadastros.addKeyListener(this);
+        btnVendas.addKeyListener(this);
+        btnProdutos_serv.addKeyListener(this);
+        btnFinanceiro.addKeyListener(this);
 
     }
 
@@ -547,6 +594,86 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         getAgenda().getLblDatal().setText(formato.format(d));
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        keyEventos.put(e.getKeyCode(), true);
+
+        if (e.getKeyCode() == KeyEvent.VK_UP) {
+
+            if (btnFinanceiro.isSelected()) {
+                btnFinanceiro.setSelected(false);
+                btnProdutos_serv.setSelected(true);
+
+            } else if (btnProdutos_serv.isSelected()) {
+                btnProdutos_serv.setSelected(false);
+                btnCadastros.setSelected(true);
+
+            } else if (btnCadastros.isSelected()) {
+                btnCadastros.setSelected(false);
+                btnVendas.setSelected(true);
+
+            } else if (btnVendas.isSelected()) {
+                btnVendas.setSelected(false);
+                btnAgenda.setSelected(true);
+
+            } else if (btnAgenda.isSelected()) {
+                btnAgenda.setSelected(false);
+                btnClientes.setSelected(true);
+
+            } else if (btnClientes.isSelected()) {
+                btnClientes.setSelected(false);
+                btnFinanceiro.setSelected(true);
+
+            }
+
+        }
+        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+
+            if (btnClientes.isSelected()) {
+                btnClientes.setSelected(false);
+                btnAgenda.setSelected(true);
+
+            } else if (btnAgenda.isSelected()) {
+                btnAgenda.setSelected(false);
+                btnVendas.setSelected(true);
+
+            } else if (btnVendas.isSelected()) {
+                btnVendas.setSelected(false);
+                btnCadastros.setSelected(true);
+
+            } else if (btnCadastros.isSelected()) {
+                btnCadastros.setSelected(false);
+                btnProdutos_serv.setSelected(true);
+
+            } else if (btnProdutos_serv.isSelected()) {
+                btnProdutos_serv.setSelected(false);
+                btnFinanceiro.setSelected(true);
+
+            } else if (btnFinanceiro.isSelected()) {
+                btnFinanceiro.setSelected(false);
+                btnClientes.setSelected(true);
+
+            }
+            if (start == 0) {
+                btnClientes.setSelected(true);
+                start++;
+            }
+
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e
+    ) {
+        keyEventos.remove(e.getKeyCode());
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e
+    ) {
     }
 
     /**
@@ -722,6 +849,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener 
      */
     public Pagamento getPagamento() {
         return pagamento;
+    }
+
+    /**
+     * @return the cGrupo
+     */
+    public CadastroGrupo getcGrupo() {
+        return cGrupo;
+    }
+
+    /**
+     * @return the cLoja
+     */
+    public CadastroLoja getcLoja() {
+        return cLoja;
     }
 
 }

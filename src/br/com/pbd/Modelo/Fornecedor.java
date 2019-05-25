@@ -35,7 +35,7 @@ public class Fornecedor implements EntidadeBase {
      private String nomefantasia;
      @Column(name = "razaosocial", length = 20, nullable = false)
      private String razaosocial;
-     @Column(name = "cnpj", length = 18, nullable = false)
+     @Column(name = "cnpj", length = 18, nullable = false, unique=true)
      private String cnpj ;
    
      @OneToOne(cascade=CascadeType.ALL)

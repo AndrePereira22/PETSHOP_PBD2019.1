@@ -34,7 +34,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaRacas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txtPesquizaRaca = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         painelNC = new javax.swing.JPanel();
         painelCadastroRaca = new javax.swing.JPanel();
@@ -54,7 +54,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaEspecie = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtPesquisaEspecie = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         painelCadastroEspecie = new javax.swing.JPanel();
@@ -216,7 +216,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquizaRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -243,7 +243,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPesquizaRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -382,7 +382,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPesquisaEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(58, 58, 58)
                         .addComponent(jButton2))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -410,7 +410,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPesquisaEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
@@ -508,8 +508,6 @@ public class Raca_especie extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JPanel painelCadastroEspecie;
     private javax.swing.JPanel painelCadastroRaca;
     private javax.swing.JPanel painelEspecie;
@@ -520,23 +518,33 @@ public class Raca_especie extends javax.swing.JInternalFrame {
     private javax.swing.JTable tabelaRacas;
     private javax.swing.JTextArea txtAreaRaca;
     private javax.swing.JTextField txtEspecie;
+    private javax.swing.JTextField txtPesquisaEspecie;
+    private javax.swing.JTextField txtPesquizaRaca;
     private javax.swing.JTextField txtRaca;
     // End of variables declaration//GEN-END:variables
 
-    
-  
-  public void AtivarComponenteRaca(Boolean status){
+    public void AtivarComponenteRaca(Boolean status) {
         getTxtAreaRaca().setEnabled(status);
         getTxtRaca().setEnabled(status);
         getComboEspecie().setEnabled(status);
         getBtnCancelarRaca().setEnabled(status);
         getBtnSavlarRaca().setEnabled(status);
-  }
- public void AtivarComponenteEspecie(Boolean status){
+    }
+
+    public void AtivarComponenteEspecie(Boolean status) {
         getTxtEspecie().setEnabled(status);
         getBtnSalvarEspecie().setEnabled(status);
         getBtnCancelarEspecie().setEnabled(status);
-  }    
+    }
+
+    public void limparComponentes() {
+        txtEspecie.setText("");
+        txtAreaRaca.setText("");
+        txtPesquisaEspecie.setText("");
+        txtPesquizaRaca.setText("");
+        txtRaca.setText("");
+
+    }
 
     /**
      * @return the btnCancelarEspecie
@@ -678,5 +686,4 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         return txtRaca;
     }
 
-    
 }

@@ -110,31 +110,30 @@ public class ControleAgenda implements ActionListener {
         int indiceAnimal = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
         int indiceServico = tPrincipal.getAgenarServico().getComboServico().getSelectedIndex();
 
-        try {
-            animal = animais.get(indiceAnimal);
-            servico = servicos.get(indiceServico);
-        } catch (ArrayIndexOutOfBoundsException e) {
-        }
-
         Date d = new Date(System.currentTimeMillis());
-        java.sql.Date data = ConverterData(tPrincipal.getAgenarServico().getData().getDate());
 
         Pagamento pagamento = new Pagamento();
         pagamento.setValortotal(0.0);
         pagamento.setNumeroparcelas(0);
         pagamento.setStatus(false);
         pagamento.setData(ConverterData(d));
+        pagamento.setForma_pagamento("DINHEIRO");
 
-        agenda.setData(data);
         agenda.setAnotacao(tPrincipal.getAgenarServico().getAreaObservacao().getText());
         agenda.setHorario(ConverterTime(tPrincipal.getAgenarServico().getComboHorario().getSelectedItem().toString()));
 
         agenda.setPagamento(pagamento);
-        agenda.setAnimal(animal);
+
         agenda.setProfissional(profissional);
-        agenda.setServico(servico);
 
         try {
+            java.sql.Date data = ConverterData(tPrincipal.getAgenarServico().getData().getDate());
+            agenda.setData(data);
+            animal = animais.get(indiceAnimal);
+            servico = servicos.get(indiceServico);
+            agenda.setServico(servico);
+            agenda.setAnimal(animal);
+
             new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
             JOptionPane.showMessageDialog(null, "Agendado com Sucesso!");
             tPrincipal.getAgenarServico().setVisible(false);
@@ -146,6 +145,12 @@ public class ControleAgenda implements ActionListener {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+
+        } catch (java.lang.NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+
         }
 
     }
@@ -184,13 +189,14 @@ public class ControleAgenda implements ActionListener {
         int indice = tPrincipal.getAgenda().getComboProfissional().getSelectedIndex();
 
         if (!profissionais.isEmpty()) {
-            profissional = profissionais.get(indice);
-            agendas = new DaoAgenda().buscaAgenda(profissional);
-
-            tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
             int i = 0;
             try {
+                profissional = profissionais.get(indice);
+                agendas = new DaoAgenda().buscaAgenda(profissional);
+
+                tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
+
                 String[] colunas = new String[]{"HORARIO", "SERVICO"};
                 Object[][] dados = new Object[agendas.size()][2];
                 for (Agenda a : agendas) {

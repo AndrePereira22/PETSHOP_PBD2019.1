@@ -30,15 +30,15 @@ public class Agenda implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agenda_seq")
     private Long id;
 
-    @OneToOne
+    @OneToOne(optional=false)
     private Animal animal;
-    @OneToOne
+    @OneToOne(optional=false)
     private Servico servico;
 
-    @OneToOne
+    @OneToOne(optional=false)
     private Profissional profissional;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(optional=false,cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     @Column (name="horario",nullable=false)

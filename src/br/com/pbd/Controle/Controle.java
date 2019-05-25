@@ -30,12 +30,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.JTable;
 
 /**
  *
  * @author Andre-Coude
  */
-public class Controle implements ActionListener {
+public class Controle extends MouseAdapter implements ActionListener {
 
     private final TelaPrincipal tPrincipal;
     private List<Cliente> clientes;
@@ -48,7 +49,7 @@ public class Controle implements ActionListener {
     private Funcionario funcionario;
     private Fornecedor fornecedor;
     private Profissional profissional;
-    private Boolean saveF, saveC, saveP, saveFor;
+    private Boolean salvar_editar;
 
     public Controle(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -57,13 +58,10 @@ public class Controle implements ActionListener {
         funcionarios = new ArrayList<Funcionario>();
         profissionais = new ArrayList<Profissional>();
         fornecedores = new ArrayList<Fornecedor>();
-        saveF = true;
-        saveC = true;
-        saveP = true;
-        saveFor = true;
+        salvar_editar = true;
 
         editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/l.png"));
+        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
 
         btnEditar = new JButton(editar);
         btnEditar.setName("editar");
@@ -75,68 +73,66 @@ public class Controle implements ActionListener {
         btnExcluir.setBorder(null);
         btnExcluir.setContentAreaFilled(false);
 
-        tPrincipal.getcFuncionario().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcFuncionario().getBtnSalvar().addActionListener(this); 
+        tPrincipal.getcFuncionario().getBtnNovoFuncionario().addActionListener(this);
+        tPrincipal.getcFuncionario().getTabelaFuncionarios().addMouseListener(this);
+        
         tPrincipal.getcCliente().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcCliente().getBtnCadastrarCliente().addActionListener(this);
+        tPrincipal.getcCliente().getTabelaCliente().addMouseListener(this);
+        
         tPrincipal.getcFornecedor().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcFornecedor().getBtnNovoFornecedor().addActionListener(this);
+        tPrincipal.getcFornecedor().getTabelaFornecedor().addMouseListener(this);
+        
         tPrincipal.getcProfissioanl().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcProfissioanl().getBtnNovoProfissional().addActionListener(this);
+        tPrincipal.getcProfissioanl().getTabelaProfissionais().addMouseListener(this);
+        
         tPrincipal.getBtnClientes().addActionListener(this);
-        tPrincipal.getCadastros().getBtnFuncionario().addActionListener(this);
         tPrincipal.getCadastros().getBtnProfissional().addActionListener(this);
         tPrincipal.getCadastros().getBtnFornecedor().addActionListener(this);
-        tPrincipal.getcCliente().getBtnCadastrarCliente().addActionListener(this);
-        tPrincipal.getcFuncionario().getBtnNovoFuncionario().addActionListener(this);
+        tPrincipal.getCadastros().getBtnFuncionario().addActionListener(this);
+        
+        
+      
+        
+    }
 
-        tPrincipal.getcCliente().getTabelaCliente().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = tPrincipal.getcCliente().getTabelaCliente().getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / tPrincipal.getcCliente().getTabelaCliente().getRowHeight();
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == tPrincipal.getcCliente().getTabelaCliente()) {
 
-                if (row < tPrincipal.getProdutos().getTabelaItens().getRowCount() && row >= 0 && column < tPrincipal.getcCliente().getTabelaCliente().getColumnCount() && column >= 0) {
-                    Object value = tPrincipal.getcCliente().getTabelaCliente().getValueAt(row, column);
-                    if (value instanceof JButton) {
-                        ((JButton) value).doClick();
-                        JButton boton = (JButton) value;
+            int ro = retornaIndice(tPrincipal.getcCliente().getTabelaCliente(), e);
+            tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCadastro());
+            tPrincipal.getcCliente().getPainelCadastro().setEnabled(true);
+            cliente = clientes.get(ro);
+            preencherDadosCliente(cliente);
+        }
+        if (e.getSource() == tPrincipal.getcFuncionario().getTabelaFuncionarios()) {
 
-                        if (boton.getName().equals("editar")) {
-                            int ro = tPrincipal.getcCliente().getTabelaCliente().getSelectedRow();
-                            tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCadastro());
-                            tPrincipal.getcCliente().getPainelCadastro().setEnabled(true);
+            int ro = retornaIndice(tPrincipal.getcFuncionario().getTabelaFuncionarios(), e);
+            tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelCadastro());
+            tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(true);
+            funcionario = funcionarios.get(ro);
+            preencherDadosFuncionario(funcionario);
+        }
+        if (e.getSource() == tPrincipal.getcProfissioanl().getTabelaProfissionais()) {
 
-                            cliente = clientes.get(ro);
-                            preencherDadosCliente(cliente);
-                            saveC = false;
-                        }
-                    }
-                }
-            }
-        });
-        tPrincipal.getcFuncionario().getTabelaFuncionarios().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = tPrincipal.getcFuncionario().getTabelaFuncionarios().getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / tPrincipal.getcFuncionario().getTabelaFuncionarios().getRowHeight();
+            int ro = retornaIndice(tPrincipal.getcProfissioanl().getTabelaProfissionais(), e);
+            tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelCadastro());
+            tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(true);
+            profissional = profissionais.get(ro);
+            preencherDadosProfissional(profissional);
+        }
+        if (e.getSource() == tPrincipal.getcFornecedor().getTabelaFornecedor()) {
 
-                if (row < tPrincipal.getcFuncionario().getTabelaFuncionarios().getRowCount() && row >= 0 && column < tPrincipal.getcFuncionario().getTabelaFuncionarios().getColumnCount() && column >= 0) {
-                    Object value = tPrincipal.getcFuncionario().getTabelaFuncionarios().getValueAt(row, column);
-                    if (value instanceof JButton) {
-                        ((JButton) value).doClick();
-                        JButton boton = (JButton) value;
-
-                        if (boton.getName().equals("editar")) {
-                            int ro = tPrincipal.getcFuncionario().getTabelaFuncionarios().getSelectedRow();
-                            tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelCadastro());
-                            tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(true);
-
-                            funcionario = funcionarios.get(ro);
-                            preencherDadosFuncionario(funcionario);
-                            saveF = false;
-                        }
-                    }
-                }
-            }
-        });
-
+            int ro = retornaIndice(tPrincipal.getcFornecedor().getTabelaFornecedor(), e);
+            tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelCadastro());
+            tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(true);
+            fornecedor = fornecedores.get(ro);
+            preencherDadosFornecedor(fornecedor);
+        }
     }
 
     @Override
@@ -144,47 +140,70 @@ public class Controle implements ActionListener {
         if (e.getSource() == tPrincipal.getBtnClientes()) {
             listarClientes();
         }
-        if (e.getSource() == tPrincipal.getcFuncionario().getBtnSalvar()) {
-            if (saveF) {
-                cadastrarFuncionario();
-            } else {
-                editarFuncionario(funcionario);
-            }
-
-        }
-        if (e.getSource() == tPrincipal.getCadastros().getBtnFuncionario()) {
-            listarFuncionarios();
-        }
-        if (e.getSource() == tPrincipal.getCadastros().getBtnProfissional()) {
-            listarProfissionais();
-        }
-        if (e.getSource() == tPrincipal.getCadastros().getBtnFornecedor()) {
-            listarFornecedores();
-        }
         if (e.getSource() == tPrincipal.getcCliente().getBtnSalvar()) {
-            if (saveC) {
+            if (salvar_editar) {
                 cadastrarCliente();
             } else {
                 editarCliente(cliente);
             }
-
         }
+
         if (e.getSource() == tPrincipal.getcCliente().getBtnCadastrarCliente()) {
-            saveC = true;
-
+            salvar_editar = true;
+            tPrincipal.getcCliente().limparComponentes();
         }
-        if (e.getSource() == tPrincipal.getcFuncionario().getBtnNovoFuncionario()) {
-            saveF = true;
 
+        if (e.getSource() == tPrincipal.getcFuncionario().getBtnSalvar()) {
+            if (salvar_editar) {
+                cadastrarFuncionario();
+            } else {
+                editarFuncionario(funcionario);
+            }
+        }
+
+        if (e.getSource() == tPrincipal.getCadastros().getBtnFuncionario()) {
+            listarFuncionarios();
+        }
+
+        if (e.getSource() == tPrincipal.getcFuncionario().getBtnNovoFuncionario()) {
+            salvar_editar = true;
+            tPrincipal.getcFuncionario().limparComponentes();
+        }
+
+        if (e.getSource() == tPrincipal.getCadastros().getBtnFornecedor()) {
+            listarFornecedores();
         }
         if (e.getSource() == tPrincipal.getcFornecedor().getBtnSalvar()) {
-            cadastrarFornecedor();
 
+            if (salvar_editar) {
+                cadastrarFornecedor();
+            } else {
+                editarFornecedor(fornecedor);
+            }
         }
+        if (e.getSource() == tPrincipal.getcFornecedor().getBtnNovoFornecedor()) {
+            salvar_editar = true;
+            tPrincipal.getcFornecedor().limparComponentes();
+        }
+
+        if (e.getSource() == tPrincipal.getCadastros().getBtnProfissional()) {
+            listarProfissionais();
+        }
+
         if (e.getSource() == tPrincipal.getcProfissioanl().getBtnSalvar()) {
-            cadastrarProfissional();
+
+            if (salvar_editar) {
+                cadastrarProfissional();
+            } else {
+                editarProfissional(profissional);
+            }
+        }
+        if (e.getSource() == tPrincipal.getcProfissioanl().getBtnNovoProfissional()) {
+            salvar_editar = true;
+            tPrincipal.getcProfissioanl().limparComponentes();
 
         }
+
     }
 
     public void cadastrarCliente() {
@@ -224,6 +243,7 @@ public class Controle implements ActionListener {
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
             listarClientes();
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -267,11 +287,8 @@ public class Controle implements ActionListener {
         funcionario.setNascimento(nascimento);
         funcionario.setRg(tPrincipal.getcFuncionario().getTxtRg().getText());
 
-        funcionario.setDados(dados);
-        funcionario.setLogin(login);
-
         try {
-
+            // criptografar senha
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
             StringBuilder ab = new StringBuilder();
@@ -284,12 +301,16 @@ public class Controle implements ActionListener {
 
             login.setSenha(senhaHex);
 
+            funcionario.setDados(dados);
+            funcionario.setLogin(login);
+
             new GenericDao<Funcionario>().salvar_ou_atualizar(funcionario);
 
             JOptionPane.showMessageDialog(null, "Funcionario cadastrado!");
             tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
             tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
             listarFuncionarios();
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -329,6 +350,7 @@ public class Controle implements ActionListener {
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
             listarFornecedores();
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -340,7 +362,6 @@ public class Controle implements ActionListener {
 
         Login login = new Login();
         String senha = new String(tPrincipal.getcProfissioanl().getTxtSenha().getPassword());
-        login.setSenha(senha);
         login.setUsuario(tPrincipal.getcProfissioanl().getTxtUsuario().getText());
 
         Dados dados = new Dados();
@@ -359,9 +380,6 @@ public class Controle implements ActionListener {
         dados.setUf(tPrincipal.getcProfissioanl().getComboUf().getSelectedItem().toString());
 
         profissional = new Profissional();
-
-        profissional.setDados(dados);
-        profissional.setLogin(login);
         profissional.setCrmv(tPrincipal.getcProfissioanl().getComboCrmv().getSelectedItem().toString());
         profissional.setCpf(tPrincipal.getcProfissioanl().getTxtCpf().getText());
         profissional.setRg(tPrincipal.getcProfissioanl().getTxtRg().getText());
@@ -373,16 +391,38 @@ public class Controle implements ActionListener {
         profissional.setNascimento(nascimento);
 
         try {
+
+            // criptografar senha
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
+            StringBuilder ab = new StringBuilder();
+
+            for (byte b : messageDigest) {
+                ab.append(String.format("%02X", 0xFF & b));
+
+            }
+            String senhaHex = ab.toString();
+
+            login.setSenha(senhaHex);
+
+            profissional.setDados(dados);
+            profissional.setLogin(login);
+
             new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
 
             JOptionPane.showMessageDialog(null, "Profissional cadastrado!");
             tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
             tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
             listarProfissionais();
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -562,7 +602,7 @@ public class Controle implements ActionListener {
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
             listarClientes();
-            saveC = true;
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -606,7 +646,7 @@ public class Controle implements ActionListener {
             tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
             tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
             listarFuncionarios();
-            saveF = true;
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -614,33 +654,29 @@ public class Controle implements ActionListener {
         }
     }
 
-    private void editarFornecedor() {
+    private void editarFornecedor(Fornecedor fornecedor) {
 
-        Dados dados = new Dados();
-        dados.setBairro(tPrincipal.getcFornecedor().getTxtBairro().getText());
-        dados.setCelular(tPrincipal.getcFornecedor().getTxtCelular().getText());
-        dados.setTelefone(tPrincipal.getcFornecedor().getTxtTelefone().getText());
-        dados.setCep(tPrincipal.getcFornecedor().getTxtCep().getText());
-        dados.setCidade(tPrincipal.getcFornecedor().getTxtCidade().getText());
-        dados.setEmail(tPrincipal.getcFornecedor().getTxtEmail().getText());
+        fornecedor.getDados().setBairro(tPrincipal.getcFornecedor().getTxtBairro().getText());
+        fornecedor.getDados().setCelular(tPrincipal.getcFornecedor().getTxtCelular().getText());
+        fornecedor.getDados().setTelefone(tPrincipal.getcFornecedor().getTxtTelefone().getText());
+        fornecedor.getDados().setCep(tPrincipal.getcFornecedor().getTxtCep().getText());
+        fornecedor.getDados().setCidade(tPrincipal.getcFornecedor().getTxtCidade().getText());
+        fornecedor.getDados().setEmail(tPrincipal.getcFornecedor().getTxtEmail().getText());
 
         String numb = tPrincipal.getcFornecedor().getTxtNumero().getText() + " "
                 + tPrincipal.getcFornecedor().getTxtComplemento().getText();
 
-        dados.setNumero(numb);
-        dados.setRua(tPrincipal.getcFornecedor().getTxtRua().getText());
-        dados.setUf(tPrincipal.getcFornecedor().getComboUf().getSelectedItem().toString());
+        fornecedor.getDados().setNumero(numb);
+        fornecedor.getDados().setRua(tPrincipal.getcFornecedor().getTxtRua().getText());
+        fornecedor.getDados().setUf(tPrincipal.getcFornecedor().getComboUf().getSelectedItem().toString());
 
-        fornecedor = new Fornecedor();
-
-        fornecedor.setDados(dados);
         fornecedor.setCnpj(tPrincipal.getcFornecedor().getTxtCnpjj().getText());
         fornecedor.setNomefantasia(tPrincipal.getcFornecedor().getTxtNomeFantazia().getText());
         fornecedor.setRazaosocial(tPrincipal.getcFornecedor().getTxtRazaoSociall().getText());
 
         try {
             new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
-            JOptionPane.showMessageDialog(null, "Fornecedor cadastrado!");
+            JOptionPane.showMessageDialog(null, "Edição Concluida!");
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
             listarFornecedores();
@@ -651,32 +687,22 @@ public class Controle implements ActionListener {
         }
     }
 
-    private void editarProfissional() {
+    private void editarProfissional(Profissional profissional) {
 
-        Login login = new Login();
-        String senha = new String(tPrincipal.getcProfissioanl().getTxtSenha().getPassword());
-        login.setSenha(senha);
-        login.setUsuario(tPrincipal.getcProfissioanl().getTxtUsuario().getText());
-
-        Dados dados = new Dados();
-        dados.setBairro(tPrincipal.getcProfissioanl().getTxtBairro().getText());
-        dados.setCelular(tPrincipal.getcProfissioanl().getTxtCelular().getText());
-        dados.setTelefone(tPrincipal.getcProfissioanl().getTxtTelefone().getText());
-        dados.setCep(tPrincipal.getcProfissioanl().getTxtCep().getText());
-        dados.setCidade(tPrincipal.getcProfissioanl().getTxtCidade().getText());
-        dados.setEmail(tPrincipal.getcProfissioanl().getTxtEmail().getText());
+        profissional.getDados().setBairro(tPrincipal.getcProfissioanl().getTxtBairro().getText());
+        profissional.getDados().setCelular(tPrincipal.getcProfissioanl().getTxtCelular().getText());
+        profissional.getDados().setTelefone(tPrincipal.getcProfissioanl().getTxtTelefone().getText());
+        profissional.getDados().setCep(tPrincipal.getcProfissioanl().getTxtCep().getText());
+        profissional.getDados().setCidade(tPrincipal.getcProfissioanl().getTxtCidade().getText());
+        profissional.getDados().setEmail(tPrincipal.getcProfissioanl().getTxtEmail().getText());
 
         String numb = tPrincipal.getcProfissioanl().getTxtNumero().getText() + " "
                 + tPrincipal.getcProfissioanl().getTxtComplemento().getText();
 
-        dados.setNumero(numb);
-        dados.setRua(tPrincipal.getcProfissioanl().getTxtRua().getText());
-        dados.setUf(tPrincipal.getcProfissioanl().getComboUf().getSelectedItem().toString());
+        profissional.getDados().setNumero(numb);
+        profissional.getDados().setRua(tPrincipal.getcProfissioanl().getTxtRua().getText());
+        profissional.getDados().setUf(tPrincipal.getcProfissioanl().getComboUf().getSelectedItem().toString());
 
-        profissional = new Profissional();
-
-        profissional.setDados(dados);
-        profissional.setLogin(login);
         profissional.setCrmv(tPrincipal.getcProfissioanl().getComboCrmv().getSelectedItem().toString());
         profissional.setCpf(tPrincipal.getcProfissioanl().getTxtCpf().getText());
         profissional.setRg(tPrincipal.getcProfissioanl().getTxtRg().getText());
@@ -690,10 +716,11 @@ public class Controle implements ActionListener {
         try {
             new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
 
-            JOptionPane.showMessageDialog(null, "Profissional cadastrado!");
+            JOptionPane.showMessageDialog(null, "Edição concluida!");
             tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
             tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
             listarProfissionais();
+            salvar_editar = true;
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
@@ -774,4 +801,85 @@ public class Controle implements ActionListener {
         }
 
     }
+
+    private void preencherDadosProfissional(Profissional profissional) {
+
+        tPrincipal.getcProfissioanl().getTxtBairro().setText(profissional.getDados().getBairro());
+        tPrincipal.getcProfissioanl().getTxtCelular().setText(profissional.getDados().getCelular());
+        tPrincipal.getcProfissioanl().getTxtTelefone().setText(profissional.getDados().getTelefone());
+        tPrincipal.getcProfissioanl().getTxtCep().setText(profissional.getDados().getCep());
+        tPrincipal.getcProfissioanl().getTxtCidade().setText(profissional.getDados().getCidade());
+        tPrincipal.getcProfissioanl().getTxtEmail().setText(profissional.getDados().getEmail());
+
+        tPrincipal.getcProfissioanl().getTxtNumero().setText(profissional.getDados().getNumero());
+
+        tPrincipal.getcProfissioanl().getTxtRua().setText(profissional.getDados().getRua());
+
+        tPrincipal.getcProfissioanl().getTxtNome().setText(profissional.getNome());
+        tPrincipal.getcProfissioanl().getTxtCpf().setText(profissional.getCpf());
+
+        tPrincipal.getcProfissioanl().getNascimento().setDate(profissional.getNascimento());
+
+        tPrincipal.getcProfissioanl().getTxtRg().setText(profissional.getRg());
+
+        for (int c = 0; c < tPrincipal.getcFuncionario().getComboSexo().getItemCount(); c++) {
+
+            if (tPrincipal.getcProfissioanl().getComboSexo().getItemAt(c).equals(profissional.getSexo())) {
+                tPrincipal.getcProfissioanl().getComboSexo().setSelectedItem(tPrincipal.getcProfissioanl().getComboSexo().getItemAt(c));
+            }
+        }
+        for (int c = 0; c < tPrincipal.getcProfissioanl().getComboUf().getItemCount(); c++) {
+
+            if (tPrincipal.getcProfissioanl().getComboUf().getItemAt(c).equals(profissional.getDados().getUf())) {
+                tPrincipal.getcProfissioanl().getComboUf().setSelectedItem(tPrincipal.getcProfissioanl().getComboUf().getItemAt(c));
+            }
+        }
+
+    }
+
+    private void preencherDadosFornecedor(Fornecedor fornecedor) {
+
+        tPrincipal.getcFornecedor().getTxtBairro().setText(fornecedor.getDados().getBairro());
+        tPrincipal.getcFornecedor().getTxtCelular().setText(fornecedor.getDados().getCelular());
+        tPrincipal.getcFornecedor().getTxtTelefone().setText(fornecedor.getDados().getTelefone());
+        tPrincipal.getcFornecedor().getTxtCep().setText(fornecedor.getDados().getCep());
+        tPrincipal.getcFornecedor().getTxtCidade().setText(fornecedor.getDados().getCidade());
+        tPrincipal.getcFornecedor().getTxtEmail().setText(fornecedor.getDados().getEmail());
+
+        tPrincipal.getcFornecedor().getTxtNumero().setText(fornecedor.getDados().getNumero());
+
+        tPrincipal.getcFornecedor().getTxtRua().setText(fornecedor.getDados().getRua());
+
+        tPrincipal.getcFornecedor().getTxtNomeFantazia().setText(fornecedor.getNomefantasia());
+        tPrincipal.getcFornecedor().getTxtCnpjj().setText(fornecedor.getCnpj());
+        tPrincipal.getcFornecedor().getTxtRazaoSociall().setText(fornecedor.getRazaosocial());
+
+        for (int c = 0; c < tPrincipal.getcFornecedor().getComboUf().getItemCount(); c++) {
+
+            if (tPrincipal.getcFornecedor().getComboUf().getItemAt(c).equals(fornecedor.getDados().getUf())) {
+                tPrincipal.getcFornecedor().getComboUf().setSelectedItem(tPrincipal.getcFornecedor().getComboUf().getItemAt(c));
+            }
+        }
+
+    }
+
+    private int retornaIndice(JTable tabela, MouseEvent e) {
+        int ro = 0;
+        int column = tabela.getColumnModel().getColumnIndexAtX(e.getX());
+        int row = e.getY() / tabela.getRowHeight();
+
+        if (row < tabela.getRowCount() && row >= 0 && column < tabela.getColumnCount() && column >= 0) {
+            Object value = tabela.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                JButton boton = (JButton) value;
+                if (boton.getName().equals("editar")) {
+                    ro = tabela.getSelectedRow();
+                    salvar_editar = false;
+                }
+            }
+        }
+        return ro;
+    }
+
 }

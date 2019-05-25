@@ -38,6 +38,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
         jPanel7 = new javax.swing.JPanel();
         btnRaca = new javax.swing.JButton();
         btnEspecie = new javax.swing.JButton();
+        btnGrupo = new javax.swing.JButton();
         voltarMenu = new javax.swing.JButton();
         TITULO = new javax.swing.JLabel();
 
@@ -135,16 +136,23 @@ public class Cadastros extends javax.swing.JInternalFrame {
             }
         });
 
+        btnGrupo.setText("GRUPO DE PRODUTOS");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnGrupo)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                        .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,6 +161,8 @@ public class Cadastros extends javax.swing.JInternalFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(btnGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -272,6 +282,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEspecie;
     private javax.swing.JButton btnFornecedor;
     private javax.swing.JButton btnFuncionario;
+    private javax.swing.JButton btnGrupo;
     private javax.swing.JButton btnProfissional;
     private javax.swing.JButton btnRaca;
     private javax.swing.JPanel jPanel1;
@@ -331,6 +342,13 @@ public class Cadastros extends javax.swing.JInternalFrame {
      */
     public javax.swing.JButton getBtnRaca() {
         return btnRaca;
+    }
+
+    /**
+     * @return the btnGrupo
+     */
+    public javax.swing.JButton getBtnGrupo() {
+        return btnGrupo;
     }
 
     

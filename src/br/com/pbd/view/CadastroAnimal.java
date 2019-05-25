@@ -521,6 +521,15 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtaApelido;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes(){
+        txtNome.setText("");
+        txtaApelido.setText("");
+        txtPeso.setText("");
+        txtCor.setText("");
+        areaObservacao.setText("");
+       
+    }
+    
     /**
      * @return the areaObservacao
      */

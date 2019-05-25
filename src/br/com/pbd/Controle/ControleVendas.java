@@ -27,13 +27,14 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Andre-Coude
  */
-public class ControleVendas implements ActionListener {
+public class ControleVendas extends MouseAdapter implements ActionListener {
 
     private final TelaPrincipal tPrincipal;
     private Venda venda;
@@ -44,8 +45,8 @@ public class ControleVendas implements ActionListener {
     private int totalItens;
     private Double ValorTotal, ValorFinal;
     private Produto produto;
-    private final JButton btnExcluir, btnAdicionar;
-    private final Icon adicionar, excluir;
+    private final JButton btnExcluir, btnAdicionar, btnEditar;
+    private final Icon adicionar, excluir, editar;
     private final Calendar calendario;
 
     public ControleVendas(TelaPrincipal tPrincipal) {
@@ -57,8 +58,9 @@ public class ControleVendas implements ActionListener {
 
         adicionar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
         excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/remove1.png"));
+        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
 
-        btnAdicionar = new JButton("adicionar");
+        btnAdicionar = new JButton(adicionar);
         btnAdicionar.setName("adicionar");
         btnAdicionar.setBorder(null);
         btnAdicionar.setContentAreaFilled(false);
@@ -68,47 +70,36 @@ public class ControleVendas implements ActionListener {
         btnExcluir.setBorder(null);
         btnExcluir.setContentAreaFilled(false);
 
+        btnEditar = new JButton(editar);
+        btnExcluir.setName("editar");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
+
         tPrincipal.getBtnVendas().addActionListener(this);
         tPrincipal.getVendas().getBtnProdutos().addActionListener(this);
         tPrincipal.getVendas().getBtnFinalizarVenda().addActionListener(this);
         tPrincipal.getQuantidade().getBtnConfirmar().addActionListener(this);
         tPrincipal.getPagamento().getBtnFinalizar().addActionListener(this);
         tPrincipal.getProdutos().getTxtPesquisarProdutos().addActionListener(this);
+        tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
 
-        tPrincipal.getProdutos().getTabelaItens().addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int column = tPrincipal.getProdutos().getTabelaItens().getColumnModel().getColumnIndexAtX(e.getX());
-                int row = e.getY() / tPrincipal.getProdutos().getTabelaItens().getRowHeight();
+    }
 
-                if (row < tPrincipal.getProdutos().getTabelaItens().getRowCount() && row >= 0 && column < tPrincipal.getProdutos().getTabelaItens().getColumnCount() && column >= 0) {
-                    Object value = tPrincipal.getProdutos().getTabelaItens().getValueAt(row, column);
-                    if (value instanceof JButton) {
-                        ((JButton) value).doClick();
-                        JButton boton = (JButton) value;
+    ;
 
-                        if (boton.getName().equals("adicionar")) {
-                            int ro = tPrincipal.getProdutos().getTabelaItens().getSelectedRow();
-                            tPrincipal.getQuantidade().setVisible(true);
-                            produto = produtos.get(ro);
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == tPrincipal.getProdutos().getTabelaItens()) {
 
-                        }
-                    }
-                }
-            }
-
-        });
+            int ro = retornaIndice(tPrincipal.getProdutos().getTabelaItens(), e);
+            tPrincipal.getQuantidade().setVisible(true);
+            produto = produtos.get(ro);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-//        if (e.getSource() == tPrincipal.getProdutos().getTxtPesquisarProdutos()) {
-//           produtos = new GenericDao<Produto>().getAll(Produto.class);
-//           listarProdutos(produtos);
-//        }
-//        
-    
         if (e.getSource() == tPrincipal.getBtnVendas()) {
             venda = new Venda();
             itens = new ArrayList<ItemVenda>();
@@ -260,15 +251,16 @@ public class ControleVendas implements ActionListener {
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "GRUP0", "REMOVER"};
-                Object[][] dados = new Object[itens.size()][6];
+                String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "GRUP0", "EDITAR", "REMOVER"};
+                Object[][] dados = new Object[itens.size()][7];
                 for (ItemVenda item : itens) {
                     dados[i][0] = item.getProduto().getDescricao();
                     dados[i][1] = item.getProduto().getFabricante();
                     dados[i][2] = item.getProduto().getValorvenda();
-                    dados[i][3] = item.getQuantidade() + " ITEM(S)";
+                    dados[i][3] = item.getQuantidade();
                     dados[i][4] = item.getProduto().getGproduto().getDescricao();
-                    dados[i][5] = btnExcluir;
+                    dados[i][5] = btnEditar;
+                    dados[i][6] = btnExcluir;
                     totalItens += item.getQuantidade();
                     ValorTotal += item.getProduto().getValorvenda() * item.getQuantidade();
 
@@ -291,6 +283,25 @@ public class ControleVendas implements ActionListener {
 
     public java.sql.Date ConverterData(java.util.Date date) {
         return new java.sql.Date(date.getTime());
+    }
+
+    private int retornaIndice(JTable tabela, MouseEvent e) {
+        int ro = 0;
+        int column = tabela.getColumnModel().getColumnIndexAtX(e.getX());
+        int row = e.getY() / tabela.getRowHeight();
+
+        if (row < tabela.getRowCount() && row >= 0 && column < tabela.getColumnCount() && column >= 0) {
+            Object value = tabela.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                JButton boton = (JButton) value;
+                if (boton.getName().equals("editar")) {
+                    ro = tabela.getSelectedRow();
+
+                }
+            }
+        }
+        return ro;
     }
 
 }
