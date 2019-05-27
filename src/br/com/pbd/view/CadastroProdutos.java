@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package br.com.pbd.view;
+import br.com.pbd.Modelo.Produto;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CadastroProdutos extends javax.swing.JInternalFrame {
 
@@ -12,6 +14,8 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
      */
     public CadastroProdutos() {
         initComponents();
+        AutoCompleteDecorator.decorate(comboFornecedor);
+        AutoCompleteDecorator.decorate(comboGrupoProduto);
     }
 
     /**
@@ -44,7 +48,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         comboGrupoProduto = new javax.swing.JComboBox<>();
         BotaoNovoGrupo = new javax.swing.JButton();
-        btnSalvarProduto = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -225,12 +229,17 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
                 .addGap(56, 56, 56))
         );
 
-        btnSalvarProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnSalvarProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save.png"))); // NOI18N
-        btnSalvarProduto.setText("  SALVAR");
-        btnSalvarProduto.setBorderPainted(false);
-        btnSalvarProduto.setContentAreaFilled(false);
-        btnSalvarProduto.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save (3).png"))); // NOI18N
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.png"))); // NOI18N
+        btnSalvar.setText("  SALVAR");
+        btnSalvar.setBorderPainted(false);
+        btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.1.png"))); // NOI18N
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
@@ -238,7 +247,12 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         btnCancelar.setBorder(null);
         btnCancelar.setBorderPainted(false);
         btnCancelar.setContentAreaFilled(false);
-        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected (1).png"))); // NOI18N
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelCadastroLayout = new javax.swing.GroupLayout(PanelCadastro);
         PanelCadastro.setLayout(PanelCadastroLayout);
@@ -250,21 +264,21 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCadastroLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalvarProduto)
-                .addGap(56, 56, 56)
-                .addComponent(btnCancelar)
-                .addGap(77, 77, 77))
+                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(137, 137, 137))
         );
         PanelCadastroLayout.setVerticalGroup(
             PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCadastroLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(painelCadastro1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvarProduto)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         painelItens.addTab("CADASTRO", PanelCadastro);
@@ -308,20 +322,28 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BotaoNovoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoGrupoActionPerformed
+
+    }//GEN-LAST:event_BotaoNovoGrupoActionPerformed
+
     private void comboGrupoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGrupoProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboGrupoProdutoActionPerformed
 
-    private void BotaoNovoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoGrupoActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
-    }//GEN-LAST:event_BotaoNovoGrupoActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoNovoGrupo;
     private javax.swing.JPanel PanelCadastro;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnSalvarProduto;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboFornecedor;
     private javax.swing.JComboBox<String> comboGrupoProduto;
     private javax.swing.JLabel jLabel3;
@@ -343,6 +365,35 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtaFabricante;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes() {
+        txtDescricao.setText("");
+        txtValorCompra.setText("");
+        txtValorVenda.setText("");
+        txtaFabricante.setText("");
+
+    }
+     public void preencherDados(Produto produto) {
+
+        getTxtDescricao().setText(produto.getDescricao());
+        getTxtaFabricante().setText(produto.getFabricante());
+        getTxtValorCompra().setText(produto.getValorcompra() + "");
+        getTxtValorVenda().setText(produto.getValorvenda() + "");
+
+        for (int c = 0; c < getComboFornecedor().getItemCount(); c++) {
+
+            if (getComboFornecedor().getItemAt(c).equals(produto.getFornecedor().getNomefantasia())) {
+               getComboFornecedor().setSelectedItem(getComboFornecedor().getItemAt(c));
+            }
+        }
+        for (int c = 0; c < getComboGrupoProduto().getItemCount(); c++) {
+
+            if (getComboGrupoProduto().getItemAt(c).equals(produto.getGproduto().getDescricao())) {
+               getComboGrupoProduto().setSelectedItem(getComboGrupoProduto().getItemAt(c));
+            }
+        }
+
+    }
+
     /**
      * @return the BotaoNovoGrupo
      */
@@ -362,13 +413,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
      */
     public javax.swing.JButton getBtnCancelar() {
         return btnCancelar;
-    }
-
-    /**
-     * @return the btnSalvarProduto
-     */
-    public javax.swing.JButton getBtnSalvarProduto() {
-        return btnSalvarProduto;
     }
 
     /**
@@ -425,6 +469,13 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
      */
     public javax.swing.JTextField getTxtaFabricante() {
         return txtaFabricante;
+    }
+
+    /**
+     * @return the btnSalvar
+     */
+    public javax.swing.JButton getBtnSalvar() {
+        return btnSalvar;
     }
 
 }

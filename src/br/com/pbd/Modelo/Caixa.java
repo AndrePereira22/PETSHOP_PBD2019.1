@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -41,6 +42,9 @@ public class Caixa implements EntidadeBase {
     private Boolean status;
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
+    
+    @OneToOne
+     private Loja loja;
 
     @Override
     public Long getId() {
@@ -122,6 +126,20 @@ public class Caixa implements EntidadeBase {
      */
     public void setData(Date data) {
         this.data = data;
+    }
+
+    /**
+     * @return the loja
+     */
+    public Loja getLoja() {
+        return loja;
+    }
+
+    /**
+     * @param loja the loja to set
+     */
+    public void setLoja(Loja loja) {
+        this.loja = loja;
     }
 
 }

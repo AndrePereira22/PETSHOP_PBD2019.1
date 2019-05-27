@@ -48,6 +48,8 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
     private final JButton btnExcluir, btnAdicionar, btnEditar;
     private final Icon adicionar, excluir, editar;
     private final Calendar calendario;
+    private int escolha;
+    private final int salvar = 1, edicao = 2, exclusao = 3;
 
     public ControleVendas(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -82,6 +84,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
         tPrincipal.getPagamento().getBtnFinalizar().addActionListener(this);
         tPrincipal.getProdutos().getTxtPesquisarProdutos().addActionListener(this);
         tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
+        tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
 
     }
 
@@ -95,6 +98,17 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             tPrincipal.getQuantidade().setVisible(true);
             produto = produtos.get(ro);
         }
+        if (e.getSource() == tPrincipal.getVendas().getTabelaItens()) {
+
+            int ro = retornaIndice(tPrincipal.getProdutos().getTabelaItens(), e);
+            if (escolha == edicao) {
+                tPrincipal.getQuantidade().setVisible(true);
+                produto = produtos.get(ro);
+            } else if (escolha == exclusao) {
+
+            }
+        }
+
     }
 
     @Override
@@ -204,14 +218,15 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
         try {
             numero = Integer.parseInt(tPrincipal.getQuantidade().getTxtQuantidade().getText());
             item.setQuantidade(numero);
+            item.setProduto(produto);
+            item.setVenda(venda);
+
+            itens.add(item);
+            
 
         } catch (NumberFormatException erro) {
         }
 
-        item.setProduto(produto);
-        item.setVenda(venda);
-
-        itens.add(item);
     }
 
     private void listarProdutos(List<Produto> produtos) {
@@ -297,7 +312,12 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
                 JButton boton = (JButton) value;
                 if (boton.getName().equals("editar")) {
                     ro = tabela.getSelectedRow();
-
+                    escolha = edicao;
+                } else if (boton.getName().equals("excluir")) {
+                    ro = tabela.getSelectedRow();
+                    escolha = exclusao;
+                } else {
+                    escolha = 0;
                 }
             }
         }

@@ -5,7 +5,7 @@
  */
 package br.com.pbd.Dao;
 
-import br.com.pbd.Modelo.Caixa;
+import br.com.pbd.Modelo.Especie;
 import br.com.pbd.sql.SQLConexao;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -14,20 +14,17 @@ import javax.persistence.Query;
  *
  * @author Andre-Coude
  */
-public class DaoCaixa {
+public class DaoEspecie {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    public Caixa  buscaUltimoCaixa() {
-
+     public Especie  buscarEspecie(String nome) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT caixa FROM Caixa caixa  ORDER BY caixa.id desc");
-            query.setMaxResults(1);
+            query = manager.createQuery("SELECT  especie FROM Especie especie where especie.nome like '%"+ nome +"%'");
         } catch (IllegalStateException e) {
-            System.out.println("erro ao buscar servicos");
+            System.out.println("erro ao buscar especie");
         }
-        return (Caixa) query.getSingleResult();
-
+        return (Especie)query.getSingleResult();
     }
 }

@@ -16,6 +16,8 @@ import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,23 +26,31 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComboBox;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Andre-Coude
  */
-public class ControleAgenda implements ActionListener {
+public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     TelaPrincipal tPrincipal;
     List<Profissional> profissionais;
     Profissional profissional;
+    private Agenda agenda;
     Animal animal;
     List<Animal> animais;
     List<Servico> servicos;
     List<Agenda> agendas;
+    private final JButton btnExcluir, btnEditar;
+    private final Icon editar, excluir;
+    private int escolha;
+    private final int salvar = 1, edicao = 2, exclusao = 3;
 
     public ControleAgenda(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -50,12 +60,35 @@ public class ControleAgenda implements ActionListener {
         servicos = new ArrayList<Servico>();
         agendas = new ArrayList<Agenda>();
 
+        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
+
+        btnEditar = new JButton(editar);
+        btnEditar.setName("editar");
+        btnEditar.setBorder(null);
+        btnEditar.setContentAreaFilled(false);
+
+        btnExcluir = new JButton(excluir);
+        btnExcluir.setName("excluir");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
+
         tPrincipal.getBtnAgenda().addActionListener(this);
-        tPrincipal.getAgenda().getBtnAddEdit().addActionListener(this);
+        tPrincipal.getAgenda().getBtnAdicionar().addActionListener(this);
         tPrincipal.getAgenda().getComboProfissional().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnSalvar().addActionListener(this);
         tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        if (e.getSource() == tPrincipal.getAgenda().getTabelaAgenda()) {
+
+            int ro = retornaIndice(tPrincipal.getAgenda().getTabelaAgenda(), e);
+            agenda = agendas.get(ro);
+
+        }
     }
 
     @Override
@@ -66,7 +99,7 @@ public class ControleAgenda implements ActionListener {
         }
 
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnCancelar()) {
-
+            tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
 
         }
@@ -76,7 +109,7 @@ public class ControleAgenda implements ActionListener {
 
         }
 
-        if (e.getSource() == tPrincipal.getAgenda().getBtnAddEdit()) {
+        if (e.getSource() == tPrincipal.getAgenda().getBtnAdicionar()) {
 
             if (!profissionais.isEmpty()) {
 
@@ -197,11 +230,13 @@ public class ControleAgenda implements ActionListener {
 
                 tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
-                String[] colunas = new String[]{"HORARIO", "SERVICO"};
-                Object[][] dados = new Object[agendas.size()][2];
+                String[] colunas = new String[]{"HORARIO", "SERVICO","EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[agendas.size()][4];
                 for (Agenda a : agendas) {
                     dados[i][0] = a.getHorario();
                     dados[i][1] = a.getServico().getDescricao();
+                    dados[i][2] = btnEditar;
+                    dados[i][3] = btnExcluir;
 
                     i++;
                 }
@@ -245,5 +280,30 @@ public class ControleAgenda implements ActionListener {
         }
         return new Time(data.getTime());
 
+    }
+
+    private int retornaIndice(JTable tabela, MouseEvent e) {
+        int ro = 0;
+        int column = tabela.getColumnModel().getColumnIndexAtX(e.getX());
+        int row = e.getY() / tabela.getRowHeight();
+
+        if (row < tabela.getRowCount() && row >= 0 && column < tabela.getColumnCount() && column >= 0) {
+            Object value = tabela.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                JButton boton = (JButton) value;
+                if (boton.getName().equals("editar")) {
+                    ro = tabela.getSelectedRow();
+                    escolha = edicao;
+                } else if (boton.getName().equals("excluir")) {
+                    ro = tabela.getSelectedRow();
+                    escolha = exclusao;
+                } else {
+                    escolha = 0;
+                }
+
+            }
+        }
+        return ro;
     }
 }

@@ -7,12 +7,15 @@ package br.com.pbd.Modelo;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -39,6 +42,11 @@ public class Loja implements EntidadeBase {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Dados dados;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "loja")
+    @JoinColumn(name = "loja_id")
+    private List<Caixa> caixas;
+    
 
     @Override
     public Long getId() {
@@ -108,4 +116,19 @@ public class Loja implements EntidadeBase {
         this.dados = dados;
     }
 
+    /**
+     * @return the caixas
+     */
+    public List<Caixa> getCaixas() {
+        return caixas;
+    }
+
+    /**
+     * @param caixas the caixas to set
+     */
+    public void setCaixas(List<Caixa> caixas) {
+        this.caixas = caixas;
+    }
+
+    
 }

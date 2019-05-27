@@ -5,6 +5,7 @@
  */
 package br.com.pbd.view;
 
+import br.com.pbd.Modelo.Servico;
 
 public class CadastroServicos extends javax.swing.JInternalFrame {
 
@@ -36,8 +37,8 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
         lblApelido1 = new javax.swing.JLabel();
         lblNome1 = new javax.swing.JLabel();
         comboDuracao = new javax.swing.JComboBox<>();
-        btnSalvarServico = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
 
@@ -128,20 +129,30 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        btnSalvarServico.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnSalvarServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save.png"))); // NOI18N
-        btnSalvarServico.setText("  SALVAR");
-        btnSalvarServico.setBorderPainted(false);
-        btnSalvarServico.setContentAreaFilled(false);
-        btnSalvarServico.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save (3).png"))); // NOI18N
-
         btnCancelar.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
         btnCancelar.setBorder(null);
         btnCancelar.setBorderPainted(false);
         btnCancelar.setContentAreaFilled(false);
-        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected (1).png"))); // NOI18N
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.png"))); // NOI18N
+        btnSalvar.setText("  SALVAR");
+        btnSalvar.setBorderPainted(false);
+        btnSalvar.setContentAreaFilled(false);
+        btnSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.1.png"))); // NOI18N
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -151,9 +162,9 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
                 .addContainerGap(53, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btnSalvarServico)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnCancelar))
+                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(153, 153, 153))
         );
@@ -162,11 +173,11 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSalvarServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelCadastroLayout = new javax.swing.GroupLayout(painelCadastro);
@@ -183,7 +194,7 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
             .addGroup(painelCadastroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -230,11 +241,19 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TITULO;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnSalvarServico;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboDuracao;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel1;
@@ -248,16 +267,31 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtaValor;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes() {
+        txtDescricao.setText("");
+        txtaValor.setText("");
 
-    
+    }
+
+    public void preencherDados(Servico servico) {
+        getTxtDescricao().setText(servico.getDescricao());
+
+        getTxtaValor().setText(servico.getValor() + "");
+
+        for (int c = 0; c < getComboDuracao().getItemCount(); c++) {
+
+            if (getComboDuracao().getItemAt(c).equals(servico.getDuracao())) {
+                getComboDuracao().setSelectedItem(getComboDuracao().getItemAt(c));
+            }
+        }
+    }
+
     /**
      * @return the txtDescricao
      */
     public javax.swing.JTextField getTxtDescricao() {
         return txtDescricao;
     }
-
-    
 
     /**
      * @return the txtaValor
@@ -273,7 +307,6 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
-    
     /**
      * @return the comboDuracao
      */
@@ -282,12 +315,10 @@ public class CadastroServicos extends javax.swing.JInternalFrame {
     }
 
     /**
-     * @return the btnSalvarServico
+     * @return the btnSalvar
      */
-    public javax.swing.JButton getBtnSalvarServico() {
-        return btnSalvarServico;
+    public javax.swing.JButton getBtnSalvar() {
+        return btnSalvar;
     }
 
-   
-    
 }

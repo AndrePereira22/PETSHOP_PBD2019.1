@@ -41,13 +41,14 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
     List<GrupoProduto> grupos;
     private GrupoProduto grupo;
     List<Fornecedor> fornecedores;
-    List<Produto> produtos;
+    private List<Produto> produtos;
     private Produto produto;
-    List<Servico> servicos;
+    private List<Servico> servicos;
     private Servico servico;
     private JButton btnExcluir, btnEditar;
     private Icon editar, excluir;
-    private Boolean salvar_editar;
+    private int escolha;
+    private final int salvar = 1, edicao = 2, exclusao = 3;
 
     public ControleProdutos_Servico(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -57,12 +58,13 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         tPrincipal.getcGrupo().getTabelaGrupos().addMouseListener(this);
         tPrincipal.getServico_Produto().getBtnNovoProduto().addActionListener(this);
         tPrincipal.getServico_Produto().getBtnNovoServico().addActionListener(this);
-        tPrincipal.getcProdutos().getBtnSalvarProduto().addActionListener(this);
-        tPrincipal.getcServicos().getBtnSalvarServico().addActionListener(this);
+        tPrincipal.getcProdutos().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcServicos().getBtnSalvar().addActionListener(this);
         tPrincipal.getBtnProdutos_serv().addActionListener(this);
         tPrincipal.getCadastros().getBtnGrupo().addActionListener(this);
         tPrincipal.getcGrupo().getBtnSalvarNovoGrupo().addActionListener(this);
         tPrincipal.getcGrupo().getBtnNovaGrupo().addActionListener(this);
+        tPrincipal.getServico_Produto().getBtnNovoServico().addActionListener(this);
 
         grupos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
@@ -70,7 +72,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         produto = new Produto();
         grupo = new GrupoProduto();
         servico = new Servico();
-        salvar_editar = true;
 
         editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
         excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
@@ -96,7 +97,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getServico_Produto().setVisible(false);
             tPrincipal.getcProdutos().setVisible(true);
             produto = produtos.get(ro);
-            preencherDadosEdicaoProduto(produto);
+            tPrincipal.getcProdutos().preencherDados(produto);
         }
         if (e.getSource() == tPrincipal.getServico_Produto().getTabelaServicos()) {
 
@@ -104,14 +105,14 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getServico_Produto().setVisible(false);
             tPrincipal.getcServicos().setVisible(true);
             servico = servicos.get(ro);
-            preencherDadosEdicaoServico(servico);
+            tPrincipal.getcServicos().preencherDados(servico);
         }
         if (e.getSource() == tPrincipal.getcGrupo().getTabelaGrupos()) {
 
             int ro = retornaIndice(tPrincipal.getcGrupo().getTabelaGrupos(), e);
             tPrincipal.getcGrupo().ativarComponentes(true);
             grupo = grupos.get(ro);
-            preencherDadosEdicaoGrupo(grupo);
+            tPrincipal.getcGrupo().preencherDados(grupo);
         }
 
     }
@@ -119,35 +120,41 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == tPrincipal.getcGrupo().getBtnNovaGrupo()) {
-            salvar_editar = true;
+            escolha = salvar;
         }
         if (e.getSource() == tPrincipal.getCadastros().getBtnGrupo()) {
             listarGrupos();
         }
         if (e.getSource() == tPrincipal.getcGrupo().getBtnSalvarNovoGrupo()) {
-            if (salvar_editar) {
+            if (escolha == salvar) {
                 salvarGrupoProduto();
-            } else {
+            } else if (escolha == edicao) {
                 editarGrupoProduto(grupo);
             }
-
         }
 
         if (e.getSource() == tPrincipal.getServico_Produto().getBtnNovoProduto()) {
+            tPrincipal.getcProdutos().limparComponentes();
             preencherFornecedores();
             preencherGrupo();
+            escolha = salvar;
         }
-        if (e.getSource() == tPrincipal.getcProdutos().getBtnSalvarProduto()) {
-            if (salvar_editar) {
+        if (e.getSource() == tPrincipal.getServico_Produto().getBtnNovoServico()) {
+            tPrincipal.getcServicos().limparComponentes();
+            escolha = salvar;
+
+        }
+        if (e.getSource() == tPrincipal.getcProdutos().getBtnSalvar()) {
+            if (escolha == salvar) {
                 salvarProduto();
-            } else {
+            } else if (escolha == edicao) {
                 editarProduto(produto);
             }
         }
-        if (e.getSource() == tPrincipal.getcServicos().getBtnSalvarServico()) {
-            if (salvar_editar) {
+        if (e.getSource() == tPrincipal.getcServicos().getBtnSalvar()) {
+            if (escolha == salvar) {
                 salvarServico();
-            } else {
+            } else if (escolha == edicao) {
                 editarServico(servico);
             }
 
@@ -155,8 +162,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         if (e.getSource() == tPrincipal.getBtnProdutos_serv()) {
             listarProdutos();
             listarServicos();
-            preencherFornecedores();
-            preencherGrupo();
         }
 
     }
@@ -195,7 +200,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarProdutos();
-            salvar_editar = true;
         } catch (java.lang.IllegalStateException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         } catch (javax.persistence.RollbackException roll) {
@@ -228,7 +232,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarServicos();
-            salvar_editar = true;
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -249,8 +252,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
-
-            salvar_editar = true;
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -410,7 +411,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarServicos();
-            salvar_editar = true;
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -459,7 +459,6 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarProdutos();
-            salvar_editar = true;
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -481,53 +480,11 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
 
-            salvar_editar = true;
-
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         }
-
-    }
-
-    public void preencherDadosEdicaoProduto(Produto produto) {
-
-        tPrincipal.getcProdutos().getTxtDescricao().setText(produto.getDescricao());
-        tPrincipal.getcProdutos().getTxtaFabricante().setText(produto.getFabricante());
-        tPrincipal.getcProdutos().getTxtValorCompra().setText(produto.getValorcompra() + "");
-        tPrincipal.getcProdutos().getTxtValorVenda().setText(produto.getValorvenda() + "");
-
-        for (int c = 0; c < tPrincipal.getcProdutos().getComboFornecedor().getItemCount(); c++) {
-
-            if (tPrincipal.getcProdutos().getComboFornecedor().getItemAt(c).equals(produto.getFornecedor().getNomefantasia())) {
-                tPrincipal.getcProdutos().getComboFornecedor().setSelectedItem(tPrincipal.getcProdutos().getComboFornecedor().getItemAt(c));
-            }
-        }
-        for (int c = 0; c < tPrincipal.getcProdutos().getComboGrupoProduto().getItemCount(); c++) {
-
-            if (tPrincipal.getcProdutos().getComboGrupoProduto().getItemAt(c).equals(produto.getGproduto().getDescricao())) {
-                tPrincipal.getcProdutos().getComboGrupoProduto().setSelectedItem(tPrincipal.getcProdutos().getComboGrupoProduto().getItemAt(c));
-            }
-        }
-
-    }
-
-    public void preencherDadosEdicaoServico(Servico servico) {
-        tPrincipal.getcServicos().getTxtDescricao().setText(servico.getDescricao());
-
-        tPrincipal.getcServicos().getTxtaValor().setText(servico.getValor() + "");
-
-        for (int c = 0; c < tPrincipal.getcServicos().getComboDuracao().getItemCount(); c++) {
-
-            if (tPrincipal.getcServicos().getComboDuracao().getItemAt(c).equals(servico.getDuracao())) {
-                tPrincipal.getcServicos().getComboDuracao().setSelectedItem(tPrincipal.getcServicos().getComboDuracao().getItemAt(c));
-            }
-        }
-    }
-
-    public void preencherDadosEdicaoGrupo(GrupoProduto grupo) {
-        tPrincipal.getcGrupo().getTxtDescricao().setText(grupo.getDescricao());
 
     }
 
@@ -543,8 +500,12 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                 JButton boton = (JButton) value;
                 if (boton.getName().equals("editar")) {
                     ro = tabela.getSelectedRow();
-                    salvar_editar = false;
-
+                    escolha = edicao;
+                } else if (boton.getName().equals("excluir")) {
+                    ro = tabela.getSelectedRow();
+                    escolha = exclusao;
+                } else {
+                    escolha = 0;
                 }
             }
         }

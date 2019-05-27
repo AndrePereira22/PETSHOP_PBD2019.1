@@ -5,6 +5,9 @@
  */
 package br.com.pbd.view;
 
+import br.com.pbd.Modelo.Animal;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 /**
  *
  * @author Andre-Coude
@@ -16,6 +19,9 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
      */
     public CadastroAnimal() {
         initComponents();
+        AutoCompleteDecorator.decorate(comboDono);
+        AutoCompleteDecorator.decorate(comboEspecie);
+        AutoCompleteDecorator.decorate(comboRaca);
     }
 
     /**
@@ -76,7 +82,7 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
 
         painelItens.setBackground(new java.awt.Color(204, 204, 255));
         painelItens.setEnabled(false);
-        painelItens.setFont(new java.awt.Font("Californian FB", 0, 18)); // NOI18N
+        painelItens.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 24)); // NOI18N
         painelItens.setPreferredSize(new java.awt.Dimension(900, 481));
 
         painelAnimail.setBackground(new java.awt.Color(255, 255, 255));
@@ -101,6 +107,8 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaAnimais.setAutoscrolls(false);
+        tabelaAnimais.setCellSelectionEnabled(true);
         tabelaAnimais.setRowHeight(40);
         jScrollPane2.setViewportView(tabelaAnimais);
         if (tabelaAnimais.getColumnModel().getColumnCount() > 0) {
@@ -335,7 +343,7 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
         btnCancelar.setBorder(null);
         btnCancelar.setBorderPainted(false);
         btnCancelar.setContentAreaFilled(false);
-        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected (1).png"))); // NOI18N
+        btnCancelar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -343,11 +351,11 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
         });
 
         btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save.png"))); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.png"))); // NOI18N
         btnSalvar.setText("  SALVAR");
         btnSalvar.setBorderPainted(false);
         btnSalvar.setContentAreaFilled(false);
-        btnSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/save (3).png"))); // NOI18N
+        btnSalvar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.1.png"))); // NOI18N
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -433,7 +441,7 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(OBSERVAÇÃO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         painelItens.addTab("CADASTRO", painelCadastro);
@@ -521,23 +529,46 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtaApelido;
     // End of variables declaration//GEN-END:variables
 
-    public void limparComponentes(){
+    public void limparComponentes() {
         txtNome.setText("");
         txtaApelido.setText("");
         txtPeso.setText("");
         txtCor.setText("");
         areaObservacao.setText("");
-       
+
     }
-    
+
+    public void preencherDados(Animal animal) {
+
+        getTxtaApelido().setText(animal.getApelido());
+        getTxtNome().setText(animal.getNome());
+        getTxtCor().setText(animal.getCor());
+        getAreaObservacao().setText(animal.getObservacao());
+        getAreaObservacao().setText(animal.getObservacao());
+        getNascimento().setDate(animal.getNascimento());
+        getTxtPeso().setText(animal.getPesokg() + "");
+
+        for (int c = 0; c < getComboDono().getItemCount(); c++) {
+
+            if (getComboDono().getItemAt(c).equals(animal.getCliente().getNome())) {
+                getComboDono().setSelectedItem(getComboDono().getItemAt(c));
+            }
+        }
+
+        for (int c = 0; c < getComboSexo().getItemCount(); c++) {
+
+            if (getComboSexo().getItemAt(c).equals(animal.getSexo())) {
+                getComboSexo().setSelectedItem(getComboSexo().getItemAt(c));
+            }
+        }
+    }
+
     /**
      * @return the areaObservacao
      */
     public javax.swing.JTextArea getAreaObservacao() {
         return areaObservacao;
     }
-
-    
 
     /**
      * @return the btnCancelar
@@ -616,7 +647,6 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
         return painelCadastro;
     }
 
-
     /**
      * @return the txtCor
      */
@@ -680,8 +710,4 @@ public class CadastroAnimal extends javax.swing.JInternalFrame {
         return tabelaAnimais;
     }
 
-    
-
-    
-    
 }

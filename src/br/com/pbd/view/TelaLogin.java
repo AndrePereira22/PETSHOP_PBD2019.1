@@ -5,6 +5,10 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+
 /**
  *
  * @author Andre-Coude
@@ -34,10 +38,11 @@ public class TelaLogin extends javax.swing.JFrame {
         painelPrincipal = new javax.swing.JPanel();
         painelSecundario = new javax.swing.JPanel();
         painelAcesso = new javax.swing.JPanel();
-        Login = new javax.swing.JTextField();
+        Login = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "u", " Nome do Usuario");
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        senha = new javax.swing.JPasswordField();
+        senha = new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), "p", "Senha");
+        ;
         btnAcessar = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         imagem = new javax.swing.JLabel();
@@ -108,12 +113,12 @@ public class TelaLogin extends javax.swing.JFrame {
             .addGroup(painelAcessoLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(painelAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(btnAcessar))
+                    .addComponent(btnAcessar)
+                    .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(btnSair))
                 .addContainerGap(23, Short.MAX_VALUE))

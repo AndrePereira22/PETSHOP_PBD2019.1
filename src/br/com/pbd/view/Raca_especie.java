@@ -5,10 +5,11 @@
  */
 package br.com.pbd.view;
 
-/**
- *
- * @author Glenda Alves de Lima
- */
+import br.com.pbd.Modelo.Especie;
+import br.com.pbd.Modelo.Raca;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
+
 public class Raca_especie extends javax.swing.JInternalFrame {
 
     /**
@@ -16,6 +17,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
      */
     public Raca_especie() {
         initComponents();
+        AutoCompleteDecorator.decorate(comboEspecie);
     }
 
     /**
@@ -71,7 +73,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));
 
         painelItens.setBackground(new java.awt.Color(255, 255, 255));
-        painelItens.setFont(new java.awt.Font("Californian FB", 0, 18)); // NOI18N
+        painelItens.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
         painelItens.setPreferredSize(new java.awt.Dimension(900, 481));
 
         painelRaca.setBackground(new java.awt.Color(255, 255, 255));
@@ -109,9 +111,11 @@ public class Raca_especie extends javax.swing.JInternalFrame {
 
         painelCadastroRaca.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        btnSavlarRaca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/confirm.png"))); // NOI18N
         btnSavlarRaca.setText("SALVAR");
         btnSavlarRaca.setEnabled(false);
 
+        btnCancelarRaca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/remove1.png"))); // NOI18N
         btnCancelarRaca.setText("CANCELAR");
         btnCancelarRaca.setEnabled(false);
         btnCancelarRaca.addActionListener(new java.awt.event.ActionListener() {
@@ -153,22 +157,22 @@ public class Raca_especie extends javax.swing.JInternalFrame {
             .addGroup(painelCadastroRacaLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(painelCadastroRacaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addComponent(comboEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5)
                     .addComponent(jLabel6)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelCadastroRacaLayout.setVerticalGroup(
             painelCadastroRacaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroRacaLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +184,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                 .addGroup(painelCadastroRacaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSavlarRaca)
                     .addComponent(btnCancelarRaca))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelNCLayout = new javax.swing.GroupLayout(painelNC);
@@ -224,8 +228,9 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelNC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
                         .addComponent(btnNovaRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSairR)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
@@ -238,7 +243,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                         .addComponent(painelNC, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnNovaRaca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNovaRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSairR)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -247,7 +252,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelRacaLayout = new javax.swing.GroupLayout(painelRaca);
@@ -264,7 +269,7 @@ public class Raca_especie extends javax.swing.JInternalFrame {
             .addGroup(painelRacaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         painelItens.addTab("RAÇAS", painelRaca);
@@ -308,9 +313,16 @@ public class Raca_especie extends javax.swing.JInternalFrame {
 
         txtEspecie.setEnabled(false);
 
+        btnSalvarEspecie.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/confirm.png"))); // NOI18N
         btnSalvarEspecie.setText("SALVAR");
         btnSalvarEspecie.setEnabled(false);
+        btnSalvarEspecie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarEspecieActionPerformed(evt);
+            }
+        });
 
+        btnCancelarEspecie.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/remove1.png"))); // NOI18N
         btnCancelarEspecie.setText("CANCELAR");
         btnCancelarEspecie.setEnabled(false);
         btnCancelarEspecie.addActionListener(new java.awt.event.ActionListener() {
@@ -324,29 +336,32 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         painelCadastroEspecieLayout.setHorizontalGroup(
             painelCadastroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastroEspecieLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(btnSalvarEspecie)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelarEspecie)
+                .addGap(22, 22, 22))
+            .addGroup(painelCadastroEspecieLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(painelCadastroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3)
-                    .addGroup(painelCadastroEspecieLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addComponent(btnSalvarEspecie)
-                        .addGap(41, 41, 41)
-                        .addComponent(btnCancelarEspecie))
-                    .addComponent(txtEspecie))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelCadastroEspecieLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         painelCadastroEspecieLayout.setVerticalGroup(
             painelCadastroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelCadastroEspecieLayout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addGroup(painelCadastroEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarEspecie)
                     .addComponent(btnCancelarEspecie))
-                .addGap(63, 63, 63))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -362,8 +377,8 @@ public class Raca_especie extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelCadastroEspecie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(painelCadastroEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnNovaEspecie.setText("NOVA ESPECIE");
@@ -388,11 +403,12 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
                         .addComponent(btnNovaEspecie)
-                        .addGap(99, 99, 99)
-                        .addComponent(btnSairE)))
+                        .addGap(39, 39, 39)
+                        .addComponent(btnSairE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -401,12 +417,12 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnNovaEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSairE))
-                        .addGap(7, 7, 7))
+                        .addGap(0, 39, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,14 +440,14 @@ public class Raca_especie extends javax.swing.JInternalFrame {
             .addGroup(painelEspecieLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelEspecieLayout.setVerticalGroup(
             painelEspecieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelEspecieLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelItens.addTab("ESPECIES", painelEspecie);
@@ -441,15 +457,16 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 974, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
+                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -481,6 +498,10 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         AtivarComponenteRaca(false);
     }//GEN-LAST:event_btnCancelarRacaActionPerformed
+
+    private void btnSalvarEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarEspecieActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarEspecieActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -543,6 +564,26 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         txtPesquisaEspecie.setText("");
         txtPesquizaRaca.setText("");
         txtRaca.setText("");
+
+    }
+
+    public void preencherDadosEdicaoRaca(Raca raca) {
+
+        getTxtRaca().setText(raca.getNome());
+        getTxtAreaRaca().setText(raca.getDescricao());
+
+        for (int c = 0; c < getComboEspecie().getItemCount(); c++) {
+
+            if (getComboEspecie().getItemAt(c).equals(raca.getEspecie().getNome())) {
+                getComboEspecie().setSelectedItem(getComboEspecie().getItemAt(c));
+            }
+        }
+
+    }
+
+    public void preencherDadosEdicaoEspecie(Especie especie) {
+
+        getTxtEspecie().setText(especie.getNome());
 
     }
 

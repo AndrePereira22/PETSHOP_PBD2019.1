@@ -147,7 +147,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="btnGerencia">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/br/com/pbd/resource/Layout App Cl&#xed;nica Bot&#xe3;o 004.png"/>
@@ -248,6 +248,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnSair">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/br/com/pbd/resource/exit1.png"/>
+            </Property>
             <Property name="alignmentX" type="float" value="20.0"/>
             <Property name="alignmentY" type="float" value="30.0"/>
             <Property name="borderPainted" type="boolean" value="false"/>

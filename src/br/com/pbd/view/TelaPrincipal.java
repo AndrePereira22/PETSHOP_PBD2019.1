@@ -80,7 +80,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         btnClientes = new javax.swing.JButton();
         btnAgenda = new javax.swing.JButton();
         btnVendas = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnGerencia = new javax.swing.JButton();
         btnCadastros = new javax.swing.JButton();
         btnProdutos_serv = new javax.swing.JButton();
         btnFinanceiro = new javax.swing.JButton();
@@ -138,14 +138,14 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         painelMenu.add(btnVendas);
         btnVendas.setBounds(20, 200, 280, 75);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 004.png"))); // NOI18N
-        jButton4.setToolTipText("");
-        jButton4.setBorder(null);
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 004.1.png"))); // NOI18N
-        painelMenu.add(jButton4);
-        jButton4.setBounds(20, 280, 280, 75);
+        btnGerencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 004.png"))); // NOI18N
+        btnGerencia.setToolTipText("");
+        btnGerencia.setBorder(null);
+        btnGerencia.setBorderPainted(false);
+        btnGerencia.setContentAreaFilled(false);
+        btnGerencia.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 004.1.png"))); // NOI18N
+        painelMenu.add(btnGerencia);
+        btnGerencia.setBounds(20, 280, 280, 75);
 
         btnCadastros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 005.png"))); // NOI18N
         btnCadastros.setBorder(null);
@@ -189,6 +189,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         painelMenu.add(btnFinanceiro);
         btnFinanceiro.setBounds(20, 520, 280, 75);
 
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/exit1.png"))); // NOI18N
         btnSair.setAlignmentX(20.0F);
         btnSair.setAlignmentY(30.0F);
         btnSair.setBorderPainted(false);
@@ -331,10 +332,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private javax.swing.JButton btnCadastros;
     private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnFinanceiro;
+    private javax.swing.JButton btnGerencia;
     private javax.swing.JButton btnProdutos_serv;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnVendas;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel paineArea;
     private javax.swing.JDesktopPane painelDesktop;
@@ -363,17 +364,17 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         }
         // Eventos da tela Cadastros
         if (e.getSource() == getCadastros().getBtnProfissional()) {
-            getcProfissioanl().setVisible(rootPaneCheckingEnabled);
+            getcProfissioanl().setVisible(true);
         }
         if (e.getSource() == getCadastros().getBtnFornecedor()) {
-            getcFornecedor().setVisible(rootPaneCheckingEnabled);
+            getcFornecedor().setVisible(true);
         }
         if (e.getSource() == getCadastros().getBtnAnimal1()) {
-            getcAnimal().setVisible(rootPaneCheckingEnabled);
+            getcAnimal().setVisible(true);
         }
 
         if (e.getSource() == getCadastros().getBtnFuncionario()) {
-            getcFuncionario().setVisible(rootPaneCheckingEnabled);
+            getcFuncionario().setVisible(true);
         }
         if (e.getSource() == getCadastros().getVoltarMenu()) {
             painelMenu.setVisible(true);
@@ -514,9 +515,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             cGrupo.setVisible(false);
             cadastros.setVisible(true);
         }
-         if (e.getSource() == cLoja.getBtnCancelar()) {
+        if (e.getSource() == cLoja.getBtnCancelar()) {
             cLoja.setVisible(false);
             painelMenu.setVisible(true);
+        }
+         if (e.getSource() == getProdutos().getBtnCancelar()) {
+            getProdutos().setVisible(false);
+            getVendas().setVisible(true);
         }
 
     }
@@ -572,6 +577,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getVendas().getBtnFinalizarVenda().addActionListener(this);
         getVendas().getBtnSair().addActionListener(this);
         getcLoja().getBtnCancelar().addActionListener(this);
+        getProdutos().getBtnCancelar().addActionListener(this);
 
         btnAgenda.addKeyListener(this);
         btnClientes.addKeyListener(this);
@@ -579,6 +585,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         btnVendas.addKeyListener(this);
         btnProdutos_serv.addKeyListener(this);
         btnFinanceiro.addKeyListener(this);
+        btnGerencia.addKeyListener(this);
 
     }
 
@@ -600,6 +607,35 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     public void keyPressed(KeyEvent e) {
         keyEventos.put(e.getKeyCode(), true);
 
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (btnFinanceiro.isSelected()) {
+
+                painelMenu.setVisible(false);
+                financas.setVisible(true);
+
+            } else if (btnProdutos_serv.isSelected()) {
+                painelMenu.setVisible(false);
+                servico_Produto.setVisible(true);
+
+            } else if (btnCadastros.isSelected()) {
+                painelMenu.setVisible(false);
+                cadastros.setVisible(true);
+
+            } else if (btnVendas.isSelected()) {
+                painelMenu.setVisible(false);
+                vendas.setVisible(true);
+
+            } else if (btnAgenda.isSelected()) {
+                painelMenu.setVisible(false);
+                agenda.setVisible(true);
+
+            } else if (btnClientes.isSelected()) {
+
+                painelMenu.setVisible(false);
+                cCliente.setVisible(true);
+            }
+        }
+
         if (e.getKeyCode() == KeyEvent.VK_UP) {
 
             if (btnFinanceiro.isSelected()) {
@@ -612,6 +648,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
             } else if (btnCadastros.isSelected()) {
                 btnCadastros.setSelected(false);
+                btnGerencia.setSelected(true);
+
+            }else if (btnGerencia.isSelected()) {
+                btnGerencia.setSelected(false);
                 btnVendas.setSelected(true);
 
             } else if (btnVendas.isSelected()) {
@@ -641,6 +681,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
             } else if (btnVendas.isSelected()) {
                 btnVendas.setSelected(false);
+                btnGerencia.setSelected(true);
+
+            } else if (btnGerencia.isSelected()) {
+                btnGerencia.setSelected(false);
                 btnCadastros.setSelected(true);
 
             } else if (btnCadastros.isSelected()) {

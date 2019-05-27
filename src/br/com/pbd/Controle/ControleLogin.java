@@ -5,9 +5,12 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoCaixa;
+import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.DaoLogin;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
@@ -21,10 +24,13 @@ import java.awt.event.KeyListener;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,16 +44,23 @@ public class ControleLogin implements ActionListener, KeyListener {
     private static Funcionario funcionario;
     private HashMap<Integer, Boolean> keyEventos;
     private Loja loja;
+    private Caixa caixa;
+    private Icon usario, profissional;
 
     public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
         keyEventos = new HashMap<Integer, Boolean>();
+        
+        usario = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+        profissional = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
+
 
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
         tLogin.getLogin().addKeyListener(this);
         tPrincipal.getcLoja().getBtnSalvar().addActionListener(this);
+
     }
 
     @Override
@@ -129,7 +142,7 @@ public class ControleLogin implements ActionListener, KeyListener {
     }
 
     public void verificarCadastroLoja() {
-
+        
         try {
             loja = new DaoLoja().buscaUltimoLoja();
 
@@ -200,17 +213,70 @@ public class ControleLogin implements ActionListener, KeyListener {
         loja.setRazaosocial(tPrincipal.getcLoja().getTxtRazaoSociall().getText());
 
         try {
+
             new GenericDao<Loja>().salvar_ou_atualizar(loja);
             JOptionPane.showMessageDialog(null, "Loja cadastrada!");
 
             tPrincipal.getcLoja().setVisible(false);
             tPrincipal.getPainelMenu().setVisible(true);
+            abrirCaixa();
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         }
+    }
+
+    public void abrirCaixa() {
+
+        try {
+            loja = new DaoLoja().buscaUltimoLoja();
+        } catch (javax.persistence.NoResultException n) {
+        }
+
+        if (loja != null) {
+
+            Date data = new Date(System.currentTimeMillis());
+            Caixa caixaAnterior = null;
+            try {
+                caixaAnterior = new DaoCaixa().buscaUltimoCaixa();
+            } catch (NoResultException n) {
+                System.out.println("Caixa anterior nao encontrado");
+            }
+            try {
+                caixa = new DaoFinanceiro().buscarCaixa(data);
+            } catch (NoResultException n) {
+                System.out.println("Caixa do dia nao encontrado");
+            }
+
+            if (caixa == null) {
+                caixa = new Caixa();
+                getCaixa().setData(data);
+                getCaixa().setStatus(Boolean.TRUE);
+                getCaixa().setLucrodia(0.0);
+                if (caixaAnterior != null) {
+                    caixa.setValorabertura(caixaAnterior.getValorfechamento());
+                    caixa.setValorfechamento(caixaAnterior.getValorfechamento());
+                } else {
+                    getCaixa().setValorabertura(0.0);
+                    getCaixa().setValorfechamento(0.0);
+                }
+                new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+
+            } else {
+                caixa.setStatus(Boolean.TRUE);
+                new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+            }
+        }
+
+    }
+
+    /**
+     * @return the caixa
+     */
+    public Caixa getCaixa() {
+        return caixa;
     }
 
 }

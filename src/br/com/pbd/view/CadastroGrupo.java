@@ -5,6 +5,8 @@
  */
 package br.com.pbd.view;
 
+import br.com.pbd.Modelo.GrupoProduto;
+
 /**
  *
  * @author Andre-Coude
@@ -44,9 +46,11 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         btnNovaGrupo = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(1024, 600));
+
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
 
-        jTabbedPane1.setFont(new java.awt.Font("Californian FB", 0, 18)); // NOI18N
+        jTabbedPane1.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -81,8 +85,10 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
 
         jLabel12.setText("DESCRIÇÃO");
 
+        btnSalvarNovoGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/confirm.png"))); // NOI18N
         btnSalvarNovoGrupo.setText("SALVAR");
 
+        btnCancelarGrupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/remove1.png"))); // NOI18N
         btnCancelarGrupo.setText("CANCELAR");
         btnCancelarGrupo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,30 +101,30 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         painelGrupoLayout.setHorizontalGroup(
             painelGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelGrupoLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(btnSalvarNovoGrupo)
-                .addGap(44, 44, 44)
-                .addComponent(btnCancelarGrupo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGrupoLayout.createSequentialGroup()
-                .addGap(0, 12, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(20, 20, 20)
+                .addGroup(painelGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(painelGrupoLayout.createSequentialGroup()
+                        .addComponent(btnSalvarNovoGrupo)
+                        .addGap(30, 30, 30)
+                        .addComponent(btnCancelarGrupo))
+                    .addGroup(painelGrupoLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescricao)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         painelGrupoLayout.setVerticalGroup(
             painelGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGrupoLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(35, 35, 35)
                 .addGroup(painelGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                    .addComponent(jLabel12)
+                    .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(painelGrupoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelarGrupo)
-                    .addComponent(btnSalvarNovoGrupo))
-                .addGap(16, 16, 16))
+                    .addComponent(btnSalvarNovoGrupo)
+                    .addComponent(btnCancelarGrupo))
+                .addGap(25, 25, 25))
         );
 
         btnNovaGrupo.setText("NOVO GRUPO");
@@ -153,12 +159,12 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnNovaGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
-                        .addComponent(btnSair)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addComponent(btnSair))
+                    .addComponent(painelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,7 +174,7 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPesquisar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(painelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,8 +194,8 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 969, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +231,7 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNovaGrupoActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        
+
     }//GEN-LAST:event_btnSairActionPerformed
 
 
@@ -252,9 +258,15 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         getBtnSalvarNovoGrupo().setEnabled(status);
         getBtnCancelarGrupo().setEnabled(status);
     }
-     public void limparComponentes() {
+
+    public void limparComponentes() {
         txtDescricao.setText("");
         txtPesquisar.setText("");
+    }
+
+    public void preencherDados(GrupoProduto grupo) {
+        getTxtDescricao().setText(grupo.getDescricao());
+
     }
 
     /**
@@ -277,7 +289,6 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
     public javax.swing.JButton getBtnPesquisar() {
         return btnPesquisar;
     }
-
 
     /**
      * @return the btnSalvarNovoGrupo
@@ -313,5 +324,5 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
     public javax.swing.JButton getBtnSair() {
         return btnSair;
     }
-    
+
 }

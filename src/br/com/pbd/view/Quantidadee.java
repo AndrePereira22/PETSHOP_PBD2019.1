@@ -143,6 +143,10 @@ public class Quantidadee extends javax.swing.JFrame {
     private javax.swing.JTextField txtQuantidade;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes() {
+        txtQuantidade.setText("");
+
+    }
     /**
      * @return the btnConfirmar
      */

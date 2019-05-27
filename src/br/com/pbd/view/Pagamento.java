@@ -18,7 +18,7 @@ public class Pagamento extends javax.swing.JFrame {
         initComponents();
         buttonGroup1.add(radioAprazo);
         buttonGroup1.add(radioAvista);
-         painelParcela.setVisible(false);
+        painelParcela.setVisible(false);
     }
 
     /**
@@ -254,13 +254,19 @@ public class Pagamento extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalPagar;
     // End of variables declaration//GEN-END:variables
 
+    public void limparComponentes() {
+        txtDataFinal.setText("");
+        txtParcelas.setText("");
+        txtTotalPagar.setText("");
+
+    }
+
     /**
      * @return the btnConfirmar
      */
     public javax.swing.JButton getBtnConfirmar() {
         return getBtnFinalizar();
     }
-
 
     /**
      * @return the btnFinalizar
@@ -290,7 +296,6 @@ public class Pagamento extends javax.swing.JFrame {
         return radioAvista;
     }
 
-    
     /**
      * @return the txtTotalPagar
      */
@@ -319,5 +324,4 @@ public class Pagamento extends javax.swing.JFrame {
         return txtParcelas;
     }
 
-    
 }

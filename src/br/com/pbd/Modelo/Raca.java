@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @SequenceGenerator(name="raca_seq",sequenceName="raca_seq", initialValue=1,allocationSize=1)
@@ -20,7 +19,7 @@ public class Raca implements EntidadeBase  {
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="raca_seq")
      private Long id;
        
-     @Column(name = "nome", length = 20, nullable = false)
+     @Column(name = "nome", length = 40, nullable = false)
      private String nome;
     @Column(name = "descricao", length = 30, nullable = false)
      private String descricao;

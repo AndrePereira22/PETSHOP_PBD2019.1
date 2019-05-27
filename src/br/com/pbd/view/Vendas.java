@@ -337,7 +337,13 @@ public class Vendas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtValorTotal;
     // End of variables declaration//GEN-END:variables
 
-   
+    public void limparComponentes() {
+        txtDesconto.setText("");
+        txtPesquisarProdutos.setText("");
+        txtTotalItens.setText("");
+        txtValorTotal.setText("");
+    }
+
     /**
      * @return the btnClientes
      */
@@ -345,7 +351,6 @@ public class Vendas extends javax.swing.JInternalFrame {
         return btnClientes;
     }
 
-   
     /**
      * @return the btnDescontoVenda
      */
@@ -374,7 +379,6 @@ public class Vendas extends javax.swing.JInternalFrame {
         return btnProdutos;
     }
 
-   
     /**
      * @return the btnValortotal
      */
@@ -424,7 +428,4 @@ public class Vendas extends javax.swing.JInternalFrame {
         return txtValorTotal;
     }
 
-
-    
-    
 }

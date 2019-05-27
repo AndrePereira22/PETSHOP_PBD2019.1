@@ -11,7 +11,7 @@ import javax.persistence.Persistence;
  */
 public class SQLConexao {
      
- private static EntityManagerFactory fabrica =  Persistence.createEntityManagerFactory("PBD2019");
+ private static EntityManagerFactory fabrica =  Persistence.createEntityManagerFactory("PBD");
  
  public static EntityManager getEntityManager(){
      

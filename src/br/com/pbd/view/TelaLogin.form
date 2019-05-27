@@ -133,13 +133,13 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="Login" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnAcessar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="Login" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="senha" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="senha" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnSair" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -150,6 +150,9 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="Login">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;u&quot;, &quot; Nome do Usuario&quot;);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>
@@ -171,6 +174,9 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="senhaActionPerformed"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), &quot;p&quot;, &quot;Senha&quot;);&#xd;&#xa;"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnAcessar">
                   <Properties>
