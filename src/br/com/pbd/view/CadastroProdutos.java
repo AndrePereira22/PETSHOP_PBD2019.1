@@ -44,6 +44,8 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         txtValorCompra = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtValorVenda = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtQuantidade = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         comboGrupoProduto = new javax.swing.JComboBox<>();
@@ -109,6 +111,8 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
 
         jLabel4.setText("VALOR DE VENDA");
 
+        jLabel1.setText("QUANTIDADE :");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -130,15 +134,20 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblApelido)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(lblApelido)
+                                .addGap(174, 174, 174)
+                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtaFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(163, 163, 163))))
+                            .addComponent(comboFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtaFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(208, 208, 208))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,10 +155,13 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
-                    .addComponent(lblApelido))
+                    .addComponent(lblApelido)
+                    .addComponent(jLabel1))
                 .addGap(6, 6, 6)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtaFabricante)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtaFabricante)
+                        .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -346,6 +358,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> comboFornecedor;
     private javax.swing.JComboBox<String> comboGrupoProduto;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -360,6 +373,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel painelCadastro1;
     private javax.swing.JTabbedPane painelItens;
     private javax.swing.JTextField txtDescricao;
+    private javax.swing.JTextField txtQuantidade;
     private javax.swing.JTextField txtValorCompra;
     private javax.swing.JTextField txtValorVenda;
     private javax.swing.JTextField txtaFabricante;
@@ -378,6 +392,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         getTxtaFabricante().setText(produto.getFabricante());
         getTxtValorCompra().setText(produto.getValorcompra() + "");
         getTxtValorVenda().setText(produto.getValorvenda() + "");
+        getTxtQuantidade().setText(produto.getQuantidae_estoque()+ "");
 
         for (int c = 0; c < getComboFornecedor().getItemCount(); c++) {
 
@@ -476,6 +491,13 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
      */
     public javax.swing.JButton getBtnSalvar() {
         return btnSalvar;
+    }
+
+    /**
+     * @return the txtQuantidade
+     */
+    public javax.swing.JTextField getTxtQuantidade() {
+        return txtQuantidade;
     }
 
 }

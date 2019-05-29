@@ -6,6 +6,7 @@
 package br.com.pbd.view;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import br.com.pbd.Modelo.Agenda;
 
 public class AgendarServico extends javax.swing.JInternalFrame {
 
@@ -377,6 +378,31 @@ public class AgendarServico extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtRaca;
     // End of variables declaration//GEN-END:variables
 
+     public void preencherDados(Agenda agenda) {
+
+        getTxtDono().setText(agenda.getAnimal().getCliente().getNome());
+        getTxtProfissional().setText(agenda.getProfissional().getNome());
+        getTxtRaca().setText(agenda.getAnimal().getRaca().getNome());
+        for (int c = 0; c < getComboHorario().getItemCount(); c++) {
+
+            if (getComboHorario().getItemAt(c).equals(agenda.getHorario())) {
+               getComboHorario().setSelectedItem(getComboHorario().getItemAt(c));
+            }
+        }
+        for (int c = 0; c < getComboAnimal().getItemCount(); c++) {
+
+            if (getComboAnimal().getItemAt(c).equals(agenda.getAnimal().getNome())) {
+               getComboAnimal().setSelectedItem(getComboAnimal().getItemAt(c));
+            }
+        }
+        for (int c = 0; c < getComboServico().getItemCount(); c++) {
+
+            if (getComboServico().getItemAt(c).equals(agenda.getServico().getDescricao())) {
+               getComboServico().setSelectedItem(getComboServico().getItemAt(c));
+            }
+        }
+
+    }
     /**
      * @return the areaNotasAnimal
      */

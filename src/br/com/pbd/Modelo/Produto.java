@@ -20,14 +20,16 @@ public class Produto implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_seq")
     private Long id;
 
-    @Column(name = "descricao", length = 20, nullable = false)
-    private String descricao;
+    @Column(name = "nome", length = 20, nullable = false)
+    private String nome;
     @Column(name = "fabricante", length = 20, nullable = false)
     private String fabricante;
-    @Column(name = "valorcompra", precision = 4, scale = 2, nullable = false)
+    @Column(name = "valor_compra", precision = 4, scale = 2, nullable = false)
     private Double valorcompra;
-    @Column(name = "valorvenda", precision = 4, scale = 2, nullable = false)
+    @Column(name = "valor_venda", precision = 4, scale = 2, nullable = false)
     private Double valorvenda;
+    @Column(name = "quantidae_estoque", precision = 2, scale = 0, nullable = false)
+    private int quantidae_estoque;
 
     @OneToOne(cascade = CascadeType.ALL)
     private GrupoProduto gproduto;
@@ -51,14 +53,14 @@ public class Produto implements EntidadeBase {
      * @return the descricao
      */
     public String getDescricao() {
-        return descricao;
+        return getNome();
     }
 
     /**
      * @param descricao the descricao to set
      */
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        this.setNome(descricao);
     }
 
     /**
@@ -129,6 +131,34 @@ public class Produto implements EntidadeBase {
      */
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    /**
+     * @return the quantidae_estoque
+     */
+    public int getQuantidae_estoque() {
+        return quantidae_estoque;
+    }
+
+    /**
+     * @param quantidae_estoque the quantidae_estoque to set
+     */
+    public void setQuantidae_estoque(int quantidae_estoque) {
+        this.quantidae_estoque = quantidae_estoque;
     }
 
 }

@@ -21,7 +21,7 @@ public class Raca implements EntidadeBase  {
        
      @Column(name = "nome", length = 40, nullable = false)
      private String nome;
-    @Column(name = "descricao", length = 30, nullable = false)
+    @Column(name = "descricao", length = 30, nullable = true)
      private String descricao;
      
      @ManyToOne

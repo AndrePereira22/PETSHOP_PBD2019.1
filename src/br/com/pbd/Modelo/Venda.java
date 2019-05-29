@@ -36,7 +36,7 @@ public class Venda implements EntidadeBase {
 
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
-    @Column(name = "valortotal", precision = 6, scale = 2, nullable = false)
+    @Column(name = "valor_total", precision = 6, scale = 2, nullable = false)
     private Double valortotal;
     @Column(name = "horario", nullable = false)
     private Time hora;

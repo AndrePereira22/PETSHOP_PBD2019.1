@@ -6,15 +6,11 @@
 package br.com.pbd.Modelo;
 
 import java.sql.Date;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -32,12 +28,10 @@ public class Caixa implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "caixa_seq")
     private Long id;
 
-    @Column(name = "valorabertura", precision = 6, scale = 2, nullable = false)
+    @Column(name = "valor_abertura", precision = 6, scale = 2, nullable = false)
     private Double valorabertura;
-    @Column(name = "valorfechamento", precision = 6, scale = 2, nullable = false)
+    @Column(name = "valor_fechamento", precision = 6, scale = 2, nullable = false)
     private Double valorfechamento;
-    @Column(name = "lucrodia", precision = 6, scale = 2, nullable = false)
-    private Double lucrodia;
     @Column(name = "status", insertable = true, nullable = false)
     private Boolean status;
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
@@ -86,19 +80,7 @@ public class Caixa implements EntidadeBase {
         this.valorfechamento = valorfechamento;
     }
 
-    /**
-     * @return the lucrodia
-     */
-    public Double getLucrodia() {
-        return lucrodia;
-    }
-
-    /**
-     * @param lucrodia the lucrodia to set
-     */
-    public void setLucrodia(Double lucrodia) {
-        this.lucrodia = lucrodia;
-    }
+   
 
     /**
      * @return the status

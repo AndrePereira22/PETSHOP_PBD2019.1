@@ -34,7 +34,7 @@ public class Parcela implements EntidadeBase {
     private Double valor;
     @Column(name = "status", nullable = false)
     private Boolean status;
-    @Column(name = "datavencimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
+    @Column(name = "data_vencimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date datavencimento;
 
     @ManyToOne

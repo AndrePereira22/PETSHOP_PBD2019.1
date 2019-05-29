@@ -15,6 +15,7 @@ import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Loja;
+import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.view.TelaLogin;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
@@ -42,19 +43,20 @@ public class ControleLogin implements ActionListener, KeyListener {
     private TelaLogin tLogin;
     private TelaPrincipal tPrincipal;
     private static Funcionario funcionario;
+    private static Profissional profissional;
     private HashMap<Integer, Boolean> keyEventos;
     private Loja loja;
     private Caixa caixa;
-    private Icon usario, profissional;
+    private Icon user, pro, adm;
 
     public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
         keyEventos = new HashMap<Integer, Boolean>();
-        
-        usario = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        profissional = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
 
+        user = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
+        pro = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
+        adm = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
 
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
@@ -110,6 +112,8 @@ public class ControleLogin implements ActionListener, KeyListener {
             tLogin.dispose();
             tPrincipal.setVisible(true);
             verificarCadastroLoja();
+            tPrincipal.getjLabel2().setText("ADMINISTRADOR");
+            tPrincipal.getjLabel2().setIcon(pro);
 
         } else {
 
@@ -124,6 +128,8 @@ public class ControleLogin implements ActionListener, KeyListener {
                 tLogin.dispose();
                 tPrincipal.setVisible(true);
                 verificarCadastroLoja();
+                tPrincipal.getjLabel2().setText(funcionario.getNome());
+                tPrincipal.getjLabel2().setIcon(user);
 
             } else {
                 try {
@@ -131,9 +137,12 @@ public class ControleLogin implements ActionListener, KeyListener {
                 } catch (NoResultException n) {
                 }
                 if (o != null) {
+                    profissional = ((Profissional) o);
                     tLogin.dispose();
                     tPrincipal.setVisible(true);
                     verificarCadastroLoja();
+                    tPrincipal.getjLabel2().setText(profissional.getNome());
+                    tPrincipal.getjLabel2().setIcon(pro);
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario nao encontrado!");
                 }
@@ -142,7 +151,7 @@ public class ControleLogin implements ActionListener, KeyListener {
     }
 
     public void verificarCadastroLoja() {
-        
+
         try {
             loja = new DaoLoja().buscaUltimoLoja();
 
@@ -254,7 +263,6 @@ public class ControleLogin implements ActionListener, KeyListener {
                 caixa = new Caixa();
                 getCaixa().setData(data);
                 getCaixa().setStatus(Boolean.TRUE);
-                getCaixa().setLucrodia(0.0);
                 if (caixaAnterior != null) {
                     caixa.setValorabertura(caixaAnterior.getValorfechamento());
                     caixa.setValorfechamento(caixaAnterior.getValorfechamento());

@@ -37,7 +37,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         painelFornecedor = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaFornecedor = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        txtPesquisa = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         btnNovoFornecedor = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
@@ -189,7 +189,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                     .addGroup(painelFornecedorLayout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         painelFornecedorLayout.setVerticalGroup(
@@ -203,7 +203,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                         .addGap(27, 27, 27)
                         .addGroup(painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -598,7 +598,6 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel painelCadastro;
     private javax.swing.JPanel painelFornecedor;
     private javax.swing.JTabbedPane painelItens;
@@ -614,6 +613,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNomeFantasia;
     private javax.swing.JTextField txtNomeFantazia;
     private javax.swing.JTextField txtNumero;
+    private javax.swing.JTextField txtPesquisa;
     private javax.swing.JTextField txtRazaoSocial;
     private javax.swing.JTextField txtRazaoSociall;
     private javax.swing.JTextField txtRua;
@@ -822,6 +822,13 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
      */
     public javax.swing.JButton getBtnSalvar() {
         return btnSalvar;
+    }
+
+    /**
+     * @return the txtPesquisa
+     */
+    public javax.swing.JTextField getTxtPesquisa() {
+        return txtPesquisa;
     }
 
 }

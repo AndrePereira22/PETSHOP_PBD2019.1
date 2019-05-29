@@ -32,11 +32,11 @@ public class Pagamento implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pagamento_seq")
     private Long id;
 
-    @Column(name = "valortotal", precision = 3, scale = 2, nullable = false)
+    @Column(name = "valor_total", precision = 3, scale = 2, nullable = false)
     private Double valortotal;
     @Column(name = "status", insertable = true, nullable = false)
     private Boolean status;
-    @Column(name = "numeroparcelas", precision = 2, scale = 0, nullable = false)
+    @Column(name = "numero_parcelas", precision = 2, scale = 0, nullable = false)
     private int numeroparcelas;
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;

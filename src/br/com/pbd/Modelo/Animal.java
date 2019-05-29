@@ -15,44 +15,41 @@ import javax.persistence.*;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="animal_seq",sequenceName="animal_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "animal_seq", sequenceName = "animal_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "animal")
 public class Animal implements EntidadeBase {
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
-    
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="animal_seq")
-     private Long id;
-       
-     @Column (name="apelido",length=10,nullable=true)
-     private String apelido;
-     @Column (name="nome",length=20,nullable=false)
-     private String nome;
-     @Column (name="sexo",length=40,nullable=false)
-     private String sexo;
-     @Column (name="cor",length=40,nullable=false)
-     private String cor;
-     @Column (name = "nascimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
-     private Date nascimento ;
-     @Column  (name = "pesokg", precision = 3, scale = 2, nullable = false)
-     private Double pesokg;
-     @Column (name="observacao",length=20,nullable=true)
-     private String observacao;
-     
-     
-     @OneToOne
-     private Raca raca;
-     
-     @ManyToOne
-     private Cliente cliente;
-     
-    
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "animal_seq")
+    private Long id;
+
+    @Column(name = "apelido", length = 10, nullable = true)
+    private String apelido;
+    @Column(name = "nome", length = 20, nullable = false)
+    private String nome;
+    @Column(name = "sexo", length = 40, nullable = false)
+    private String sexo;
+    @Column(name = "cor", length = 40, nullable = false)
+    private String cor;
+    @Column(name = "nascimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = true)
+    private Date nascimento;
+    @Column(name = "peso_kg", precision = 3, scale = 2, nullable = false)
+    private Double pesokg;
+    @Column(name = "observacao", length = 20, nullable = true)
+    private String observacao;
+
+    @OneToOne
+    private Raca raca;
+
+    @ManyToOne
+    private Cliente cliente;
 
     @Override
     public Long getId() {
-    return id; 
+        return id;
     }
 
     /**
@@ -160,8 +157,6 @@ public class Animal implements EntidadeBase {
         changeSupport.firePropertyChange("pesokg", oldPesokg, pesokg);
     }
 
-    
-
     /**
      * @return the Cliente
      */
@@ -216,9 +211,4 @@ public class Animal implements EntidadeBase {
         changeSupport.removePropertyChangeListener(listener);
     }
 
-   
-    
-   
-    
-    
 }

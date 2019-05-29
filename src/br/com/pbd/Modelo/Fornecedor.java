@@ -31,9 +31,9 @@ public class Fornecedor implements EntidadeBase {
      @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="fornecedor_seq")
      private Long id;
        
-     @Column(name = "nomefantasia", length = 20, nullable = false)
+     @Column(name = "nome_fantasia", length = 20, nullable = false)
      private String nomefantasia;
-     @Column(name = "razaosocial", length = 20, nullable = false)
+     @Column(name = "razao_social", length = 20, nullable = false)
      private String razaosocial;
      @Column(name = "cnpj", length = 18, nullable = false, unique=true)
      private String cnpj ;

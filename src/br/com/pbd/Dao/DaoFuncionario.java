@@ -5,7 +5,7 @@
  */
 package br.com.pbd.Dao;
 
-import br.com.pbd.Modelo.Produto;
+import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -15,16 +15,19 @@ import javax.persistence.Query;
  *
  * @author Andre-Coude
  */
-public class DaoProduto {
-     private static final EntityManager manager = SQLConexao.getEntityManager();
+public class DaoFuncionario {
 
-    public List<Produto>  listarProduto(String nome) {
+    private static final EntityManager manager = SQLConexao.getEntityManager();
+
+    public List<Funcionario> Busca(String nome) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  produto FROM Produto produto where produto.nome like '%"+ nome +"%'");
+            query = manager.createQuery("SELECT  funcionario FROM Funcionario funcionario where funcionario.nome like '%" + nome + "%' or funcionario.cpf like '%" + nome + "%' or funcionario.rg like '%" + nome + "%' ");
+
         } catch (IllegalStateException e) {
-            System.out.println("erro ao buscar produtos");
+            System.out.println("erro ao buscar Funcionario");
         }
         return query.getResultList();
     }
+
 }

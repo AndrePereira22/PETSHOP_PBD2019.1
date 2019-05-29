@@ -34,10 +34,8 @@ public class Agenda implements EntidadeBase {
     private Animal animal;
     @OneToOne(optional=false)
     private Servico servico;
-
     @OneToOne(optional=false)
     private Profissional profissional;
-
     @OneToOne(optional=false,cascade = CascadeType.ALL)
     private Pagamento pagamento;
 

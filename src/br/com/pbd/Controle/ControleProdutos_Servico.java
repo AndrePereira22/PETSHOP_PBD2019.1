@@ -180,6 +180,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
         String vCompra = tPrincipal.getcProdutos().getTxtValorCompra().getText();
         String vVenda = tPrincipal.getcProdutos().getTxtValorVenda().getText();
+        String quantidade = tPrincipal.getcProdutos().getTxtQuantidade().getText();
 
         Double valorCompra = 0.0, valorVenda = 0.0;
 
@@ -188,6 +189,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             grupo = grupos.get(intdiceG);
             produto.setFornecedor(forn);
             produto.setGproduto(grupo);
+            produto.setQuantidae_estoque(Integer.parseInt(quantidade));
 
             valorCompra = Double.parseDouble(vCompra);
             valorVenda = Double.parseDouble(vVenda);
@@ -270,7 +272,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             int i = 0;
             try {
                 String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE COMPRA", "VALOR DE VENDA", "FORNECEDOR", "GRUPO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[produtos.size()][8];
+                Object[][] dados = new Object[produtos.size()][9];
                 for (Produto a : produtos) {
                     dados[i][0] = a.getDescricao();
                     dados[i][1] = a.getFabricante();
@@ -278,8 +280,9 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                     dados[i][3] = a.getValorvenda();
                     dados[i][4] = a.getFornecedor().getNomefantasia();
                     dados[i][5] = a.getGproduto().getDescricao();
-                    dados[i][6] = btnEditar;
-                    dados[i][7] = btnExcluir;
+                    dados[i][6] = a.getQuantidae_estoque()+"";
+                    dados[i][7] = btnEditar;
+                    dados[i][8] = btnExcluir;
 
                     i++;
                 }

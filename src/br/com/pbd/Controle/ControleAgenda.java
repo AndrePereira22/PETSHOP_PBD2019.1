@@ -79,14 +79,22 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         tPrincipal.getAgenarServico().getBtnSalvar().addActionListener(this);
         tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
+        tPrincipal.getAgenda().getTabelaAgenda().addMouseListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == tPrincipal.getAgenda().getTabelaAgenda()) {
 
+            
             int ro = retornaIndice(tPrincipal.getAgenda().getTabelaAgenda(), e);
             agenda = agendas.get(ro);
+            if(escolha==edicao){
+                tPrincipal.getAgenarServico().setVisible(true);
+                tPrincipal.getAgenarServico().preencherDados(agenda);
+            }else if(escolha==exclusao){
+                
+            }
 
         }
     }
@@ -96,6 +104,8 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
         if (e.getSource() == tPrincipal.getBtnAgenda()) {
             preencherProfissionais();
+            preencherAnimais();
+            preencherServicos();
         }
 
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnCancelar()) {
@@ -112,6 +122,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getAgenda().getBtnAdicionar()) {
 
             if (!profissionais.isEmpty()) {
+                escolha=salvar;
 
                 preencherAnimais();
                 preencherServicos();
@@ -127,7 +138,12 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         }
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnSalvar()) {
 
-            salvarServico();
+            if(escolha==salvar){
+                 salvarServico();
+            }else if(escolha==edicao){
+                editarServico(agenda);
+            }
+           
         }
         if (e.getSource() == tPrincipal.getAgenarServico().getComboAnimal()) {
             preencherDadosAnimal();
@@ -169,6 +185,51 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
             new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
             JOptionPane.showMessageDialog(null, "Agendado com Sucesso!");
+            tPrincipal.getAgenarServico().setVisible(false);
+            tPrincipal.getAgenda().setVisible(true);
+            tPrincipal.getAgenda().getComboProfissional();
+            listarAgenda();
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+
+        } catch (java.lang.NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+
+        }
+
+    }
+     private void editarServico(Agenda agenda) {
+
+       Servico servico=null;
+
+        int indiceAnimal = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
+        int indiceServico = tPrincipal.getAgenarServico().getComboServico().getSelectedIndex();
+
+        Date d = new Date(System.currentTimeMillis());
+
+       
+
+        agenda.setAnotacao(tPrincipal.getAgenarServico().getAreaObservacao().getText());
+        agenda.setHorario(ConverterTime(tPrincipal.getAgenarServico().getComboHorario().getSelectedItem().toString()));
+
+
+        agenda.setProfissional(profissional);
+
+        try {
+            java.sql.Date data = ConverterData(tPrincipal.getAgenarServico().getData().getDate());
+            agenda.setData(data);
+            animal = animais.get(indiceAnimal);
+            servico = servicos.get(indiceServico);
+            agenda.setServico(servico);
+            agenda.setAnimal(animal);
+
+            new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+            JOptionPane.showMessageDialog(null, "Edicao concluida!");
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();

@@ -7,6 +7,7 @@ package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.ItemVenda;
 import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Parcela;
@@ -27,6 +28,7 @@ import java.util.List;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -160,8 +162,18 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             venda.setPagamento(pagamento);
             pagamento.setParcelas(parcelas);
             venda.setFuncionario(ControleLogin.getFuncionario());
-            venda.setItens(itens);
-            new GenericDao<Venda>().salvar_ou_atualizar(venda);
+
+            try {
+                venda.setItens(itens);
+                new GenericDao<Venda>().salvar_ou_atualizar(venda);
+                itens.removeAll(itens);
+                listarProdutosAdicionados(itens);
+
+            } catch (java.lang.IllegalStateException n) {
+                JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            } catch (javax.persistence.RollbackException roll) {
+                JOptionPane.showMessageDialog(null, roll.getCause());
+            }
 
         }
     }
@@ -222,7 +234,6 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             item.setVenda(venda);
 
             itens.add(item);
-            
 
         } catch (NumberFormatException erro) {
         }
