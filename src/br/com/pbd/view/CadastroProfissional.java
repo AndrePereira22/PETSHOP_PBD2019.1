@@ -957,4 +957,11 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
         return txtPesquisa;
     }
 
+    /**
+     * @return the painelLogin
+     */
+    public javax.swing.JPanel getPainelLogin() {
+        return painelLogin;
+    }
+
 }

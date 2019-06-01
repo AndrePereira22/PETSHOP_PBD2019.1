@@ -80,7 +80,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
         btnExcluir.setContentAreaFilled(false);
 
         tPrincipal.getBtnVendas().addActionListener(this);
-        tPrincipal.getVendas().getBtnProdutos().addActionListener(this);
+        tPrincipal.getVendas().getBtnPesquisar().addActionListener(this);
         tPrincipal.getVendas().getBtnFinalizarVenda().addActionListener(this);
         tPrincipal.getQuantidade().getBtnConfirmar().addActionListener(this);
         tPrincipal.getPagamento().getBtnFinalizar().addActionListener(this);
@@ -124,7 +124,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             totalItens = 0;
             produto = new Produto();
         }
-        if (e.getSource() == tPrincipal.getVendas().getBtnProdutos()) {
+        if (e.getSource() == tPrincipal.getVendas().getBtnPesquisar()) {
             tPrincipal.getProdutos().setVisible(true);
             ValorTotal = 0.0;
             totalItens = 0;
@@ -138,14 +138,17 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             listarProdutos(produtos);
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
+            if (produtosAdicionados.isEmpty()) {
 
-            if (!tPrincipal.getVendas().getTxtDesconto().getText().equals("")) {
-                ValorFinal = ValorTotal - Double.parseDouble(tPrincipal.getVendas().getTxtDesconto().getText());
             } else {
-                ValorFinal = ValorTotal;
-            }
-            tPrincipal.getPagamento().getTxtTotalPagar().setText(ValorFinal + "");
 
+                if (!tPrincipal.getVendas().getTxtDesconto().getText().equals("")) {
+                    ValorFinal = ValorTotal - Double.parseDouble(tPrincipal.getVendas().getTxtDesconto().getText());
+                } else {
+                    ValorFinal = ValorTotal;
+                }
+                tPrincipal.getPagamento().getTxtTotalPagar().setText(ValorFinal + "");
+            }
         }
         if (e.getSource() == tPrincipal.getQuantidade().getBtnConfirmar()) {
 

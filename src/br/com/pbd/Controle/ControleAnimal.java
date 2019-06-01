@@ -5,6 +5,8 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoAnimal;
+import br.com.pbd.Dao.DaoEspecie;
 import br.com.pbd.Dao.DaoRaca;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Animal;
@@ -15,6 +17,8 @@ import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -30,9 +34,9 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Andre-Coude
  */
-public class ControleAnimal extends MouseAdapter implements ActionListener {
+public class ControleAnimal extends MouseAdapter implements ActionListener, KeyListener {
 
-    private TelaPrincipal tPrincipal;
+    private final TelaPrincipal tPrincipal;
     private List<Especie> especies;
     private Especie especie;
     private List<Raca> racas;
@@ -40,8 +44,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
     private List<Cliente> clientes;
     private List<Animal> animais;
     private Animal animal;
-    private JButton btnExcluir, btnEditar;
-    private Icon editar, excluir;
+    private final JButton btnExcluir, btnEditar;
+    private final Icon editar, excluir;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
@@ -69,21 +73,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
         btnExcluir.setBorder(null);
         btnExcluir.setContentAreaFilled(false);
 
-        tPrincipal.getcAnimal().getBtnSalvar().addActionListener(this);
-        tPrincipal.getcAnimal().getComboEspecie().addActionListener(this);
-        tPrincipal.getcAnimal().getBtnCadastrarAnimal().addActionListener(this);
-        tPrincipal.getCadastros().getBtnAnimal1().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnSavlarRaca().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnSalvarEspecie().addActionListener(this);
-        tPrincipal.getCadastros().getBtnRaca().addActionListener(this);
-        tPrincipal.getCadastros().getBtnEspecie().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnNovaRaca().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnSairE().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnSairR().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnNovaEspecie().addActionListener(this);
-        tPrincipal.getRaca_especie().getTabelaRacas().addMouseListener(this);
-        tPrincipal.getcAnimal().getTabelaAnimais().addMouseListener(this);
-        tPrincipal.getRaca_especie().getTabelaEspecie().addMouseListener(this);
+        adicionarEventos();
 
     }
 
@@ -147,7 +137,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
             } else if (escolha == edicao) {
                 editarAnimal(animal);
             }
-            listarTabelaAnimais();
+            animais = new GenericDao<Animal>().getAll(Animal.class);
+            listarTabelaAnimais(animais);
         }
         if (e.getSource() == tPrincipal.getcAnimal().getBtnCadastrarAnimal()) {
 
@@ -163,7 +154,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getCadastros().getBtnAnimal1()) {
             preencherEspecie();
             preencherClientes();
-            listarTabelaAnimais();
+            animais = new GenericDao<Animal>().getAll(Animal.class);
+            listarTabelaAnimais(animais);
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnSalvarEspecie()) {
             if (escolha == salvar) {
@@ -172,7 +164,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
                 editarEspecie(especie);
             }
 
-            listarTabelaEspecie();
+            especies = new GenericDao<Especie>().getAll(Especie.class);
+            listarTabelaEspecie(especies);
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnSavlarRaca()) {
             if (escolha == salvar) {
@@ -181,7 +174,9 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
                 editarRaca(raca);
             }
             tPrincipal.getRaca_especie().getPainelItens().setEnabled(true);
-            listarTabelaRaca();
+            racas = new GenericDao<Raca>().getAll(Raca.class);
+
+            listarTabelaRaca(racas);
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnNovaRaca()) {
             escolha = salvar;
@@ -193,16 +188,24 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
         }
 
         if (e.getSource() == tPrincipal.getCadastros().getBtnRaca()) {
-            listarTabelaRaca();
+            racas = new GenericDao<Raca>().getAll(Raca.class);
+
+            listarTabelaRaca(racas);
             preencherComboEspecie();
         }
         if (e.getSource() == tPrincipal.getCadastros().getBtnEspecie()) {
-            listarTabelaEspecie();
-            listarTabelaRaca();
+            racas = new GenericDao<Raca>().getAll(Raca.class);
+
+            especies = new GenericDao<Especie>().getAll(Especie.class);
+            listarTabelaEspecie(especies);
+            listarTabelaRaca(racas);
         }
         if (e.getSource() == tPrincipal.getCadastros().getBtnRaca()) {
-            listarTabelaEspecie();
-            listarTabelaRaca();
+            racas = new GenericDao<Raca>().getAll(Raca.class);
+
+            especies = new GenericDao<Especie>().getAll(Especie.class);
+            listarTabelaEspecie(especies);
+            listarTabelaRaca(racas);
         }
     }
 
@@ -299,19 +302,17 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
 
     }
 
-    public void listarTabelaAnimais() {
+    public void listarTabelaAnimais(List<Animal> lista) {
 
-        animais = new GenericDao<Animal>().getAll(Animal.class);
-
-        if (!animais.isEmpty()) {
+        if (!lista.isEmpty()) {
 
             tPrincipal.getcAnimal().getTabelaAnimais().setDefaultRenderer(Object.class, new Render());
 
             int i = 0;
             try {
                 String[] colunas = new String[]{"NOME", "APELIDO", "DATA DE NASCIMENTO", "SEXO", "COR", "RAÇA", "DONO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[animais.size()][9];
-                for (Animal a : animais) {
+                Object[][] dados = new Object[lista.size()][9];
+                for (Animal a : lista) {
                     dados[i][0] = a.getNome();
                     dados[i][1] = a.getApelido();
                     dados[i][2] = a.getNascimento();
@@ -337,19 +338,17 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
         }
     }
 
-    public void listarTabelaEspecie() {
+    public void listarTabelaEspecie(List<Especie> lista) {
 
-        especies = new GenericDao<Especie>().getAll(Especie.class);
-
-        if (!especies.isEmpty()) {
+        if (!lista.isEmpty()) {
 
             tPrincipal.getRaca_especie().getTabelaEspecie().setDefaultRenderer(Object.class, new Render());
 
             int i = 0;
             try {
                 String[] colunas = new String[]{"NOME", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[especies.size()][3];
-                for (Especie a : especies) {
+                Object[][] dados = new Object[lista.size()][3];
+                for (Especie a : lista) {
                     dados[i][0] = a.getNome();
                     dados[i][1] = btnEditar;
                     dados[i][2] = btnExcluir;
@@ -369,24 +368,21 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
         }
     }
 
-    public void listarTabelaRaca() {
+    public void listarTabelaRaca(List<Raca> lista) {
 
-        racas = new GenericDao<Raca>().getAll(Raca.class);
-
-        if (!racas.isEmpty()) {
+        if (!lista.isEmpty()) {
 
             tPrincipal.getRaca_especie().getTabelaRacas().setDefaultRenderer(Object.class, new Render());
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"NOME", "DESCRIÇÃO", "ESPECIE", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[racas.size()][5];
-                for (Raca a : racas) {
+                String[] colunas = new String[]{"NOME","ESPECIE", "EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[lista.size()][4];
+                for (Raca a : lista) {
                     dados[i][0] = a.getNome();
-                    dados[i][1] = a.getDescricao();
-                    dados[i][2] = a.getEspecie().getNome();
-                    dados[i][3] = btnEditar;
-                    dados[i][4] = btnExcluir;
+                    dados[i][1] = a.getEspecie().getNome();
+                    dados[i][2] = btnEditar;
+                    dados[i][3] = btnExcluir;
 
                     i++;
                 }
@@ -566,4 +562,60 @@ public class ControleAnimal extends MouseAdapter implements ActionListener {
         return ro;
     }
 
+    // eventos de teclas
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+        if (e.getSource() == tPrincipal.getcAnimal().getTxtPesquisa()) {
+            String nome = tPrincipal.getcAnimal().getTxtPesquisa().getText();
+            animais = new DaoAnimal().Busca(nome);
+            listarTabelaAnimais(animais);
+
+        }
+        if (e.getSource() == tPrincipal.getRaca_especie().getTxtPesquisaEspecie()) {
+            String nome = tPrincipal.getRaca_especie().getTxtPesquisaEspecie().getText();
+            especies = new DaoEspecie().Busca(nome);
+            listarTabelaEspecie(especies);
+        }
+        if (e.getSource() == tPrincipal.getRaca_especie().getTxtPesquizaRaca()) {
+            String nome = tPrincipal.getRaca_especie().getTxtPesquizaRaca().getText();
+            racas = new DaoRaca().Busca(nome);
+            listarTabelaRaca(racas);
+        }
+
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    private void adicionarEventos() {
+
+        tPrincipal.getcAnimal().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcAnimal().getComboEspecie().addActionListener(this);
+        tPrincipal.getcAnimal().getBtnCadastrarAnimal().addActionListener(this);
+        tPrincipal.getCadastros().getBtnAnimal1().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnSavlarRaca().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnSalvarEspecie().addActionListener(this);
+        tPrincipal.getCadastros().getBtnRaca().addActionListener(this);
+        tPrincipal.getCadastros().getBtnEspecie().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnNovaRaca().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnSairE().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnSairR().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnNovaEspecie().addActionListener(this);
+        tPrincipal.getRaca_especie().getTabelaRacas().addMouseListener(this);
+        tPrincipal.getcAnimal().getTabelaAnimais().addMouseListener(this);
+        tPrincipal.getcAnimal().getTxtPesquisa().addKeyListener(this);
+        tPrincipal.getRaca_especie().getTabelaEspecie().addMouseListener(this);
+        tPrincipal.getRaca_especie().getTxtPesquizaRaca().addKeyListener(this);
+        tPrincipal.getRaca_especie().getTxtPesquisaEspecie().addKeyListener(this);
+
+    }
 }

@@ -30,5 +30,15 @@ public class DaoRaca {
         }
         return query.getResultList();
     }
+    public List<Raca> Busca(String nome) {
+            Query query = null;
+            try {
+                query = manager.createQuery("SELECT  raca FROM Raca raca where raca.nome like '%" + nome + "%' ");
+
+            } catch (IllegalStateException e) {
+                System.out.println("erro ao buscar racas");
+            }
+            return query.getResultList();
+        }
 
 }

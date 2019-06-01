@@ -24,24 +24,35 @@ public class Gerencia extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        painelCadastro = new javax.swing.JPanel();
+        painelControlAcesso = new javax.swing.JTabbedPane();
+        painelEstoque = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnSair = new javax.swing.JButton();
-        painelFoto = new javax.swing.JPanel();
+        painelRelatorio = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnSairServico = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        painelControleAcesso = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        btnSairServico1 = new javax.swing.JButton();
+        painelBackup = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        btnSair1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1024, 600));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));
 
-        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jTabbedPane1.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
-        jTabbedPane1.setPreferredSize(new java.awt.Dimension(900, 481));
+        painelControlAcesso.setBackground(new java.awt.Color(255, 255, 255));
+        painelControlAcesso.setFont(new java.awt.Font("Franklin Gothic Heavy", 0, 16)); // NOI18N
+        painelControlAcesso.setPreferredSize(new java.awt.Dimension(900, 481));
 
-        painelCadastro.setBackground(new java.awt.Color(255, 255, 255));
+        painelEstoque.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -67,26 +78,26 @@ public class Gerencia extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout painelCadastroLayout = new javax.swing.GroupLayout(painelCadastro);
-        painelCadastro.setLayout(painelCadastroLayout);
-        painelCadastroLayout.setHorizontalGroup(
-            painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCadastroLayout.createSequentialGroup()
+        javax.swing.GroupLayout painelEstoqueLayout = new javax.swing.GroupLayout(painelEstoque);
+        painelEstoque.setLayout(painelEstoqueLayout);
+        painelEstoqueLayout.setHorizontalGroup(
+            painelEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelEstoqueLayout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
-        painelCadastroLayout.setVerticalGroup(
-            painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCadastroLayout.createSequentialGroup()
+        painelEstoqueLayout.setVerticalGroup(
+            painelEstoqueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelEstoqueLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("ESTOQUE", painelCadastro);
+        painelControlAcesso.addTab("ESTOQUE", painelEstoque);
 
-        painelFoto.setBackground(new java.awt.Color(255, 255, 255));
+        painelRelatorio.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -100,56 +111,184 @@ public class Gerencia extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("ANIMAIS");
+
+        jButton2.setText("CLIENTES");
+
+        jButton3.setText("SERVICOS EFETUADOS");
+
+        jButton4.setText("PRODUTOS");
+
+        jButton5.setText("VENDAS");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(772, 772, 772)
-                .addComponent(btnSairServico)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(772, 772, 772)
+                        .addComponent(btnSairServico))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton5)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4)))))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(381, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
                 .addComponent(btnSairServico)
                 .addGap(39, 39, 39))
         );
 
-        javax.swing.GroupLayout painelFotoLayout = new javax.swing.GroupLayout(painelFoto);
-        painelFoto.setLayout(painelFotoLayout);
-        painelFotoLayout.setHorizontalGroup(
-            painelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFotoLayout.createSequentialGroup()
+        javax.swing.GroupLayout painelRelatorioLayout = new javax.swing.GroupLayout(painelRelatorio);
+        painelRelatorio.setLayout(painelRelatorioLayout);
+        painelRelatorioLayout.setHorizontalGroup(
+            painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelRelatorioLayout.createSequentialGroup()
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        painelFotoLayout.setVerticalGroup(
-            painelFotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFotoLayout.createSequentialGroup()
+        painelRelatorioLayout.setVerticalGroup(
+            painelRelatorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelRelatorioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("RELATORIO", painelFoto);
+        painelControlAcesso.addTab("RELATORIOS", painelRelatorio);
+
+        painelControleAcesso.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnSairServico1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
+        btnSairServico1.setText("SAIR");
+        btnSairServico1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSairServico1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairServico1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(772, 772, 772)
+                .addComponent(btnSairServico1)
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap(392, Short.MAX_VALUE)
+                .addComponent(btnSairServico1)
+                .addGap(39, 39, 39))
+        );
+
+        javax.swing.GroupLayout painelControleAcessoLayout = new javax.swing.GroupLayout(painelControleAcesso);
+        painelControleAcesso.setLayout(painelControleAcessoLayout);
+        painelControleAcessoLayout.setHorizontalGroup(
+            painelControleAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelControleAcessoLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        painelControleAcessoLayout.setVerticalGroup(
+            painelControleAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelControleAcessoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        painelControlAcesso.addTab("CONTROLE DE ACESSO", painelControleAcesso);
+
+        painelBackup.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnSair1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
+        btnSair1.setText("SAIR");
+        btnSair1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap(718, Short.MAX_VALUE)
+                .addComponent(btnSair1)
+                .addGap(109, 109, 109))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(390, 390, 390)
+                .addComponent(btnSair1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout painelBackupLayout = new javax.swing.GroupLayout(painelBackup);
+        painelBackup.setLayout(painelBackupLayout);
+        painelBackupLayout.setHorizontalGroup(
+            painelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelBackupLayout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+        painelBackupLayout.setVerticalGroup(
+            painelBackupLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelBackupLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        painelControlAcesso.addTab("BACKUP", painelBackup);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(painelControlAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 57, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(painelControlAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -172,16 +311,31 @@ public class Gerencia extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSairServicoActionPerformed
 
+    private void btnSairServico1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairServico1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSairServico1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnSair1;
     private javax.swing.JButton btnSairServico;
+    private javax.swing.JButton btnSairServico1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JPanel painelCadastro;
-    private javax.swing.JPanel painelFoto;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel painelBackup;
+    private javax.swing.JTabbedPane painelControlAcesso;
+    private javax.swing.JPanel painelControleAcesso;
+    private javax.swing.JPanel painelEstoque;
+    private javax.swing.JPanel painelRelatorio;
     // End of variables declaration//GEN-END:variables
 
     /**

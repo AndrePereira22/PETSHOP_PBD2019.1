@@ -86,14 +86,13 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == tPrincipal.getAgenda().getTabelaAgenda()) {
 
-            
             int ro = retornaIndice(tPrincipal.getAgenda().getTabelaAgenda(), e);
             agenda = agendas.get(ro);
-            if(escolha==edicao){
+            if (escolha == edicao) {
                 tPrincipal.getAgenarServico().setVisible(true);
                 tPrincipal.getAgenarServico().preencherDados(agenda);
-            }else if(escolha==exclusao){
-                
+            } else if (escolha == exclusao) {
+
             }
 
         }
@@ -122,7 +121,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getAgenda().getBtnAdicionar()) {
 
             if (!profissionais.isEmpty()) {
-                escolha=salvar;
+                escolha = salvar;
 
                 preencherAnimais();
                 preencherServicos();
@@ -138,12 +137,12 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         }
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnSalvar()) {
 
-            if(escolha==salvar){
-                 salvarServico();
-            }else if(escolha==edicao){
+            if (escolha == salvar) {
+                salvarServico();
+            } else if (escolha == edicao) {
                 editarServico(agenda);
             }
-           
+
         }
         if (e.getSource() == tPrincipal.getAgenarServico().getComboAnimal()) {
             preencherDadosAnimal();
@@ -203,20 +202,18 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         }
 
     }
-     private void editarServico(Agenda agenda) {
 
-       Servico servico=null;
+    private void editarServico(Agenda agenda) {
+
+        Servico servico = null;
 
         int indiceAnimal = tPrincipal.getAgenarServico().getComboAnimal().getSelectedIndex();
         int indiceServico = tPrincipal.getAgenarServico().getComboServico().getSelectedIndex();
 
         Date d = new Date(System.currentTimeMillis());
 
-       
-
         agenda.setAnotacao(tPrincipal.getAgenarServico().getAreaObservacao().getText());
         agenda.setHorario(ConverterTime(tPrincipal.getAgenarServico().getComboHorario().getSelectedItem().toString()));
-
 
         agenda.setProfissional(profissional);
 
@@ -283,15 +280,16 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         int indice = tPrincipal.getAgenda().getComboProfissional().getSelectedIndex();
 
         if (!profissionais.isEmpty()) {
+            java.sql.Date data = ConverterData(tPrincipal.getAgenda().getCalenario().getDate());
 
             int i = 0;
             try {
                 profissional = profissionais.get(indice);
-                agendas = new DaoAgenda().buscaAgenda(profissional);
+                agendas = new DaoAgenda().buscaAgenda(profissional,data);
 
                 tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
-                String[] colunas = new String[]{"HORARIO", "SERVICO","EDITAR", "EXCLUIR"};
+                String[] colunas = new String[]{"HORARIO", "SERVICO", "EDITAR", "EXCLUIR"};
                 Object[][] dados = new Object[agendas.size()][4];
                 for (Agenda a : agendas) {
                     dados[i][0] = a.getHorario();
@@ -308,7 +306,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
                     }
                 };
                 tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
-            } catch (Exception ex) {
+            } catch (java.lang.NullPointerException ex) {
 
             }
         }

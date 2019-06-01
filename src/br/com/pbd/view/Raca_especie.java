@@ -561,8 +561,8 @@ public class Raca_especie extends javax.swing.JInternalFrame {
     public void limparComponentes() {
         txtEspecie.setText("");
         txtAreaRaca.setText("");
-        txtPesquisaEspecie.setText("");
-        txtPesquizaRaca.setText("");
+        getTxtPesquisaEspecie().setText("");
+        getTxtPesquizaRaca().setText("");
         txtRaca.setText("");
 
     }
@@ -725,6 +725,20 @@ public class Raca_especie extends javax.swing.JInternalFrame {
      */
     public javax.swing.JTextField getTxtRaca() {
         return txtRaca;
+    }
+
+    /**
+     * @return the txtPesquisaEspecie
+     */
+    public javax.swing.JTextField getTxtPesquisaEspecie() {
+        return txtPesquisaEspecie;
+    }
+
+    /**
+     * @return the txtPesquizaRaca
+     */
+    public javax.swing.JTextField getTxtPesquizaRaca() {
+        return txtPesquizaRaca;
     }
 
 }

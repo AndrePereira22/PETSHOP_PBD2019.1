@@ -5,6 +5,8 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author Glenda Alves de Lima
@@ -33,7 +35,7 @@ public class Produtos extends javax.swing.JInternalFrame {
         tabelaItens = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        txtPesquisarProdutos = new javax.swing.JTextField();
+        txtPesquisarProdutos = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome ou codigo do Produto");
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);

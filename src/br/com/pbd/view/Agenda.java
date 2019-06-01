@@ -43,9 +43,9 @@ public class Agenda extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblDatal = new javax.swing.JLabel();
-        calendario = new com.toedter.calendar.JDayChooser();
         btnSair = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        calenario = new com.toedter.calendar.JCalendar();
         TITULO = new javax.swing.JLabel();
 
         setBorder(null);
@@ -154,8 +154,6 @@ public class Agenda extends javax.swing.JInternalFrame {
                     .addComponent(lblDatal, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        calendario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
         btnSair.setText("SAIR");
         btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
@@ -172,21 +170,22 @@ public class Agenda extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(calendario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3))
-                .addGap(67, 67, 67))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(183, 183, 183)
+                        .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3)
+                    .addComponent(calenario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(105, 105, 105))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(12, 12, 12)
-                .addComponent(calendario, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(calenario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
                 .addComponent(btnSair)
                 .addGap(50, 50, 50))
             .addGroup(jPanel5Layout.createSequentialGroup()
@@ -215,7 +214,7 @@ public class Agenda extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(comboProfissional, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(TITULO))
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +269,7 @@ public class Agenda extends javax.swing.JInternalFrame {
     private javax.swing.JLabel TITULO;
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnSair;
-    private com.toedter.calendar.JDayChooser calendario;
+    private com.toedter.calendar.JCalendar calenario;
     private javax.swing.JComboBox<String> comboProfissional;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -300,13 +299,7 @@ public class Agenda extends javax.swing.JInternalFrame {
         return btnSair;
     }
 
-    /**
-     * @return the calendario
-     */
-    public com.toedter.calendar.JDayChooser getCalendario() {
-        return calendario;
-    }
-
+    
     /**
      * @return the comboProfissional
      */
@@ -319,6 +312,13 @@ public class Agenda extends javax.swing.JInternalFrame {
      */
     public javax.swing.JTable getTabelaAgenda() {
         return tabelaAgenda;
+    }
+
+    /**
+     * @return the calenario
+     */
+    public com.toedter.calendar.JCalendar getCalenario() {
+        return calenario;
     }
 
     

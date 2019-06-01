@@ -59,7 +59,6 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     private Profissional profissional;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
-
     private HashMap<Integer, Boolean> keyEventos;
 
     public Controle(TelaPrincipal tPrincipal) {
@@ -89,6 +88,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
     }
 
+    // eventos de Mouse
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == tPrincipal.getcCliente().getTabelaCliente()) {
@@ -99,6 +99,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 tPrincipal.getcCliente().getPainelCadastro().setEnabled(true);
                 cliente = clientes.get(ro);
                 tPrincipal.getcCliente().preencherDados(cliente);
+                tPrincipal.ativarEdicaoLogin(false);
             } else if (escolha == exclusao) {
 
             }
@@ -110,6 +111,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelCadastro());
                 tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(true);
                 funcionario = funcionarios.get(ro);
+                       tPrincipal.ativarEdicaoLogin(false);
                 tPrincipal.getcFuncionario().preencherDados(funcionario);
             } else if (escolha == exclusao) {
 
@@ -122,6 +124,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelCadastro());
                 tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(true);
                 profissional = profissionais.get(ro);
+                tPrincipal.ativarEdicaoLogin(false);
                 tPrincipal.getcProfissioanl().preencherDados(profissional);
             } else if (escolha == exclusao) {
 
@@ -141,6 +144,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
     }
 
+    // eventos de botoes
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -169,6 +173,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         if (e.getSource() == tPrincipal.getcFuncionario().getBtnNovoFuncionario()) {
             escolha = salvar;
+            tPrincipal.ativarEdicaoLogin(true);
             tPrincipal.getcFuncionario().limparComponentes();
         }
         if (e.getSource() == tPrincipal.getcFuncionario().getBtnSalvar()) {
@@ -220,6 +225,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         if (e.getSource() == tPrincipal.getcProfissioanl().getBtnNovoProfissional()) {
             escolha = salvar;
+            tPrincipal.ativarEdicaoLogin(true);
             tPrincipal.getcProfissioanl().limparComponentes();
 
         }
@@ -777,31 +783,28 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         return ro;
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
+    // eventos de teclas
     @Override
     public void keyPressed(KeyEvent e) {
         keyEventos.put(e.getKeyCode(), true);
 
-        if (tPrincipal.getcCliente().isVisible()) {
+        if (e.getSource()== tPrincipal.getcCliente().getTxtPesquisa() ) {
             String nome = tPrincipal.getcCliente().getTxtPesquisa().getText();
             clientes = new DaoCliente().Busca(nome);
             listarClientes(clientes);
 
         }
-        if (tPrincipal.getcFuncionario().isVisible()) {
+        if (e.getSource()== tPrincipal.getcFuncionario().getTxtPesquisa()) {
             String nome = tPrincipal.getcFuncionario().getTxtPesquisa().getText();
             funcionarios = new DaoFuncionario().Busca(nome);
             listarFuncionarios(funcionarios);
         }
-        if (tPrincipal.getcFornecedor().isVisible()) {
+        if (e.getSource()== tPrincipal.getcFornecedor().getTxtPesquisa()) {
             String nome = tPrincipal.getcFornecedor().getTxtPesquisa().getText();
             fornecedores = new DaoFornecedor().Busca(nome);
             listarFornecedores(fornecedores);
         }
-        if (tPrincipal.getcProfissioanl().isVisible()) {
+        if (e.getSource()==tPrincipal.getcProfissioanl().getTxtPesquisa()) {
             String nome = tPrincipal.getcProfissioanl().getTxtPesquisa().getText();
             profissionais = new DaoProfissional().Busca(nome);
             listarProfissionais(profissionais);
@@ -814,6 +817,10 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     @Override
     public void keyReleased(KeyEvent e) {
         keyEventos.remove(e.getKeyCode());
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 
     private void adicionarEvents() {

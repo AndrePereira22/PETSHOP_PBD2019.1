@@ -11,6 +11,7 @@ import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.sql.Date;
 
 /**
  *
@@ -24,6 +25,17 @@ public class DaoAgenda {
         try {
             query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj");
             query.setParameter("obj", pro);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar servicos");
+        }
+        return query.getResultList();
+    }
+      public List<Agenda>  buscaAgenda(Profissional pro,Date data) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj and agenda.data =:date");
+            query.setParameter("obj", pro);
+            query.setParameter("date", data);
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar servicos");
         }
