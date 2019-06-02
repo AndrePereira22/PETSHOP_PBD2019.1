@@ -226,6 +226,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtPesquizaRaca">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xd;&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome da Ra&#xe7;a &quot;);"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel1">
                       <Properties>
@@ -475,8 +478,8 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtPesquisaEspecie" min="-2" pref="291" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                                      <Component id="txtPesquisaEspecie" min="-2" pref="331" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane2" min="-2" pref="464" max="-2" attributes="0"/>
@@ -561,6 +564,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtPesquisaEspecie">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xd;&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome da Especie &quot;);"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel2">
                       <Properties>

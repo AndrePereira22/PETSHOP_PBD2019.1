@@ -50,6 +50,9 @@ public class Venda implements EntidadeBase {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "venda")
     @JoinColumn(name = "venda_id")
     private List<ItemVenda> itens;
+    
+     @OneToMany
+    private List<Cliente> clientes;
 
     @Override
     public Long getId() {
@@ -145,6 +148,20 @@ public class Venda implements EntidadeBase {
      */
     public void setItens(List<ItemVenda> itens) {
         this.itens = itens;
+    }
+
+    /**
+     * @return the clientes
+     */
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    /**
+     * @param clientes the clientes to set
+     */
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     

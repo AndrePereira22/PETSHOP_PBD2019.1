@@ -5,6 +5,8 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.JTextField;
+
 public class Servico_Produto extends javax.swing.JInternalFrame {
 
     /**
@@ -30,7 +32,8 @@ public class Servico_Produto extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaProdutos = new javax.swing.JTable();
         btnPesquisaProduto = new javax.swing.JButton();
-        txtgPesquisaProduto = new javax.swing.JTextField();
+        txtgPesquisaProduto = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome , Codigo ou Preço ");
         jLabel1 = new javax.swing.JLabel();
         btnNovoProduto = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
@@ -39,7 +42,8 @@ public class Servico_Produto extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaServicos = new javax.swing.JTable();
         btnPesquisaServico = new javax.swing.JButton();
-        txtPesquisaServico = new javax.swing.JTextField();
+        txtPesquisaServico = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome do Serviço ");
         jLabel2 = new javax.swing.JLabel();
         btnNovoServico = new javax.swing.JButton();
         btnSairServico = new javax.swing.JButton();

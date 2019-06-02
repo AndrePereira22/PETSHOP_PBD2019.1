@@ -5,19 +5,31 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 
 /**
  *
  * @author Glenda Alves de Lima
  */
-public class Produtos extends javax.swing.JInternalFrame {
+public class EscolhaClientes extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaCadastroCliente
      */
-    public Produtos() {
+    private final JButton btnAdicionar;
+    private final Icon adicionar;
+
+    public EscolhaClientes() {
         initComponents();
+
+        adicionar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/client.png"));
+        btnAdicionar = new JButton(adicionar);
+        btnAdicionar.setName("adicionar");
+        btnAdicionar.setBorder(null);
+        btnAdicionar.setContentAreaFilled(false);
     }
 
     /**
@@ -35,7 +47,7 @@ public class Produtos extends javax.swing.JInternalFrame {
         tabelaItens = new javax.swing.JTable();
         btnCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        txtPesquisarProdutos = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome ou codigo do Produto");
+        txtPesquisarClientes = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome , CPF ");
         jLabel1 = new javax.swing.JLabel();
 
         setBorder(null);
@@ -112,7 +124,7 @@ public class Produtos extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setText("PESQUISAR  PRODUTO");
+        jLabel1.setText("PESQUISAR  CLIENTE :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,8 +133,8 @@ public class Produtos extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPesquisarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -131,7 +143,7 @@ public class Produtos extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPesquisarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -187,26 +199,8 @@ public class Produtos extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaItens;
-    private javax.swing.JTextField txtPesquisarProdutos;
+    private javax.swing.JTextField txtPesquisarClientes;
     // End of variables declaration//GEN-END:variables
-
-    public void limparComponentes() {
-        txtPesquisarProdutos.setText("");
-    }
-    
-    /**
-     * @return the tabelaItens
-     */
-    public javax.swing.JTable getTabelaItens() {
-        return tabelaItens;
-    }
-
-    /**
-     * @return the txtPesquisarProdutos
-     */
-    public javax.swing.JTextField getTxtPesquisarProdutos() {
-        return txtPesquisarProdutos;
-    }
 
     /**
      * @return the btnCancelar
@@ -215,7 +209,25 @@ public class Produtos extends javax.swing.JInternalFrame {
         return btnCancelar;
     }
 
+    /**
+     * @return the tabelaItens
+     */
+    public javax.swing.JTable getTabelaItens() {
+        return tabelaItens;
+    }
 
-    
-    
+    /**
+     * @return the txtPesquisarClientes
+     */
+    public javax.swing.JTextField getTxtPesquisarClientes() {
+        return txtPesquisarClientes;
+    }
+
+    /**
+     * @return the btnAdicionar
+     */
+    public JButton getBtnAdicionar() {
+        return btnAdicionar;
+    }
+
 }

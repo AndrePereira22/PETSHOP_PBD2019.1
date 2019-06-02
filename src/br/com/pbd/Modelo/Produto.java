@@ -20,6 +20,8 @@ public class Produto implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "produto_seq")
     private Long id;
 
+    @Column(name = "codigo", precision = 8, scale = 0, nullable = false)
+    private int codigo;
     @Column(name = "nome", length = 20, nullable = false)
     private String nome;
     @Column(name = "fabricante", length = 20, nullable = false)
@@ -159,6 +161,20 @@ public class Produto implements EntidadeBase {
      */
     public void setQuantidae_estoque(int quantidae_estoque) {
         this.quantidae_estoque = quantidae_estoque;
+    }
+
+    /**
+     * @return the codigo
+     */
+    public int getCodigo() {
+        return codigo;
+    }
+
+    /**
+     * @param codigo the codigo to set
+     */
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
 }

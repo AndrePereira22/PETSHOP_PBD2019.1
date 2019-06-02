@@ -45,26 +45,11 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
     private Produto produto;
     private List<Servico> servicos;
     private Servico servico;
-    private JButton btnExcluir, btnEditar;
-    private Icon editar, excluir;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
     public ControleProdutos_Servico(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
-
-        tPrincipal.getServico_Produto().getTabelaServicos().addMouseListener(this);
-        tPrincipal.getServico_Produto().getTabelaProdutos().addMouseListener(this);
-        tPrincipal.getcGrupo().getTabelaGrupos().addMouseListener(this);
-        tPrincipal.getServico_Produto().getBtnNovoProduto().addActionListener(this);
-        tPrincipal.getServico_Produto().getBtnNovoServico().addActionListener(this);
-        tPrincipal.getcProdutos().getBtnSalvar().addActionListener(this);
-        tPrincipal.getcServicos().getBtnSalvar().addActionListener(this);
-        tPrincipal.getBtnProdutos_serv().addActionListener(this);
-        tPrincipal.getCadastros().getBtnGrupo().addActionListener(this);
-        tPrincipal.getcGrupo().getBtnSalvarNovoGrupo().addActionListener(this);
-        tPrincipal.getcGrupo().getBtnNovaGrupo().addActionListener(this);
-        tPrincipal.getServico_Produto().getBtnNovoServico().addActionListener(this);
 
         grupos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
@@ -73,19 +58,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         grupo = new GrupoProduto();
         servico = new Servico();
 
-        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
-
-        btnEditar = new JButton(editar);
-        btnEditar.setName("editar");
-        btnEditar.setBorder(null);
-        btnEditar.setContentAreaFilled(false);
-
-        btnExcluir = new JButton(excluir);
-        btnExcluir.setName("excluir");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
-
+        adicionarEventos();
     }
 
     @Override
@@ -271,18 +244,17 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE COMPRA", "VALOR DE VENDA", "FORNECEDOR", "GRUPO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[produtos.size()][9];
+                String[] colunas = new String[]{"CODIGO", "NOME", "FABRICANTE", "VALOR DE VENDA", "FORNECEDOR", "GRUPO", "EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[produtos.size()][8];
                 for (Produto a : produtos) {
-                    dados[i][0] = a.getDescricao();
-                    dados[i][1] = a.getFabricante();
-                    dados[i][2] = a.getValorcompra();
+                    dados[i][0] = a.getCodigo();
+                    dados[i][1] = a.getDescricao();
+                    dados[i][2] = a.getFabricante();
                     dados[i][3] = a.getValorvenda();
                     dados[i][4] = a.getFornecedor().getNomefantasia();
                     dados[i][5] = a.getGproduto().getDescricao();
-                    dados[i][6] = a.getQuantidae_estoque()+"";
-                    dados[i][7] = btnEditar;
-                    dados[i][8] = btnExcluir;
+                    dados[i][6] =  tPrincipal.getBtnEditar();
+                    dados[i][7] =  tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -314,8 +286,8 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                     dados[i][0] = a.getDescricao();
                     dados[i][1] = a.getDuracao();
                     dados[i][2] = a.getValor();
-                    dados[i][3] = btnEditar;
-                    dados[i][4] = btnExcluir;
+                    dados[i][3] =  tPrincipal.getBtnEditar();
+                    dados[i][4] =  tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -345,8 +317,8 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                 Object[][] dados = new Object[grupos.size()][3];
                 for (GrupoProduto a : grupos) {
                     dados[i][0] = a.getDescricao();
-                    dados[i][1] = btnEditar;
-                    dados[i][2] = btnExcluir;
+                    dados[i][1] =  tPrincipal.getBtnEditar();
+                    dados[i][2] =  tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -513,5 +485,21 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             }
         }
         return ro;
+    }
+
+    public void adicionarEventos() {
+
+        tPrincipal.getServico_Produto().getTabelaServicos().addMouseListener(this);
+        tPrincipal.getServico_Produto().getTabelaProdutos().addMouseListener(this);
+        tPrincipal.getcGrupo().getTabelaGrupos().addMouseListener(this);
+        tPrincipal.getServico_Produto().getBtnNovoProduto().addActionListener(this);
+        tPrincipal.getServico_Produto().getBtnNovoServico().addActionListener(this);
+        tPrincipal.getcProdutos().getBtnSalvar().addActionListener(this);
+        tPrincipal.getcServicos().getBtnSalvar().addActionListener(this);
+        tPrincipal.getBtnProdutos_serv().addActionListener(this);
+        tPrincipal.getCadastros().getBtnGrupo().addActionListener(this);
+        tPrincipal.getcGrupo().getBtnSalvarNovoGrupo().addActionListener(this);
+        tPrincipal.getcGrupo().getBtnNovaGrupo().addActionListener(this);
+        tPrincipal.getServico_Produto().getBtnNovoServico().addActionListener(this);
     }
 }

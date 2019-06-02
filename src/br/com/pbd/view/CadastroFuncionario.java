@@ -5,7 +5,9 @@
  */
 package br.com.pbd.view;
 
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import br.com.pbd.Modelo.Funcionario;
+import javax.swing.JTextField;
 
 /**
  *
@@ -18,6 +20,10 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
      */
     public CadastroFuncionario() {
         initComponents();
+
+        AutoCompleteDecorator.decorate(comboUf);
+
+        AutoCompleteDecorator.decorate(comboTipo);
     }
 
     /**
@@ -34,7 +40,8 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         painelFuncionario = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaFuncionarios = new javax.swing.JTable();
-        txtPesquisa = new javax.swing.JTextField();
+        txtPesquisa =
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome, CPF OU Função  ");
         jLabel19 = new javax.swing.JLabel();
         btnNovoFuncionario = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
@@ -196,7 +203,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
 
         jLabel20.setText("Descrição :");
 
-        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "GERENTE", "VENDEDOR", "RECEPCIONISTA", "FAXINEIRO (A)" }));
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "GERENTE", "VENDEDOR", "RECEPCIONISTA", "FAXINEIRO (A)" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -935,7 +942,5 @@ public void limparComponentes() {
     public javax.swing.JPanel getPainelLogin() {
         return painelLogin;
     }
-
-    
 
 }

@@ -186,6 +186,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtPesquisar">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xd;&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome&quot;);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel1">
                   <Properties>

@@ -7,6 +7,7 @@ package br.com.pbd.view;
 
 import br.com.pbd.Modelo.Cliente;
 import javax.swing.JTextField;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -19,6 +20,8 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
      */
     public CadastroCliente() {
         initComponents();
+        
+        AutoCompleteDecorator.decorate(comboUf);
     }
 
     /**
@@ -34,7 +37,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
         painelItens = new javax.swing.JTabbedPane();
         painelCliente = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        txtPesquisa = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome ou cpf ");
+        txtPesquisa = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome ou CPF ");
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaCliente = new javax.swing.JTable();
         btnCadastrarCliente = new javax.swing.JButton();

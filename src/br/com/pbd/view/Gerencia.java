@@ -28,6 +28,9 @@ public class Gerencia extends javax.swing.JInternalFrame {
         painelEstoque = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnSair = new javax.swing.JButton();
+        painelControleAcesso = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        btnSairServico1 = new javax.swing.JButton();
         painelRelatorio = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         btnSairServico = new javax.swing.JButton();
@@ -36,9 +39,6 @@ public class Gerencia extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        painelControleAcesso = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        btnSairServico1 = new javax.swing.JButton();
         painelBackup = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         btnSair1 = new javax.swing.JButton();
@@ -96,6 +96,56 @@ public class Gerencia extends javax.swing.JInternalFrame {
         );
 
         painelControlAcesso.addTab("ESTOQUE", painelEstoque);
+
+        painelControleAcesso.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        btnSairServico1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
+        btnSairServico1.setText("SAIR");
+        btnSairServico1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSairServico1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairServico1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(772, 772, 772)
+                .addComponent(btnSairServico1)
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap(392, Short.MAX_VALUE)
+                .addComponent(btnSairServico1)
+                .addGap(39, 39, 39))
+        );
+
+        javax.swing.GroupLayout painelControleAcessoLayout = new javax.swing.GroupLayout(painelControleAcesso);
+        painelControleAcesso.setLayout(painelControleAcessoLayout);
+        painelControleAcessoLayout.setHorizontalGroup(
+            painelControleAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelControleAcessoLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        painelControleAcessoLayout.setVerticalGroup(
+            painelControleAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelControleAcessoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        painelControlAcesso.addTab("CONTROLE DE ACESSO", painelControleAcesso);
 
         painelRelatorio.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -179,56 +229,6 @@ public class Gerencia extends javax.swing.JInternalFrame {
 
         painelControlAcesso.addTab("RELATORIOS", painelRelatorio);
 
-        painelControleAcesso.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        btnSairServico1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
-        btnSairServico1.setText("SAIR");
-        btnSairServico1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
-        btnSairServico1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairServico1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(772, 772, 772)
-                .addComponent(btnSairServico1)
-                .addContainerGap(64, Short.MAX_VALUE))
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(392, Short.MAX_VALUE)
-                .addComponent(btnSairServico1)
-                .addGap(39, 39, 39))
-        );
-
-        javax.swing.GroupLayout painelControleAcessoLayout = new javax.swing.GroupLayout(painelControleAcesso);
-        painelControleAcesso.setLayout(painelControleAcessoLayout);
-        painelControleAcessoLayout.setHorizontalGroup(
-            painelControleAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelControleAcessoLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        painelControleAcessoLayout.setVerticalGroup(
-            painelControleAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelControleAcessoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        painelControlAcesso.addTab("CONTROLE DE ACESSO", painelControleAcesso);
-
         painelBackup.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -307,13 +307,13 @@ public class Gerencia extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSairServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairServicoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSairServicoActionPerformed
-
     private void btnSairServico1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairServico1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSairServico1ActionPerformed
+
+    private void btnSairServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairServicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSairServicoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -345,12 +345,6 @@ public class Gerencia extends javax.swing.JInternalFrame {
         return btnSair;
     }
 
-    /**
-     * @return the btnSairServico
-     */
-    public javax.swing.JButton getBtnSairServico() {
-        return btnSairServico;
-    }
-
+    
 
 }

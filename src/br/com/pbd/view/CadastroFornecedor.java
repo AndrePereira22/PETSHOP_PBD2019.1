@@ -6,6 +6,8 @@
 package br.com.pbd.view;
 
 import br.com.pbd.Modelo.Fornecedor;
+import javax.swing.JTextField;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 public class CadastroFornecedor extends javax.swing.JInternalFrame {
 
@@ -14,6 +16,8 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
      */
     public CadastroFornecedor() {
         initComponents();
+
+        AutoCompleteDecorator.decorate(comboUf);
     }
 
     /**
@@ -37,7 +41,7 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         painelFornecedor = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaFornecedor = new javax.swing.JTable();
-        txtPesquisa = new javax.swing.JTextField();
+        txtPesquisa = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome , Razao Social ou CNPJ ");
         jLabel16 = new javax.swing.JLabel();
         btnNovoFornecedor = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();

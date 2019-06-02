@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
-public class Mensagems extends JDialog implements ActionListener {
+public class Mensagem extends JDialog implements ActionListener {
 
     private static long serialVersionUID = 1L;
     private JFrame frame;

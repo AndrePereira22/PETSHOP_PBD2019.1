@@ -26,8 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -47,8 +45,6 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     List<Animal> animais;
     List<Servico> servicos;
     List<Agenda> agendas;
-    private final JButton btnExcluir, btnEditar;
-    private final Icon editar, excluir;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
@@ -60,26 +56,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         servicos = new ArrayList<Servico>();
         agendas = new ArrayList<Agenda>();
 
-        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
-
-        btnEditar = new JButton(editar);
-        btnEditar.setName("editar");
-        btnEditar.setBorder(null);
-        btnEditar.setContentAreaFilled(false);
-
-        btnExcluir = new JButton(excluir);
-        btnExcluir.setName("excluir");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
-
-        tPrincipal.getBtnAgenda().addActionListener(this);
-        tPrincipal.getAgenda().getBtnAdicionar().addActionListener(this);
-        tPrincipal.getAgenda().getComboProfissional().addActionListener(this);
-        tPrincipal.getAgenarServico().getBtnSalvar().addActionListener(this);
-        tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
-        tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
-        tPrincipal.getAgenda().getTabelaAgenda().addMouseListener(this);
+        adicionarEventos();
     }
 
     @Override
@@ -285,7 +262,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             int i = 0;
             try {
                 profissional = profissionais.get(indice);
-                agendas = new DaoAgenda().buscaAgenda(profissional,data);
+                agendas = new DaoAgenda().buscaAgenda(profissional, data);
 
                 tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
@@ -294,8 +271,8 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
                 for (Agenda a : agendas) {
                     dados[i][0] = a.getHorario();
                     dados[i][1] = a.getServico().getDescricao();
-                    dados[i][2] = btnEditar;
-                    dados[i][3] = btnExcluir;
+                    dados[i][2] = tPrincipal.getBtnEditar();
+                    dados[i][3] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -364,5 +341,16 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             }
         }
         return ro;
+    }
+
+    public void adicionarEventos() {
+        
+        tPrincipal.getBtnAgenda().addActionListener(this);
+        tPrincipal.getAgenda().getBtnAdicionar().addActionListener(this);
+        tPrincipal.getAgenda().getComboProfissional().addActionListener(this);
+        tPrincipal.getAgenarServico().getBtnSalvar().addActionListener(this);
+        tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
+        tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
+        tPrincipal.getAgenda().getTabelaAgenda().addMouseListener(this);
     }
 }

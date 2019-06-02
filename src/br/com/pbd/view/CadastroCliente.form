@@ -152,7 +152,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtPesquisa">
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome ou cpf &quot;);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome ou CPF &quot;);"/>
                   </AuxValues>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane1">

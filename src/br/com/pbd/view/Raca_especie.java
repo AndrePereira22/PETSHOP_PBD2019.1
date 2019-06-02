@@ -7,6 +7,7 @@ package br.com.pbd.view;
 
 import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Raca;
+import javax.swing.JTextField;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 
@@ -36,7 +37,8 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaRacas = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        txtPesquizaRaca = new javax.swing.JTextField();
+        txtPesquizaRaca = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome da Raça ");
         jLabel1 = new javax.swing.JLabel();
         painelNC = new javax.swing.JPanel();
         painelCadastroRaca = new javax.swing.JPanel();
@@ -56,7 +58,8 @@ public class Raca_especie extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaEspecie = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        txtPesquisaEspecie = new javax.swing.JTextField();
+        txtPesquisaEspecie = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome da Especie ");
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         painelCadastroEspecie = new javax.swing.JPanel();
@@ -397,8 +400,8 @@ public class Raca_especie extends javax.swing.JInternalFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisaEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
+                        .addComponent(txtPesquisaEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)

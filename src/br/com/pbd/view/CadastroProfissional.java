@@ -6,7 +6,8 @@
 package br.com.pbd.view;
 
 import br.com.pbd.Modelo.Profissional;
-
+import javax.swing.JTextField;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 /**
  *
  * @author Glenda Alves de Lima
@@ -18,6 +19,9 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
      */
     public CadastroProfissional() {
         initComponents();
+        
+        AutoCompleteDecorator.decorate(comboEspecialidade);
+        AutoCompleteDecorator.decorate(comboUf);
     }
 
     /**
@@ -34,7 +38,8 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
         painelProfissional = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaProfissionais = new javax.swing.JTable();
-        txtPesquisa = new javax.swing.JTextField();
+        txtPesquisa = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome - Codigo - Preço ");
         jLabel21 = new javax.swing.JLabel();
         btnNovoProfissional = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
@@ -144,7 +149,7 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
                     .addGroup(painelProfissionalLayout.createSequentialGroup()
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         painelProfissionalLayout.setVerticalGroup(

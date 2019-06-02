@@ -185,6 +185,9 @@
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JTextField" name="txtPesquisa">
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome, CPF OU Fun&#xe7;&#xe3;o  &quot;);"/>
+                  </AuxValues>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel19">
                   <Properties>
@@ -431,12 +434,11 @@
                     <Component class="javax.swing.JComboBox" name="comboTipo">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="5">
-                            <StringItem index="0" value="ADMINISTRADOR"/>
-                            <StringItem index="1" value="GERENTE"/>
-                            <StringItem index="2" value="VENDEDOR"/>
-                            <StringItem index="3" value="RECEPCIONISTA"/>
-                            <StringItem index="4" value="FAXINEIRO (A)"/>
+                          <StringArray count="4">
+                            <StringItem index="0" value="GERENTE"/>
+                            <StringItem index="1" value="VENDEDOR"/>
+                            <StringItem index="2" value="RECEPCIONISTA"/>
+                            <StringItem index="3" value="FAXINEIRO (A)"/>
                           </StringArray>
                         </Property>
                       </Properties>

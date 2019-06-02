@@ -224,6 +224,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtgPesquisaProduto">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xd;&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome , Codigo ou Pre&#xe7;o &quot;);"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel1">
                       <Properties>
@@ -392,6 +395,9 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPesquisaServicoActionPerformed"/>
                       </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xd;&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome do Servi&#xe7;o &quot;);"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel2">
                       <Properties>

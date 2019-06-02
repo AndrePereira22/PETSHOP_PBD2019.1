@@ -5,6 +5,9 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTextField;
 
 /**
@@ -16,8 +19,30 @@ public class Vendas extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaCadastroCliente
      */
+    private final JButton btnExcluir, btnAdicionarProduto, btnEditar;
+    private final Icon  adicionar, excluir, editar;
+
     public Vendas() {
         initComponents();
+
+        adicionar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/cart.png"));
+        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/remove1.png"));
+        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+
+        btnAdicionarProduto = new JButton(adicionar);
+        btnAdicionarProduto.setName("adicionar");
+        btnAdicionarProduto.setBorder(null);
+        btnAdicionarProduto.setContentAreaFilled(false);
+
+        btnExcluir = new JButton(excluir);
+        btnExcluir.setName("excluir");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
+
+        btnEditar = new JButton(editar);
+        btnExcluir.setName("editar");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
     }
 
     /**
@@ -41,6 +66,10 @@ public class Vendas extends javax.swing.JInternalFrame {
         txtTotalItens = new javax.swing.JTextField();
         btnNumeroItens = new javax.swing.JButton();
         btnDescontoVenda = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtCliente = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome ou CPF ");
+        btnClientes = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaItens = new javax.swing.JTable();
@@ -61,6 +90,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setEnabled(false);
 
         btnProdutos.setText("PRODUTOS#");
         btnProdutos.addActionListener(new java.awt.event.ActionListener() {
@@ -83,7 +113,7 @@ public class Vendas extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +146,7 @@ public class Vendas extends javax.swing.JInternalFrame {
                 .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(btnFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,6 +164,10 @@ public class Vendas extends javax.swing.JInternalFrame {
         btnDescontoVenda.setText("DESCONTO VENDA");
         btnDescontoVenda.setEnabled(false);
 
+        jLabel4.setText("CLIENTE :");
+
+        btnClientes.setText("PESUISAR #");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -141,21 +175,28 @@ public class Vendas extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
                         .addComponent(btnProdutos))
-                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnNumeroItens, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotalItens, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnClientes))
+                            .addComponent(jLabel4)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtDesconto))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnNumeroItens, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtTotalItens, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -166,11 +207,17 @@ public class Vendas extends javax.swing.JInternalFrame {
                         .addGap(31, 31, 31)
                         .addComponent(btnProdutos))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(89, 89, 89)
+                .addGap(13, 13, 13)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnClientes))
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNumeroItens, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTotalItens, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -205,7 +252,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         jLabel1.setText("PRODUTOS :");
 
-        btnPesquisar.setText("PESQUISAR");
+        btnPesquisar.setText("OK");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -215,7 +262,7 @@ public class Vendas extends javax.swing.JInternalFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txtPesquisarProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                .addComponent(txtPesquisarProdutos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPesquisar)
                 .addGap(113, 113, 113))
@@ -236,7 +283,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
         txtValorTotal.setBackground(new java.awt.Color(204, 204, 204));
         txtValorTotal.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        txtValorTotal.setText("80.00");
+        txtValorTotal.setText("0.00");
         txtValorTotal.setBorder(null);
         txtValorTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,7 +304,7 @@ public class Vendas extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -281,12 +328,14 @@ public class Vendas extends javax.swing.JInternalFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +353,7 @@ public class Vendas extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -346,6 +395,7 @@ public class Vendas extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClientes;
     private javax.swing.JButton btnDescontoVenda;
     private javax.swing.JButton btnFinalizarVenda;
     private javax.swing.JButton btnNumeroItens;
@@ -356,6 +406,7 @@ public class Vendas extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
@@ -365,6 +416,7 @@ public class Vendas extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaItens;
+    private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtDesconto;
     private javax.swing.JTextField txtPesquisarProdutos;
     private javax.swing.JTextField txtTotalItens;
@@ -372,13 +424,12 @@ public class Vendas extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     public void limparComponentes() {
-        txtDesconto.setText("");
+        txtDesconto.setText("0");
         txtPesquisarProdutos.setText("");
-        txtTotalItens.setText("");
-        txtValorTotal.setText("");
+        txtTotalItens.setText("0");
+        txtValorTotal.setText("0.00");
+        txtCliente.setText("");
     }
-
-   
 
     /**
      * @return the btnDescontoVenda
@@ -407,8 +458,6 @@ public class Vendas extends javax.swing.JInternalFrame {
     public javax.swing.JButton getBtnProdutos() {
         return btnProdutos;
     }
-
-   
 
     /**
      * @return the tabelaItens
@@ -457,6 +506,42 @@ public class Vendas extends javax.swing.JInternalFrame {
      */
     public javax.swing.JButton getBtnPesquisar() {
         return btnPesquisar;
+    }
+
+    /**
+     * @return the txtCliente
+     */
+    public javax.swing.JTextField getTxtCliente() {
+        return txtCliente;
+    }
+
+    /**
+     * @return the btnClientes
+     */
+    public javax.swing.JButton getBtnClientes() {
+        return btnClientes;
+    }
+
+    /**
+     * @return the btnExcluir
+     */
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+
+    /**
+     * @return the btnAdicionarProduto
+     */
+    public JButton getBtnAdicionarProduto() {
+        return btnAdicionarProduto;
+    }
+
+
+    /**
+     * @return the btnEditar
+     */
+    public JButton getBtnEditar() {
+        return btnEditar;
     }
 
 }

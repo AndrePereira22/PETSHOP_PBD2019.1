@@ -18,6 +18,7 @@ public class AgendarServico extends javax.swing.JInternalFrame {
         comboHorario1.setVisible(false);
         AutoCompleteDecorator.decorate(comboAnimal);
         AutoCompleteDecorator.decorate(comboServico);
+         AutoCompleteDecorator.decorate(comboHorario);
     }
 
     /**

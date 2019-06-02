@@ -20,7 +20,6 @@ import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -33,8 +32,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -51,8 +48,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     private List<Funcionario> funcionarios;
     private List<Profissional> profissionais;
     private List<Fornecedor> fornecedores;
-    private final JButton btnExcluir, btnEditar;
-    private final Icon editar, excluir;
+
     private Cliente cliente;
     private Funcionario funcionario;
     private Fornecedor fornecedor;
@@ -68,24 +64,9 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         funcionarios = new ArrayList<Funcionario>();
         profissionais = new ArrayList<Profissional>();
         fornecedores = new ArrayList<Fornecedor>();
-
         keyEventos = new HashMap<Integer, Boolean>();
 
-        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
-
-        btnEditar = new JButton(editar);
-        btnEditar.setName("editar");
-        btnEditar.setBorder(null);
-        btnEditar.setContentAreaFilled(false);
-
-        btnExcluir = new JButton(excluir);
-        btnExcluir.setName("excluir");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
-
         adicionarEvents();
-
     }
 
     // eventos de Mouse
@@ -111,7 +92,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelCadastro());
                 tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(true);
                 funcionario = funcionarios.get(ro);
-                       tPrincipal.ativarEdicaoLogin(false);
+                tPrincipal.ativarEdicaoLogin(false);
                 tPrincipal.getcFuncionario().preencherDados(funcionario);
             } else if (escolha == exclusao) {
 
@@ -491,8 +472,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                     dados[i][2] = a.getNascimento();
                     dados[i][3] = a.getCpf();
                     dados[i][4] = a.getDados().getCelular();
-                    dados[i][5] = btnEditar;
-                    dados[i][6] = btnExcluir;
+                    dados[i][5] = tPrincipal.getBtnEditar();
+                    dados[i][6] = tPrincipal.getBtnExcluir();
                     i++;
                 }
                 DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
@@ -523,8 +504,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                     dados[i][3] = a.getCpf();
                     dados[i][4] = a.getTipo();
                     dados[i][5] = a.getDados().getCelular();
-                    dados[i][6] = btnEditar;
-                    dados[i][7] = btnExcluir;
+                    dados[i][6] = tPrincipal.getBtnEditar();
+                    dados[i][7] = tPrincipal.getBtnExcluir();
                     i++;
                 }
                 DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
@@ -554,8 +535,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                     dados[i][3] = a.getCpf();
                     dados[i][4] = a.getTipo();
                     dados[i][5] = a.getDados().getCelular();
-                    dados[i][6] = btnEditar;
-                    dados[i][7] = btnExcluir;
+                    dados[i][6] = tPrincipal.getBtnEditar();
+                    dados[i][7] = tPrincipal.getBtnExcluir();
                     i++;
                 }
                 DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
@@ -587,8 +568,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                     dados[i][2] = a.getCnpj();
                     dados[i][3] = a.getDados().getCidade();
                     dados[i][4] = a.getDados().getCelular();
-                    dados[i][5] = btnEditar;
-                    dados[i][6] = btnExcluir;
+                    dados[i][5] = tPrincipal.getBtnEditar();
+                    dados[i][6] = tPrincipal.getBtnExcluir();
                     i++;
                 }
                 DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
@@ -769,11 +750,10 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 JButton boton = (JButton) value;
+                ro = tabela.getSelectedRow();
                 if (boton.getName().equals("editar")) {
-                    ro = tabela.getSelectedRow();
                     escolha = edicao;
                 } else if (boton.getName().equals("excluir")) {
-                    ro = tabela.getSelectedRow();
                     escolha = exclusao;
                 } else {
                     escolha = 0;
@@ -788,23 +768,22 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     public void keyPressed(KeyEvent e) {
         keyEventos.put(e.getKeyCode(), true);
 
-        if (e.getSource()== tPrincipal.getcCliente().getTxtPesquisa() ) {
+        if (e.getSource() == tPrincipal.getcCliente().getTxtPesquisa()) {
             String nome = tPrincipal.getcCliente().getTxtPesquisa().getText();
             clientes = new DaoCliente().Busca(nome);
             listarClientes(clientes);
-
         }
-        if (e.getSource()== tPrincipal.getcFuncionario().getTxtPesquisa()) {
+        if (e.getSource() == tPrincipal.getcFuncionario().getTxtPesquisa()) {
             String nome = tPrincipal.getcFuncionario().getTxtPesquisa().getText();
             funcionarios = new DaoFuncionario().Busca(nome);
             listarFuncionarios(funcionarios);
         }
-        if (e.getSource()== tPrincipal.getcFornecedor().getTxtPesquisa()) {
+        if (e.getSource() == tPrincipal.getcFornecedor().getTxtPesquisa()) {
             String nome = tPrincipal.getcFornecedor().getTxtPesquisa().getText();
             fornecedores = new DaoFornecedor().Busca(nome);
             listarFornecedores(fornecedores);
         }
-        if (e.getSource()==tPrincipal.getcProfissioanl().getTxtPesquisa()) {
+        if (e.getSource() == tPrincipal.getcProfissioanl().getTxtPesquisa()) {
             String nome = tPrincipal.getcProfissioanl().getTxtPesquisa().getText();
             profissionais = new DaoProfissional().Busca(nome);
             listarProfissionais(profissionais);

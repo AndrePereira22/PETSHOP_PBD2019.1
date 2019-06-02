@@ -44,8 +44,6 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
     private List<Cliente> clientes;
     private List<Animal> animais;
     private Animal animal;
-    private final JButton btnExcluir, btnEditar;
-    private final Icon editar, excluir;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
@@ -59,19 +57,6 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
         animal = new Animal();
         raca = new Raca();
         especie = new Especie();
-
-        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
-
-        btnEditar = new JButton(editar);
-        btnEditar.setName("editar");
-        btnEditar.setBorder(null);
-        btnEditar.setContentAreaFilled(false);
-
-        btnExcluir = new JButton(excluir);
-        btnExcluir.setName("excluir");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
 
         adicionarEventos();
 
@@ -320,8 +305,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                     dados[i][4] = a.getCor();
                     dados[i][5] = a.getRaca().getNome();
                     dados[i][6] = a.getCliente().getNome();
-                    dados[i][7] = btnEditar;
-                    dados[i][8] = btnExcluir;
+                    dados[i][7] =  tPrincipal.getBtnEditar();
+                    dados[i][8] =  tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -350,8 +335,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                 Object[][] dados = new Object[lista.size()][3];
                 for (Especie a : lista) {
                     dados[i][0] = a.getNome();
-                    dados[i][1] = btnEditar;
-                    dados[i][2] = btnExcluir;
+                    dados[i][1] =  tPrincipal.getBtnEditar();
+                    dados[i][2] =  tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -381,8 +366,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                 for (Raca a : lista) {
                     dados[i][0] = a.getNome();
                     dados[i][1] = a.getEspecie().getNome();
-                    dados[i][2] = btnEditar;
-                    dados[i][3] = btnExcluir;
+                    dados[i][2] =  tPrincipal.getBtnEditar();
+                    dados[i][3] =  tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -435,7 +420,6 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
     public final void preencherClientes() {
 
         clientes = new GenericDao<Cliente>().getAll(Cliente.class);
-        System.out.println("especies " + clientes.size());
         tPrincipal.getcAnimal().getComboDono().removeAllItems();
         clientes.forEach((c) -> {
             tPrincipal.getcAnimal().getComboDono().addItem(c.getNome());

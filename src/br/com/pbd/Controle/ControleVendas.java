@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,6 +6,7 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoCliente;
 import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Cliente;
@@ -17,6 +19,8 @@ import br.com.pbd.Modelo.Venda;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Time;
@@ -24,9 +28,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -36,22 +39,23 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Andre-Coude
  */
-public class ControleVendas extends MouseAdapter implements ActionListener {
+public class ControleVendas extends MouseAdapter implements ActionListener, KeyListener {
 
     private final TelaPrincipal tPrincipal;
     private Venda venda;
     private Pagamento pagamento;
+    private Cliente cliente;
     private List<ItemVenda> itens;
+    private List<Cliente> clientes;
     private List<Produto> produtos, produtosAdicionados;
     private final List<Parcela> parcelas;
     private int totalItens;
     private Double ValorTotal, ValorFinal;
     private Produto produto;
-    private final JButton btnExcluir, btnAdicionar, btnEditar;
-    private final Icon adicionar, excluir, editar;
     private final Calendar calendario;
     private int escolha;
-    private final int salvar = 1, edicao = 2, exclusao = 3;
+    private final int salvar = 1, edicao = 2, exclusao = 3, adicao = 4;
+    private HashMap<Integer, Boolean> keyEventos;
 
     public ControleVendas(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -59,46 +63,21 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
         ValorTotal = 0.0;
         calendario = new GregorianCalendar();
         parcelas = new ArrayList<Parcela>();
+        keyEventos = new HashMap<Integer, Boolean>();
+        adicionarEventos();
+    };
 
-        adicionar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/remove1.png"));
-        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
-
-        btnAdicionar = new JButton(adicionar);
-        btnAdicionar.setName("adicionar");
-        btnAdicionar.setBorder(null);
-        btnAdicionar.setContentAreaFilled(false);
-
-        btnExcluir = new JButton(excluir);
-        btnExcluir.setName("excluir");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
-
-        btnEditar = new JButton(editar);
-        btnExcluir.setName("editar");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
-
-        tPrincipal.getBtnVendas().addActionListener(this);
-        tPrincipal.getVendas().getBtnPesquisar().addActionListener(this);
-        tPrincipal.getVendas().getBtnFinalizarVenda().addActionListener(this);
-        tPrincipal.getQuantidade().getBtnConfirmar().addActionListener(this);
-        tPrincipal.getPagamento().getBtnFinalizar().addActionListener(this);
-        tPrincipal.getProdutos().getTxtPesquisarProdutos().addActionListener(this);
-        tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
-        tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
-
-    }
-
-    ;
+    
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == tPrincipal.getProdutos().getTabelaItens()) {
 
             int ro = retornaIndice(tPrincipal.getProdutos().getTabelaItens(), e);
-            tPrincipal.getQuantidade().setVisible(true);
-            produto = produtos.get(ro);
+            if (escolha == adicao) {
+                tPrincipal.getQuantidade().setVisible(true);
+                produto = produtos.get(ro);
+            }
         }
         if (e.getSource() == tPrincipal.getVendas().getTabelaItens()) {
 
@@ -109,6 +88,15 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             } else if (escolha == exclusao) {
 
             }
+        }
+        if (e.getSource() == tPrincipal.geteClientes().getTabelaItens()) {
+
+            int ro = retornaIndice(tPrincipal.geteClientes().getTabelaItens(), e);
+            if (escolha == adicao) {
+                cliente = clientes.get(ro);
+                escolherCliente(cliente);
+            }
+
         }
 
     }
@@ -128,17 +116,17 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             tPrincipal.getProdutos().setVisible(true);
             ValorTotal = 0.0;
             totalItens = 0;
-
-            if (tPrincipal.getVendas().getTxtPesquisarProdutos().getText().equals("")) {
-                produtos = new GenericDao<Produto>().getAll(Produto.class);
-
-            } else {
-                produtos = new DaoProduto().listarProduto(tPrincipal.getVendas().getTxtPesquisarProdutos().getText());
-            }
+            produtos = new DaoProduto().listarProduto(tPrincipal.getVendas().getTxtPesquisarProdutos().getText());
             listarProdutos(produtos);
+        }
+        if (e.getSource() == tPrincipal.getVendas().getBtnClientes()) {
+
+            clientes = new DaoCliente().Busca(tPrincipal.getVendas().getTxtCliente().getText());
+            listarClientes(clientes);
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
             if (produtosAdicionados.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "ADICIONE PRODUTOS !");
 
             } else {
 
@@ -165,12 +153,15 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             venda.setPagamento(pagamento);
             pagamento.setParcelas(parcelas);
             venda.setFuncionario(ControleLogin.getFuncionario());
+            venda.setClientes(clientes);
 
             try {
                 venda.setItens(itens);
                 new GenericDao<Venda>().salvar_ou_atualizar(venda);
                 itens.removeAll(itens);
                 listarProdutosAdicionados(itens);
+                cliente = null;
+                tPrincipal.getVendas().limparComponentes();
 
             } catch (java.lang.IllegalStateException n) {
                 JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -226,6 +217,9 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
     }
 
     public void adicionarItemVenda() {
+        if (produtosAdicionados == null) {
+            produtosAdicionados = new ArrayList<Produto>();
+        }
 
         produtosAdicionados.add(produto);
         ItemVenda item = new ItemVenda();
@@ -255,7 +249,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
                     dados[i][0] = a.getDescricao();
                     dados[i][1] = a.getFabricante();
                     dados[i][2] = a.getValorvenda();
-                    dados[i][3] = btnAdicionar;
+                    dados[i][3] = tPrincipal.getVendas().getBtnAdicionarProduto();
 
                     i++;
                 }
@@ -280,16 +274,15 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "GRUP0", "EDITAR", "REMOVER"};
-                Object[][] dados = new Object[itens.size()][7];
+                String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "EDITAR", "REMOVER"};
+                Object[][] dados = new Object[itens.size()][6];
                 for (ItemVenda item : itens) {
                     dados[i][0] = item.getProduto().getDescricao();
                     dados[i][1] = item.getProduto().getFabricante();
                     dados[i][2] = item.getProduto().getValorvenda();
                     dados[i][3] = item.getQuantidade();
-                    dados[i][4] = item.getProduto().getGproduto().getDescricao();
-                    dados[i][5] = btnEditar;
-                    dados[i][6] = btnExcluir;
+                    dados[i][4] = tPrincipal.getVendas().getBtnEditar();
+                    dados[i][5] = tPrincipal.getVendas().getBtnExcluir();
                     totalItens += item.getQuantidade();
                     ValorTotal += item.getProduto().getValorvenda() * item.getQuantidade();
 
@@ -302,6 +295,38 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
                     }
                 };
                 tPrincipal.getVendas().getTabelaItens().setModel(dataModel);
+            } catch (Exception ex) {
+
+            }
+
+        }
+
+    }
+
+    private void listarClientes(List<Cliente> itens) {
+        if (!itens.isEmpty()) {
+            tPrincipal.geteClientes().getTabelaItens().setDefaultRenderer(Object.class, new Render());
+
+            int i = 0;
+            try {
+                String[] colunas = new String[]{"Nome", "CPF", "NASCIMENTO", "SEXO", "ESCOLHER"};
+                Object[][] dados = new Object[itens.size()][5];
+                for (Cliente item : itens) {
+                    dados[i][0] = item.getNome();
+                    dados[i][1] = item.getCpf();
+                    dados[i][2] = item.getNascimento();
+                    dados[i][3] = item.getSexo();
+                    dados[i][4] = tPrincipal.geteClientes().getBtnAdicionar();
+
+                    i++;
+                }
+
+                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                    public boolean isCellEditable(int row, int column) {
+                        return false;
+                    }
+                };
+                tPrincipal.geteClientes().getTabelaItens().setModel(dataModel);
             } catch (Exception ex) {
 
             }
@@ -324,18 +349,71 @@ public class ControleVendas extends MouseAdapter implements ActionListener {
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 JButton boton = (JButton) value;
+                ro = tabela.getSelectedRow();
                 if (boton.getName().equals("editar")) {
-                    ro = tabela.getSelectedRow();
                     escolha = edicao;
                 } else if (boton.getName().equals("excluir")) {
-                    ro = tabela.getSelectedRow();
                     escolha = exclusao;
+                } else if (boton.getName().equals("adicionar")) {
+                    escolha = adicao;
                 } else {
                     escolha = 0;
                 }
             }
         }
         return ro;
+    }
+
+    // eventos de teclas
+    @Override
+    public void keyPressed(KeyEvent e) {
+        keyEventos.put(e.getKeyCode(), true);
+
+        if (e.getSource() == tPrincipal.geteClientes().getTxtPesquisarClientes()) {
+            clientes = new DaoCliente().Busca(tPrincipal.geteClientes().getTxtPesquisarClientes().getText());
+            listarClientes(clientes);
+        }
+        if (e.getSource() == tPrincipal.getProdutos().getTxtPesquisarProdutos()) {
+            produtos = new DaoProduto().listarProduto(tPrincipal.getProdutos().getTxtPesquisarProdutos().getText());
+            listarProdutos(produtos);
+        }
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        keyEventos.remove(e.getKeyCode());
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void escolherCliente(Cliente cliente) {
+
+        tPrincipal.geteClientes().setVisible(false);
+        tPrincipal.getVendas().setVisible(true);
+        tPrincipal.getVendas().getTxtCliente().setText(cliente.getNome());
+        clientes = new ArrayList<Cliente>();
+        clientes.add(cliente);
+    }
+
+    public void adicionarEventos() {
+
+        tPrincipal.getBtnVendas().addActionListener(this);
+        tPrincipal.getVendas().getBtnPesquisar().addActionListener(this);
+        tPrincipal.getVendas().getBtnClientes().addActionListener(this);
+        tPrincipal.getVendas().getBtnFinalizarVenda().addActionListener(this);
+        tPrincipal.getQuantidade().getBtnConfirmar().addActionListener(this);
+        tPrincipal.getPagamento().getBtnFinalizar().addActionListener(this);
+        tPrincipal.getProdutos().getTxtPesquisarProdutos().addActionListener(this);
+        tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
+        tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
+        tPrincipal.geteClientes().getTabelaItens().addMouseListener(this);
+        tPrincipal.geteClientes().getTxtPesquisarClientes().addKeyListener(this);
+        tPrincipal.getProdutos().getTxtPesquisarProdutos().addKeyListener(this);
     }
 
 }

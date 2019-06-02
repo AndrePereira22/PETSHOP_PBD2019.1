@@ -6,6 +6,7 @@
 package br.com.pbd.view;
 
 import br.com.pbd.Modelo.GrupoProduto;
+import javax.swing.JTextField;
 
 /**
  *
@@ -36,7 +37,8 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaGrupos = new javax.swing.JTable();
         btnPesquisar = new javax.swing.JButton();
-        txtPesquisar = new javax.swing.JTextField();
+        txtPesquisar = 
+        new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome");
         jLabel1 = new javax.swing.JLabel();
         painelGrupo = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();

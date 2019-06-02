@@ -57,10 +57,10 @@
           <Group type="103" groupAlignment="1" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jPanel1" min="-2" pref="360" max="-2" attributes="0"/>
+                  <Component id="jPanel1" min="-2" pref="381" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jPanel9" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -88,6 +88,7 @@
                 <LineBorder/>
               </Border>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
 
           <Layout>
@@ -95,24 +96,34 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="jPanel7" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               <Component id="btnProdutos" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btnNumeroItens" min="-2" pref="141" max="-2" attributes="0"/>
+                                      <Component id="txtCliente" min="-2" pref="237" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtTotalItens" min="-2" pref="148" max="-2" attributes="0"/>
+                                      <Component id="btnClientes" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnDescontoVenda" min="-2" pref="141" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtDesconto" min="-2" pref="144" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="btnDescontoVenda" min="-2" pref="141" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtDesconto" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="btnNumeroItens" min="-2" pref="141" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="txtTotalItens" min="-2" pref="148" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
@@ -131,12 +142,19 @@
                           </Group>
                           <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="txtCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnNumeroItens" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="txtTotalItens" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnDescontoVenda" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="txtDesconto" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
@@ -176,7 +194,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" pref="133" max="-2" attributes="0"/>
-                          <EmptySpace pref="176" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -226,7 +244,7 @@
                           <Component id="btnSair" min="-2" pref="83" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Component id="btnFinalizarVenda" min="-2" pref="148" max="-2" attributes="0"/>
-                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                          <EmptySpace pref="64" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -301,6 +319,21 @@
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="jLabel4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CLIENTE :"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="txtCliente">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="&#xd;&#xa;new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;lupa2&quot;, &quot; Nome ou CPF &quot;);"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnClientes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PESUISAR #"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel9">
@@ -318,13 +351,17 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel8" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
                   <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jPanel8" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="573" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -388,7 +425,7 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txtPesquisarProdutos" pref="339" max="32767" attributes="0"/>
+                          <Component id="txtPesquisarProdutos" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnPesquisar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
@@ -422,7 +459,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnPesquisar">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="PESQUISAR"/>
+                    <Property name="text" type="java.lang.String" value="OK"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -447,7 +484,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" pref="135" max="-2" attributes="0"/>
-                          <EmptySpace pref="100" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel3" min="-2" pref="82" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="txtValorTotal" min="-2" pref="132" max="-2" attributes="0"/>
@@ -482,7 +519,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="36" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="80.00"/>
+                    <Property name="text" type="java.lang.String" value="0.00"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
