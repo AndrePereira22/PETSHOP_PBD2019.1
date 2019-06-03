@@ -29,6 +29,7 @@ public class ControleFinanceiro implements ActionListener {
 
     public ControleFinanceiro(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
+        abrirCaixa();
     }
 
     @Override

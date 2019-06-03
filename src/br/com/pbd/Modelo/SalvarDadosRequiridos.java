@@ -6,17 +6,32 @@
 package br.com.pbd.Modelo;
 
 import br.com.pbd.Dao.DaoEspecie;
+import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.NoResultException;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Andre-Coude
  */
-public class SalvarEspecie {
+public class SalvarDadosRequiridos {
 
-    public static void salvarEspecies() {
+    public static void procurarLoja() {
+
+        Loja loja = null;
+        try {
+            loja = new DaoLoja().buscaUltimoLoja();
+        } catch (NoResultException n) {
+            salvarLoja();
+        }
+    }
+
+    
+
+    public static void salvarDadosRequiridos() {
 
         List<Especie> list = new GenericDao<Especie>().getAll(Especie.class);
         if (list.isEmpty()) {
@@ -201,5 +216,36 @@ public class SalvarEspecie {
             new GenericDao<Especie>().salvar_ou_atualizar(e);
         }
 
+    }
+    public static void salvarLoja() {
+
+        Dados dados = new Dados();
+        dados.setBairro("...");
+        dados.setCelular("...");
+        dados.setTelefone("...");
+        dados.setCep("...");
+        dados.setCidade("...");
+        dados.setEmail("...");
+
+        dados.setNumero("...");
+        dados.setRua("...");
+        dados.setUf("..");
+
+        Loja loja = new Loja();
+
+        loja.setDados(dados);
+        loja.setCnpj("00.000.000/0000.00");
+        loja.setNomefantasia("PETSHOP CONTROL");
+        loja.setRazaosocial("CUIDADO E DEDICAÇÃO ANIMAL");
+
+        try {
+
+            new GenericDao<Loja>().salvar_ou_atualizar(loja);
+
+        } catch (java.lang.IllegalStateException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
     }
 }

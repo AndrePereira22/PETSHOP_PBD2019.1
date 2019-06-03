@@ -5,8 +5,6 @@
  */
 package br.com.pbd.Modelo;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,9 +31,9 @@ public class Loja implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loja_seq")
     private Long id;
 
-    @Column(name = "nome_fantasia", length = 20, nullable = false)
+    @Column(name = "nome_fantasia", length = 30, nullable = false)
     private String nomefantasia;
-    @Column(name = "razao_social", length = 20, nullable = false)
+    @Column(name = "razao_social", length = 40, nullable = false)
     private String razaosocial;
     @Column(name = "cnpj", length = 18, nullable = false)
     private String cnpj;

@@ -3,6 +3,8 @@ package br.com.pbd.view;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Modelo.Loja;
 import br.com.pbd.sql.PostgresBackup_Curso;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -47,6 +49,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
     public TelaPrincipal() {
         initComponents();
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        Dimension tamTela = kit.getScreenSize();
+        this.setSize(tamTela);
         this.setExtendedState(MAXIMIZED_BOTH);
 
         ajustarInternalFrame(cAnimal);
@@ -116,6 +121,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1024, 600));
 
         painelMenu.setBackground(new java.awt.Color(255, 255, 255));
         painelMenu.setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -266,22 +272,16 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(painelMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 1403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 9, Short.MAX_VALUE))
+                .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1403, Short.MAX_VALUE)
+                .addGap(9, 9, 9))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 1392, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 1412, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 1412, 691);
