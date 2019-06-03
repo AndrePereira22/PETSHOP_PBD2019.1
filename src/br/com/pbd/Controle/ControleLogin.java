@@ -30,8 +30,6 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,28 +38,20 @@ import javax.swing.JOptionPane;
  */
 public class ControleLogin implements ActionListener, KeyListener {
 
-    private TelaLogin tLogin;
-    private TelaPrincipal tPrincipal;
+    private final TelaLogin tLogin;
+    private final TelaPrincipal tPrincipal;
     private static Funcionario funcionario;
     private static Profissional profissional;
-    private HashMap<Integer, Boolean> keyEventos;
-    private Loja loja;
-    private Caixa caixa;
-    private Icon user, pro, adm;
+    private final HashMap<Integer, Boolean> keyEventos;
 
     public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
         keyEventos = new HashMap<Integer, Boolean>();
 
-        user = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
-        pro = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
-        adm = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
-
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
         tLogin.getLogin().addKeyListener(this);
-        tPrincipal.getcLoja().getBtnSalvar().addActionListener(this);
 
     }
 
@@ -70,9 +60,6 @@ public class ControleLogin implements ActionListener, KeyListener {
 
         if (e.getSource() == tLogin.getBtnAcessar()) {
             logar();
-        }
-        if (e.getSource() == tPrincipal.getcLoja().getBtnSalvar()) {
-            salvarLoja();
         }
 
     }
@@ -109,12 +96,9 @@ public class ControleLogin implements ActionListener, KeyListener {
 
         if (senha.equals("admin") && usuario.equals("admin")) {
 
-            tLogin.dispose();
-            tPrincipal.setVisible(true);
-            verificarCadastroLoja();
             tPrincipal.getjLabel2().setText("ADMINISTRADOR");
-            tPrincipal.getjLabel2().setIcon(pro);
-
+            tPrincipal.getjLabel2().setIcon(tLogin.getPro());
+            exibirMenu();
         } else {
 
             Object o = null;
@@ -125,11 +109,12 @@ public class ControleLogin implements ActionListener, KeyListener {
 
             if (o != null) {
                 funcionario = ((Funcionario) o);
-                tLogin.dispose();
-                tPrincipal.setVisible(true);
-                verificarCadastroLoja();
+
                 tPrincipal.getjLabel2().setText(funcionario.getNome());
-                tPrincipal.getjLabel2().setIcon(user);
+                tPrincipal.getjLabel2().setIcon(tLogin.getUser());
+                exibirMenu();
+                tPrincipal.getPainelMenu().setVisible(false);
+                tPrincipal.getcLoja().setVisible(true);
 
             } else {
                 try {
@@ -138,29 +123,14 @@ public class ControleLogin implements ActionListener, KeyListener {
                 }
                 if (o != null) {
                     profissional = ((Profissional) o);
-                    tLogin.dispose();
-                    tPrincipal.setVisible(true);
-                    verificarCadastroLoja();
                     tPrincipal.getjLabel2().setText(profissional.getNome());
-                    tPrincipal.getjLabel2().setIcon(pro);
+                    tPrincipal.getjLabel2().setIcon(tLogin.getPro());
+                    exibirMenu();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuario nao encontrado!");
                 }
             }
-        }
-    }
-
-    public void verificarCadastroLoja() {
-
-        try {
-            loja = new DaoLoja().buscaUltimoLoja();
-
-        } catch (javax.persistence.NoResultException n) {
-        }
-
-        if (loja == null) {
-            tPrincipal.getPainelMenu().setVisible(false);
-            tPrincipal.getcLoja().setVisible(true);
         }
     }
 
@@ -193,98 +163,14 @@ public class ControleLogin implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+    public void exibirMenu() {
+        tLogin.dispose();
+        tPrincipal.setVisible(true);
+       
+    }
+
     public static Funcionario getFuncionario() {
         return funcionario;
-    }
-
-    private void salvarLoja() {
-
-        Dados dados = new Dados();
-        dados.setBairro(tPrincipal.getcLoja().getTxtBairro().getText());
-        dados.setCelular(tPrincipal.getcLoja().getTxtCelular().getText());
-        dados.setTelefone(tPrincipal.getcLoja().getTxtTelefone().getText());
-        dados.setCep(tPrincipal.getcLoja().getTxtCep().getText());
-        dados.setCidade(tPrincipal.getcLoja().getTxtCidade().getText());
-        dados.setEmail(tPrincipal.getcLoja().getTxtEmail().getText());
-
-        String numb = tPrincipal.getcLoja().getTxtNumero().getText() + " "
-                + tPrincipal.getcLoja().getTxtComplemento().getText();
-
-        dados.setNumero(numb);
-        dados.setRua(tPrincipal.getcLoja().getTxtRua().getText());
-        dados.setUf(tPrincipal.getcLoja().getComboUf().getSelectedItem().toString());
-
-        Loja loja = new Loja();
-
-        loja.setDados(dados);
-        loja.setCnpj(tPrincipal.getcLoja().getTxtCnpjj().getText());
-        loja.setNomefantasia(tPrincipal.getcLoja().getTxtNomeFantazia().getText());
-        loja.setRazaosocial(tPrincipal.getcLoja().getTxtRazaoSociall().getText());
-
-        try {
-
-            new GenericDao<Loja>().salvar_ou_atualizar(loja);
-            JOptionPane.showMessageDialog(null, "Loja cadastrada!");
-
-            tPrincipal.getcLoja().setVisible(false);
-            tPrincipal.getPainelMenu().setVisible(true);
-            abrirCaixa();
-
-        } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
-        } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
-        }
-    }
-
-    public void abrirCaixa() {
-
-        try {
-            loja = new DaoLoja().buscaUltimoLoja();
-        } catch (javax.persistence.NoResultException n) {
-        }
-
-        if (loja != null) {
-
-            Date data = new Date(System.currentTimeMillis());
-            Caixa caixaAnterior = null;
-            try {
-                caixaAnterior = new DaoCaixa().buscaUltimoCaixa();
-            } catch (NoResultException n) {
-                System.out.println("Caixa anterior nao encontrado");
-            }
-            try {
-                caixa = new DaoFinanceiro().buscarCaixa(data);
-            } catch (NoResultException n) {
-                System.out.println("Caixa do dia nao encontrado");
-            }
-
-            if (caixa == null) {
-                caixa = new Caixa();
-                getCaixa().setData(data);
-                getCaixa().setStatus(Boolean.TRUE);
-                if (caixaAnterior != null) {
-                    caixa.setValorabertura(caixaAnterior.getValorfechamento());
-                    caixa.setValorfechamento(caixaAnterior.getValorfechamento());
-                } else {
-                    getCaixa().setValorabertura(0.0);
-                    getCaixa().setValorfechamento(0.0);
-                }
-                new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
-
-            } else {
-                caixa.setStatus(Boolean.TRUE);
-                new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
-            }
-        }
-
-    }
-
-    /**
-     * @return the caixa
-     */
-    public Caixa getCaixa() {
-        return caixa;
     }
 
 }

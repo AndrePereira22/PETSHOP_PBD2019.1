@@ -1,5 +1,7 @@
 package br.com.pbd.view;
 
+import br.com.pbd.Dao.DaoLoja;
+import br.com.pbd.Modelo.Loja;
 import br.com.pbd.sql.PostgresBackup_Curso;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import javax.persistence.NoResultException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -381,6 +384,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private javax.swing.JPanel painelMenu;
     // End of variables declaration//GEN-END:variables
 
+    
     public void ativarEdicaoLogin(Boolean status) {
         getcFuncionario().getPainelLogin().setVisible(status);
         getcProfissioanl().getPainelLogin().setVisible(status);
@@ -575,6 +579,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getProdutos().setVisible(false);
             getVendas().setVisible(true);
         }
+         if (e.getSource() == getGerencia().getBtnEditar()) {
+            getcLoja().setVisible(true);
+        }
+         if (e.getSource() == getGerencia().getBtnSair()) {
+            getGerencia().setVisible(false);
+            painelMenu.setVisible(true);
+        }
 
     }
 
@@ -630,6 +641,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getVendas().getBtnSair().addActionListener(this);
         getProdutos().getBtnCancelar().addActionListener(this);
         geteClientes().getBtnCancelar().addActionListener(this);
+        getGerencia().getBtnEditar().addActionListener(this);
+        getGerencia().getBtnSair().addActionListener(this);
 
         btnAgenda.addKeyListener(this);
         btnClientes.addKeyListener(this);
@@ -1007,5 +1020,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     public JButton getBtnEditar() {
         return btnEditar;
     }
+
+  
 
 }

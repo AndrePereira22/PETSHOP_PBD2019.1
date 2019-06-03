@@ -5,6 +5,8 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -15,15 +17,20 @@ import javax.swing.JTextField;
  */
 public class TelaLogin extends javax.swing.JFrame {
 
-    
-   
     /**
      * Creates new form TelaLogin
      */
+ 
+    private Icon user, pro, adm;
+    
     public TelaLogin() {
         initComponents();
         
         setVisible(rootPaneCheckingEnabled);
+        user = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
+        pro = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
+        adm = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
+
     }
 
     /**
@@ -282,6 +289,27 @@ public class TelaLogin extends javax.swing.JFrame {
      */
     public void setSenha(javax.swing.JPasswordField senha) {
         this.senha = senha;
+    }
+
+    /**
+     * @return the user
+     */
+    public Icon getUser() {
+        return user;
+    }
+
+    /**
+     * @return the pro
+     */
+    public Icon getPro() {
+        return pro;
+    }
+
+    /**
+     * @return the adm
+     */
+    public Icon getAdm() {
+        return adm;
     }
     
 }
