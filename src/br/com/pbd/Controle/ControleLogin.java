@@ -55,6 +55,7 @@ public class ControleLogin implements ActionListener, KeyListener {
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
         tLogin.getLogin().addKeyListener(this);
+        mensagem.getBtnOk().addKeyListener(this);
 
     }
 
@@ -144,7 +145,13 @@ public class ControleLogin implements ActionListener, KeyListener {
         keyEventos.put(e.getKeyCode(), true);
 
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            logar();
+
+            if (e.getSource() == mensagem.getBtnOk()) {
+                mensagem.setVisible(false);
+            } else {
+                logar();
+            }
+
         }
         if (e.getKeyCode() == KeyEvent.VK_UP) {
             tLogin.getLogin().grabFocus();

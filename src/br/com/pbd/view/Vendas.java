@@ -40,9 +40,9 @@ public class Vendas extends javax.swing.JInternalFrame {
         btnExcluir.setContentAreaFilled(false);
 
         btnEditar = new JButton(editar);
-        btnExcluir.setName("editar");
-        btnExcluir.setBorder(null);
-        btnExcluir.setContentAreaFilled(false);
+        btnEditar.setName("editar");
+        btnEditar.setBorder(null);
+        btnEditar.setContentAreaFilled(false);
     }
 
     /**

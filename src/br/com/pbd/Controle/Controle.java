@@ -17,6 +17,7 @@ import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,7 @@ import javax.swing.JTable;
  */
 public class Controle extends MouseAdapter implements ActionListener, KeyListener {
 
+    private Fachada fachada;
     private final TelaPrincipal tPrincipal;
     private List<Cliente> clientes;
     private List<Funcionario> funcionarios;
@@ -57,8 +59,9 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     private final int salvar = 1, edicao = 2, exclusao = 3;
     private HashMap<Integer, Boolean> keyEventos;
 
-    public Controle(TelaPrincipal tPrincipal) {
+    public Controle(TelaPrincipal tPrincipal,Fachada fachada) {
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
 
         clientes = new ArrayList<Cliente>();
         funcionarios = new ArrayList<Funcionario>();

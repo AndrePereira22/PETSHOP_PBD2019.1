@@ -13,11 +13,14 @@ import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Servico;
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +40,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControleAgenda extends MouseAdapter implements ActionListener {
 
+    private Fachada fachada;
     TelaPrincipal tPrincipal;
     List<Profissional> profissionais;
     Profissional profissional;
@@ -48,8 +52,9 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
-    public ControleAgenda(TelaPrincipal tPrincipal) {
+    public ControleAgenda(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
 
         profissionais = new ArrayList<Profissional>();
         animais = new ArrayList<Animal>();
@@ -57,6 +62,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         agendas = new ArrayList<Agenda>();
 
         adicionarEventos();
+
     }
 
     @Override
@@ -73,6 +79,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             }
 
         }
+
     }
 
     @Override
@@ -159,7 +166,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             agenda.setServico(servico);
             agenda.setAnimal(animal);
 
-            new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+            fachada.salvar(agenda);
             JOptionPane.showMessageDialog(null, "Agendado com Sucesso!");
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
@@ -202,7 +209,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             agenda.setServico(servico);
             agenda.setAnimal(animal);
 
-            new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+            fachada.salvar(agenda);
             JOptionPane.showMessageDialog(null, "Edicao concluida!");
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
@@ -214,10 +221,10 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            JOptionPane.showMessageDialog(null, "arrayh index !");
 
         } catch (java.lang.NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            JOptionPane.showMessageDialog(null, "null point !");
 
         }
 
@@ -258,11 +265,12 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
         if (!profissionais.isEmpty()) {
             java.sql.Date data = ConverterData(tPrincipal.getAgenda().getCalenario().getDate());
-
+            
             int i = 0;
             try {
+                tPrincipal.mudarVisaoData(data);
                 profissional = profissionais.get(indice);
-                agendas = new DaoAgenda().buscaAgenda(profissional, data);
+                agendas = fachada.busca(profissional, data);
 
                 tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
@@ -344,7 +352,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     }
 
     public void adicionarEventos() {
-        
+
         tPrincipal.getBtnAgenda().addActionListener(this);
         tPrincipal.getAgenda().getBtnAdicionar().addActionListener(this);
         tPrincipal.getAgenda().getComboProfissional().addActionListener(this);
@@ -352,5 +360,12 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
         tPrincipal.getAgenda().getTabelaAgenda().addMouseListener(this);
+
+        tPrincipal.getAgenda().getCalenario().getDayChooser().addPropertyChangeListener("day", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                listarAgenda();
+            }
+        });
     }
 }

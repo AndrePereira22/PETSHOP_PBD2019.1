@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -307,7 +307,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getPainelMenu().setVisible(false);
         getAgenda().setVisible(rootPaneCheckingEnabled);
 
-        mudarVisaoData();
+        
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -648,8 +648,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         painelDesktop.add(frame);
     }
 
-    public final void mudarVisaoData() {
-        Date d = new Date(System.currentTimeMillis());
+    public final void mudarVisaoData(Date d) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
         getAgenda().getLblDatal().setText(formato.format(d));

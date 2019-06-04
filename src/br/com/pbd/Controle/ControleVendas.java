@@ -50,7 +50,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     private List<ItemVenda> itens;
     private List<Cliente> clientes;
     private List<Produto> produtos, produtosAdicionados;
-    private final List<Parcela> parcelas;
+    private List<Parcela> parcelas;
     private int totalItens;
     private Double ValorTotal, ValorFinal;
     private Produto produto;
@@ -130,7 +130,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             tPrincipal.getProdutos().setVisible(true);
             ValorTotal = 0.0;
             totalItens = 0;
-            ativo=0;
+            ativo = 0;
             produtos = new DaoProduto().listarProduto(tPrincipal.getVendas().getTxtPesquisarProdutos().getText());
             listarProdutos(produtos);
         }
@@ -164,6 +164,9 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         }
         if (e.getSource() == diaPagamento.getBtnFinalizar()) {
             escolherPagamento();
+            if (venda == null) {
+                venda = new Venda();
+            }
             venda.setData(ConverterData(new Date()));
             venda.setHora(new Time(Integer.MIN_VALUE));
             venda.setValortotal(ValorFinal);
@@ -175,10 +178,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             try {
                 venda.setItens(itens);
                 new GenericDao<Venda>().salvar_ou_atualizar(venda);
-                diaPagamento.setVisible(false);
-                itens.removeAll(itens);
-                listarProdutosAdicionados(itens);
-                cliente = null;
+                zerarValores();
                 tPrincipal.getVendas().limparComponentes();
 
             } catch (java.lang.IllegalStateException n) {
@@ -192,9 +192,9 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
     public void escolherPagamento() {
 
+        pagamento = new Pagamento();
         if (diaPagamento.getRadioAvista().isSelected()) {
 
-            pagamento = new Pagamento();
             pagamento.setNumeroparcelas(0);
             pagamento.setStatus(true);
             pagamento.setValortotal(ValorTotal);
@@ -202,7 +202,6 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             pagamento.setForma_pagamento(diaPagamento.getComboFormaPagamento().getSelectedItem().toString());
 
         } else {
-            pagamento = new Pagamento();
             int numero = Integer.parseInt(diaPagamento.getTxtParcelas().getText());
             pagamento.setNumeroparcelas(numero);
             pagamento.setStatus(true);
@@ -231,7 +230,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             }
 
         }
-
+        diaPagamento.setVisible(false);
     }
 
     public void adicionarItemVenda() {
@@ -256,7 +255,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             itens.add(item);
             diaQuantidade.setVisible(false);
             tPrincipal.getProdutos().setVisible(false);
-            tPrincipal.getVendas().setVisible(true);          
+            tPrincipal.getVendas().setVisible(true);
         } catch (NumberFormatException erro) {
         } catch (java.lang.NullPointerException erro) {
         }
@@ -424,6 +423,27 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         tPrincipal.getVendas().getTxtCliente().setText(cliente.getNome());
         clientes = new ArrayList<Cliente>();
         clientes.add(cliente);
+    }
+
+    public void zerarValores() {
+        totalItens = 0;
+        ValorTotal = 0.0;
+        parcelas = new ArrayList<Parcela>();
+        produtosAdicionados = new ArrayList<Produto>();
+        itens = new ArrayList<ItemVenda>();
+        cliente = null;
+        venda = null;
+
+        String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "EDITAR", "REMOVER"};
+        Object[][] dados = new Object[0][6];
+
+        DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tPrincipal.getVendas().getTabelaItens().setModel(dataModel);
+
     }
 
     public void adicionarEventos() {

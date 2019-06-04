@@ -14,6 +14,7 @@ import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Raca;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +37,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControleAnimal extends MouseAdapter implements ActionListener, KeyListener {
 
+    private Fachada fachada;
     private final TelaPrincipal tPrincipal;
     private List<Especie> especies;
     private Especie especie;
@@ -47,8 +49,9 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
-    public ControleAnimal(TelaPrincipal tPrincipal) {
+    public ControleAnimal(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
 
         especies = new ArrayList<Especie>();
         racas = new ArrayList<Raca>();
@@ -122,7 +125,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             } else if (escolha == edicao) {
                 editarAnimal(animal);
             }
-            animais = new GenericDao<Animal>().getAll(Animal.class);
+            animais = fachada.getAllAnimal();
             listarTabelaAnimais(animais);
         }
         if (e.getSource() == tPrincipal.getcAnimal().getBtnCadastrarAnimal()) {
@@ -139,7 +142,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
         if (e.getSource() == tPrincipal.getCadastros().getBtnAnimal1()) {
             preencherEspecie();
             preencherClientes();
-            animais = new GenericDao<Animal>().getAll(Animal.class);
+            animais = fachada.getAllAnimal();
             listarTabelaAnimais(animais);
         }
         if (e.getSource() == tPrincipal.getRaca_especie().getBtnSalvarEspecie()) {
@@ -227,7 +230,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             animal.setCliente(cli);
             animal.setRaca(raca);
 
-            new GenericDao<Animal>().salvar_ou_atualizar(animal);
+            fachada.salvar(animal);
             JOptionPane.showMessageDialog(null, "Animal cadastrado!");
             tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
             tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
@@ -305,8 +308,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                     dados[i][4] = a.getCor();
                     dados[i][5] = a.getRaca().getNome();
                     dados[i][6] = a.getCliente().getNome();
-                    dados[i][7] =  tPrincipal.getBtnEditar();
-                    dados[i][8] =  tPrincipal.getBtnExcluir();
+                    dados[i][7] = tPrincipal.getBtnEditar();
+                    dados[i][8] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -335,8 +338,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                 Object[][] dados = new Object[lista.size()][3];
                 for (Especie a : lista) {
                     dados[i][0] = a.getNome();
-                    dados[i][1] =  tPrincipal.getBtnEditar();
-                    dados[i][2] =  tPrincipal.getBtnExcluir();
+                    dados[i][1] = tPrincipal.getBtnEditar();
+                    dados[i][2] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -361,13 +364,13 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"NOME","ESPECIE", "EDITAR", "EXCLUIR"};
+                String[] colunas = new String[]{"NOME", "ESPECIE", "EDITAR", "EXCLUIR"};
                 Object[][] dados = new Object[lista.size()][4];
                 for (Raca a : lista) {
                     dados[i][0] = a.getNome();
                     dados[i][1] = a.getEspecie().getNome();
-                    dados[i][2] =  tPrincipal.getBtnEditar();
-                    dados[i][3] =  tPrincipal.getBtnExcluir();
+                    dados[i][2] = tPrincipal.getBtnEditar();
+                    dados[i][3] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -390,7 +393,6 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
     public final void preencherEspecie() {
         especies = new GenericDao<Especie>().getAll(Especie.class);
-        System.out.println("especies " + especies.size());
 
         tPrincipal.getcAnimal().getComboEspecie().removeAllItems();
         especies.forEach((e) -> {
@@ -456,18 +458,20 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         }
         animal.setPesokg(pesokg);
+
+        int indiceRaca = tPrincipal.getcAnimal().getComboRaca().getSelectedIndex();
+        int indiceCliente = tPrincipal.getcAnimal().getComboDono().getSelectedIndex();
+
         try {
-
-            int indiceRaca = tPrincipal.getcAnimal().getComboRaca().getSelectedIndex();
-            int indiceCliente = tPrincipal.getcAnimal().getComboDono().getSelectedIndex();
-
-            raca = racas.get(indiceRaca);
-            animal.setRaca(raca);
-
-            cli = clientes.get(indiceCliente);
-            animal.setCliente(cli);
-
-            new GenericDao<Animal>().salvar_ou_atualizar(animal);
+            if (indiceRaca > -1) {
+                raca = racas.get(indiceRaca);
+                animal.setRaca(raca);
+            }
+            if (indiceCliente > -1) {
+                cli = clientes.get(indiceCliente);
+                animal.setCliente(cli);
+            }
+            fachada.salvar(animal);
             JOptionPane.showMessageDialog(null, "Edição finalizada!");
             tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
             tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
@@ -552,7 +556,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         if (e.getSource() == tPrincipal.getcAnimal().getTxtPesquisa()) {
             String nome = tPrincipal.getcAnimal().getTxtPesquisa().getText();
-            animais = new DaoAnimal().Busca(nome);
+            animais = fachada.busca(nome);
             listarTabelaAnimais(animais);
 
         }

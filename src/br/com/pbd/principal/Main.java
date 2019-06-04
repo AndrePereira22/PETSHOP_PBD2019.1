@@ -9,6 +9,7 @@ import br.com.pbd.Controle.ControleLogin;
 import br.com.pbd.Controle.ControleProdutos_Servico;
 import br.com.pbd.Controle.ControleVendas;
 import br.com.pbd.Modelo.SalvarDadosRequiridos;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.TelaLogin;
 import br.com.pbd.view.TelaPrincipal;
 
@@ -19,11 +20,12 @@ public class Main {
         SalvarDadosRequiridos.salvarDadosRequiridos();
         SalvarDadosRequiridos.procurarLoja();
 
+        Fachada fachada = Fachada.getInstance();
         TelaPrincipal tPrincipal = new TelaPrincipal();
 
-        Controle controle = new Controle(tPrincipal);
-        ControleAnimal cAnimal = new ControleAnimal(tPrincipal);
-        ControleAgenda cAgenda = new ControleAgenda(tPrincipal);
+        Controle controle = new Controle(tPrincipal, fachada);
+        ControleAnimal cAnimal = new ControleAnimal(tPrincipal, fachada);
+        ControleAgenda cAgenda = new ControleAgenda(tPrincipal, fachada);
         ControleProdutos_Servico cProduto_Servico = new ControleProdutos_Servico(tPrincipal);
         ControleVendas cVendas = new ControleVendas(tPrincipal);
         ControleGerencial cGerencial = new ControleGerencial(tPrincipal);
