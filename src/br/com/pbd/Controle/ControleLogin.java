@@ -16,6 +16,7 @@ import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Loja;
 import br.com.pbd.Modelo.Profissional;
+import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.TelaLogin;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
@@ -43,11 +44,13 @@ public class ControleLogin implements ActionListener, KeyListener {
     private static Funcionario funcionario;
     private static Profissional profissional;
     private final HashMap<Integer, Boolean> keyEventos;
+    private DiaMensagem mensagem;
 
     public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
         keyEventos = new HashMap<Integer, Boolean>();
+        mensagem = new DiaMensagem(this.tLogin, true);
 
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
@@ -128,7 +131,9 @@ public class ControleLogin implements ActionListener, KeyListener {
                     exibirMenu();
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Usuario nao encontrado!");
+
+                    mensagem.getLblMens().setText("Usuario ou senha invalidos!");
+                    mensagem.setVisible(true);
                 }
             }
         }
@@ -166,7 +171,7 @@ public class ControleLogin implements ActionListener, KeyListener {
     public void exibirMenu() {
         tLogin.dispose();
         tPrincipal.setVisible(true);
-       
+
     }
 
     public static Funcionario getFuncionario() {

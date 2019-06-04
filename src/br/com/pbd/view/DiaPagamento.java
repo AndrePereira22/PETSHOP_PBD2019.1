@@ -9,16 +9,14 @@ package br.com.pbd.view;
  *
  * @author Andre-Coude
  */
-public class Pagamento extends javax.swing.JFrame {
+public class DiaPagamento extends javax.swing.JDialog {
 
     /**
-     * Creates new form PAGAMENTO
+     * Creates new form DiaPagamento
      */
-    public Pagamento() {
+    public DiaPagamento(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
-        buttonGroup1.add(radioAprazo);
-        buttonGroup1.add(radioAvista);
-        painelParcela.setVisible(false);
     }
 
     /**
@@ -30,7 +28,6 @@ public class Pagamento extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         btnFinalizar = new javax.swing.JButton();
         txtTotalPagar = new javax.swing.JTextField();
@@ -46,6 +43,8 @@ public class Pagamento extends javax.swing.JFrame {
         txtDataFinal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -125,30 +124,28 @@ public class Pagamento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(50, 50, 50)
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnFinalizar))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(28, 28, 28)
-                            .addComponent(radioAvista)
-                            .addGap(50, 50, 50)
-                            .addComponent(radioAprazo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(97, 97, 97))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(comboFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(painelParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFinalizar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(135, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(radioAvista)
+                .addGap(54, 54, 54)
+                .addComponent(radioAprazo, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(painelParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,13 +154,16 @@ public class Pagamento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(comboFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioAvista)
-                    .addComponent(radioAprazo))
-                .addGap(18, 18, 18)
-                .addComponent(painelParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radioAvista)
+                            .addComponent(radioAprazo)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(painelParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,9 +179,7 @@ public class Pagamento extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -198,7 +196,7 @@ public class Pagamento extends javax.swing.JFrame {
 
     private void radioAprazoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAprazoActionPerformed
         // TODO add your handling code here:
-        painelParcela.setVisible(true);
+        getPainelParcela().setVisible(true);
     }//GEN-LAST:event_radioAprazoActionPerformed
 
     /**
@@ -218,28 +216,33 @@ public class Pagamento extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DiaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DiaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DiaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DiaPagamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pagamento().setVisible(true);
+                DiaPagamento dialog = new DiaPagamento(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFinalizar;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> comboFormaPagamento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -254,20 +257,6 @@ public class Pagamento extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalPagar;
     // End of variables declaration//GEN-END:variables
 
-    public void limparComponentes() {
-        txtDataFinal.setText("");
-        txtParcelas.setText("");
-        txtTotalPagar.setText("");
-
-    }
-
-    /**
-     * @return the btnConfirmar
-     */
-    public javax.swing.JButton getBtnConfirmar() {
-        return getBtnFinalizar();
-    }
-
     /**
      * @return the btnFinalizar
      */
@@ -280,6 +269,13 @@ public class Pagamento extends javax.swing.JFrame {
      */
     public javax.swing.JComboBox<String> getComboFormaPagamento() {
         return comboFormaPagamento;
+    }
+
+    /**
+     * @return the painelParcela
+     */
+    public javax.swing.JPanel getPainelParcela() {
+        return painelParcela;
     }
 
     /**
@@ -297,20 +293,6 @@ public class Pagamento extends javax.swing.JFrame {
     }
 
     /**
-     * @return the txtTotalPagar
-     */
-    public javax.swing.JTextField getTxtTotalPagar() {
-        return txtTotalPagar;
-    }
-
-    /**
-     * @return the painelParcela
-     */
-    public javax.swing.JPanel getPainelParcela() {
-        return painelParcela;
-    }
-
-    /**
      * @return the txtDataFinal
      */
     public javax.swing.JTextField getTxtDataFinal() {
@@ -323,5 +305,13 @@ public class Pagamento extends javax.swing.JFrame {
     public javax.swing.JTextField getTxtParcelas() {
         return txtParcelas;
     }
+
+    /**
+     * @return the txtTotalPagar
+     */
+    public javax.swing.JTextField getTxtTotalPagar() {
+        return txtTotalPagar;
+    }
+
 
 }

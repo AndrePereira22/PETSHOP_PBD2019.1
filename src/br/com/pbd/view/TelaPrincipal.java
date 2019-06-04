@@ -1,7 +1,5 @@
 package br.com.pbd.view;
 
-import br.com.pbd.Dao.DaoLoja;
-import br.com.pbd.Modelo.Loja;
 import br.com.pbd.sql.PostgresBackup_Curso;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -12,7 +10,6 @@ import java.awt.event.KeyListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import javax.persistence.NoResultException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -39,8 +36,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private final Financeiro financas = new Financeiro();
     private final Produtos produtos = new Produtos();
     private final EscolhaClientes eClientes = new EscolhaClientes();
-    private final Quantidadee quantidade = new Quantidadee();
-    private final Pagamento pagamento = new Pagamento();
+  
     private final CadastroGrupo cGrupo = new CadastroGrupo();
     private HashMap<Integer, Boolean> keyEventos;
     private int start;
@@ -90,6 +86,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         btnExcluir.setBorder(null);
         btnExcluir.setContentAreaFilled(false);
 
+        
         adicionaEventos();
 
         this.setVisible(false);
@@ -384,7 +381,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private javax.swing.JPanel painelMenu;
     // End of variables declaration//GEN-END:variables
 
-    
     public void ativarEdicaoLogin(Boolean status) {
         getcFuncionario().getPainelLogin().setVisible(status);
         getcProfissioanl().getPainelLogin().setVisible(status);
@@ -545,17 +541,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getProdutos().setVisible(true);
 
         }
-        if (e.getSource() == getQuantidade().getBtnConfirmar()) {
-            if (e.getSource() == getVendas().getBtnProdutos()) {
-                getProdutos().setVisible(true);
+       
 
-            }
-            getProdutos().setVisible(false);
-            getVendas().setVisible(true);
-        }
-        if (e.getSource() == getVendas().getBtnFinalizarVenda()) {
-            getPagamento().setVisible(true);
-        }
         if (e.getSource() == getVendas().getBtnSair()) {
             getVendas().setVisible(false);
             painelMenu.setVisible(true);
@@ -579,10 +566,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getProdutos().setVisible(false);
             getVendas().setVisible(true);
         }
-         if (e.getSource() == getGerencia().getBtnEditar()) {
+        if (e.getSource() == getGerencia().getBtnEditar()) {
             getcLoja().setVisible(true);
         }
-         if (e.getSource() == getGerencia().getBtnSair()) {
+        if (e.getSource() == getGerencia().getBtnSair()) {
             getGerencia().setVisible(false);
             painelMenu.setVisible(true);
         }
@@ -635,8 +622,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getRaca_especie().getBtnCancelarEspecie().addActionListener(this);
 
         getVendas().getBtnProdutos().addActionListener(this);
-        getQuantidade().getBtnConfirmar().addActionListener(this);
-        getVendas().getBtnFinalizarVenda().addActionListener(this);
         getVendas().getBtnClientes().addActionListener(this);
         getVendas().getBtnSair().addActionListener(this);
         getProdutos().getBtnCancelar().addActionListener(this);
@@ -654,6 +639,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getBtnGerencia().addKeyListener(this);
 
     }
+
 
     public final void ajustarInternalFrame(JInternalFrame frame) {
 
@@ -952,20 +938,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }
 
     /**
-     * @return the quantidade
-     */
-    public Quantidadee getQuantidade() {
-        return quantidade;
-    }
-
-    /**
-     * @return the pagamento
-     */
-    public Pagamento getPagamento() {
-        return pagamento;
-    }
-
-    /**
      * @return the cGrupo
      */
     public CadastroGrupo getcGrupo() {
@@ -1022,5 +994,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }
 
   
+
+   
 
 }

@@ -16,6 +16,8 @@ import br.com.pbd.Modelo.Parcela;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Venda;
+import br.com.pbd.view.DiaPagamento;
+import br.com.pbd.view.DiaQuantidade;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +58,9 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3, adicao = 4;
     private HashMap<Integer, Boolean> keyEventos;
+    private DiaQuantidade diaQuantidade;
+    private DiaPagamento diaPagamento;
+    private int ativo;
 
     public ControleVendas(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
@@ -64,8 +69,13 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         calendario = new GregorianCalendar();
         parcelas = new ArrayList<Parcela>();
         keyEventos = new HashMap<Integer, Boolean>();
+        diaQuantidade = new DiaQuantidade(this.tPrincipal, true);
+        diaPagamento = new DiaPagamento(this.tPrincipal, true);
+        ativo = 0;
         adicionarEventos();
-    };
+    }
+
+    ;
 
     
 
@@ -75,15 +85,19 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
             int ro = retornaIndice(tPrincipal.getProdutos().getTabelaItens(), e);
             if (escolha == adicao) {
-                tPrincipal.getQuantidade().setVisible(true);
+                ativo++;
                 produto = produtos.get(ro);
+
+                if (ativo == 1) {
+                    diaQuantidade.setVisible(true);
+                }
             }
         }
         if (e.getSource() == tPrincipal.getVendas().getTabelaItens()) {
 
             int ro = retornaIndice(tPrincipal.getProdutos().getTabelaItens(), e);
             if (escolha == edicao) {
-                tPrincipal.getQuantidade().setVisible(true);
+                diaQuantidade.setVisible(true);
                 produto = produtos.get(ro);
             } else if (escolha == exclusao) {
 
@@ -116,6 +130,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             tPrincipal.getProdutos().setVisible(true);
             ValorTotal = 0.0;
             totalItens = 0;
+            ativo=0;
             produtos = new DaoProduto().listarProduto(tPrincipal.getVendas().getTxtPesquisarProdutos().getText());
             listarProdutos(produtos);
         }
@@ -125,7 +140,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             listarClientes(clientes);
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
-            if (produtosAdicionados.isEmpty()) {
+            if (produtosAdicionados == null || produtosAdicionados.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "ADICIONE PRODUTOS !");
 
             } else {
@@ -135,17 +150,19 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 } else {
                     ValorFinal = ValorTotal;
                 }
-                tPrincipal.getPagamento().getTxtTotalPagar().setText(ValorFinal + "");
+                diaPagamento.getTxtTotalPagar().setText(ValorFinal + "");
+                diaPagamento.setVisible(true);
+
             }
         }
-        if (e.getSource() == tPrincipal.getQuantidade().getBtnConfirmar()) {
-
+        if (e.getSource() == diaQuantidade.getBtnOk()) {
             adicionarItemVenda();
             listarProdutosAdicionados(itens);
             tPrincipal.getVendas().getTxtTotalItens().setText(totalItens + "");
             tPrincipal.getVendas().getTxtValorTotal().setText(ValorTotal + "");
+
         }
-        if (e.getSource() == tPrincipal.getPagamento().getBtnFinalizar()) {
+        if (e.getSource() == diaPagamento.getBtnFinalizar()) {
             escolherPagamento();
             venda.setData(ConverterData(new Date()));
             venda.setHora(new Time(Integer.MIN_VALUE));
@@ -158,6 +175,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             try {
                 venda.setItens(itens);
                 new GenericDao<Venda>().salvar_ou_atualizar(venda);
+                diaPagamento.setVisible(false);
                 itens.removeAll(itens);
                 listarProdutosAdicionados(itens);
                 cliente = null;
@@ -174,23 +192,23 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
     public void escolherPagamento() {
 
-        if (tPrincipal.getPagamento().getRadioAvista().isSelected()) {
+        if (diaPagamento.getRadioAvista().isSelected()) {
 
             pagamento = new Pagamento();
             pagamento.setNumeroparcelas(0);
             pagamento.setStatus(true);
             pagamento.setValortotal(ValorTotal);
             pagamento.setData(ConverterData(new Date()));
-            pagamento.setForma_pagamento(tPrincipal.getPagamento().getComboFormaPagamento().getSelectedItem().toString());
+            pagamento.setForma_pagamento(diaPagamento.getComboFormaPagamento().getSelectedItem().toString());
 
         } else {
             pagamento = new Pagamento();
-            int numero = Integer.parseInt(tPrincipal.getPagamento().getTxtParcelas().getText());
+            int numero = Integer.parseInt(diaPagamento.getTxtParcelas().getText());
             pagamento.setNumeroparcelas(numero);
             pagamento.setStatus(true);
             pagamento.setValortotal(ValorTotal);
             pagamento.setData(ConverterData(new Date()));
-            pagamento.setForma_pagamento(tPrincipal.getPagamento().getComboFormaPagamento().getSelectedItem().toString());
+            pagamento.setForma_pagamento(diaPagamento.getComboFormaPagamento().getSelectedItem().toString());
             Date data = new Date();
             for (int j = 1; j <= numero; j++) {
                 Parcela parcela = new Parcela();
@@ -225,14 +243,22 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         ItemVenda item = new ItemVenda();
         int numero = 0;
         try {
-            numero = Integer.parseInt(tPrincipal.getQuantidade().getTxtQuantidade().getText());
+
+            String n = diaQuantidade.getTxtQuantidade().getText();
+
+            numero = Integer.parseInt(n);
             item.setQuantidade(numero);
             item.setProduto(produto);
             item.setVenda(venda);
-
+            if (itens == null) {
+                itens = new ArrayList<ItemVenda>();
+            }
             itens.add(item);
-
+            diaQuantidade.setVisible(false);
+            tPrincipal.getProdutos().setVisible(false);
+            tPrincipal.getVendas().setVisible(true);          
         } catch (NumberFormatException erro) {
+        } catch (java.lang.NullPointerException erro) {
         }
 
     }
@@ -406,8 +432,8 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         tPrincipal.getVendas().getBtnPesquisar().addActionListener(this);
         tPrincipal.getVendas().getBtnClientes().addActionListener(this);
         tPrincipal.getVendas().getBtnFinalizarVenda().addActionListener(this);
-        tPrincipal.getQuantidade().getBtnConfirmar().addActionListener(this);
-        tPrincipal.getPagamento().getBtnFinalizar().addActionListener(this);
+        diaQuantidade.getBtnOk().addActionListener(this);
+        diaPagamento.getBtnFinalizar().addActionListener(this);
         tPrincipal.getProdutos().getTxtPesquisarProdutos().addActionListener(this);
         tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
         tPrincipal.getProdutos().getTabelaItens().addMouseListener(this);
