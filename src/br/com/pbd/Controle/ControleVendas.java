@@ -125,6 +125,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             produtosAdicionados = new ArrayList<Produto>();
             totalItens = 0;
             produto = new Produto();
+
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnPesquisar()) {
             tPrincipal.getProdutos().setVisible(true);
@@ -178,6 +179,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             try {
                 venda.setItens(itens);
                 new GenericDao<Venda>().salvar_ou_atualizar(venda);
+                saidaDeProdutos(itens);
                 zerarValores();
                 tPrincipal.getVendas().limparComponentes();
 
@@ -446,7 +448,20 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
     }
 
-    public void adicionarEventos() {
+    public void saidaDeProdutos(List<ItemVenda> itens) {
+
+        itens.forEach((item) -> {
+            int quantidade = item.getQuantidade();
+            int quantidadeEstoque = item.getProduto().getQuantidae_estoque();
+            Produto  produto=  item.getProduto();
+            produto.setQuantidae_estoque(quantidadeEstoque-quantidade);
+            
+            new GenericDao<Produto>().salvar_ou_atualizar(produto);
+
+        });
+    }
+
+public void adicionarEventos() {
 
         tPrincipal.getBtnVendas().addActionListener(this);
         tPrincipal.getVendas().getBtnPesquisar().addActionListener(this);

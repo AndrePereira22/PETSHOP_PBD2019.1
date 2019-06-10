@@ -5,11 +5,17 @@
  */
 package br.com.pbd.Modelo;
 
+import br.com.pbd.Dao.DaoAdministrador;
 import br.com.pbd.Dao.DaoEspecie;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import javax.swing.JOptionPane;
 
@@ -29,7 +35,15 @@ public class SalvarDadosRequiridos {
         }
     }
 
-    
+    public static void procurarAdm() {
+
+        Administrador adm = null;
+        try {
+            adm = new DaoAdministrador().busca();
+        } catch (NoResultException n) {
+            salvarADM();
+        }
+    }
 
     public static void salvarDadosRequiridos() {
 
@@ -217,6 +231,7 @@ public class SalvarDadosRequiridos {
         }
 
     }
+
     public static void salvarLoja() {
 
         Dados dados = new Dados();
@@ -246,6 +261,39 @@ public class SalvarDadosRequiridos {
             JOptionPane.showMessageDialog(null, roll.getCause());
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+    }
+
+    public static void salvarADM() {
+
+        Administrador adm = new Administrador();
+        Login login = new Login();
+        String senha = "admin";
+        String usuario = "admin";
+
+        try {
+            MessageDigest md;
+            md = MessageDigest.getInstance("SHA-256");
+            byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
+            StringBuilder ab = new StringBuilder();
+            for (byte b : messageDigest) {
+                ab.append(String.format("%02X", 0xFF & b));
+            }
+            String senhaHex = ab.toString();
+            login.setSenha(senhaHex);
+            login.setUsuario(usuario);
+            adm.setLogin(login);
+
+            new GenericDao<Administrador>().salvar_ou_atualizar(adm);
+
+        } catch (java.lang.IllegalStateException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(SalvarDadosRequiridos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(SalvarDadosRequiridos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

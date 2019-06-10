@@ -36,7 +36,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private final Financeiro financas = new Financeiro();
     private final Produtos produtos = new Produtos();
     private final EscolhaClientes eClientes = new EscolhaClientes();
-  
+    private final EntradaProdutos eProdutos = new EntradaProdutos();
+    private final ContasAPagar cPagar = new ContasAPagar();
+    private final ContasAreceber cReceber = new ContasAreceber();
+
     private final CadastroGrupo cGrupo = new CadastroGrupo();
     private HashMap<Integer, Boolean> keyEventos;
     private int start;
@@ -67,6 +70,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         ajustarInternalFrame(servico_Produto);
         ajustarInternalFrame(raca_especie);
         ajustarInternalFrame(produtos);
+        ajustarInternalFrame(eProdutos);
+        ajustarInternalFrame(cPagar);
+        ajustarInternalFrame(cReceber);
         ajustarInternalFrame(cGrupo);
         ajustarInternalFrame(cLoja);
 
@@ -86,7 +92,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         btnExcluir.setBorder(null);
         btnExcluir.setContentAreaFilled(false);
 
-        
         adicionaEventos();
 
         this.setVisible(false);
@@ -118,11 +123,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1024, 600));
 
         painelMenu.setBackground(new java.awt.Color(255, 255, 255));
         painelMenu.setPreferredSize(new java.awt.Dimension(1024, 600));
-        painelMenu.setLayout(null);
+        painelMenu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 001.png"))); // NOI18N
         btnClientes.setBorder(null);
@@ -135,8 +139,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnClientesActionPerformed(evt);
             }
         });
-        painelMenu.add(btnClientes);
-        btnClientes.setBounds(20, 40, 280, 75);
+        painelMenu.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 280, 75));
 
         btnAgenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 002.png"))); // NOI18N
         btnAgenda.setBorder(null);
@@ -149,8 +152,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnAgendaActionPerformed(evt);
             }
         });
-        painelMenu.add(btnAgenda);
-        btnAgenda.setBounds(20, 120, 280, 75);
+        painelMenu.add(btnAgenda, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 280, 75));
 
         btnVendas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 003.png"))); // NOI18N
         btnVendas.setBorder(null);
@@ -163,8 +165,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnVendasActionPerformed(evt);
             }
         });
-        painelMenu.add(btnVendas);
-        btnVendas.setBounds(20, 200, 280, 75);
+        painelMenu.add(btnVendas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 280, 75));
 
         btnGerencia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Gerencia  004.png"))); // NOI18N
         btnGerencia.setToolTipText("");
@@ -178,8 +179,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnGerenciaActionPerformed(evt);
             }
         });
-        painelMenu.add(btnGerencia);
-        btnGerencia.setBounds(20, 280, 280, 75);
+        painelMenu.add(btnGerencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 280, 75));
 
         btnCadastros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 005.png"))); // NOI18N
         btnCadastros.setBorder(null);
@@ -192,8 +192,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnCadastrosActionPerformed(evt);
             }
         });
-        painelMenu.add(btnCadastros);
-        btnCadastros.setBounds(20, 360, 280, 75);
+        painelMenu.add(btnCadastros, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 280, 75));
 
         btnProdutos_serv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 006.png"))); // NOI18N
         btnProdutos_serv.setBorder(null);
@@ -206,8 +205,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnProdutos_servActionPerformed(evt);
             }
         });
-        painelMenu.add(btnProdutos_serv);
-        btnProdutos_serv.setBounds(20, 440, 280, 75);
+        painelMenu.add(btnProdutos_serv, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 280, 75));
 
         btnFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/Layout App Clínica Botão 007.png"))); // NOI18N
         btnFinanceiro.setBorder(null);
@@ -220,10 +218,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnFinanceiroActionPerformed(evt);
             }
         });
-        painelMenu.add(btnFinanceiro);
-        btnFinanceiro.setBounds(20, 520, 280, 75);
+        painelMenu.add(btnFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 280, 75));
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/exit1.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/exit.png"))); // NOI18N
         btnSair.setAlignmentX(20.0F);
         btnSair.setAlignmentY(30.0F);
         btnSair.setBorderPainted(false);
@@ -233,22 +230,21 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnSairActionPerformed(evt);
             }
         });
-        painelMenu.add(btnSair);
-        btnSair.setBounds(710, 510, 120, 70);
+        painelMenu.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 480, 120, 70));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/proIcon.png"))); // NOI18N
         jLabel2.setText("USER");
-        painelMenu.add(jLabel2);
-        jLabel2.setBounds(20, 0, 300, 32);
+        painelMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 300, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/fundoo1.png"))); // NOI18N
         jLabel1.setToolTipText("");
-        painelMenu.add(jLabel1);
-        jLabel1.setBounds(0, 0, 1400, 680);
+        painelMenu.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1400, 680));
 
         paineArea.setBackground(new java.awt.Color(255, 255, 255));
         paineArea.setPreferredSize(new java.awt.Dimension(1024, 600));
         paineArea.setLayout(null);
+
+        painelDesktop.setPreferredSize(new java.awt.Dimension(1024, 600));
 
         javax.swing.GroupLayout painelDesktopLayout = new javax.swing.GroupLayout(painelDesktop);
         painelDesktop.setLayout(painelDesktopLayout);
@@ -269,19 +265,21 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1403, Short.MAX_VALUE)
-                .addGap(9, 9, 9))
+                .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 1410, Short.MAX_VALUE)
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 1412, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(paineArea, javax.swing.GroupLayout.PREFERRED_SIZE, 1420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE)
+            .addComponent(painelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 691, Short.MAX_VALUE))
+                .addComponent(paineArea, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE))
         );
 
-        setBounds(0, 0, 1412, 691);
+        setBounds(0, 0, 1401, 680);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
@@ -307,13 +305,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getPainelMenu().setVisible(false);
         getAgenda().setVisible(rootPaneCheckingEnabled);
 
-        
+
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         // TODO add your handling code here:
 
-        PostgresBackup_Curso pc = new PostgresBackup_Curso();
+//        PostgresBackup_Curso pc = new PostgresBackup_Curso();
         // System.exit(WIDTH);
     }//GEN-LAST:event_btnSairActionPerformed
 
@@ -541,7 +539,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getProdutos().setVisible(true);
 
         }
-       
 
         if (e.getSource() == getVendas().getBtnSair()) {
             getVendas().setVisible(false);
@@ -572,6 +569,26 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         if (e.getSource() == getGerencia().getBtnSair()) {
             getGerencia().setVisible(false);
             painelMenu.setVisible(true);
+        }
+        if (e.getSource() == getFinancas().getBtnContaApagar()) {
+
+            getFinancas().setVisible(false);
+            getcPagar().setVisible(true);
+        }
+        if (e.getSource() == getFinancas().getBtnContasAreceber()) {
+
+            getFinancas().setVisible(false);
+            getcReceber().setVisible(true);
+        }
+        if (e.getSource() == getFinancas().getBtnSair()) {
+
+            getFinancas().setVisible(false);
+            painelMenu.setVisible(true);
+        }
+        if (e.getSource() == geteProdutos().getBtnCancelar()) {
+
+            geteProdutos().setVisible(false);
+            getGerencia().setVisible(true);
         }
 
     }
@@ -628,6 +645,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         geteClientes().getBtnCancelar().addActionListener(this);
         getGerencia().getBtnEditar().addActionListener(this);
         getGerencia().getBtnSair().addActionListener(this);
+        getFinancas().getBtnContaApagar().addActionListener(this);
+        getFinancas().getBtnContasAreceber().addActionListener(this);
+        getFinancas().getBtnSair().addActionListener(this);
+        geteProdutos().getBtnCancelar().addActionListener(this);
 
         btnAgenda.addKeyListener(this);
         btnClientes.addKeyListener(this);
@@ -639,7 +660,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getBtnGerencia().addKeyListener(this);
 
     }
-
 
     public final void ajustarInternalFrame(JInternalFrame frame) {
 
@@ -992,8 +1012,25 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         return btnEditar;
     }
 
-  
+    /**
+     * @return the eProdutos
+     */
+    public EntradaProdutos geteProdutos() {
+        return eProdutos;
+    }
 
-   
+    /**
+     * @return the cPagar
+     */
+    public ContasAPagar getcPagar() {
+        return cPagar;
+    }
+
+    /**
+     * @return the cReceber
+     */
+    public ContasAreceber getcReceber() {
+        return cReceber;
+    }
 
 }

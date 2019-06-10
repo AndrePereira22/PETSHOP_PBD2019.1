@@ -556,7 +556,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         if (e.getSource() == tPrincipal.getcAnimal().getTxtPesquisa()) {
             String nome = tPrincipal.getcAnimal().getTxtPesquisa().getText();
-            animais = fachada.busca(nome);
+            animais = fachada.buscaAnimal(nome);
             listarTabelaAnimais(animais);
 
         }

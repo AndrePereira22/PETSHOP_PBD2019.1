@@ -31,6 +31,7 @@ public class TelaLogin extends javax.swing.JFrame {
         pro = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
         adm = new ImageIcon(getClass().getResource("/br/com/pbd/resource/u.png"));
 
+        
     }
 
     /**
@@ -57,6 +58,7 @@ public class TelaLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login do Sistema");
         setUndecorated(true);
+        setResizable(false);
 
         painelPrincipal.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -113,7 +115,7 @@ public class TelaLogin extends javax.swing.JFrame {
                         .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAcessar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 23, Short.MAX_VALUE))
         );
         painelAcessoLayout.setVerticalGroup(
             painelAcessoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,19 +142,21 @@ public class TelaLogin extends javax.swing.JFrame {
             painelSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelSecundarioLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(imagem, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelAcesso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(imagem, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSecundarioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(painelAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         painelSecundarioLayout.setVerticalGroup(
             painelSecundarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSecundarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(imagem)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(painelAcesso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelPrincipalLayout = new javax.swing.GroupLayout(painelPrincipal);
@@ -168,8 +172,8 @@ public class TelaLogin extends javax.swing.JFrame {
             painelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelSecundario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(painelSecundario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -249,6 +253,10 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField senha;
     // End of variables declaration//GEN-END:variables
 
+    public void limparCampos(){
+        senha.setText("");
+        Login.setText("");
+    }
     /**
      * @return the btnAcessar
      */
@@ -311,5 +319,6 @@ public class TelaLogin extends javax.swing.JFrame {
     public Icon getAdm() {
         return adm;
     }
-    
+
+
 }

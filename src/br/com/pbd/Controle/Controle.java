@@ -59,7 +59,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     private final int salvar = 1, edicao = 2, exclusao = 3;
     private HashMap<Integer, Boolean> keyEventos;
 
-    public Controle(TelaPrincipal tPrincipal,Fachada fachada) {
+    public Controle(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
 
@@ -137,7 +137,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             tPrincipal.getcCliente().limparComponentes();
         }
         if (e.getSource() == tPrincipal.getBtnClientes()) {
-            clientes = new GenericDao<Cliente>().getAll(Cliente.class);
+            clientes = fachada.getAll();
             listarClientes(clientes);
         }
 
@@ -262,7 +262,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             java.sql.Date nascimento = ConverterData(tPrincipal.getcCliente().getNascimento().getDate());
             cliente.setNascimento(nascimento);
 
-            new GenericDao<Cliente>().salvar_ou_atualizar(cliente);
+            fachada.salvar(cliente);
 
             JOptionPane.showMessageDialog(null, "Cliente cadastrado!");
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
@@ -612,12 +612,12 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         try {
             java.sql.Date nascimento = ConverterData(tPrincipal.getcCliente().getNascimento().getDate());
             cliente.setNascimento(nascimento);
-            new GenericDao<Cliente>().salvar_ou_atualizar(cliente);
+            fachada.salvar(cliente);
 
             JOptionPane.showMessageDialog(null, "Edição concluida!");
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
-            clientes = new GenericDao<Cliente>().getAll(Cliente.class);
+            clientes = fachada.getAll();
             listarClientes(clientes);
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -773,7 +773,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         if (e.getSource() == tPrincipal.getcCliente().getTxtPesquisa()) {
             String nome = tPrincipal.getcCliente().getTxtPesquisa().getText();
-            clientes = new DaoCliente().Busca(nome);
+            clientes = fachada.buscaCliente(nome);
             listarClientes(clientes);
         }
         if (e.getSource() == tPrincipal.getcFuncionario().getTxtPesquisa()) {

@@ -5,6 +5,7 @@
  */
 package br.com.pbd.Dao;
 
+import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
@@ -16,12 +17,24 @@ import javax.persistence.Query;
  * @author Andre-Coude
  */
 public class DaoProduto {
-     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    public List<Produto>  listarProduto(String nome) {
+    private static final EntityManager manager = SQLConexao.getEntityManager();
+
+    public List<Produto> listarProduto(String nome) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  produto FROM Produto produto where produto.nome like '%"+ nome +"%'");
+            query = manager.createQuery("SELECT  produto FROM Produto produto where produto.nome like '%" + nome + "%'");
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar produtos");
+        }
+        return query.getResultList();
+    }
+
+    public List<Produto> listarProduto(GrupoProduto grupo) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  produto FROM Produto produto where produto.gproduto=:grupo ");
+            query.setParameter("grupo", grupo);
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar produtos");
         }

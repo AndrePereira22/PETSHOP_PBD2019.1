@@ -7,11 +7,14 @@ package br.com.pbd.fachada;
 
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Animal;
+import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.business.BusinessAgenda;
 import br.com.pbd.business.BusinessAnimal;
+import br.com.pbd.business.BusinessCliente;
 import br.com.pbd.business.IBusinessAgenda;
 import br.com.pbd.business.IBusinessAnimal;
+import br.com.pbd.business.IBusinessCliente;
 import java.sql.Date;
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class Fachada implements IFachada {
     private static Fachada instance;
     private IBusinessAgenda bAgenda;
     private IBusinessAnimal bAnimal;
+    private IBusinessCliente bCliente;
 
     public static Fachada getInstance() {
         if (instance == null) {
@@ -36,6 +40,7 @@ public class Fachada implements IFachada {
 
         this.bAgenda = new BusinessAgenda();
         this.bAnimal = new BusinessAnimal();
+        this.bCliente = new BusinessCliente();
     }
 
     @Override
@@ -54,29 +59,49 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public List<Agenda> busca(Profissional pro, Date data) {
+    public List<Agenda> buscaAgenda(Profissional pro, Date data) {
         return this.bAgenda.busca(pro, data);
     }
 
     @Override
     public void salvar(Animal animal) {
-     this.bAnimal.salvar(animal); 
+        this.bAnimal.salvar(animal);
     }
 
     @Override
     public List<Animal> getAllAnimal() {
-    return this.bAnimal.getAll();
+        return this.bAnimal.getAll();
     }
 
     @Override
     public void ativarDesativar(Animal animal) {
-     this.bAnimal.ativarDesativar(animal);
+        this.bAnimal.ativarDesativar(animal);
     }
 
     @Override
-    public List<Animal> busca(String nome) {
-     return this.bAnimal.busca(nome
-     );
+    public List<Animal> buscaAnimal(String nome) {
+        return this.bAnimal.busca(nome
+        );
+    }
+
+    @Override
+    public void salvar(Cliente cliente) {
+        this.bCliente.salvar(cliente);
+    }
+
+    @Override
+    public List<Cliente> getAll() {
+        return this.bCliente.getAll();
+    }
+
+    @Override
+    public void ativarDesativar(Cliente cliente) {
+        this.bCliente.salvar(cliente);
+    }
+
+    @Override
+    public List<Cliente> buscaCliente(String nome) {
+        return this.bCliente.busca(nome);
     }
 
 }

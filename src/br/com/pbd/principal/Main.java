@@ -19,6 +19,7 @@ public class Main {
 
         SalvarDadosRequiridos.salvarDadosRequiridos();
         SalvarDadosRequiridos.procurarLoja();
+        SalvarDadosRequiridos.procurarAdm();
 
         Fachada fachada = Fachada.getInstance();
         TelaPrincipal tPrincipal = new TelaPrincipal();

@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -156,6 +157,9 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         String quantidade = tPrincipal.getcProdutos().getTxtQuantidade().getText();
 
         Double valorCompra = 0.0, valorVenda = 0.0;
+        Random gerador = new Random();
+        int codigo = gerador.nextInt()*1000;
+        produto.setCodigo(codigo);
 
         try {
             forn = fornecedores.get(intdiceF);

@@ -6,16 +6,23 @@
 package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoCaixa;
+import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Caixa;
+import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.Loja;
+import br.com.pbd.Modelo.Pagamento;
+import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.NoResultException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,20 +34,32 @@ public class ControleFinanceiro implements ActionListener {
     private Caixa caixa;
     private Loja loja;
 
+    private List<ContaAPagar> contas;
+
     public ControleFinanceiro(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
         abrirCaixa();
+
+        tPrincipal.getcPagar().getBtnSalvarConta().addActionListener(this);
+        tPrincipal.getFinancas().getBtnContaApagar().addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == tPrincipal.getFinancas().getBtnContaApagar()) {
+            buscarContas();
+        }
+        if (e.getSource() == tPrincipal.getcPagar().getBtnSalvarConta()) {
+            salvarContaApagar();
+            tPrincipal.getcPagar().limparComponentes(false);
+        }
 
     }
 
     public void abrirCaixa() {
 
         if (loja != null) {
-            
+
             Date data = new Date(System.currentTimeMillis());
             Caixa caixaAnterior = null;
             try {
@@ -74,13 +93,106 @@ public class ControleFinanceiro implements ActionListener {
             }
         }
     }
-    public void buscarLoja(){
-        
-         try {
+
+    private void salvarContaApagar() {
+
+        ContaAPagar contaPagar = new ContaAPagar();
+
+        contaPagar.setDescricao(tPrincipal.getcPagar().getTxtDescricao().getText());
+
+        Double valor = 0.0;
+        contaPagar.setStatus(false);
+
+        try {
+            valor = Double.parseDouble(tPrincipal.getcPagar().getTxtValor().getText());
+            java.sql.Date vencimento = ConverterData(tPrincipal.getcPagar().getVencimento().getDate());
+
+            contaPagar.setData(vencimento);
+            contaPagar.setValortotal(valor);
+
+            new GenericDao<ContaAPagar>().salvar_ou_atualizar(contaPagar);
+            JOptionPane.showMessageDialog(null, "Conta cadastrada!");
+            buscarContas();
+
+        } catch (java.lang.IllegalStateException n) {
+            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+        } catch (javax.persistence.RollbackException roll) {
+            JOptionPane.showMessageDialog(null, roll.getCause());
+        }
+    }
+
+    public void buscarLoja() {
+
+        try {
             loja = new DaoLoja().buscaUltimoLoja();
+            tPrincipal.getGerencia().preencherDados(loja);
         } catch (NoResultException n) {
         }
-    
+
+    }
+
+    private void listarContasApagar(List<ContaAPagar> lista) {
+
+        tPrincipal.getcPagar().getTabelaContasApagar().setDefaultRenderer(Object.class, new Render());
+
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"DESCRICAO", "VALOR", "DATA DE VENCIMENTO", "PAGAR "};
+            Object[][] dados = new Object[lista.size()][4];
+            for (ContaAPagar a : lista) {
+                dados[i][0] = a.getDescricao();
+                dados[i][1] = a.getValortotal();
+                dados[i][2] = a.getData();
+                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
+
+                i++;
+            }
+
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getcPagar().getTabelaContasApagar().setModel(dataModel);
+        } catch (Exception ex) {
+
+        }
+    }
+    private void listarPagamentos(List<Pagamento> lista) {
+
+        tPrincipal.getcReceber().getTabelaContasAreceber().setDefaultRenderer(Object.class, new Render());
+
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"DESCRICAO", "VALOR", "DATA DE VENCIMENTO", "PAGAR "};
+            Object[][] dados = new Object[lista.size()][4];
+            for (Pagamento a : lista) {
+                dados[i][1] = a.getValortotal();
+                dados[i][2] = a.getData();
+                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
+
+                i++;
+            }
+
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getcReceber().getTabelaContasAreceber().setModel(dataModel);
+        } catch (Exception ex) {
+
+        }
+    }
+
+    public void buscarContas() {
+
+        contas = new DaoContasApagar().buscaContas();
+        listarContasApagar(contas);
+    }
+
+    public java.sql.Date ConverterData(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
     }
 
 }

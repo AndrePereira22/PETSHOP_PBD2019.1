@@ -265,12 +265,12 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
         if (!profissionais.isEmpty()) {
             java.sql.Date data = ConverterData(tPrincipal.getAgenda().getCalenario().getDate());
-            
+
             int i = 0;
             try {
                 tPrincipal.mudarVisaoData(data);
                 profissional = profissionais.get(indice);
-                agendas = fachada.busca(profissional, data);
+                agendas = fachada.buscaAgenda(profissional, data);
 
                 tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
@@ -293,7 +293,10 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
                 tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
             } catch (java.lang.NullPointerException ex) {
 
+            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+
             }
+
         }
     }
 

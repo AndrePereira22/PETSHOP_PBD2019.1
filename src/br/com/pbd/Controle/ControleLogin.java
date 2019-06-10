@@ -5,18 +5,12 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.DaoCaixa;
-import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.DaoLogin;
-import br.com.pbd.Dao.DaoLoja;
-import br.com.pbd.Dao.GenericDao;
-import br.com.pbd.Modelo.Caixa;
-import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
-import br.com.pbd.Modelo.Loja;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.view.DiaMensagem;
+import br.com.pbd.view.DiaSair;
 import br.com.pbd.view.TelaLogin;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
@@ -26,12 +20,10 @@ import java.awt.event.KeyListener;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.NoResultException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,19 +36,24 @@ public class ControleLogin implements ActionListener, KeyListener {
     private static Funcionario funcionario;
     private static Profissional profissional;
     private final HashMap<Integer, Boolean> keyEventos;
-    private DiaMensagem mensagem;
+    private Object objeto;
+    private final DiaMensagem mensagem;
+    private final DiaSair sair;
 
     public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
         keyEventos = new HashMap<Integer, Boolean>();
         mensagem = new DiaMensagem(this.tLogin, true);
+        sair = new DiaSair(this.tPrincipal, true);
 
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
         tLogin.getLogin().addKeyListener(this);
         mensagem.getBtnOk().addKeyListener(this);
-
+        tPrincipal.getBtnSair().addActionListener(this);
+        sair.getBtnLogoof().addActionListener(this);
+        sair.getBtnSair().addActionListener(this);
     }
 
     @Override
@@ -64,6 +61,18 @@ public class ControleLogin implements ActionListener, KeyListener {
 
         if (e.getSource() == tLogin.getBtnAcessar()) {
             logar();
+        }
+        if (e.getSource() == tPrincipal.getBtnSair()) {
+            sair.setVisible(true);
+        }
+        if (e.getSource() == sair.getBtnLogoof()) {
+            sair.setVisible(false);
+            tPrincipal.setVisible(false);
+            tLogin.limparCampos();
+            tLogin.setVisible(true);
+        }
+        if (e.getSource() == sair.getBtnSair()) {
+            System.exit(0);
         }
 
     }
@@ -98,46 +107,16 @@ public class ControleLogin implements ActionListener, KeyListener {
 
         login.setSenha(senhaHex);
 
-        if (senha.equals("admin") && usuario.equals("admin")) {
+        objeto = null;
 
-            tPrincipal.getjLabel2().setText("ADMINISTRADOR");
-            tPrincipal.getjLabel2().setIcon(tLogin.getPro());
-            exibirMenu();
-        } else {
+        if(acessoAdmi(login)){
+            
+        }else if (acessoFunc(login)){
 
-            Object o = null;
-            try {
-                o = new DaoLogin().verificarLogin(login, "Funcionario");
-            } catch (NoResultException n) {
-            }
-
-            if (o != null) {
-                funcionario = ((Funcionario) o);
-
-                tPrincipal.getjLabel2().setText(funcionario.getNome());
-                tPrincipal.getjLabel2().setIcon(tLogin.getUser());
-                exibirMenu();
-                tPrincipal.getPainelMenu().setVisible(false);
-                tPrincipal.getcLoja().setVisible(true);
-
-            } else {
-                try {
-                    o = new DaoLogin().verificarLogin(login, "Profissional");
-                } catch (NoResultException n) {
-                }
-                if (o != null) {
-                    profissional = ((Profissional) o);
-                    tPrincipal.getjLabel2().setText(profissional.getNome());
-                    tPrincipal.getjLabel2().setIcon(tLogin.getPro());
-                    exibirMenu();
-
-                } else {
-
-                    mensagem.getLblMens().setText("Usuario ou senha invalidos!");
-                    mensagem.setVisible(true);
-                }
-            }
+        }else{
+            acessoProfi(login);
         }
+
     }
 
     @Override
@@ -175,9 +154,85 @@ public class ControleLogin implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
-    public void exibirMenu() {
-        tLogin.dispose();
-        tPrincipal.setVisible(true);
+    public boolean acessoAdmi(Login login) {
+
+        try {
+            objeto = new DaoLogin().verificarLogin(login, "Administrador");
+            if (objeto != null) {
+
+                tPrincipal.getjLabel2().setText("ADMINISTRADOR");
+                tPrincipal.getjLabel2().setIcon(tLogin.getPro());
+                tPrincipal.getBtnVendas().setEnabled(false);
+                tPrincipal.getBtnClientes().setEnabled(true);
+                tPrincipal.getBtnGerencia().setEnabled(true);
+                tPrincipal.getBtnFinanceiro().setEnabled(true);
+                tPrincipal.getBtnCadastros().setEnabled(true);
+                tPrincipal.getBtnProdutos_serv().setEnabled(true);
+                tPrincipal.getBtnAgenda().setEnabled(true);
+                tLogin.dispose();
+                tPrincipal.setVisible(true);
+                return true;
+            }
+
+        } catch (NoResultException n) {
+            return false;
+        }
+        return false;
+    }
+
+    public boolean acessoFunc(Login login) {
+        try {
+            objeto = new DaoLogin().verificarLogin(login, "Funcionario");
+            if (objeto != null) {
+                funcionario = ((Funcionario) objeto);
+
+                tPrincipal.getjLabel2().setText(funcionario.getNome());
+                tPrincipal.getjLabel2().setIcon(tLogin.getUser());
+                tPrincipal.getBtnVendas().setEnabled(true);
+                tPrincipal.getBtnClientes().setEnabled(true);
+                tPrincipal.getBtnGerencia().setEnabled(false);
+                tPrincipal.getBtnFinanceiro().setEnabled(true);
+                tPrincipal.getBtnCadastros().setEnabled(true);
+                tPrincipal.getBtnProdutos_serv().setEnabled(true);
+                tPrincipal.getBtnAgenda().setEnabled(true);
+                tLogin.dispose();
+                tPrincipal.setVisible(true);
+                return true;
+            }
+        } catch (NoResultException n) {
+            return false;
+        }
+        return false;
+    }
+
+    public void acessoProfi(Login login) {
+
+        try {
+            objeto = new DaoLogin().verificarLogin(login, "Profissional");
+            if (objeto != null) {
+                profissional = ((Profissional) objeto);
+                tPrincipal.getjLabel2().setText(profissional.getNome());
+                tPrincipal.getjLabel2().setIcon(tLogin.getPro());
+                tPrincipal.getBtnVendas().setEnabled(false);
+                tPrincipal.getBtnClientes().setEnabled(false);
+                tPrincipal.getBtnGerencia().setEnabled(false);
+                tPrincipal.getBtnFinanceiro().setEnabled(false);
+                tPrincipal.getBtnCadastros().setEnabled(false);
+                tPrincipal.getBtnProdutos_serv().setEnabled(false);
+                tPrincipal.getBtnAgenda().setEnabled(true);
+                tLogin.dispose();
+                tPrincipal.setVisible(true);
+            }
+        } catch (NoResultException n) {
+            mensagemErro();
+        }
+
+    }
+
+    public void mensagemErro() {
+
+        mensagem.getLblMens().setText("Usuario ou senha invalidos!");
+        mensagem.setVisible(true);
 
     }
 

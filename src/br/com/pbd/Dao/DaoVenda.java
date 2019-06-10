@@ -5,7 +5,7 @@
  */
 package br.com.pbd.Dao;
 
-import br.com.pbd.Modelo.Login;
+import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.sql.SQLConexao;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -14,23 +14,20 @@ import javax.persistence.Query;
  *
  * @author Andre-Coude
  */
-public class DaoLogin {
+public class DaoVenda {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    
+    public Caixa  buscaUltimoCaixa() {
 
-    public Object verificarLogin( Login login,String s) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT obj FROM "+ s+" obj where obj.login.senha =:senha and obj.login.usuario=:usuario");
-            query.setParameter("senha", login.getSenha());
-            query.setParameter("usuario", login.getUsuario());
+            query = manager.createQuery("SELECT caixa FROM Caixa caixa  ORDER BY caixa.id desc");
+            query.setMaxResults(1);
         } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar servicos");
         }
-        return query.getSingleResult();
-    }
-    
+        return (Caixa) query.getSingleResult();
 
-        
+    }
 }
