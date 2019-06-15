@@ -14,7 +14,6 @@
     <class>br.com.pbd.Modelo.ItemVenda</class>
     <class>br.com.pbd.Modelo.Login</class>
     <class>br.com.pbd.Modelo.Loja</class>
-    <class>br.com.pbd.Modelo.Pagamento</class>
     <class>br.com.pbd.Modelo.Parcela</class>
     <class>br.com.pbd.Modelo.Produto</class>
     <class>br.com.pbd.Modelo.Profissional</class>
@@ -25,6 +24,8 @@
     <class>br.com.pbd.Modelo.Administrador</class>
     <class>br.com.pbd.Modelo.ContaAPagar</class>
     <class>br.com.pbd.Modelo.EntradaEstoque</class>
+    <class>br.com.pbd.Modelo.Pagamento</class>
+    <class>br.com.pbd.Modelo.VendaCliente</class>
     <properties>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/petshop"/>

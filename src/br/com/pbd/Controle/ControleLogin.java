@@ -6,6 +6,7 @@
 package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoLogin;
+import br.com.pbd.Modelo.Administrador;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Profissional;
@@ -34,6 +35,7 @@ public class ControleLogin implements ActionListener, KeyListener {
     private final TelaLogin tLogin;
     private final TelaPrincipal tPrincipal;
     private static Funcionario funcionario;
+    private static Administrador adm;
     private static Profissional profissional;
     private final HashMap<Integer, Boolean> keyEventos;
     private Object objeto;
@@ -109,11 +111,11 @@ public class ControleLogin implements ActionListener, KeyListener {
 
         objeto = null;
 
-        if(acessoAdmi(login)){
-            
-        }else if (acessoFunc(login)){
+        if (acessoAdmi(login)) {
 
-        }else{
+        } else if (acessoFunc(login)) {
+
+        } else {
             acessoProfi(login);
         }
 
@@ -159,18 +161,11 @@ public class ControleLogin implements ActionListener, KeyListener {
         try {
             objeto = new DaoLogin().verificarLogin(login, "Administrador");
             if (objeto != null) {
-
+                adm = ((Administrador) objeto);
                 tPrincipal.getjLabel2().setText("ADMINISTRADOR");
                 tPrincipal.getjLabel2().setIcon(tLogin.getPro());
-                tPrincipal.getBtnVendas().setEnabled(false);
-                tPrincipal.getBtnClientes().setEnabled(true);
-                tPrincipal.getBtnGerencia().setEnabled(true);
-                tPrincipal.getBtnFinanceiro().setEnabled(true);
-                tPrincipal.getBtnCadastros().setEnabled(true);
-                tPrincipal.getBtnProdutos_serv().setEnabled(true);
-                tPrincipal.getBtnAgenda().setEnabled(true);
+                tPrincipal.ativarBotoesAdm();
                 tLogin.dispose();
-                tPrincipal.setVisible(true);
                 return true;
             }
 
@@ -188,15 +183,8 @@ public class ControleLogin implements ActionListener, KeyListener {
 
                 tPrincipal.getjLabel2().setText(funcionario.getNome());
                 tPrincipal.getjLabel2().setIcon(tLogin.getUser());
-                tPrincipal.getBtnVendas().setEnabled(true);
-                tPrincipal.getBtnClientes().setEnabled(true);
-                tPrincipal.getBtnGerencia().setEnabled(false);
-                tPrincipal.getBtnFinanceiro().setEnabled(true);
-                tPrincipal.getBtnCadastros().setEnabled(true);
-                tPrincipal.getBtnProdutos_serv().setEnabled(true);
-                tPrincipal.getBtnAgenda().setEnabled(true);
+                tPrincipal.ativarBotoesFuncionario();
                 tLogin.dispose();
-                tPrincipal.setVisible(true);
                 return true;
             }
         } catch (NoResultException n) {
@@ -211,17 +199,11 @@ public class ControleLogin implements ActionListener, KeyListener {
             objeto = new DaoLogin().verificarLogin(login, "Profissional");
             if (objeto != null) {
                 profissional = ((Profissional) objeto);
-                tPrincipal.getjLabel2().setText(profissional.getNome());
+                tPrincipal.getjLabel2().setText(getProfissional().getNome());
                 tPrincipal.getjLabel2().setIcon(tLogin.getPro());
-                tPrincipal.getBtnVendas().setEnabled(false);
-                tPrincipal.getBtnClientes().setEnabled(false);
-                tPrincipal.getBtnGerencia().setEnabled(false);
-                tPrincipal.getBtnFinanceiro().setEnabled(false);
-                tPrincipal.getBtnCadastros().setEnabled(false);
-                tPrincipal.getBtnProdutos_serv().setEnabled(false);
-                tPrincipal.getBtnAgenda().setEnabled(true);
+                tPrincipal.ativarBotoesProfissional();
                 tLogin.dispose();
-                tPrincipal.setVisible(true);
+
             }
         } catch (NoResultException n) {
             mensagemErro();
@@ -238,6 +220,20 @@ public class ControleLogin implements ActionListener, KeyListener {
 
     public static Funcionario getFuncionario() {
         return funcionario;
+    }
+
+    /**
+     * @return the adm
+     */
+    public static Administrador getAdm() {
+        return adm;
+    }
+
+    /**
+     * @return the profissional
+     */
+    public static Profissional getProfissional() {
+        return profissional;
     }
 
 }

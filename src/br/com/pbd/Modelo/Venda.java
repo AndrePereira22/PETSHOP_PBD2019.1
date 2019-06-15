@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,12 +6,10 @@
  */
 package br.com.pbd.Modelo;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,24 +34,25 @@ public class Venda implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "venda_seq")
     private Long id;
 
-    @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
-    private Date data;
     @Column(name = "valor_total", precision = 6, scale = 2, nullable = false)
     private Double valortotal;
     @Column(name = "horario", nullable = false)
     private Time hora;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
     @ManyToOne
     private Funcionario funcionario;
+    
+    @OneToOne
+    private Caixa caixa;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "venda")
     @JoinColumn(name = "venda_id")
     private List<ItemVenda> itens;
-    
-     @OneToMany
+
+    @OneToMany
     private List<Cliente> clientes;
 
     @Override
@@ -67,19 +67,7 @@ public class Venda implements EntidadeBase {
         this.id = id;
     }
 
-    /**
-     * @return the data
-     */
-    public Date getData() {
-        return data;
-    }
-
-    /**
-     * @param data the data to set
-     */
-    public void setData(Date data) {
-        this.data = data;
-    }
+    
 
     /**
      * @return the valortotal
@@ -165,5 +153,18 @@ public class Venda implements EntidadeBase {
         this.clientes = clientes;
     }
 
-    
+    /**
+     * @return the caixa
+     */
+    public Caixa getCaixa() {
+        return caixa;
+    }
+
+    /**
+     * @param caixa the caixa to set
+     */
+    public void setCaixa(Caixa caixa) {
+        this.caixa = caixa;
+    }
+
 }

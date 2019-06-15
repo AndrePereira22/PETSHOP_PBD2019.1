@@ -22,7 +22,7 @@ public class DaoFuncionario {
     public List<Funcionario> Busca(String nome) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  funcionario FROM Funcionario funcionario where funcionario.nome like '%" + nome + "%' or funcionario.cpf like '%" + nome + "%' or funcionario.rg like '%" + nome + "%' ");
+            query = manager.createQuery("SELECT  funcionario FROM Funcionario funcionario where funcionario.nome like '%" + nome + "%' or funcionario.cpf like '%" + nome + "%' or funcionario.tipo like '%" + nome + "%' ");
 
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar Funcionario");

@@ -6,11 +6,15 @@
 package br.com.pbd.Modelo;
 
 import java.sql.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -36,9 +40,13 @@ public class Caixa implements EntidadeBase {
     private Boolean status;
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
-    
+
     @OneToOne
-     private Loja loja;
+    private Loja loja;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "caixa")
+    @JoinColumn(name = "caixa_id")
+    private List<Venda> vendas;
 
     @Override
     public Long getId() {
@@ -80,8 +88,6 @@ public class Caixa implements EntidadeBase {
         this.valorfechamento = valorfechamento;
     }
 
-   
-
     /**
      * @return the status
      */
@@ -122,6 +128,20 @@ public class Caixa implements EntidadeBase {
      */
     public void setLoja(Loja loja) {
         this.loja = loja;
+    }
+
+    /**
+     * @return the vendas
+     */
+    public List<Venda> getVendas() {
+        return vendas;
+    }
+
+    /**
+     * @param vendas the vendas to set
+     */
+    public void setVendas(List<Venda> vendas) {
+        this.vendas = vendas;
     }
 
 }

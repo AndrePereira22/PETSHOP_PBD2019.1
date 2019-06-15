@@ -48,7 +48,7 @@ public class Servico_Produto extends javax.swing.JInternalFrame {
         btnNovoServico = new javax.swing.JButton();
         btnSairServico = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(1024, 600));
+        setPreferredSize(new java.awt.Dimension(1034, 610));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));

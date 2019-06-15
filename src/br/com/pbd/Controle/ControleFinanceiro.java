@@ -5,11 +5,13 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.DaoCaixa;
 import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.Loja;
@@ -33,15 +35,17 @@ public class ControleFinanceiro implements ActionListener {
     private final TelaPrincipal tPrincipal;
     private Caixa caixa;
     private Loja loja;
+    private List<Agenda> agendas;
 
     private List<ContaAPagar> contas;
 
     public ControleFinanceiro(TelaPrincipal tPrincipal) {
         this.tPrincipal = tPrincipal;
-        abrirCaixa();
-
+        this.abrirCaixa();
         tPrincipal.getcPagar().getBtnSalvarConta().addActionListener(this);
         tPrincipal.getFinancas().getBtnContaApagar().addActionListener(this);
+        tPrincipal.getBtnFinanceiro().addActionListener(this);
+        tPrincipal.getFinancas().getComboEntrada().addActionListener(this);
     }
 
     @Override
@@ -50,48 +54,53 @@ public class ControleFinanceiro implements ActionListener {
             buscarContas();
         }
         if (e.getSource() == tPrincipal.getcPagar().getBtnSalvarConta()) {
+            System.out.println("br.com.pbd.Controle.ControleFinanceiro.actionPerformed()");
             salvarContaApagar();
             tPrincipal.getcPagar().limparComponentes(false);
+        }
+        if (e.getSource() == tPrincipal.getBtnFinanceiro()) {
+            ListarTabela();
+        }
+        if (e.getSource() == tPrincipal.getFinancas().getComboEntrada()) {
+            ListarTabela();
         }
 
     }
 
     public void abrirCaixa() {
 
-        if (loja != null) {
-
-            Date data = new Date(System.currentTimeMillis());
-            Caixa caixaAnterior = null;
-            try {
-                caixaAnterior = new DaoCaixa().buscaUltimoCaixa();
-            } catch (NoResultException n) {
-                System.out.println("Caixa anterior nao encontrado");
-            }
-            try {
-                caixa = new DaoFinanceiro().buscarCaixa(data);
-            } catch (NoResultException n) {
-                System.out.println("Caixa do dia nao encontrado");
-            }
-
-            if (caixa == null) {
-                caixa = new Caixa();
-                caixa.setData(data);
-                caixa.setStatus(Boolean.TRUE);
-                caixa.setLoja(loja);
-                if (caixaAnterior != null) {
-                    caixa.setValorabertura(caixaAnterior.getValorfechamento());
-                    caixa.setValorfechamento(caixaAnterior.getValorfechamento());
-                } else {
-                    caixa.setValorabertura(0.0);
-                    caixa.setValorfechamento(0.0);
-                }
-                new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
-
-            } else {
-                caixa.setStatus(Boolean.TRUE);
-                new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
-            }
+        Date data = new Date(System.currentTimeMillis());
+        Caixa caixaAnterior = null;
+        try {
+            caixaAnterior = new DaoCaixa().buscaUltimoCaixa();
+        } catch (NoResultException n) {
+            System.out.println("Caixa anterior nao encontrado");
         }
+        try {
+            caixa = new DaoFinanceiro().buscarCaixa(data);
+        } catch (NoResultException n) {
+            System.out.println("Caixa do dia nao encontrado");
+        }
+
+        if (caixa == null) {
+            caixa = new Caixa();
+            caixa.setData(data);
+            caixa.setStatus(Boolean.TRUE);
+            caixa.setLoja(loja);
+            if (caixaAnterior != null) {
+                caixa.setValorabertura(caixaAnterior.getValorfechamento());
+                caixa.setValorfechamento(caixaAnterior.getValorfechamento());
+            } else {
+                caixa.setValorabertura(0.0);
+                caixa.setValorfechamento(0.0);
+            }
+            new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+
+        } else {
+            caixa.setStatus(Boolean.TRUE);
+            new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+        }
+
     }
 
     private void salvarContaApagar() {
@@ -121,16 +130,6 @@ public class ControleFinanceiro implements ActionListener {
         }
     }
 
-    public void buscarLoja() {
-
-        try {
-            loja = new DaoLoja().buscaUltimoLoja();
-            tPrincipal.getGerencia().preencherDados(loja);
-        } catch (NoResultException n) {
-        }
-
-    }
-
     private void listarContasApagar(List<ContaAPagar> lista) {
 
         tPrincipal.getcPagar().getTabelaContasApagar().setDefaultRenderer(Object.class, new Render());
@@ -158,6 +157,7 @@ public class ControleFinanceiro implements ActionListener {
 
         }
     }
+
     private void listarPagamentos(List<Pagamento> lista) {
 
         tPrincipal.getcReceber().getTabelaContasAreceber().setDefaultRenderer(Object.class, new Render());
@@ -185,6 +185,34 @@ public class ControleFinanceiro implements ActionListener {
         }
     }
 
+    private void listarServiçosPagos(List<Agenda> lista) {
+
+        tPrincipal.getFinancas().getTabelaVendas().setDefaultRenderer(Object.class, new Render());
+
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"VALOR TOTAL", "CLIENTE", "ANIMAL", "PROFISSIONAL "};
+            Object[][] dados = new Object[lista.size()][4];
+            for (Agenda a : lista) {
+                dados[i][0] = a.getPagamento().getValortotal();
+                dados[i][1] = a.getAnimal().getCliente().getNome();
+                dados[i][2] = a.getAnimal().getNome();
+                dados[i][3] = a.getProfissional().getNome();
+
+                i++;
+            }
+
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getFinancas().getTabelaVendas().setModel(dataModel);
+        } catch (Exception ex) {
+
+        }
+    }
+
     public void buscarContas() {
 
         contas = new DaoContasApagar().buscaContas();
@@ -193,6 +221,20 @@ public class ControleFinanceiro implements ActionListener {
 
     public java.sql.Date ConverterData(java.util.Date date) {
         return new java.sql.Date(date.getTime());
+    }
+
+    public void ListarTabela() {
+        String tipo = tPrincipal.getFinancas().getComboEntrada().getSelectedItem().toString();
+
+        if (tipo.equals("SERVICOS")) {
+            java.util.Date data = tPrincipal.getFinancas().getCalendario().getDate();
+            agendas = new DaoAgenda().buscarPagamentos(ConverterData(data));
+            listarServiçosPagos(agendas);
+
+        }
+        if (tipo.equals("VENDAS")) {
+
+        }
     }
 
 }

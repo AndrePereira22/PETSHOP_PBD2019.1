@@ -8,6 +8,8 @@ package br.com.pbd.fachada;
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Cliente;
+import br.com.pbd.Modelo.Fornecedor;
+import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Profissional;
 import java.sql.Date;
 import java.util.List;
@@ -36,10 +38,33 @@ public interface IFachada {
 
     public void salvar(Cliente cliente);
 
-    public List<Cliente> getAll();
+    public List<Cliente> getAllCliente();
 
     public void ativarDesativar(Cliente cliente);
 
     public List<Cliente> buscaCliente(String nome);
 
+    public void salvar(Funcionario funcionario);
+
+    public List<Funcionario> getAllFuncionario();
+
+    public void ativarDesativar(Funcionario funcionario);
+
+    public List<Funcionario> buscaFuncionario(String nome);
+
+        public void salvar(Profissional profissional);
+
+    public List<Profissional> getAllProfissionals();
+
+    public void ativarDesativar(Profissional profissional);
+
+    public List<Profissional> buscaProfissionals(String nome);
+    
+    public void salvar(Fornecedor fornecedor);
+
+    public List<Fornecedor> getAllFornecedor();
+
+    public void ativarDesativar(Fornecedor fornecedor);
+
+    public List<Fornecedor> buscaFornecedors(String nome);
 }

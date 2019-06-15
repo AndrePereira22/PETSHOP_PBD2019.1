@@ -175,8 +175,11 @@ public class DiaMensagem extends javax.swing.JDialog {
         return lblMens;
     }
 
+    public void setLblMens(String s) {
+        lblMens.setText(s);
+    }
+
     /**
      * @return the txtProduto
      */
-
 }

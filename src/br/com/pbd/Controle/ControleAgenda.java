@@ -86,9 +86,16 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == tPrincipal.getBtnAgenda()) {
-            preencherProfissionais();
-            preencherAnimais();
-            preencherServicos();
+            if (ControleLogin.getProfissional() == null) {
+                tPrincipal.getAgenda().ativar(true);
+                tPrincipal.getAgenda().getNomeProfissional().setVisible(false);
+                preencherProfissionais();
+                preencherAnimais();
+                preencherServicos();
+            } else {
+                tPrincipal.getAgenda().ativar(false);
+                listaAgendaProfissional(ControleLogin.getProfissional());
+            }
         }
 
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnCancelar()) {
@@ -98,7 +105,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         }
 
         if (e.getSource() == tPrincipal.getAgenda().getComboProfissional()) {
-            listarAgenda();
+            listarAgendaGeral();
 
         }
 
@@ -171,7 +178,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();
-            listarAgenda();
+            listarAgendaGeral();
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -214,7 +221,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();
-            listarAgenda();
+            listarAgendaGeral();
 
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -259,7 +266,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         });
     }
 
-    public void listarAgenda() {
+    public void listarAgendaGeral() {
 
         int indice = tPrincipal.getAgenda().getComboProfissional().getSelectedIndex();
 
@@ -300,17 +307,54 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         }
     }
 
+    public void listaAgendaProfissional(Profissional profissional) {
+
+        java.sql.Date data = ConverterData(tPrincipal.getAgenda().getCalenario().getDate());
+
+        int i = 0;
+        try {
+            tPrincipal.mudarVisaoData(data);
+            tPrincipal.getAgenda().getNomeProfissional().setText(profissional.getNome());
+            tPrincipal.getAgenda().getNomeProfissional().setVisible(true);
+            agendas = fachada.buscaAgenda(profissional, data);
+
+            tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
+
+            String[] colunas = new String[]{"HORARIO", "SERVICO", "EDITAR", "EXCLUIR"};
+            Object[][] dados = new Object[agendas.size()][4];
+            for (Agenda a : agendas) {
+                dados[i][0] = a.getHorario();
+                dados[i][1] = a.getServico().getDescricao();
+                dados[i][2] = tPrincipal.getBtnEditar();
+                dados[i][3] = tPrincipal.getBtnExcluir();
+
+                i++;
+            }
+
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
+        } catch (java.lang.NullPointerException ex) {
+
+        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+
+        }
+
+    }
+
     private void preencherProfissionais() {
 
         profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
 
-        if (tPrincipal.getAgenda().getComboProfissional().getSelectedIndex() >= 0) {
-            tPrincipal.getAgenda().getComboProfissional().removeAllItems();
-        }
+        tPrincipal.getAgenda().getComboProfissional().removeAllItems();
+
         profissionais.forEach((p) -> {
             tPrincipal.getAgenda().getComboProfissional().addItem(p.getNome());
         });
-        listarAgenda();
+        listarAgendaGeral();
     }
 
     public java.sql.Date ConverterData(java.util.Date date) {
@@ -367,7 +411,11 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         tPrincipal.getAgenda().getCalenario().getDayChooser().addPropertyChangeListener("day", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                listarAgenda();
+                if (ControleLogin.getProfissional() == null) {
+                    listarAgendaGeral();
+                } else {
+                    listaAgendaProfissional(ControleLogin.getProfissional());
+                }
             }
         });
     }

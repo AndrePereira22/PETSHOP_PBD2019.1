@@ -47,7 +47,7 @@ public class ContasAPagar extends javax.swing.JInternalFrame {
         btnSair = new javax.swing.JButton();
         btnNovaConta = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(1024, 600));
+        setPreferredSize(new java.awt.Dimension(1034, 610));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));
@@ -114,6 +114,11 @@ public class ContasAPagar extends javax.swing.JInternalFrame {
 
         btnCancelarConta.setText("CANCELAR");
         btnCancelarConta.setEnabled(false);
+        btnCancelarConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarContaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -273,6 +278,10 @@ public class ContasAPagar extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         limparComponentes(true);
     }//GEN-LAST:event_btnNovaContaActionPerformed
+
+    private void btnCancelarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarContaActionPerformed
+        limparComponentes(false);
+    }//GEN-LAST:event_btnCancelarContaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

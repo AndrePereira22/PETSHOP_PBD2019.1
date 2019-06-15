@@ -9,11 +9,14 @@ import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Administrador;
 import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.EntradaEstoque;
+import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Loja;
 import br.com.pbd.Modelo.Produto;
+import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
@@ -38,6 +41,8 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
     private Loja loja;
     private List<GrupoProduto> grupos;
     private List<Produto> produtos;
+    private List<Profissional> profissionais;
+    private List<Funcionario> funcionarios;
     private Produto produto;
 
     public ControleGerencial(TelaPrincipal tPrincipal) {
@@ -50,6 +55,7 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
         tPrincipal.getcLoja().getBtnCancelar().addActionListener(this);
         tPrincipal.getGerencia().getComboGrupo().addActionListener(this);
         tPrincipal.getGerencia().getTabelaProdutos().addMouseListener(this);
+        tPrincipal.getGerencia().getComboUsuario().addActionListener(this);
         tPrincipal.geteProdutos().getBtnSalvar().addActionListener(this);
 
     }
@@ -73,6 +79,11 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getBtnGerencia()) {
             buscarLoja();
             preencherGrupo();
+            escolherUsuario();
+
+        }
+        if (e.getSource() == tPrincipal.getGerencia().getComboUsuario()) {
+            escolherUsuario();
 
         }
 
@@ -141,6 +152,60 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
         });
         buscaDeProdutos();
 
+    }
+
+    private void listarFuncionarios(List<Funcionario> lista) {
+
+        tPrincipal.getGerencia().getTabelaUsuarios().setDefaultRenderer(Object.class, new Render());
+
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR", "RESET"};
+            Object[][] dados = new Object[lista.size()][4];
+            for (Funcionario a : lista) {
+                dados[i][0] = a.getNome();
+                dados[i][1] = a.getTipo();
+                dados[i][2] = tPrincipal.getGerencia().getBtnAdicionar();
+                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
+                i++;
+            }
+
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getGerencia().getTabelaUsuarios().setModel(dataModel);
+        } catch (Exception ex) {
+
+        }
+    }
+
+    private void listarProfissionais(List<Profissional> lista) {
+
+        tPrincipal.getGerencia().getTabelaUsuarios().setDefaultRenderer(Object.class, new Render());
+
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR", "RESET"};
+            Object[][] dados = new Object[lista.size()][4];
+            for (Profissional a : lista) {
+                dados[i][0] = a.getNome();
+                dados[i][1] = a.getTipo();
+                dados[i][2] = tPrincipal.getGerencia().getBtnAdicionar();
+                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
+                i++;
+            }
+
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getGerencia().getTabelaUsuarios().setModel(dataModel);
+        } catch (Exception ex) {
+
+        }
     }
 
     public void buscaDeProdutos() {
@@ -241,6 +306,20 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
     public java.sql.Date ConverterData(java.util.Date date) {
         return new java.sql.Date(date.getTime());
+    }
+
+    public void escolherUsuario() {
+        String user = tPrincipal.getGerencia().getComboUsuario().getSelectedItem().toString();
+
+        if (user.equals("FUNCIONARIO")) {
+            funcionarios = new GenericDao<Funcionario>().getAll(Funcionario.class);
+            listarFuncionarios(funcionarios);
+        } else if (user.equals("PROFISSIONAL")) {
+            profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+            listarProfissionais(profissionais);
+
+        }
+
     }
 
     public void buscarLoja() {

@@ -5,11 +5,6 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.DaoCliente;
-import br.com.pbd.Dao.DaoFornecedor;
-import br.com.pbd.Dao.DaoFuncionario;
-import br.com.pbd.Dao.DaoProfissional;
-import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Fornecedor;
@@ -18,6 +13,7 @@ import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.fachada.Fachada;
+import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,35 +40,34 @@ import javax.swing.JTable;
  */
 public class Controle extends MouseAdapter implements ActionListener, KeyListener {
 
-    private Fachada fachada;
+    private final Fachada fachada;
     private final TelaPrincipal tPrincipal;
     private List<Cliente> clientes;
     private List<Funcionario> funcionarios;
     private List<Profissional> profissionais;
     private List<Fornecedor> fornecedores;
-
     private Cliente cliente;
     private Funcionario funcionario;
     private Fornecedor fornecedor;
     private Profissional profissional;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
-    private HashMap<Integer, Boolean> keyEventos;
+    private final HashMap<Integer, Boolean> keyEventos;
+    private final DiaMensagem mens;
 
     public Controle(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
-
-        clientes = new ArrayList<Cliente>();
-        funcionarios = new ArrayList<Funcionario>();
-        profissionais = new ArrayList<Profissional>();
-        fornecedores = new ArrayList<Fornecedor>();
-        keyEventos = new HashMap<Integer, Boolean>();
+        this.clientes = new ArrayList<Cliente>();
+        this.funcionarios = new ArrayList<Funcionario>();
+        this.profissionais = new ArrayList<Profissional>();
+        this.fornecedores = new ArrayList<Fornecedor>();
+        this.keyEventos = new HashMap<Integer, Boolean>();
+        this.mens = new DiaMensagem(tPrincipal, true);
 
         adicionarEvents();
     }
 
-    // eventos de Mouse
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == tPrincipal.getcCliente().getTabelaCliente()) {
@@ -128,7 +123,6 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
     }
 
-    // eventos de botoes
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -137,7 +131,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             tPrincipal.getcCliente().limparComponentes();
         }
         if (e.getSource() == tPrincipal.getBtnClientes()) {
-            clientes = fachada.getAll();
+            clientes = fachada.getAllCliente();
             listarClientes(clientes);
         }
 
@@ -175,7 +169,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
 
         if (e.getSource() == tPrincipal.getCadastros().getBtnFuncionario()) {
-            funcionarios = new GenericDao<Funcionario>().getAll(Funcionario.class);
+            funcionarios = fachada.getAllFuncionario();
             listarFuncionarios(funcionarios);
         }
 
@@ -185,7 +179,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
 
         if (e.getSource() == tPrincipal.getCadastros().getBtnFornecedor()) {
-            fornecedores = new GenericDao<Fornecedor>().getAll(Fornecedor.class);
+            fornecedores = fachada.getAllFornecedor();
             listarFornecedores(fornecedores);
         }
         if (e.getSource() == tPrincipal.getcFornecedor().getBtnSalvar()) {
@@ -203,7 +197,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
 
         if (e.getSource() == tPrincipal.getCadastros().getBtnProfissional()) {
-            profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+            profissionais = fachada.getAllProfissionals();
             listarProfissionais(profissionais);
         }
 
@@ -264,15 +258,18 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             fachada.salvar(cliente);
 
-            JOptionPane.showMessageDialog(null, "Cliente cadastrado!");
+            mens.setLblMens(tPrincipal.getcCliente().getCADASTRO());
+            mens.setVisible(true);
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
-            clientes = new GenericDao<Cliente>().getAll(Cliente.class);
+            clientes = fachada.getAllCliente();
             listarClientes(clientes);
-        } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
-        } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
+        } catch (java.lang.NullPointerException roll) {
+            mens.setLblMens("SELECIONE A DATA DE NASCIMENTO!");
+            mens.setVisible(true);
         }
 
     }
@@ -328,23 +325,26 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             funcionario.setLogin(login);
 
             if (senha.equals(confirmSenha)) {
-                new GenericDao<Funcionario>().salvar_ou_atualizar(funcionario);
+                fachada.salvar(funcionario);
 
-                JOptionPane.showMessageDialog(null, "Funcionario cadastrado!");
+                mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+                mens.setVisible(true);
                 tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
                 tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
-                funcionarios = new GenericDao<Funcionario>().getAll(Funcionario.class);
+                funcionarios = fachada.getAllFuncionario();
                 listarFuncionarios(funcionarios);
             } else {
-                JOptionPane.showMessageDialog(null, "SENHAS DIFERENTES!");
-
+                mens.setLblMens(tPrincipal.getSENHA());
+                mens.setVisible(true);
             }
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-            Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
+            mens.setLblMens("ERRO AO SALVAR LOGIN!");
+            mens.setVisible(true);
         }
     }
 
@@ -373,11 +373,11 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         fornecedor.setRazaosocial(tPrincipal.getcFornecedor().getTxtRazaoSociall().getText());
 
         try {
-            new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
+            fachada.salvar(fornecedor);
             JOptionPane.showMessageDialog(null, "Fornecedor cadastrado!");
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
-            fornecedores = new GenericDao<Fornecedor>().getAll(Fornecedor.class);
+            fornecedores = fachada.getAllFornecedor();;
             listarFornecedores(fornecedores);
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -440,21 +440,23 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             profissional.setLogin(login);
 
             if (senha.equals(confirmSenha)) {
-                new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
+                fachada.salvar(profissional);
 
                 JOptionPane.showMessageDialog(null, "Profissional cadastrado!");
                 tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
                 tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
-                profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+                profissionais = fachada.getAllProfissionals();
                 listarProfissionais(profissionais);
             } else {
-                JOptionPane.showMessageDialog(null, "SENHAS DIFERENTES !");
-
+                mens.setLblMens("SENHAS DIFERENTES!");
+                mens.setVisible(true);
             }
-        } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
-        } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
+            mens.setLblMens(n.getMessage());
+            mens.setVisible(true);
+        } catch (java.lang.NullPointerException roll) {
+            mens.setLblMens("SELECIONE A DATA DE NASCIMENTO!");
+            mens.setVisible(true);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -462,130 +464,125 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
     public void listarClientes(List<Cliente> lista) {
 
-        if (!lista.isEmpty()) {
-
-            tPrincipal.getcCliente().getTabelaCliente().setDefaultRenderer(Object.class, new Render());
-            int i = 0;
-            try {
-                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "CELULAR", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[lista.size()][7];
-                for (Cliente a : lista) {
-                    dados[i][0] = a.getNome();
-                    dados[i][1] = a.getSexo();
-                    dados[i][2] = a.getNascimento();
-                    dados[i][3] = a.getCpf();
-                    dados[i][4] = a.getDados().getCelular();
-                    dados[i][5] = tPrincipal.getBtnEditar();
-                    dados[i][6] = tPrincipal.getBtnExcluir();
-                    i++;
-                }
-                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-                tPrincipal.getcCliente().getTabelaCliente().setModel(dataModel);
-            } catch (Exception ex) {
-
+        tPrincipal.getcCliente().getTabelaCliente().setDefaultRenderer(Object.class, new Render());
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "CELULAR", "EDITAR", "EXCLUIR"};
+            Object[][] dados = new Object[lista.size()][7];
+            for (Cliente a : lista) {
+                dados[i][0] = a.getNome();
+                dados[i][1] = a.getSexo();
+                dados[i][2] = a.getNascimento();
+                dados[i][3] = a.getCpf();
+                dados[i][4] = a.getDados().getCelular();
+                dados[i][5] = tPrincipal.getBtnEditar();
+                dados[i][6] = tPrincipal.getBtnExcluir();
+                i++;
             }
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getcCliente().getTabelaCliente().setModel(dataModel);
+        } catch (Exception ex) {
+
         }
+
     }
 
     public void listarFuncionarios(List<Funcionario> lista) {
 
-        if (!lista.isEmpty()) {
-            tPrincipal.getcFuncionario().getTabelaFuncionarios().setDefaultRenderer(Object.class, new Render());
-            int i = 0;
-            try {
-                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "FUNÇÃO", "CELULAR", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[lista.size()][8];
-                for (Funcionario a : lista) {
-                    dados[i][0] = a.getNome();
-                    dados[i][1] = a.getSexo();
-                    dados[i][2] = a.getNascimento();
-                    dados[i][3] = a.getCpf();
-                    dados[i][4] = a.getTipo();
-                    dados[i][5] = a.getDados().getCelular();
-                    dados[i][6] = tPrincipal.getBtnEditar();
-                    dados[i][7] = tPrincipal.getBtnExcluir();
-                    i++;
-                }
-                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-                tPrincipal.getcFuncionario().getTabelaFuncionarios().setModel(dataModel);
-            } catch (Exception ex) {
-
+        tPrincipal.getcFuncionario().getTabelaFuncionarios().setDefaultRenderer(Object.class, new Render());
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "FUNÇÃO", "CELULAR", "EDITAR", "EXCLUIR"};
+            Object[][] dados = new Object[lista.size()][8];
+            for (Funcionario a : lista) {
+                dados[i][0] = a.getNome();
+                dados[i][1] = a.getSexo();
+                dados[i][2] = a.getNascimento();
+                dados[i][3] = a.getCpf();
+                dados[i][4] = a.getTipo();
+                dados[i][5] = a.getDados().getCelular();
+                dados[i][6] = tPrincipal.getBtnEditar();
+                dados[i][7] = tPrincipal.getBtnExcluir();
+                i++;
             }
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getcFuncionario().getTabelaFuncionarios().setModel(dataModel);
+        } catch (Exception ex) {
+
         }
+
     }
 
     public void listarProfissionais(List<Profissional> lista) {
-        if (!lista.isEmpty()) {
-            tPrincipal.getcProfissioanl().getTabelaProfissionais().setDefaultRenderer(Object.class, new Render());
-            int i = 0;
-            try {
-                String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "FUNÇÃO", "CELULAR", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[lista.size()][9];
-                for (Profissional a : lista) {
-                    dados[i][0] = a.getNome();
-                    dados[i][1] = a.getSexo();
-                    dados[i][2] = a.getNascimento();
-                    dados[i][3] = a.getCpf();
-                    dados[i][4] = a.getTipo();
-                    dados[i][5] = a.getDados().getCelular();
-                    dados[i][6] = tPrincipal.getBtnEditar();
-                    dados[i][7] = tPrincipal.getBtnExcluir();
-                    i++;
-                }
-                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-                tPrincipal.getcProfissioanl().getTabelaProfissionais().setModel(dataModel);
-            } catch (Exception ex) {
 
+        tPrincipal.getcProfissioanl().getTabelaProfissionais().setDefaultRenderer(Object.class, new Render());
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "FUNÇÃO", "CELULAR", "EDITAR", "EXCLUIR"};
+            Object[][] dados = new Object[lista.size()][9];
+            for (Profissional a : lista) {
+                dados[i][0] = a.getNome();
+                dados[i][1] = a.getSexo();
+                dados[i][2] = a.getNascimento();
+                dados[i][3] = a.getCpf();
+                dados[i][4] = a.getTipo();
+                dados[i][5] = a.getDados().getCelular();
+                dados[i][6] = tPrincipal.getBtnEditar();
+                dados[i][7] = tPrincipal.getBtnExcluir();
+                i++;
             }
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getcProfissioanl().getTabelaProfissionais().setModel(dataModel);
+        } catch (Exception ex) {
 
         }
+
     }
 
     public void listarFornecedores(List<Fornecedor> lista) {
 
-        if (!lista.isEmpty()) {
-            tPrincipal.getcFornecedor().getTabelaFornecedor().setDefaultRenderer(Object.class, new Render());
+        tPrincipal.getcFornecedor().getTabelaFornecedor().setDefaultRenderer(Object.class, new Render());
 
-            int i = 0;
-            try {
-                String[] colunas = new String[]{"NOME", "RAZÃO SOCIAL", "CNPJ", "CIDADE", "CONTATO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[lista.size()][7];
-                for (Fornecedor a : lista) {
-                    dados[i][0] = a.getNomefantasia();
-                    dados[i][1] = a.getRazaosocial();
-                    dados[i][2] = a.getCnpj();
-                    dados[i][3] = a.getDados().getCidade();
-                    dados[i][4] = a.getDados().getCelular();
-                    dados[i][5] = tPrincipal.getBtnEditar();
-                    dados[i][6] = tPrincipal.getBtnExcluir();
-                    i++;
-                }
-                DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
-                    @Override
-                    public boolean isCellEditable(int row, int column) {
-                        return false;
-                    }
-                };
-                tPrincipal.getcFornecedor().getTabelaFornecedor().setModel(dataModel);
-            } catch (Exception ex) {
-
+        int i = 0;
+        try {
+            String[] colunas = new String[]{"NOME", "RAZÃO SOCIAL", "CNPJ", "CIDADE", "CONTATO", "EDITAR", "EXCLUIR"};
+            Object[][] dados = new Object[lista.size()][7];
+            for (Fornecedor a : lista) {
+                dados[i][0] = a.getNomefantasia();
+                dados[i][1] = a.getRazaosocial();
+                dados[i][2] = a.getCnpj();
+                dados[i][3] = a.getDados().getCidade();
+                dados[i][4] = a.getDados().getCelular();
+                dados[i][5] = tPrincipal.getBtnEditar();
+                dados[i][6] = tPrincipal.getBtnExcluir();
+                i++;
             }
+            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            tPrincipal.getcFornecedor().getTabelaFornecedor().setModel(dataModel);
+        } catch (Exception ex) {
+
         }
+
     }
 
     public void editarCliente(Cliente cliente) {
@@ -610,19 +607,24 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         cliente.setRg(tPrincipal.getcCliente().getTxtRg().getText());
 
         try {
-            java.sql.Date nascimento = ConverterData(tPrincipal.getcCliente().getNascimento().getDate());
-            cliente.setNascimento(nascimento);
+
+            try {
+                java.sql.Date nascimento = ConverterData(tPrincipal.getcCliente().getNascimento().getDate());
+                cliente.setNascimento(nascimento);
+            } catch (java.lang.NullPointerException roll) {
+            }
+
             fachada.salvar(cliente);
 
-            JOptionPane.showMessageDialog(null, "Edição concluida!");
+            mens.setLblMens(tPrincipal.getEDICAO());
+            mens.setVisible(true);
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
-            clientes = fachada.getAll();
+            clientes = fachada.getAllCliente();
             listarClientes(clientes);
-        } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
-        } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
 
     }
@@ -649,46 +651,48 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             java.sql.Date nascimento = ConverterData(tPrincipal.getcFuncionario().getNascimento().getDate());
             funcionario.setNascimento(nascimento);
-            new GenericDao<Funcionario>().salvar_ou_atualizar(funcionario);
+            fachada.salvar(funcionario);
 
-            JOptionPane.showMessageDialog(null, "Ediçao concluida!");
+            mens.setLblMens(tPrincipal.getEDICAO());
+            mens.setVisible(true);
             tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
             tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
-            funcionarios = new GenericDao<Funcionario>().getAll(Funcionario.class);
+            funcionarios = fachada.getAllFuncionario();
             listarFuncionarios(funcionarios);
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         }
     }
 
-    private void editarFornecedor(Fornecedor fornecedor) {
+    private void editarFornecedor(Fornecedor forn) {
 
-        fornecedor.getDados().setBairro(tPrincipal.getcFornecedor().getTxtBairro().getText());
-        fornecedor.getDados().setCelular(tPrincipal.getcFornecedor().getTxtCelular().getText());
-        fornecedor.getDados().setTelefone(tPrincipal.getcFornecedor().getTxtTelefone().getText());
-        fornecedor.getDados().setCep(tPrincipal.getcFornecedor().getTxtCep().getText());
-        fornecedor.getDados().setCidade(tPrincipal.getcFornecedor().getTxtCidade().getText());
-        fornecedor.getDados().setEmail(tPrincipal.getcFornecedor().getTxtEmail().getText());
+        forn.getDados().setBairro(tPrincipal.getcFornecedor().getTxtBairro().getText());
+        forn.getDados().setCelular(tPrincipal.getcFornecedor().getTxtCelular().getText());
+        forn.getDados().setTelefone(tPrincipal.getcFornecedor().getTxtTelefone().getText());
+        forn.getDados().setCep(tPrincipal.getcFornecedor().getTxtCep().getText());
+        forn.getDados().setCidade(tPrincipal.getcFornecedor().getTxtCidade().getText());
+        forn.getDados().setEmail(tPrincipal.getcFornecedor().getTxtEmail().getText());
 
         String numb = tPrincipal.getcFornecedor().getTxtNumero().getText() + " "
                 + tPrincipal.getcFornecedor().getTxtComplemento().getText();
 
-        fornecedor.getDados().setNumero(numb);
-        fornecedor.getDados().setRua(tPrincipal.getcFornecedor().getTxtRua().getText());
-        fornecedor.getDados().setUf(tPrincipal.getcFornecedor().getComboUf().getSelectedItem().toString());
+        forn.getDados().setNumero(numb);
+        forn.getDados().setRua(tPrincipal.getcFornecedor().getTxtRua().getText());
+        forn.getDados().setUf(tPrincipal.getcFornecedor().getComboUf().getSelectedItem().toString());
 
-        fornecedor.setCnpj(tPrincipal.getcFornecedor().getTxtCnpjj().getText());
-        fornecedor.setNomefantasia(tPrincipal.getcFornecedor().getTxtNomeFantazia().getText());
-        fornecedor.setRazaosocial(tPrincipal.getcFornecedor().getTxtRazaoSociall().getText());
+        forn.setCnpj(tPrincipal.getcFornecedor().getTxtCnpjj().getText());
+        forn.setNomefantasia(tPrincipal.getcFornecedor().getTxtNomeFantazia().getText());
+        forn.setRazaosocial(tPrincipal.getcFornecedor().getTxtRazaoSociall().getText());
 
         try {
-            new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
+            fachada.salvar(forn);
             JOptionPane.showMessageDialog(null, "Edição Concluida!");
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
-            fornecedores = new GenericDao<Fornecedor>().getAll(Fornecedor.class);
+            fornecedores = fachada.getAllFornecedor();
             listarFornecedores(fornecedores);
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -697,40 +701,40 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
     }
 
-    private void editarProfissional(Profissional profissional) {
+    private void editarProfissional(Profissional pro) {
 
-        profissional.getDados().setBairro(tPrincipal.getcProfissioanl().getTxtBairro().getText());
-        profissional.getDados().setCelular(tPrincipal.getcProfissioanl().getTxtCelular().getText());
-        profissional.getDados().setTelefone(tPrincipal.getcProfissioanl().getTxtTelefone().getText());
-        profissional.getDados().setCep(tPrincipal.getcProfissioanl().getTxtCep().getText());
-        profissional.getDados().setCidade(tPrincipal.getcProfissioanl().getTxtCidade().getText());
-        profissional.getDados().setEmail(tPrincipal.getcProfissioanl().getTxtEmail().getText());
+        pro.getDados().setBairro(tPrincipal.getcProfissioanl().getTxtBairro().getText());
+        pro.getDados().setCelular(tPrincipal.getcProfissioanl().getTxtCelular().getText());
+        pro.getDados().setTelefone(tPrincipal.getcProfissioanl().getTxtTelefone().getText());
+        pro.getDados().setCep(tPrincipal.getcProfissioanl().getTxtCep().getText());
+        pro.getDados().setCidade(tPrincipal.getcProfissioanl().getTxtCidade().getText());
+        pro.getDados().setEmail(tPrincipal.getcProfissioanl().getTxtEmail().getText());
 
         String numb = tPrincipal.getcProfissioanl().getTxtNumero().getText() + " "
                 + tPrincipal.getcProfissioanl().getTxtComplemento().getText();
 
-        profissional.getDados().setNumero(numb);
-        profissional.getDados().setRua(tPrincipal.getcProfissioanl().getTxtRua().getText());
-        profissional.getDados().setUf(tPrincipal.getcProfissioanl().getComboUf().getSelectedItem().toString());
+        pro.getDados().setNumero(numb);
+        pro.getDados().setRua(tPrincipal.getcProfissioanl().getTxtRua().getText());
+        pro.getDados().setUf(tPrincipal.getcProfissioanl().getComboUf().getSelectedItem().toString());
 
-        profissional.setCrmv(tPrincipal.getcProfissioanl().getComboCrmv().getSelectedItem().toString());
-        profissional.setCpf(tPrincipal.getcProfissioanl().getTxtCpf().getText());
-        profissional.setRg(tPrincipal.getcProfissioanl().getTxtRg().getText());
-        profissional.setNome(tPrincipal.getcProfissioanl().getTxtNome().getText());
-        profissional.setSexo(tPrincipal.getcProfissioanl().getComboSexo().getSelectedItem().toString());
-        profissional.setTipo(tPrincipal.getcProfissioanl().getComboEspecialidade().getSelectedItem().toString());
+        pro.setCrmv(tPrincipal.getcProfissioanl().getComboCrmv().getSelectedItem().toString());
+        pro.setCpf(tPrincipal.getcProfissioanl().getTxtCpf().getText());
+        pro.setRg(tPrincipal.getcProfissioanl().getTxtRg().getText());
+        pro.setNome(tPrincipal.getcProfissioanl().getTxtNome().getText());
+        pro.setSexo(tPrincipal.getcProfissioanl().getComboSexo().getSelectedItem().toString());
+        pro.setTipo(tPrincipal.getcProfissioanl().getComboEspecialidade().getSelectedItem().toString());
 
         try {
             java.sql.Date nascimento = ConverterData(tPrincipal.getcProfissioanl().getNascimento().getDate());
 
-            profissional.setNascimento(nascimento);
+            pro.setNascimento(nascimento);
 
-            new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
+            fachada.salvar(pro);
 
             JOptionPane.showMessageDialog(null, "Edição concluida!");
             tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
             tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
-            profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+            profissionais = fachada.getAllProfissionals();
             listarProfissionais(profissionais);
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
@@ -778,17 +782,17 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
         if (e.getSource() == tPrincipal.getcFuncionario().getTxtPesquisa()) {
             String nome = tPrincipal.getcFuncionario().getTxtPesquisa().getText();
-            funcionarios = new DaoFuncionario().Busca(nome);
+            funcionarios = fachada.buscaFuncionario(nome);
             listarFuncionarios(funcionarios);
         }
         if (e.getSource() == tPrincipal.getcFornecedor().getTxtPesquisa()) {
             String nome = tPrincipal.getcFornecedor().getTxtPesquisa().getText();
-            fornecedores = new DaoFornecedor().Busca(nome);
+            fornecedores = fachada.buscaFornecedors(nome);
             listarFornecedores(fornecedores);
         }
         if (e.getSource() == tPrincipal.getcProfissioanl().getTxtPesquisa()) {
             String nome = tPrincipal.getcProfissioanl().getTxtPesquisa().getText();
-            profissionais = new DaoProfissional().Busca(nome);
+            profissionais = fachada.buscaProfissionals(nome);
             listarProfissionais(profissionais);
         }
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {

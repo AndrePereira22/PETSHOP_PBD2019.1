@@ -49,7 +49,7 @@ public class EntradaProdutos extends javax.swing.JInternalFrame {
         jLabel6 = new javax.swing.JLabel();
         txtQuantidadeEstoque = new javax.swing.JTextField();
 
-        setPreferredSize(new java.awt.Dimension(1024, 600));
+        setPreferredSize(new java.awt.Dimension(1034, 610));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));

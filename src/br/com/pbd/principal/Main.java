@@ -16,14 +16,12 @@ import br.com.pbd.view.TelaPrincipal;
 public class Main {
 
     public static void main(String[] s) {
-
         SalvarDadosRequiridos.salvarDadosRequiridos();
         SalvarDadosRequiridos.procurarLoja();
         SalvarDadosRequiridos.procurarAdm();
 
         Fachada fachada = Fachada.getInstance();
         TelaPrincipal tPrincipal = new TelaPrincipal();
-
         Controle controle = new Controle(tPrincipal, fachada);
         ControleAnimal cAnimal = new ControleAnimal(tPrincipal, fachada);
         ControleAgenda cAgenda = new ControleAgenda(tPrincipal, fachada);
@@ -33,6 +31,8 @@ public class Main {
         TelaLogin tLogin = new TelaLogin();
         ControleLogin cLogin = new ControleLogin(tLogin, tPrincipal);
         ControleFinanceiro cFinanceiro = new ControleFinanceiro(tPrincipal);
+        cFinanceiro.abrirCaixa();
 
     }
+
 }

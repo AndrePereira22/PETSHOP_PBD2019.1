@@ -35,7 +35,7 @@ public class ContaAPagar implements EntidadeBase {
 
     @Column(name = "vencimento", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
     private Date data;
-    @Column(name = "status", insertable = false, nullable = false)
+    @Column(name = "status", insertable = false, nullable = true)
     private Boolean status;
 
     @Override

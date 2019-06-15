@@ -51,7 +51,7 @@ public class ContasAreceber extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnSair = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(1024, 600));
+        setPreferredSize(new java.awt.Dimension(1034, 610));
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));

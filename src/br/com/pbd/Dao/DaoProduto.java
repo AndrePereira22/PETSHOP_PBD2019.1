@@ -20,10 +20,11 @@ public class DaoProduto {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    public List<Produto> listarProduto(String nome) {
+    public List<Produto> Busca(String nome) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  produto FROM Produto produto where produto.nome like '%" + nome + "%'");
+            query = manager.createQuery("SELECT produto FROM Produto produto where produto.nome like '%" + nome + "%'");
+            
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar produtos");
         }

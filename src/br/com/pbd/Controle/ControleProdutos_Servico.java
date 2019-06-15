@@ -158,7 +158,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
         Double valorCompra = 0.0, valorVenda = 0.0;
         Random gerador = new Random();
-        int codigo = gerador.nextInt()*1000;
+        int codigo = gerador.nextInt()*(-1000);
         produto.setCodigo(codigo);
 
         try {
