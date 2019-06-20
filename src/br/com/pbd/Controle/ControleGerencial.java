@@ -5,12 +5,8 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoLoja;
-import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Dao.GenericDao;
-import br.com.pbd.Modelo.Administrador;
-import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.EntradaEstoque;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.GrupoProduto;
@@ -18,11 +14,16 @@ import br.com.pbd.Modelo.Loja;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.fachada.Fachada;
+import br.com.pbd.view.DiaLogin;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -36,7 +37,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Andre-Coude
  */
 public class ControleGerencial extends MouseAdapter implements ActionListener {
-
+    
+    private final Fachada fachada;
     private final TelaPrincipal tPrincipal;
     private Loja loja;
     private List<GrupoProduto> grupos;
@@ -44,10 +46,18 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
     private List<Profissional> profissionais;
     private List<Funcionario> funcionarios;
     private Produto produto;
-
-    public ControleGerencial(TelaPrincipal tPrincipal) {
+    private final int reset = 1, edicao = 2, adicionar = 3;
+    private int opcao = 0;
+    private Funcionario funcionario;
+    private Profissional profissional;
+    private final DiaLogin diaSenha;
+    private final String FUNCIONARIO = "FUNCIONARIO", PROFISSIONAL = "PROFISSIONAL";
+    
+    public ControleGerencial(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
-
+        this.fachada = fachada;
+        diaSenha = new DiaLogin(tPrincipal, true);
+        
         tPrincipal.getBtnGerencia().addActionListener(this);
         tPrincipal.getGerencia().getBtnEditar().addActionListener(this);
         tPrincipal.getGerencia().getBtnEditar().addActionListener(this);
@@ -55,67 +65,124 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
         tPrincipal.getcLoja().getBtnCancelar().addActionListener(this);
         tPrincipal.getGerencia().getComboGrupo().addActionListener(this);
         tPrincipal.getGerencia().getTabelaProdutos().addMouseListener(this);
+        tPrincipal.getGerencia().getTabelaUsuarios().addMouseListener(this);
         tPrincipal.getGerencia().getComboUsuario().addActionListener(this);
         tPrincipal.geteProdutos().getBtnSalvar().addActionListener(this);
-
+        diaSenha.getBtnOk().addActionListener(this);
+        
     }
-
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == tPrincipal.getGerencia().getTabelaProdutos()) {
             int ro = retornaIndice(tPrincipal.getGerencia().getTabelaProdutos(), e);
-
-            produto = produtos.get(ro);
-            tPrincipal.getGerencia().setVisible(false);
-            tPrincipal.geteProdutos().prencherProduto(produto);
-            tPrincipal.geteProdutos().setVisible(true);
+            try {
+                produto = produtos.get(ro);
+                tPrincipal.getGerencia().setVisible(false);
+                tPrincipal.geteProdutos().prencherProduto(produto);
+                tPrincipal.geteProdutos().setVisible(true);
+            } catch (java.lang.NullPointerException x) {
+            }
+            
         }
-
+        if (e.getSource() == tPrincipal.getGerencia().getTabelaUsuarios()) {
+            int ro = retornaIndice(tPrincipal.getGerencia().getTabelaUsuarios(), e);
+            
+            String user = tPrincipal.getGerencia().getComboUsuario().getSelectedItem().toString();
+            if (user.equals(FUNCIONARIO)) {
+                controleSenhaFu(ro);
+            } else if (user.equals(PROFISSIONAL)) {
+                controleSenhaPro(ro);
+            }
+        }
+        
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
         if (e.getSource() == tPrincipal.getBtnGerencia()) {
             buscarLoja();
             preencherGrupo();
             escolherUsuario();
-
+            
+        }
+        if (e.getSource() == diaSenha.getBtnOk()) {
+            
+            String senha = new String(diaSenha.getTxtSenha().getPassword());
+            String Confirmsenha = new String(diaSenha.getTxtConfimarSenha().getPassword());
+            String user = tPrincipal.getGerencia().getComboUsuario().getSelectedItem().toString();
+            String senhaHex = "";
+            try {
+                // criptografar senha
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
+                StringBuilder ab = new StringBuilder();
+                
+                for (byte b : messageDigest) {
+                    ab.append(String.format("%02X", 0xFF & b));
+                    
+                }
+                senhaHex = ab.toString();
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            }
+            if (user.equals(FUNCIONARIO)) {
+                funcionario.getLogin().setSenha(senhaHex);
+                if (senha.equals(Confirmsenha)) {
+                    fachada.salvar(funcionario);
+                    diaSenha.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Senha Atualizada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Senhas diferentes");
+                }
+                
+            } else if (user.equals(PROFISSIONAL)) {
+                profissional.getLogin().setSenha(senhaHex);
+                if (senha.equals(Confirmsenha)) {
+                    fachada.salvar(profissional);
+                    diaSenha.setVisible(false);
+                    JOptionPane.showMessageDialog(null, "Senha Atualizada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Senhas diferentes");
+                }
+                
+            }
+            
         }
         if (e.getSource() == tPrincipal.getGerencia().getComboUsuario()) {
             escolherUsuario();
-
+            
         }
-
+        
         if (e.getSource() == tPrincipal.geteProdutos().getBtnSalvar()) {
             salvarEntradaProdutos();
-
+            
         }
         if (e.getSource() == tPrincipal.getGerencia().getComboGrupo()) {
             buscaDeProdutos();
         }
-
+        
         if (e.getSource() == tPrincipal.getGerencia().getBtnEditar()) {
-
+            
             if (loja != null) {
                 tPrincipal.getcLoja().preencherDados(loja);
             }
         }
         if (e.getSource() == tPrincipal.getcLoja().getBtnSalvar()) {
-
+            
             editarLoja(loja);
-
+            
         }
         if (e.getSource() == tPrincipal.getcLoja().getBtnCancelar()) {
             tPrincipal.getcLoja().setVisible(false);
         }
-
+        
     }
-
+    
     private void listarProdutos(List<Produto> lista) {
-
+        
         tPrincipal.getGerencia().getTabelaProdutos().setDefaultRenderer(Object.class, new Render());
-
+        
         int i = 0;
         try {
             String[] colunas = new String[]{"CODIGO", "NOME", "FABRICANTE", "VALOR DE VENDA", "FORNECEDOR", "ESTOQUE ", "NOVA ENTRADA "};
@@ -128,10 +195,10 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
                 dados[i][4] = a.getFornecedor().getNomefantasia();
                 dados[i][5] = a.getQuantidae_estoque();
                 dados[i][6] = tPrincipal.getGerencia().getBtnAdicionar();
-
+                
                 i++;
             }
-
+            
             DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -139,25 +206,25 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             };
             tPrincipal.getGerencia().getTabelaProdutos().setModel(dataModel);
         } catch (Exception ex) {
-
+            
         }
-
+        
     }
-
+    
     private void preencherGrupo() {
-        grupos = new GenericDao<GrupoProduto>().getAll(GrupoProduto.class);
+        grupos = fachada.getAllGrupo();
         tPrincipal.getGerencia().getComboGrupo().removeAllItems();
         grupos.forEach((c) -> {
             tPrincipal.getGerencia().getComboGrupo().addItem(c.getDescricao());
         });
         buscaDeProdutos();
-
+        
     }
-
+    
     private void listarFuncionarios(List<Funcionario> lista) {
-
+        
         tPrincipal.getGerencia().getTabelaUsuarios().setDefaultRenderer(Object.class, new Render());
-
+        
         int i = 0;
         try {
             String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR", "RESET"};
@@ -165,11 +232,11 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             for (Funcionario a : lista) {
                 dados[i][0] = a.getNome();
                 dados[i][1] = a.getTipo();
-                dados[i][2] = tPrincipal.getGerencia().getBtnAdicionar();
-                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
+                dados[i][2] = tPrincipal.getGerencia().getBtnEdicao();
+                dados[i][3] = tPrincipal.getGerencia().getBtnReset();
                 i++;
             }
-
+            
             DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -177,14 +244,14 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             };
             tPrincipal.getGerencia().getTabelaUsuarios().setModel(dataModel);
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     private void listarProfissionais(List<Profissional> lista) {
-
+        
         tPrincipal.getGerencia().getTabelaUsuarios().setDefaultRenderer(Object.class, new Render());
-
+        
         int i = 0;
         try {
             String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR", "RESET"};
@@ -192,11 +259,11 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             for (Profissional a : lista) {
                 dados[i][0] = a.getNome();
                 dados[i][1] = a.getTipo();
-                dados[i][2] = tPrincipal.getGerencia().getBtnAdicionar();
-                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
+                dados[i][2] = tPrincipal.getGerencia().getBtnEdicao();
+                dados[i][3] = tPrincipal.getGerencia().getBtnReset();
                 i++;
             }
-
+            
             DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -204,43 +271,42 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             };
             tPrincipal.getGerencia().getTabelaUsuarios().setModel(dataModel);
         } catch (Exception ex) {
-
+            
         }
     }
-
+    
     public void buscaDeProdutos() {
         int indice = tPrincipal.getGerencia().getComboGrupo().getSelectedIndex();
-
+        
         if (indice >= 0) {
             GrupoProduto grupo = grupos.get(indice);
-            produtos = new DaoProduto().listarProduto(grupo);
+            produtos = fachada.buscaGrupo(grupo);
             listarProdutos(produtos);
         }
-
+        
     }
-
+    
     private void editarLoja(Loja loja) {
-
+        
         loja.getDados().setBairro(tPrincipal.getcLoja().getTxtBairro().getText());
         loja.getDados().setCelular(tPrincipal.getcLoja().getTxtCelular().getText());
         loja.getDados().setTelefone(tPrincipal.getcLoja().getTxtTelefone().getText());
         loja.getDados().setCep(tPrincipal.getcLoja().getTxtCep().getText());
         loja.getDados().setCidade(tPrincipal.getcLoja().getTxtCidade().getText());
         loja.getDados().setEmail(tPrincipal.getcLoja().getTxtEmail().getText());
-
+        
         String numb = tPrincipal.getcLoja().getTxtNumero().getText() + " "
                 + tPrincipal.getcLoja().getTxtComplemento().getText();
-
+        
         loja.getDados().setNumero(numb);
         loja.getDados().setRua(tPrincipal.getcLoja().getTxtRua().getText());
         loja.getDados().setUf(tPrincipal.getcLoja().getComboUf().getSelectedItem().toString());
-
+        
         loja.setCnpj(tPrincipal.getcLoja().getTxtCnpjj().getText());
         loja.setNomefantasia(tPrincipal.getcLoja().getTxtNomeFantazia().getText());
         loja.setRazaosocial(tPrincipal.getcLoja().getTxtRazaoSociall().getText());
-
+        
         try {
-
             new GenericDao<Loja>().salvar_ou_atualizar(loja);
             JOptionPane.showMessageDialog(null, "Edição concluida!");
             tPrincipal.getcLoja().setVisible(false);
@@ -252,44 +318,44 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             JOptionPane.showMessageDialog(null, roll.getCause());
         }
     }
-
+    
     private void salvarEntradaProdutos() {
-
+        
         EntradaEstoque entrada = new EntradaEstoque();
-
+        
         Date data = ConverterData(new Date(System.currentTimeMillis()));
-
+        
         int quantidade = 0;
-
+        
         try {
-
+            
             quantidade = Integer.parseInt(tPrincipal.geteProdutos().getTxtQuatidade().getText());
             entrada.setData(data);
             entrada.setQuantidade(quantidade);
             entrada.setProduto(produto);
-
+            
             new GenericDao<EntradaEstoque>().salvar_ou_atualizar(entrada);
             JOptionPane.showMessageDialog(null, "Entrada cadastrada!");
             tPrincipal.geteProdutos().setVisible(false);
             tPrincipal.getGerencia().setVisible(true);
-
+            
             int atual = quantidade + produto.getQuantidae_estoque();
             produto.setQuantidae_estoque(atual);
-            new GenericDao<Produto>().salvar_ou_atualizar(produto);
+            fachada.salvar(produto);
             buscaDeProdutos();
-
+            
         } catch (java.lang.IllegalStateException n) {
             JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
         } catch (javax.persistence.RollbackException roll) {
             JOptionPane.showMessageDialog(null, roll.getCause());
         }
     }
-
+    
     private int retornaIndice(JTable tabela, MouseEvent e) {
         int ro = 0;
         int column = tabela.getColumnModel().getColumnIndexAtX(e.getX());
         int row = e.getY() / tabela.getRowHeight();
-
+        
         if (row < tabela.getRowCount() && row >= 0 && column < tabela.getColumnCount() && column >= 0) {
             Object value = tabela.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -297,38 +363,63 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
                 JButton boton = (JButton) value;
                 ro = tabela.getSelectedRow();
                 if (boton.getName().equals("adicionar")) {
-
+                    opcao = adicionar;
+                }
+                if (boton.getName().equals("edicao")) {
+                    opcao = edicao;
+                }
+                if (boton.getName().equals("reset")) {
+                    opcao = reset;
                 }
             }
         }
         return ro;
     }
-
+    
     public java.sql.Date ConverterData(java.util.Date date) {
         return new java.sql.Date(date.getTime());
     }
-
+    
     public void escolherUsuario() {
         String user = tPrincipal.getGerencia().getComboUsuario().getSelectedItem().toString();
-
-        if (user.equals("FUNCIONARIO")) {
-            funcionarios = new GenericDao<Funcionario>().getAll(Funcionario.class);
+        if (user.equals(FUNCIONARIO)) {
+            funcionarios = fachada.getAllFuncionario();
             listarFuncionarios(funcionarios);
-        } else if (user.equals("PROFISSIONAL")) {
-            profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+        } else if (user.equals(PROFISSIONAL)) {
+            profissionais = fachada.getAllProfissionals();
             listarProfissionais(profissionais);
-
+            
         }
-
+        
     }
-
+    
     public void buscarLoja() {
-
+        
         try {
             loja = new DaoLoja().buscaUltimoLoja();
         } catch (NoResultException n) {
         }
-
+        
     }
-
+    
+    public void controleSenhaFu(int ro) {
+        
+        if (opcao == edicao) {
+            funcionario = funcionarios.get(ro);
+            diaSenha.setVisible(true);
+        } else if (opcao == reset) {
+            
+        }
+    }
+    
+    public void controleSenhaPro(int ro) {
+        
+        if (opcao == edicao) {
+            profissional = profissionais.get(ro);
+            diaSenha.setVisible(true);
+        } else if (opcao == reset) {
+            
+        }
+    }
+    
 }

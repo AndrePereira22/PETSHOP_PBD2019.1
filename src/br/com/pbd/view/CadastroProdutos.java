@@ -49,7 +49,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         jPanel8 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         comboGrupoProduto = new javax.swing.JComboBox<>();
-        BotaoNovoGrupo = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -187,13 +186,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
             }
         });
 
-        BotaoNovoGrupo.setText("NOVO GRUPO");
-        BotaoNovoGrupo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoNovoGrupoActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -201,10 +193,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(comboGrupoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(BotaoNovoGrupo))
+                    .addComponent(comboGrupoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -214,10 +203,8 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BotaoNovoGrupo)
-                    .addComponent(comboGrupoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80))
+                .addComponent(comboGrupoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(82, 82, 82))
         );
 
         javax.swing.GroupLayout painelCadastro1Layout = new javax.swing.GroupLayout(painelCadastro1);
@@ -334,10 +321,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BotaoNovoGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoNovoGrupoActionPerformed
-
-    }//GEN-LAST:event_BotaoNovoGrupoActionPerformed
-
     private void comboGrupoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboGrupoProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboGrupoProdutoActionPerformed
@@ -352,7 +335,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoNovoGrupo;
     private javax.swing.JPanel PanelCadastro;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
@@ -409,12 +391,6 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
 
     }
 
-    /**
-     * @return the BotaoNovoGrupo
-     */
-    public javax.swing.JButton getBotaoNovoGrupo() {
-        return BotaoNovoGrupo;
-    }
 
     /**
      * @return the PanelCadastro

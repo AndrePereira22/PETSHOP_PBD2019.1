@@ -9,13 +9,11 @@ import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.DaoCaixa;
 import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoFinanceiro;
-import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.Loja;
-import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
@@ -54,7 +52,6 @@ public class ControleFinanceiro implements ActionListener {
             buscarContas();
         }
         if (e.getSource() == tPrincipal.getcPagar().getBtnSalvarConta()) {
-            System.out.println("br.com.pbd.Controle.ControleFinanceiro.actionPerformed()");
             salvarContaApagar();
             tPrincipal.getcPagar().limparComponentes(false);
         }
@@ -158,46 +155,27 @@ public class ControleFinanceiro implements ActionListener {
         }
     }
 
-    private void listarPagamentos(List<Pagamento> lista) {
-
-        tPrincipal.getcReceber().getTabelaContasAreceber().setDefaultRenderer(Object.class, new Render());
-
-        int i = 0;
-        try {
-            String[] colunas = new String[]{"DESCRICAO", "VALOR", "DATA DE VENCIMENTO", "PAGAR "};
-            Object[][] dados = new Object[lista.size()][4];
-            for (Pagamento a : lista) {
-                dados[i][1] = a.getValortotal();
-                dados[i][2] = a.getData();
-                dados[i][3] = tPrincipal.getGerencia().getBtnAdicionar();
-
-                i++;
-            }
-
-            DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-            tPrincipal.getcReceber().getTabelaContasAreceber().setModel(dataModel);
-        } catch (Exception ex) {
-
-        }
-    }
-
-    private void listarServiçosPagos(List<Agenda> lista) {
+    private void listarServicos(List<Agenda> lista) {
 
         tPrincipal.getFinancas().getTabelaVendas().setDefaultRenderer(Object.class, new Render());
 
         int i = 0;
+        String status = "";
         try {
-            String[] colunas = new String[]{"VALOR TOTAL", "CLIENTE", "ANIMAL", "PROFISSIONAL "};
-            Object[][] dados = new Object[lista.size()][4];
+            String[] colunas = new String[]{"VALOR TOTAL", "PAGAMENTO", "CLIENTE", "ANIMAL", "PROFISSIONAL "};
+            Object[][] dados = new Object[lista.size()][5];
             for (Agenda a : lista) {
+                if (a.getPagamento().getStatus()) {
+                    status = "PAGO";
+                } else {
+                    status = "PENDENTE";
+                }
+
                 dados[i][0] = a.getPagamento().getValortotal();
-                dados[i][1] = a.getAnimal().getCliente().getNome();
-                dados[i][2] = a.getAnimal().getNome();
-                dados[i][3] = a.getProfissional().getNome();
+                dados[i][1] = status;
+                dados[i][2] = a.getAnimal().getCliente().getNome();
+                dados[i][3] = a.getAnimal().getNome();
+                dados[i][4] = a.getProfissional().getNome();
 
                 i++;
             }
@@ -228,8 +206,8 @@ public class ControleFinanceiro implements ActionListener {
 
         if (tipo.equals("SERVICOS")) {
             java.util.Date data = tPrincipal.getFinancas().getCalendario().getDate();
-            agendas = new DaoAgenda().buscarPagamentos(ConverterData(data));
-            listarServiçosPagos(agendas);
+            agendas = new DaoAgenda().buscarAgendas(ConverterData(data));
+            listarServicos(agendas);
 
         }
         if (tipo.equals("VENDAS")) {

@@ -45,7 +45,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
         setBorder(null);
         setPreferredSize(new java.awt.Dimension(1034, 610));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 51));
@@ -198,7 +198,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
         TITULO.setBackground(new java.awt.Color(0, 0, 0));
         TITULO.setFont(new java.awt.Font("Tahoma", 0, 30)); // NOI18N
         TITULO.setForeground(new java.awt.Color(255, 255, 255));
-        TITULO.setText("Gerenciar");
+        TITULO.setText("CADASTROS :");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);

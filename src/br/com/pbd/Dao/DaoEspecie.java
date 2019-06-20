@@ -19,23 +19,25 @@ public class DaoEspecie {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-     public Especie  buscarEspecie(String nome) {
+    public List<Especie> Busca(String nome) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  especie FROM Especie especie where especie.nome like '%"+ nome +"%'");
-        } catch (IllegalStateException e) {
-            System.out.println("erro ao buscar especie");
-        }
-        return (Especie)query.getSingleResult();
-    }
-     public List<Especie> Busca(String nome) {
-            Query query = null;
-            try {
-                query = manager.createQuery("SELECT  especie FROM Especie especie where especie.nome like '%" + nome + "%'");
+            query = manager.createQuery("SELECT  especie FROM Especie especie where especie.nome like '%" + nome + "%'");
 
-            } catch (IllegalStateException e) {
-                System.out.println("erro ao buscar cliente");
-            }
-            return query.getResultList();
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar cliente");
         }
+        return query.getResultList();
+    }
+
+    public Especie Buscar(String nome) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  especie FROM Especie especie where especie.nome=:obj");
+            query.setParameter("obj", nome);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar cliente");
+        }
+        return (Especie) query.getSingleResult();
+    }
 }

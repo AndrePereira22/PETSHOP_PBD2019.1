@@ -21,16 +21,8 @@ public class DaoAgenda {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    public List<Agenda> buscaAgenda(Profissional pro) {
-        Query query = null;
-        try {
-            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj");
-            query.setParameter("obj", pro);
-        } catch (IllegalStateException e) {
-            System.out.println("erro ao buscar servicos");
-        }
-        return query.getResultList();
-    }
+   
+    
 
     public List<Agenda> buscaAgenda(Profissional pro, Date data) {
         Query query = null;
@@ -44,20 +36,16 @@ public class DaoAgenda {
         return query.getResultList();
     }
 
-    public List<Agenda> buscarPagamentos(Date data) {
+    public List<Agenda> buscarAgendas(Date data) {
         Query query = null;
-        int numero = 0;
-        Boolean status = true;
         try {
-            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.data =:date "
-                    + "and agenda.pagamento.numeroparcelas =:n " + "and agenda.pagamento.status =:s ");
-            query.setParameter("n", numero);
+            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.data =:date");
             query.setParameter("date", data);
-            query.setParameter("s", status);
         } catch (IllegalStateException e) {
             query.setParameter("date", data);
             System.out.println("erro ao buscar agendas");
         }
         return query.getResultList();
     }
+
 }

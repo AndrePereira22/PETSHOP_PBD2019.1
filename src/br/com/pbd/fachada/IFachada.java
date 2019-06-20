@@ -8,9 +8,14 @@ package br.com.pbd.fachada;
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Cliente;
+import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.Funcionario;
+import br.com.pbd.Modelo.GrupoProduto;
+import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Profissional;
+import br.com.pbd.Modelo.Raca;
+import br.com.pbd.Modelo.Servico;
 import java.sql.Date;
 import java.util.List;
 
@@ -40,7 +45,7 @@ public interface IFachada {
 
     public List<Cliente> getAllCliente();
 
-    public void ativarDesativar(Cliente cliente);
+    public boolean removerCliente(Cliente cliente);
 
     public List<Cliente> buscaCliente(String nome);
 
@@ -52,14 +57,14 @@ public interface IFachada {
 
     public List<Funcionario> buscaFuncionario(String nome);
 
-        public void salvar(Profissional profissional);
+    public void salvar(Profissional profissional);
 
     public List<Profissional> getAllProfissionals();
 
     public void ativarDesativar(Profissional profissional);
 
     public List<Profissional> buscaProfissionals(String nome);
-    
+
     public void salvar(Fornecedor fornecedor);
 
     public List<Fornecedor> getAllFornecedor();
@@ -67,4 +72,50 @@ public interface IFachada {
     public void ativarDesativar(Fornecedor fornecedor);
 
     public List<Fornecedor> buscaFornecedors(String nome);
+
+    public void salvar(Servico servico);
+
+    public List<Servico> getAllServico();
+
+    public void ativarDesativar(Servico servico);
+
+    public List<Servico> buscaServico(String nome);
+
+    public void salvarRaca(Raca raca);
+
+    public List<Raca> getAllRaca();
+
+    public void ativarDesativar(Raca raca);
+
+    public List<Raca> buscaRaca(Especie especie);
+
+    public List<Raca> buscaRaca(String nome);
+
+    public void salvarEspecie(Especie especie);
+
+    public List<Especie> getAllEspecie();
+
+    public void ativarDesativar(Especie especie);
+
+    public List<Especie> buscaEspecie(String nome);
+
+    public Especie buscar(String nome);
+    
+      public void salvar(Produto produto);
+
+    public List<Produto> getAllProduto();
+
+    public void excluir(Produto produto);
+    
+     public List<Produto> buscaGrupo(GrupoProduto grupo);
+
+    public List<Produto> buscaProduto(String nome);
+    
+     public void salvar(GrupoProduto grupo);
+
+    public List<GrupoProduto> getAllGrupo();
+
+    public void excluir(GrupoProduto grupo);
+
+    public List<GrupoProduto> buscaGrupo(String nome);
 }

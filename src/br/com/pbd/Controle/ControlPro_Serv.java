@@ -5,12 +5,12 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Servico;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -36,9 +34,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Andre-Coude
  */
-public class ControleProdutos_Servico extends MouseAdapter implements ActionListener {
+public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
-    TelaPrincipal tPrincipal;
+    private final Fachada fachada;
+    private final TelaPrincipal tPrincipal;
     List<GrupoProduto> grupos;
     private GrupoProduto grupo;
     List<Fornecedor> fornecedores;
@@ -49,8 +48,9 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
 
-    public ControleProdutos_Servico(TelaPrincipal tPrincipal) {
+    public ControlPro_Serv(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
 
         grupos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
@@ -158,7 +158,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
         Double valorCompra = 0.0, valorVenda = 0.0;
         Random gerador = new Random();
-        int codigo = gerador.nextInt()*(-1000);
+        int codigo = gerador.nextInt() * (-1000);
         produto.setCodigo(codigo);
 
         try {
@@ -173,7 +173,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             produto.setValorvenda(valorVenda);
             produto.setValorcompra(valorCompra);
 
-            new GenericDao<Produto>().salvar_ou_atualizar(produto);
+            fachada.salvar(produto);
 
             JOptionPane.showMessageDialog(null, "Produto cadastrado!");
             tPrincipal.getcProdutos().setVisible(false);
@@ -205,7 +205,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             servico.setValor(valorServico);
             servico.setDuracao(ConverterTime(tPrincipal.getcServicos().getComboDuracao().getSelectedItem().toString()));
 
-            new GenericDao<Servico>().salvar_ou_atualizar(servico);
+            fachada.salvar(servico);
 
             JOptionPane.showMessageDialog(null, "Serviço cadastrado!");
             tPrincipal.getcServicos().setVisible(false);
@@ -226,7 +226,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         grupo.setDescricao(tPrincipal.getcGrupo().getTxtDescricao().getText());
 
         try {
-            new GenericDao<GrupoProduto>().salvar_ou_atualizar(grupo);
+            fachada.salvar(grupo);
             JOptionPane.showMessageDialog(null, "Grupo cadastrado!");
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
@@ -242,7 +242,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
     public void listarProdutos() {
 
-        produtos = new GenericDao<Produto>().getAll(Produto.class);
+        produtos = fachada.getAllProduto();
         if (!produtos.isEmpty()) {
             tPrincipal.getServico_Produto().getTabelaProdutos().setDefaultRenderer(Object.class, new Render());
 
@@ -257,8 +257,8 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                     dados[i][3] = a.getValorvenda();
                     dados[i][4] = a.getFornecedor().getNomefantasia();
                     dados[i][5] = a.getGproduto().getDescricao();
-                    dados[i][6] =  tPrincipal.getBtnEditar();
-                    dados[i][7] =  tPrincipal.getBtnExcluir();
+                    dados[i][6] = tPrincipal.getBtnEditar();
+                    dados[i][7] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -278,7 +278,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
     public void listarServicos() {
 
-        servicos = new GenericDao<Servico>().getAll(Servico.class);
+        servicos = fachada.getAllServico();
         if (!servicos.isEmpty()) {
             tPrincipal.getServico_Produto().getTabelaServicos().setDefaultRenderer(Object.class, new Render());
 
@@ -290,8 +290,8 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                     dados[i][0] = a.getDescricao();
                     dados[i][1] = a.getDuracao();
                     dados[i][2] = a.getValor();
-                    dados[i][3] =  tPrincipal.getBtnEditar();
-                    dados[i][4] =  tPrincipal.getBtnExcluir();
+                    dados[i][3] = tPrincipal.getBtnEditar();
+                    dados[i][4] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -311,7 +311,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
 
     public void listarGrupos() {
 
-        grupos = new GenericDao<GrupoProduto>().getAll(GrupoProduto.class);
+        grupos =  fachada.getAllGrupo();
         if (!grupos.isEmpty()) {
             tPrincipal.getcGrupo().getTabelaGrupos().setDefaultRenderer(Object.class, new Render());
 
@@ -321,8 +321,8 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
                 Object[][] dados = new Object[grupos.size()][3];
                 for (GrupoProduto a : grupos) {
                     dados[i][0] = a.getDescricao();
-                    dados[i][1] =  tPrincipal.getBtnEditar();
-                    dados[i][2] =  tPrincipal.getBtnExcluir();
+                    dados[i][1] = tPrincipal.getBtnEditar();
+                    dados[i][2] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -341,7 +341,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
     }
 
     private void preencherFornecedores() {
-        fornecedores = new GenericDao<Fornecedor>().getAll(Fornecedor.class);
+        fornecedores = fachada.getAllFornecedor();
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         fornecedores.forEach((c) -> {
             tPrincipal.getcProdutos().getComboFornecedor().addItem(c.getNomefantasia());
@@ -350,7 +350,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
     }
 
     private void preencherGrupo() {
-        grupos = new GenericDao<GrupoProduto>().getAll(GrupoProduto.class);
+        grupos =  fachada.getAllGrupo();
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         grupos.forEach((c) -> {
             tPrincipal.getcProdutos().getComboGrupoProduto().addItem(c.getDescricao());
@@ -384,7 +384,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             valorServico = Double.parseDouble(valor);
             servico.setValor(valorServico);
 
-            new GenericDao<Servico>().salvar_ou_atualizar(servico);
+            fachada.salvar(servico);
 
             JOptionPane.showMessageDialog(null, "Edicao concluida!");
             tPrincipal.getcServicos().setVisible(false);
@@ -432,7 +432,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
             produto.setFornecedor(forn);
             produto.setGproduto(grupo);
 
-            new GenericDao<Produto>().salvar_ou_atualizar(produto);
+            fachada.salvar(produto);
 
             JOptionPane.showMessageDialog(null, "Edicao concluida!");
             tPrincipal.getcProdutos().setVisible(false);
@@ -453,7 +453,7 @@ public class ControleProdutos_Servico extends MouseAdapter implements ActionList
         grupo.setDescricao(tPrincipal.getcGrupo().getTxtDescricao().getText());
 
         try {
-            new GenericDao<GrupoProduto>().salvar_ou_atualizar(grupo);
+             fachada.salvar(grupo);
             JOptionPane.showMessageDialog(null, "Edição concluida!");
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();

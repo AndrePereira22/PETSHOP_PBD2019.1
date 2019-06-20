@@ -5,8 +5,6 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.DaoAgenda;
-import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Profissional;
@@ -40,8 +38,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControleAgenda extends MouseAdapter implements ActionListener {
 
-    private Fachada fachada;
-    TelaPrincipal tPrincipal;
+    private final Fachada fachada;
+    private final TelaPrincipal tPrincipal;
     List<Profissional> profissionais;
     Profissional profissional;
     private Agenda agenda;
@@ -152,7 +150,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         Date d = new Date(System.currentTimeMillis());
 
         Pagamento pagamento = new Pagamento();
-        pagamento.setValortotal(0.0);
+
         pagamento.setNumeroparcelas(0);
         pagamento.setStatus(false);
         pagamento.setData(ConverterData(d));
@@ -160,8 +158,6 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
         agenda.setAnotacao(tPrincipal.getAgenarServico().getAreaObservacao().getText());
         agenda.setHorario(ConverterTime(tPrincipal.getAgenarServico().getComboHorario().getSelectedItem().toString()));
-
-        agenda.setPagamento(pagamento);
 
         agenda.setProfissional(profissional);
 
@@ -173,6 +169,9 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             agenda.setServico(servico);
             agenda.setAnimal(animal);
 
+            pagamento.setValortotal(servico.getValor());
+            agenda.setPagamento(pagamento);
+            
             fachada.salvar(agenda);
             JOptionPane.showMessageDialog(null, "Agendado com Sucesso!");
             tPrincipal.getAgenarServico().setVisible(false);
@@ -250,7 +249,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     public final void preencherAnimais() {
 
-        animais = new GenericDao<Animal>().getAll(Animal.class);
+        animais = fachada.getAllAnimal();
         tPrincipal.getAgenarServico().getComboAnimal().removeAllItems();
         animais.forEach((c) -> {
             tPrincipal.getAgenarServico().getComboAnimal().addItem(c.getNome());
@@ -259,7 +258,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     public final void preencherServicos() {
 
-        servicos = new GenericDao<Servico>().getAll(Servico.class);
+        servicos = fachada.getAllServico();
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         servicos.forEach((c) -> {
             tPrincipal.getAgenarServico().getComboServico().addItem(c.getDescricao());
@@ -320,13 +319,11 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
             tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
-            String[] colunas = new String[]{"HORARIO", "SERVICO", "EDITAR", "EXCLUIR"};
-            Object[][] dados = new Object[agendas.size()][4];
+            String[] colunas = new String[]{"HORARIO", "SERVICO"};
+            Object[][] dados = new Object[agendas.size()][2];
             for (Agenda a : agendas) {
                 dados[i][0] = a.getHorario();
                 dados[i][1] = a.getServico().getDescricao();
-                dados[i][2] = tPrincipal.getBtnEditar();
-                dados[i][3] = tPrincipal.getBtnExcluir();
 
                 i++;
             }
@@ -347,7 +344,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     private void preencherProfissionais() {
 
-        profissionais = new GenericDao<Profissional>().getAll(Profissional.class);
+        profissionais = fachada.getAllProfissionals();
 
         tPrincipal.getAgenda().getComboProfissional().removeAllItems();
 

@@ -42,8 +42,6 @@ public class Venda implements EntidadeBase {
     @OneToOne(cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
-    @ManyToOne
-    private Funcionario funcionario;
     
     @OneToOne
     private Caixa caixa;
@@ -97,19 +95,6 @@ public class Venda implements EntidadeBase {
         this.hora = hora;
     }
 
-    /**
-     * @return the funcionario
-     */
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    /**
-     * @param funcionario the funcionario to set
-     */
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
 
     /**
      * @return the pagamento

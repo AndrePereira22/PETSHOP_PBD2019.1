@@ -7,8 +7,6 @@
 package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoCaixa;
-import br.com.pbd.Dao.DaoCliente;
-import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Cliente;
@@ -18,6 +16,7 @@ import br.com.pbd.Modelo.Parcela;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Venda;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaClientes;
 import br.com.pbd.view.DiaPagamento;
 import br.com.pbd.view.DiaProdutos;
@@ -47,7 +46,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Andre-Coude
  */
 public class ControleVendas extends MouseAdapter implements ActionListener, KeyListener {
-    
+
+    private final Fachada fachada;
     private final TelaPrincipal tPrincipal;
     private Venda venda;
     private Pagamento pagamento;
@@ -60,16 +60,18 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     private Double ValorTotal, ValorFinal;
     private Produto produto;
     private final Calendar calendario;
-    private int escolha;
-    private final int salvar = 1, edicao = 2, exclusao = 3, adicao = 4;
+    private int opcao, indiceTemp;
+    private final int edicao = 2, exclusao = 3, adicao = 4;
     private HashMap<Integer, Boolean> keyEventos;
     private DiaQuantidade diaQuantidade;
     private DiaPagamento diaPagamento;
     private DiaProdutos diaProduto;
     private DiaClientes diaClientes;
-    
-    public ControleVendas(TelaPrincipal tPrincipal) {
+
+    public ControleVendas(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
+
         totalItens = 0;
         ValorTotal = 0.0;
         calendario = new GregorianCalendar();
@@ -81,76 +83,76 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         diaClientes = new DiaClientes(tPrincipal, true);
         adicionarEventos();
     }
-    
+
     ;
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getSource() == diaProduto.getTabelaItens()) {
-            
+
             int ro = retornaIndice(diaProduto.getTabelaItens(), e);
-            if (escolha == adicao) {
+            if (opcao == adicao) {
                 produto = produtos.get(ro);
                 diaQuantidade.setVisible(true);
-                
+
             }
         }
         if (e.getSource() == tPrincipal.getVendas().getTabelaItens()) {
-            
-            int ro = retornaIndice(tPrincipal.getVendas().getTabelaItens(), e);
-            
-            if (escolha == edicao) {
+
+            int indiceTemp = retornaIndice(tPrincipal.getVendas().getTabelaItens(), e);
+            if (opcao == edicao) {
                 diaQuantidade.setVisible(true);
-                produto = produtos.get(ro);
-            } else if (escolha == exclusao) {
-                
+
+            } else if (opcao == exclusao) {
+                itens.remove(indiceTemp);
+                listarProdutosAdicionados(itens);
             }
         }
         if (e.getSource() == diaClientes.getTabelaClientes()) {
-            
+
             int ro = retornaIndice(diaClientes.getTabelaClientes(), e);
-            if (escolha == adicao) {
+            if (opcao == adicao) {
                 cliente = clientes.get(ro);
                 tPrincipal.getVendas().getTxtClienteVenda().setText(cliente.getNome());
                 diaClientes.setVisible(false);
                 tPrincipal.getVendas().setVisible(true);
-                
+
             }
-            
+
         }
-        
+
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         if (e.getSource() == tPrincipal.getBtnVendas()) {
             venda = new Venda();
             itens = new ArrayList<ItemVenda>();
             produtos = new ArrayList<Produto>();
             totalItens = 0;
             produto = new Produto();
-            
+
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnPesquisar()) {
-            
+
             ValorTotal = 0.0;
             totalItens = 0;
-            produtos = new GenericDao<Produto>().getAll(Produto.class);
+            produtos = fachada.getAllProduto();
             listarProdutos(produtos);
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnClientes()) {
-            
-            clientes = new GenericDao<Cliente>().getAll(Cliente.class);
+
+            clientes = fachada.getAllCliente();
             listarClientes(clientes);
-            
+
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
             if (itens == null || itens.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "ADICIONE PRODUTOS !");
-                
+
             } else {
-                
+
                 if (!tPrincipal.getVendas().getTxtDesconto().getText().equals("")) {
                     ValorFinal = ValorTotal - Double.parseDouble(tPrincipal.getVendas().getTxtDesconto().getText());
                 } else {
@@ -158,20 +160,20 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 }
                 diaPagamento.getTxtTotalPagar().setText(ValorFinal + "");
                 diaPagamento.setVisible(true);
-                
+
             }
         }
         if (e.getSource() == diaQuantidade.getBtnOk()) {
-            
-            if (escolha == adicao) {
+
+            if (opcao == adicao) {
                 adicionarItemVenda();
                 listarProdutosAdicionados(itens);
-                tPrincipal.getVendas().getTxtTotalItens().setText(totalItens + "");
-                tPrincipal.getVendas().getTxtValorTotal().setText(ValorTotal + "");
-            } else if (escolha == edicao) {
-                
+
+            } else if (opcao == edicao) {
+
+                editarQuantidade();
             }
-            
+
         }
         if (e.getSource() == diaPagamento.getBtnFinalizar()) {
             escolherPagamento();
@@ -182,37 +184,36 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             venda.setValortotal(ValorFinal);
             venda.setPagamento(pagamento);
             pagamento.setParcelas(parcelas);
-            venda.setFuncionario(ControleLogin.getFuncionario());
             venda.setCaixa(buscarCaixa());
             venda.setClientes(clientes);
-            
+
             try {
                 venda.setItens(itens);
                 new GenericDao<Venda>().salvar_ou_atualizar(venda);
                 saidaDeProdutos(itens);
                 zerarValores();
                 tPrincipal.getVendas().limparComponentes();
-                
+
             } catch (java.lang.IllegalStateException n) {
                 JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
             } catch (javax.persistence.RollbackException roll) {
                 JOptionPane.showMessageDialog(null, roll.getCause());
             }
-            
+
         }
     }
-    
+
     public void escolherPagamento() {
-        
+
         pagamento = new Pagamento();
         if (diaPagamento.getRadioAvista().isSelected()) {
-            
+
             pagamento.setNumeroparcelas(0);
             pagamento.setStatus(true);
             pagamento.setValortotal(ValorTotal);
             pagamento.setData(ConverterData(new Date()));
             pagamento.setForma_pagamento(diaPagamento.getComboFormaPagamento().getSelectedItem().toString());
-            
+
         } else {
             int numero = Integer.parseInt(diaPagamento.getTxtParcelas().getText());
             pagamento.setNumeroparcelas(numero);
@@ -223,42 +224,42 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             Date data = new Date();
             for (int j = 1; j <= numero; j++) {
                 Parcela parcela = new Parcela();
-                
+
                 parcela.setNumero(j);
-                
+
                 parcela.setStatus(Boolean.FALSE);
-                
+
                 parcela.setValor(ValorTotal / numero);
-                
+
                 calendario.setTime(data);
                 calendario.set(Calendar.MONTH, calendario.get(Calendar.MONTH) + j);
                 calendario.set(Calendar.YEAR, calendario.get(Calendar.YEAR));
-                
+
                 parcela.setDatavencimento(ConverterData(calendario.getTime()));
-                
+
                 parcelas.add(parcela);
                 parcela.setPagamento(pagamento);
-                
+
             }
-            
+
         }
         diaPagamento.setVisible(false);
     }
-    
+
     public void adicionarItemVenda() {
-        
+
         int numero = 0;
         try {
             String n = diaQuantidade.getTxtQuantidade().getText();
             numero = Integer.parseInt(n);
-            
+
         } catch (NumberFormatException | java.lang.NullPointerException erro) {
         }
         if (numero < produto.getQuantidae_estoque()) {
             if (itens == null) {
                 itens = new ArrayList<ItemVenda>();
             }
-            
+
             ItemVenda item = new ItemVenda();
             item.setQuantidade(numero);
             item.setProduto(produto);
@@ -270,12 +271,12 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         } else {
             JOptionPane.showMessageDialog(null, "NAO HA ESSA QUANTIDADE EM ESTOQUE");
         }
-        
+
     }
-    
+
     private void listarProdutos(List<Produto> produtos) {
         diaProduto.getTabelaItens().setDefaultRenderer(Object.class, new Render());
-        
+
         int i = 0;
         try {
             String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "ADICIONAR"};
@@ -285,28 +286,29 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 dados[i][1] = a.getFabricante();
                 dados[i][2] = a.getValorvenda();
                 dados[i][3] = tPrincipal.getVendas().getBtnAdicionarProduto();
-                
+
                 i++;
             }
-            
+
             DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
             diaProduto.getTabelaItens().setModel(dataModel);
-            
+
             diaProduto.setVisible(true);
-            
+
         } catch (Exception ex) {
-            
+
         }
-        
+
     }
-    
+
     private void listarProdutosAdicionados(List<ItemVenda> itens) {
         tPrincipal.getVendas().getTabelaItens().setDefaultRenderer(Object.class, new Render());
-        
+        ValorTotal = 0.0;
+        totalItens = 0;
         int i = 0;
         try {
             String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "EDITAR", "REMOVER"};
@@ -320,25 +322,27 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 dados[i][5] = tPrincipal.getVendas().getBtnExcluir();
                 totalItens += item.getQuantidade();
                 ValorTotal += item.getProduto().getValorvenda() * item.getQuantidade();
-                
+
                 i++;
             }
-            
+
             DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
             tPrincipal.getVendas().getTabelaItens().setModel(dataModel);
+            tPrincipal.getVendas().getTxtTotalItens().setText(totalItens + "");
+            tPrincipal.getVendas().getTxtValorTotal().setText(ValorTotal + "");
         } catch (Exception ex) {
-            
+
         }
-        
+
     }
-    
+
     private void listarClientes(List<Cliente> itens) {
         diaClientes.getTabelaClientes().setDefaultRenderer(Object.class, new Render());
-        
+
         int i = 0;
         try {
             String[] colunas = new String[]{"Nome", "CPF", "NASCIMENTO", "SEXO", "ESCOLHER"};
@@ -349,10 +353,10 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 dados[i][2] = item.getNascimento();
                 dados[i][3] = item.getSexo();
                 dados[i][4] = tPrincipal.getBtnAdicionar();
-                
+
                 i++;
             }
-            
+
             DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
@@ -361,20 +365,20 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             diaClientes.getTabelaClientes().setModel(dataModel);
             diaClientes.setVisible(true);
         } catch (Exception ex) {
-            
+
         }
-        
+
     }
-    
+
     public java.sql.Date ConverterData(java.util.Date date) {
         return new java.sql.Date(date.getTime());
     }
-    
+
     private int retornaIndice(JTable tabela, MouseEvent e) {
         int ro = 0;
         int column = tabela.getColumnModel().getColumnIndexAtX(e.getX());
         int row = e.getY() / tabela.getRowHeight();
-        
+
         if (row < tabela.getRowCount() && row >= 0 && column < tabela.getColumnCount() && column >= 0) {
             Object value = tabela.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -382,13 +386,13 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 JButton boton = (JButton) value;
                 ro = tabela.getSelectedRow();
                 if (boton.getName().equals("editar")) {
-                    escolha = edicao;
+                    opcao = edicao;
                 } else if (boton.getName().equals("excluir")) {
-                    escolha = exclusao;
+                    opcao = exclusao;
                 } else if (boton.getName().equals("adicionar")) {
-                    escolha = adicao;
+                    opcao = adicao;
                 } else {
-                    escolha = 0;
+                    opcao = 0;
                 }
             }
         }
@@ -399,36 +403,36 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     @Override
     public void keyPressed(KeyEvent e) {
         keyEventos.put(e.getKeyCode(), true);
-        
+
         if (e.getSource() == diaClientes.getTxtPesquisa()) {
-            clientes = new DaoCliente().Busca(diaClientes.getTxtPesquisa().getText());
+            clientes = fachada.buscaCliente(diaClientes.getTxtPesquisa().getText());
             listarClientes(clientes);
         }
         if (e.getSource() == diaProduto.getTxtPesquisa()) {
             String busca = diaProduto.getTxtPesquisa().getText();
             try {
-                
+
             } catch (NumberFormatException x) {
             }
-            produtos = new DaoProduto().Busca(busca);
+            produtos = fachada.buscaProduto(busca);
             listarProdutos(produtos);
-            
+
         }
-        
+
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            
+
         }
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
         keyEventos.remove(e.getKeyCode());
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
     }
-    
+
     public void zerarValores() {
         totalItens = 0;
         ValorTotal = 0.0;
@@ -436,38 +440,39 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         itens = new ArrayList<ItemVenda>();
         cliente = null;
         venda = null;
-        
+
         String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "QUANTIDADE", "EDITAR", "REMOVER"};
         Object[][] dados = new Object[0][6];
-        
+
         DefaultTableModel dataModel = new DefaultTableModel(dados, colunas) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         tPrincipal.getVendas().getTabelaItens().setModel(dataModel);
-        
+
     }
-    
+
     public void saidaDeProdutos(List<ItemVenda> itens) {
-        
+
         itens.forEach((item) -> {
             int quantidade = item.getQuantidade();
             int quantidadeEstoque = item.getProduto().getQuantidae_estoque();
             Produto produto = item.getProduto();
             produto.setQuantidae_estoque(quantidadeEstoque - quantidade);
-            
-            new GenericDao<Produto>().salvar_ou_atualizar(produto);
-            
+
+            fachada.salvar(produto);
+
         });
     }
-    
+
     public void adicionarEventos() {
-        
+
         tPrincipal.getBtnVendas().addActionListener(this);
         tPrincipal.getVendas().getBtnPesquisar().addActionListener(this);
         tPrincipal.getVendas().getBtnClientes().addActionListener(this);
         tPrincipal.getVendas().getBtnFinalizarVenda().addActionListener(this);
+        tPrincipal.getVendas().getTabelaItens().addMouseListener(this);
         diaQuantidade.getBtnOk().addActionListener(this);
         diaPagamento.getBtnFinalizar().addActionListener(this);
         diaClientes.getTabelaClientes().addMouseListener(this);
@@ -475,7 +480,25 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         diaProduto.getTxtPesquisa().addKeyListener(this);
         diaProduto.getTabelaItens().addMouseListener(this);
     }
-    
+
+    public void editarQuantidade() {
+
+        int numero = 0;
+        try {
+            String n = diaQuantidade.getTxtQuantidade().getText();
+            numero = Integer.parseInt(n);
+
+        } catch (NumberFormatException | java.lang.NullPointerException erro) {
+        }
+        if (numero < itens.get(indiceTemp).getProduto().getQuantidae_estoque()) {
+            itens.get(indiceTemp).setQuantidade(numero);
+        } else {
+            JOptionPane.showMessageDialog(null, "numero unsuficiente no estoque");
+        }
+        listarProdutosAdicionados(itens);
+        diaQuantidade.setVisible(false);
+    }
+
     public Caixa buscarCaixa() {
         Caixa caixa = null;
         try {
@@ -485,5 +508,5 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         }
         return null;
     }
-    
+
 }

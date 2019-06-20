@@ -51,19 +51,19 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="31" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="painelItens" min="-2" pref="974" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <EmptySpace pref="50" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="24" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="painelItens" min="-2" pref="528" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -170,12 +170,12 @@
                           <Font name="Calibri" size="16" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="5" rowCount="1">
-                            <Column editable="false" title="T&#xed;tulo 1" type="java.lang.Object"/>
-                            <Column editable="false" title="T&#xed;tulo 2" type="java.lang.Object"/>
-                            <Column editable="false" title="T&#xed;tulo 3" type="java.lang.Object"/>
-                            <Column editable="false" title="T&#xed;tulo 4" type="java.lang.Object"/>
-                            <Column editable="false" title="T&#xed;tulo 5" type="java.lang.Object"/>
+                          <Table columnCount="5" rowCount="0">
+                            <Column editable="false" title="NOME" type="java.lang.Object"/>
+                            <Column editable="false" title="APELIDO" type="java.lang.Object"/>
+                            <Column editable="false" title="COR" type="java.lang.Object"/>
+                            <Column editable="false" title="RA&#xc7;A" type="java.lang.Object"/>
+                            <Column editable="false" title="DONO" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="autoscrolls" type="boolean" value="false"/>

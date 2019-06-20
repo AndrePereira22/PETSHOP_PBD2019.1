@@ -25,8 +25,16 @@ public class BusinessCliente implements IBusinessCliente {
     }
 
     @Override
-    public void ativarDesativar(Cliente cliente) {
-        new GenericDao<Cliente>().salvar_ou_atualizar(cliente);
+    public boolean ativarDesativar(Cliente cliente) {
+
+        List<Animal> animais = new DaoAnimal().buscaPorCliente(cliente);
+        if (animais.isEmpty()) {
+            new GenericDao<Cliente>().remover(Cliente.class, cliente.getId());
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override

@@ -6,9 +6,9 @@
 package br.com.pbd.Modelo;
 
 import br.com.pbd.Dao.DaoAdministrador;
-import br.com.pbd.Dao.DaoEspecie;
 import br.com.pbd.Dao.DaoLoja;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.fachada.Fachada;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +24,8 @@ import javax.swing.JOptionPane;
  * @author Andre-Coude
  */
 public class SalvarDadosRequiridos {
+
+    static Fachada fachada = Fachada.getInstance();
 
     public static void procurarLoja() {
 
@@ -47,7 +49,7 @@ public class SalvarDadosRequiridos {
 
     public static void salvarDadosRequiridos() {
 
-        List<Especie> list = new GenericDao<Especie>().getAll(Especie.class);
+        List<Especie> list = fachada.getAllEspecie();
         if (list.isEmpty()) {
 
             List<String> lista = new ArrayList<String>();
@@ -63,7 +65,7 @@ public class SalvarDadosRequiridos {
                 Especie r = new Especie();
                 r.setNome(lista.get(i));
                 list.add(r);
-                new GenericDao<Especie>().salvar_ou_atualizar(r);
+                fachada.salvarEspecie(r);
             }
             salvarRacasCanina();
             salvarRacasRoedor();
@@ -72,7 +74,7 @@ public class SalvarDadosRequiridos {
 
     public static void salvarRacasCanina() {
 
-        Especie e = new DaoEspecie().buscarEspecie("CANINA");
+        Especie e = fachada.buscar("CANINA");
         if (e != null) {
 
             List<Raca> list = new ArrayList<Raca>();
@@ -195,13 +197,13 @@ public class SalvarDadosRequiridos {
             }
             e.setRacas(list);
 
-            new GenericDao<Especie>().salvar_ou_atualizar(e);
+            fachada.salvarEspecie(e);
         }
 
     }
 
     public static void salvarRacasRoedor() {
-        Especie e = new DaoEspecie().buscarEspecie("ROEDOR");
+        Especie e = fachada.buscar("ROEDOR");
         if (e != null) {
 
             List<Raca> list = new ArrayList<Raca>();
@@ -227,7 +229,7 @@ public class SalvarDadosRequiridos {
             }
             e.setRacas(list);
 
-            new GenericDao<Especie>().salvar_ou_atualizar(e);
+            fachada.salvarEspecie(e);
         }
 
     }

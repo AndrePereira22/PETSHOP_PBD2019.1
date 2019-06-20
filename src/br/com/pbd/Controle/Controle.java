@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 
@@ -73,13 +72,24 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         if (e.getSource() == tPrincipal.getcCliente().getTabelaCliente()) {
 
             int ro = retornaIndice(tPrincipal.getcCliente().getTabelaCliente(), e);
+            cliente = clientes.get(ro);
+
             if (escolha == edicao) {
                 tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCadastro());
                 tPrincipal.getcCliente().getPainelCadastro().setEnabled(true);
-                cliente = clientes.get(ro);
                 tPrincipal.getcCliente().preencherDados(cliente);
                 tPrincipal.ativarEdicaoLogin(false);
             } else if (escolha == exclusao) {
+
+                if (fachada.removerCliente(cliente)) {
+                    clientes = fachada.getAllCliente();
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarClientes(clientes);
+                } else {
+                    mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
+                    mens.setVisible(true);
+                }
 
             }
         }
@@ -341,7 +351,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.getLblMens().setText("ERRO!");
+            mens.setVisible(true);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
             mens.setLblMens("ERRO AO SALVAR LOGIN!");
             mens.setVisible(true);
@@ -374,15 +385,19 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         try {
             fachada.salvar(fornecedor);
-            JOptionPane.showMessageDialog(null, "Fornecedor cadastrado!");
+            mens.getLblMens().setText("FORNECEDOR CADASTRADO!");
+            mens.setVisible(true);
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
             fornecedores = fachada.getAllFornecedor();;
             listarFornecedores(fornecedores);
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+
+            mens.getLblMens().setText(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.getLblMens().setText("ERRO!");
+            mens.setVisible(true);
         }
     }
 
@@ -441,8 +456,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             if (senha.equals(confirmSenha)) {
                 fachada.salvar(profissional);
-
-                JOptionPane.showMessageDialog(null, "Profissional cadastrado!");
+                mens.getLblMens().setText("PROFISSIONAL CADASTRADO!");
+                mens.setVisible(true);
                 tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
                 tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
                 profissionais = fachada.getAllProfissionals();
@@ -663,7 +678,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.getLblMens().setText("ERRO!");
+            mens.setVisible(true);
         }
     }
 
@@ -689,15 +705,19 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         try {
             fachada.salvar(forn);
-            JOptionPane.showMessageDialog(null, "Edição Concluida!");
+            mens.getLblMens().setText("SUCESSO!");
+            mens.setVisible(true);
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
             fornecedores = fachada.getAllFornecedor();
             listarFornecedores(fornecedores);
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.getLblMens().setText(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.getLblMens().setText("ERRO!");
+            mens.setVisible(true);
+
         }
     }
 
@@ -730,16 +750,18 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             pro.setNascimento(nascimento);
 
             fachada.salvar(pro);
-
-            JOptionPane.showMessageDialog(null, "Edição concluida!");
+            mens.getLblMens().setText("SUCESSO!");
+            mens.setVisible(true);
             tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
             tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
             profissionais = fachada.getAllProfissionals();
             listarProfissionais(profissionais);
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.getLblMens().setText(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.getLblMens().setText("ERRRO!");
+            mens.setVisible(true);
         }
     }
 

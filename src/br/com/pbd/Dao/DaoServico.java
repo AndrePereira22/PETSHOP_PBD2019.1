@@ -5,8 +5,7 @@
  */
 package br.com.pbd.Dao;
 
-import br.com.pbd.Modelo.Especie;
-import br.com.pbd.Modelo.Raca;
+import br.com.pbd.Modelo.Servico;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,24 +15,14 @@ import javax.persistence.Query;
  *
  * @author Andre-Coude
  */
-public class DaoRaca {
+public class DaoServico {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    public List<Raca> buscaPorEspecie(Especie especie) {
-        Query query = null;
-        try {
-            query = manager.createQuery("SELECT  raca FROM Raca raca where raca.especie =:obj");
-            query.setParameter("obj", especie);
-        } catch (IllegalStateException e) {
-            System.out.println("erro ao buscar Raças");
-        }
-        return query.getResultList();
-    }
-    public List<Raca> Busca(String nome) {
+    public List<Servico> Busca(String nome) {
             Query query = null;
             try {
-                query = manager.createQuery("SELECT  raca FROM Raca raca where raca.nome like '%" + nome + "%' ");
+                query = manager.createQuery("SELECT  s FROM Servico s where s.nome like '%" + nome + "%' ");
 
             } catch (IllegalStateException e) {
                 System.out.println("erro ao buscar racas");

@@ -7,6 +7,7 @@ package br.com.pbd.view;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import br.com.pbd.Modelo.Funcionario;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -87,9 +88,11 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         painelLogin = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JPasswordField();
-        txtConfimarSenha = new javax.swing.JPasswordField();
+        txtUsuario = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "u", " Nome do Usuario");
+        txtSenha = new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), "p", "Senha");
+        ;
+        txtConfimarSenha = new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), "p", "Confirmar Senha");
+        ;
         jLabel18 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -584,11 +587,11 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
         );
 
         pack();

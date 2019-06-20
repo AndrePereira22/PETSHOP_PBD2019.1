@@ -40,6 +40,11 @@ public class DiaQuantidade extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
 
         btnOk.setText("OK");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("QUANTIDADE :");
@@ -96,6 +101,10 @@ public class DiaQuantidade extends javax.swing.JDialog {
     private void txtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantidadeActionPerformed
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        getTxtQuantidade().setText("");
+    }//GEN-LAST:event_btnOkActionPerformed
 
     /**
      * @param args the command line arguments

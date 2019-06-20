@@ -5,21 +5,21 @@
  */
 package br.com.pbd.business;
 
-import br.com.pbd.Modelo.Cliente;
+import br.com.pbd.Modelo.Servico;
 import java.util.List;
 
 /**
  *
  * @author Andre-Coude
  */
-public interface IBusinessCliente {
+public interface IBusinessServicos {
     
-    public void salvar(Cliente cliente);
+     public void salvar(Servico servico);
 
-    public List<Cliente> getAll();
+    public List<Servico> getAll();
 
-    public boolean ativarDesativar(Cliente cliente);
+    public void ativarDesativar(Servico servico);
 
-    public List<Cliente> busca(String nome);
+    public List<Servico> busca(String nome);
     
 }

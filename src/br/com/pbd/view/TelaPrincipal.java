@@ -406,10 +406,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }
 
     public void ativarBotoesAdm() {
-        getBtnVendas().setEnabled(false);
+        getBtnVendas().setEnabled(true);
         getBtnVendas().setSelected(false);
         getBtnClientes().setEnabled(true);
-        getBtnClientes().setSelected(true);
+        getBtnClientes().setSelected(false);
         getBtnGerencia().setEnabled(true);
         getBtnGerencia().setSelected(false);
         getBtnFinanceiro().setEnabled(true);
@@ -460,15 +460,16 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getcServicos().setVisible(true);
         }
         if (e.getSource() == getServico_Produto().getBtnSair()) {
-            getServico_Produto().setVisible(false);  
+            getServico_Produto().setVisible(false);
             painelMenu.setVisible(true);
             btnProdutos_serv.requestFocus();
-          
+            repaint();
 
         }
         if (e.getSource() == getServico_Produto().getBtnSairServico()) {
             getServico_Produto().setVisible(false);
             painelMenu.setVisible(true);
+            repaint();
         }
         // Eventos da tela Cadastros
         if (e.getSource() == getCadastros().getBtnProfissional()) {
@@ -484,10 +485,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         if (e.getSource() == getCadastros().getBtnFuncionario()) {
             getcFuncionario().setVisible(true);
         }
-        if (e.getSource() == getCadastros().getVoltarMenu()) { 
+        if (e.getSource() == getCadastros().getVoltarMenu()) {
             painelMenu.setVisible(true);
             btnCadastros.requestFocus();
-           
+            repaint();
+
         }
         if (e.getSource() == getCadastros().getBtnEspecie()) {
             getRaca_especie().setVisible(true);
@@ -506,6 +508,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getAgenda().setVisible(false);
             painelMenu.setVisible(true);
             btnAgenda.requestFocus();
+            repaint();
         }
         if (e.getSource() == cServicos.getBtnCancelar()) {
             servico_Produto.setVisible(true);
@@ -542,7 +545,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getcCliente().setVisible(false);
             painelMenu.setVisible(true);
             btnClientes.requestFocus();
-            
+            repaint();
+
         }
         // Eventos da tela Cadastro de Fornecedor
         if (e.getSource() == getcFornecedor().getBtnCancelar()) {
@@ -609,6 +613,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getVendas().setVisible(false);
             painelMenu.setVisible(true);
             btnVendas.requestFocus();
+            repaint();
         }
 
         if (e.getSource() == cGrupo.getBtnSair()) {
@@ -624,6 +629,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
             painelMenu.setVisible(true);
             btnGerencia.requestFocus();
+            repaint();
         }
         if (e.getSource() == getFinancas().getBtnContaApagar()) {
 
@@ -640,6 +646,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getFinancas().setVisible(false);
             painelMenu.setVisible(true);
             btnFinanceiro.requestFocus();
+            repaint();
         }
         if (e.getSource() == geteProdutos().getBtnCancelar()) {
 

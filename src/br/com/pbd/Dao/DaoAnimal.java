@@ -22,7 +22,7 @@ public class DaoAnimal {
 
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
-    public List<Animal> usandoID(Cliente cliente) {
+    public List<Animal> buscaPorCliente(Cliente cliente) {
         Query query = null;
         try {
             query = manager.createQuery("SELECT  animal FROM Animal animal where animal.cliente =:obj");

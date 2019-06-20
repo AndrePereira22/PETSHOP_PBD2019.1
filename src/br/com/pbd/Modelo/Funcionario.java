@@ -51,9 +51,6 @@ public class Funcionario implements EntidadeBase {
     @OneToOne(cascade = CascadeType.ALL)
     private Login login;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
-    @JoinColumn(name = "funcionario_id")
-    private List<Venda> vendas;
 
     @Override
     public Long getId() {
@@ -165,19 +162,6 @@ public class Funcionario implements EntidadeBase {
         this.tipo = tipo;
     }
 
-    /**
-     * @return the vendas
-     */
-    public List<Venda> getVendas() {
-        return vendas;
-    }
-
-    /**
-     * @param vendas the vendas to set
-     */
-    public void setVendas(List<Venda> vendas) {
-        this.vendas = vendas;
-    }
 
     /**
      * @return the rg
