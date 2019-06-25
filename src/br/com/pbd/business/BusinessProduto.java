@@ -7,8 +7,10 @@ package br.com.pbd.business;
 
 import br.com.pbd.Dao.DaoGrupoProduto;
 import br.com.pbd.Dao.DaoProduto;
+import br.com.pbd.Dao.DaoVenda;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.GrupoProduto;
+import br.com.pbd.Modelo.ItemVenda;
 import br.com.pbd.Modelo.Produto;
 import java.util.List;
 
@@ -31,8 +33,16 @@ public class BusinessProduto implements IBusinessProduto {
     }
 
     @Override
-    public void excluir(Produto produto) {
-        new GenericDao<Produto>().remover(Produto.class, produto.getId());
+    public boolean excluir(Produto produto) {
+
+        List<ItemVenda> itens = new DaoVenda().buscaItens(produto);
+        if (itens.isEmpty()) {
+            new GenericDao<Produto>().remover(Produto.class, produto.getId());
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override

@@ -7,20 +7,24 @@ package br.com.pbd.fachada;
 
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Animal;
+import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.GrupoProduto;
+import br.com.pbd.Modelo.Loja;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Raca;
 import br.com.pbd.Modelo.Servico;
+import br.com.pbd.Modelo.Venda;
 import br.com.pbd.business.BusinessAgenda;
 import br.com.pbd.business.BusinessAnimal;
 import br.com.pbd.business.BusinessCliente;
 import br.com.pbd.business.BusinessFornecedor;
 import br.com.pbd.business.BusinessFuncionario;
+import br.com.pbd.business.BusinessGeral;
 import br.com.pbd.business.BusinessProduto;
 import br.com.pbd.business.BusinessProfissional;
 import br.com.pbd.business.BusinessServicos;
@@ -29,6 +33,7 @@ import br.com.pbd.business.IBusinessAnimal;
 import br.com.pbd.business.IBusinessCliente;
 import br.com.pbd.business.IBusinessFornecedor;
 import br.com.pbd.business.IBusinessFuncionario;
+import br.com.pbd.business.IBusinessGeral;
 import br.com.pbd.business.IBusinessProduto;
 import br.com.pbd.business.IBusinessProfissional;
 import java.sql.Date;
@@ -50,6 +55,7 @@ public class Fachada implements IFachada {
     private final IBusinessFornecedor bFornecedor;
     private final IBusinessServicos bServico;
     private final IBusinessProduto bProduto;
+    private final IBusinessGeral bGeral;
 
     public static Fachada getInstance() {
         if (instance == null) {
@@ -68,6 +74,7 @@ public class Fachada implements IFachada {
         this.bServico = new BusinessServicos();
         this.bAgenda = new BusinessAgenda();
         this.bProduto = new BusinessProduto();
+        this.bGeral = new BusinessGeral();
 
     }
 
@@ -82,8 +89,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void ativarDesativar(Animal animal) {
-        this.bAnimal.ativarDesativar(animal);
+    public boolean remover(Animal animal) {
+       return this.bAnimal.remover(animal);
     }
 
     @Override
@@ -123,8 +130,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void ativarDesativar(Funcionario funcionario) {
-        this.bFuncionario.salvar(funcionario);
+    public void remover(Funcionario funcionario) {
+        this.bFuncionario.remover(funcionario);
     }
 
     @Override
@@ -143,8 +150,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void ativarDesativar(Profissional profissional) {
-        this.bProfissional.salvar(profissional);
+    public boolean remover(Profissional profissional) {
+       return  (this.bProfissional.remover(profissional));
     }
 
     @Override
@@ -163,8 +170,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void ativarDesativar(Fornecedor fornecedor) {
-        this.bFornecedor.salvar(fornecedor);
+    public boolean removerFornecedor(Fornecedor fornecedor) {
+        return (this.bFornecedor.remover(fornecedor));
     }
 
     @Override
@@ -185,13 +192,17 @@ public class Fachada implements IFachada {
 
     @Override
     public void ativarDesativar(Servico servico) {
-        this.bServico.salvar(servico);
+        this.bServico.ativarDesativar(servico);
 
     }
 
     @Override
     public List<Servico> buscaServico(String nome) {
         return this.bServico.busca(nome);
+    }
+    @Override
+    public List<Servico> buscarAtivos(Boolean ativo) {
+      return this.bServico.buscarAtivos(ativo);
     }
 
     @Override
@@ -277,8 +288,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void excluir(Produto produto) {
-        this.bProduto.excluir(produto);
+    public boolean excluir(Produto produto) {
+        return this.bProduto.excluir(produto);
     }
 
     @Override
@@ -311,5 +322,32 @@ public class Fachada implements IFachada {
     public List<GrupoProduto> buscaGrupo(String nome) {
         return this.bProduto.buscaGrupo(nome);
     }
+
+    @Override
+    public void salvar(Loja loja) {
+        this.bGeral.salvar(loja);
+    }
+
+    @Override
+    public Loja buscarLoja() {
+        return this.bGeral.buscarLoja();
+    }
+
+    @Override
+    public void salvar(Caixa caixa) {
+        this.bGeral.salvar(caixa);
+    }
+
+    @Override
+    public Caixa buscaCaixa() {
+        return this.bGeral.buscaCaixa();
+    }
+
+    @Override
+    public void salvar(Venda venda) {
+        this.bGeral.salvar(venda);
+    }
+
+    
 
 }

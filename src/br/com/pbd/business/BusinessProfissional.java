@@ -5,8 +5,10 @@
  */
 package br.com.pbd.business;
 
+import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.DaoProfissional;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Profissional;
 import java.util.List;
 
@@ -29,8 +31,15 @@ public class BusinessProfissional implements IBusinessProfissional {
     }
 
     @Override
-    public void ativarDesativar(Profissional profissional) {
-        new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
+    public boolean remover(Profissional profissional) {
+        
+     List<Agenda> lista = new DaoAgenda().buscaAgendaProfissional(profissional);
+        if (lista.isEmpty()) {
+            new GenericDao<Profissional>().remover(Profissional.class, profissional.getId());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

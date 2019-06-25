@@ -21,5 +21,6 @@ public interface IBusinessServicos {
     public void ativarDesativar(Servico servico);
 
     public List<Servico> busca(String nome);
+    public List<Servico> buscarAtivos(Boolean ativo);
     
 }

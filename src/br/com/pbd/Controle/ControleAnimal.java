@@ -11,6 +11,7 @@ import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Raca;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.fachada.Fachada;
+import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,10 +43,12 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
     private Animal animal;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
+     private final DiaMensagem mens;
     
     public ControleAnimal(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
+       this.mens = new DiaMensagem(tPrincipal, true);
         
         especies = new ArrayList<Especie>();
         racas = new ArrayList<Raca>();
@@ -79,7 +82,15 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                 tPrincipal.getcAnimal().getPainelCadastro().setEnabled(true);
                 tPrincipal.getcAnimal().preencherDados(animal);
             } else if (escolha == exclusao) {
-                
+                   if (fachada.remover(animal)) {
+                    animais = fachada.getAllAnimal();
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarTabelaAnimais(animais);
+                } else {
+                    mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
+                    mens.setVisible(true);
+                }
             }
             
         }
@@ -298,8 +309,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             
             int i = 0;
             try {
-                String[] colunas = new String[]{"NOME", "APELIDO", "DATA DE NASCIMENTO", "SEXO", "COR", "RAÇA", "DONO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[lista.size()][9];
+                String[] colunas = new String[]{"NOME", "APELIDO", "DATA DE NASCIMENTO", "SEXO", "COR", "RAÇA", "DONO","VACINAS","EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[lista.size()][10];
                 for (Animal a : lista) {
                     dados[i][0] = a.getNome();
                     dados[i][1] = a.getApelido();
@@ -309,7 +320,8 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                     dados[i][5] = a.getRaca().getNome();
                     dados[i][6] = a.getCliente().getNome();
                     dados[i][7] = tPrincipal.getBtnEditar();
-                    dados[i][8] = tPrincipal.getBtnExcluir();
+                    dados[i][8] = tPrincipal.getBtnEditar();
+                    dados[i][9] = tPrincipal.getBtnExcluir();
                     
                     i++;
                 }
@@ -387,7 +399,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
         }
     }
     
-    public java.sql.Date ConverterData(java.util.Date date) {
+    public java.sql.Date ConverterData(java.util.Date date) throws NullPointerException{
         return new java.sql.Date(date.getTime());
     }
     

@@ -11,6 +11,8 @@ import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Servico;
 import br.com.pbd.fachada.Fachada;
+import br.com.pbd.view.DiaMensagem;
+import br.com.pbd.view.DiaOpcao;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +28,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -47,10 +48,14 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
     private Servico servico;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
+    private final DiaMensagem mens;
+    private final DiaOpcao opcao;
 
     public ControlPro_Serv(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
+        this.mens = new DiaMensagem(tPrincipal, true);
+        this.opcao = new DiaOpcao(tPrincipal, true);
 
         grupos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
@@ -68,18 +73,44 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getServico_Produto().getTabelaProdutos()) {
 
             int ro = retornaIndice(tPrincipal.getServico_Produto().getTabelaProdutos(), e);
-            tPrincipal.getServico_Produto().setVisible(false);
-            tPrincipal.getcProdutos().setVisible(true);
             produto = produtos.get(ro);
-            tPrincipal.getcProdutos().preencherDados(produto);
+
+            if (escolha == edicao) {
+                tPrincipal.getServico_Produto().setVisible(false);
+                tPrincipal.getcProdutos().setVisible(true);
+                tPrincipal.getcProdutos().preencherDados(produto);
+            } else if (escolha == exclusao) {
+                if (fachada.excluir(produto)) {
+                    produtos = fachada.getAllProduto();
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarProdutos();
+                } else {
+                    mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
+                    mens.setVisible(true);
+                }
+            }
         }
         if (e.getSource() == tPrincipal.getServico_Produto().getTabelaServicos()) {
 
             int ro = retornaIndice(tPrincipal.getServico_Produto().getTabelaServicos(), e);
-            tPrincipal.getServico_Produto().setVisible(false);
-            tPrincipal.getcServicos().setVisible(true);
             servico = servicos.get(ro);
-            tPrincipal.getcServicos().preencherDados(servico);
+            if (escolha == edicao) {
+                tPrincipal.getServico_Produto().setVisible(false);
+                tPrincipal.getcServicos().setVisible(true);
+                tPrincipal.getcServicos().preencherDados(servico);
+            } else if (escolha == exclusao) {
+                opcao.setVisible(true);
+                if (opcao.getOpcao() == 1) {
+                    servico.setAtivo(false);
+                    fachada.ativarDesativar(servico);
+                    servicos = fachada.buscarAtivos(true);
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarServicos(servicos);
+                    opcao.setOpcao(opcao.getCANCELAR());
+                }
+            }
         }
         if (e.getSource() == tPrincipal.getcGrupo().getTabelaGrupos()) {
 
@@ -135,7 +166,8 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         }
         if (e.getSource() == tPrincipal.getBtnProdutos_serv()) {
             listarProdutos();
-            listarServicos();
+            servicos = fachada.buscarAtivos(true);
+            listarServicos(servicos);
         }
 
     }
@@ -158,7 +190,10 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
         Double valorCompra = 0.0, valorVenda = 0.0;
         Random gerador = new Random();
-        int codigo = gerador.nextInt() * (-1000);
+        int codigo = gerador.nextInt() * (1000);
+        if (codigo < 1) {
+            codigo = codigo * -1;
+        }
         produto.setCodigo(codigo);
 
         try {
@@ -174,19 +209,14 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             produto.setValorcompra(valorCompra);
 
             fachada.salvar(produto);
-
-            JOptionPane.showMessageDialog(null, "Produto cadastrado!");
+            mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+            mens.setVisible(true);
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarProdutos();
-        } catch (java.lang.IllegalStateException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
-        } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
-        } catch (NumberFormatException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
-        } catch (ArrayIndexOutOfBoundsException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | NumberFormatException | ArrayIndexOutOfBoundsException roll) {
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
 
     }
@@ -207,17 +237,22 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
             fachada.salvar(servico);
 
-            JOptionPane.showMessageDialog(null, "Serviço cadastrado!");
+            mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+            mens.setVisible(true);
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
-            listarServicos();
+            servicos = fachada.buscarAtivos(true);
+            listarServicos(servicos);
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (NumberFormatException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
     }
 
@@ -227,15 +262,18 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
         try {
             fachada.salvar(grupo);
-            JOptionPane.showMessageDialog(null, "Grupo cadastrado!");
+            mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+            mens.setVisible(true);
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
 
     }
@@ -276,9 +314,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         }
     }
 
-    public void listarServicos() {
-
-        servicos = fachada.getAllServico();
+    public void listarServicos(List<Servico> servicos) {
         if (!servicos.isEmpty()) {
             tPrincipal.getServico_Produto().getTabelaServicos().setDefaultRenderer(Object.class, new Render());
 
@@ -311,7 +347,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
     public void listarGrupos() {
 
-        grupos =  fachada.getAllGrupo();
+        grupos = fachada.getAllGrupo();
         if (!grupos.isEmpty()) {
             tPrincipal.getcGrupo().getTabelaGrupos().setDefaultRenderer(Object.class, new Render());
 
@@ -350,7 +386,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
     }
 
     private void preencherGrupo() {
-        grupos =  fachada.getAllGrupo();
+        grupos = fachada.getAllGrupo();
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         grupos.forEach((c) -> {
             tPrincipal.getcProdutos().getComboGrupoProduto().addItem(c.getDescricao());
@@ -385,18 +421,22 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             servico.setValor(valorServico);
 
             fachada.salvar(servico);
-
-            JOptionPane.showMessageDialog(null, "Edicao concluida!");
+            mens.setLblMens(tPrincipal.getEDICAO());
+            mens.setVisible(true);
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
-            listarServicos();
+            servicos = fachada.buscarAtivos(true);
+            listarServicos(servicos);
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (NumberFormatException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
     }
 
@@ -410,7 +450,8 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         try {
 
         } catch (ArrayIndexOutOfBoundsException erro) {
-            JOptionPane.showMessageDialog(null, "ESCOLHA UM GRUPO!");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
 
         String vCompra = tPrincipal.getcProdutos().getTxtValorCompra().getText();
@@ -433,18 +474,21 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             produto.setGproduto(grupo);
 
             fachada.salvar(produto);
-
-            JOptionPane.showMessageDialog(null, "Edicao concluida!");
+            mens.setLblMens(tPrincipal.getEDICAO());
+            mens.setVisible(true);
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarProdutos();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (NumberFormatException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
     }
 
@@ -453,16 +497,19 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         grupo.setDescricao(tPrincipal.getcGrupo().getTxtDescricao().getText());
 
         try {
-             fachada.salvar(grupo);
-            JOptionPane.showMessageDialog(null, "Edição concluida!");
+            fachada.salvar(grupo);
+            mens.setLblMens(tPrincipal.getEDICAO());
+            mens.setVisible(true);
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
 
     }

@@ -19,7 +19,7 @@ public interface IBusinessProduto {
 
     public List<Produto> getAll();
 
-    public void excluir(Produto produto);
+    public boolean excluir(Produto produto);
 
     public List<Produto> buscaGrupo(GrupoProduto grupo);
 

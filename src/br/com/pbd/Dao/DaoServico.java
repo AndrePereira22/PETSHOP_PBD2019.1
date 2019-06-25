@@ -29,5 +29,15 @@ public class DaoServico {
             }
             return query.getResultList();
         }
+    public List<Servico> BuscarAtivos(Boolean ativo) {
+            Query query = null;
+            try {
+                query = manager.createQuery("SELECT  s FROM Servico s where s.ativo=:ativo ");
+query.setParameter("ativo", ativo);
+            } catch (IllegalStateException e) {
+                System.out.println("erro ao buscar racas");
+            }
+            return query.getResultList();
+        }
 
 }

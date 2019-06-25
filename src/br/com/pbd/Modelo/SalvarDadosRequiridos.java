@@ -31,7 +31,7 @@ public class SalvarDadosRequiridos {
 
         Loja loja = null;
         try {
-            loja = new DaoLoja().buscaUltimoLoja();
+            loja = fachada.buscarLoja();
         } catch (NoResultException n) {
             salvarLoja();
         }

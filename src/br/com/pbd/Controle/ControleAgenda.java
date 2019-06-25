@@ -12,6 +12,7 @@ import br.com.pbd.Modelo.Servico;
 import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.fachada.Fachada;
+import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +29,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -49,10 +49,13 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     List<Agenda> agendas;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
+    private final DiaMensagem mens;
 
     public ControleAgenda(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
+
+        this.mens = new DiaMensagem(tPrincipal, true);
 
         profissionais = new ArrayList<Profissional>();
         animais = new ArrayList<Animal>();
@@ -120,7 +123,8 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
                 tPrincipal.getAgenarServico().setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "VOCÊ PRECISA CADASTRAR PROFISSIONARIS !");
+                mens.setLblMens("CADASTRE UM PROFISSIONAL!");
+                mens.setVisible(true);
             }
 
         }
@@ -171,24 +175,27 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
             pagamento.setValortotal(servico.getValor());
             agenda.setPagamento(pagamento);
-            
+
             fachada.salvar(agenda);
-            JOptionPane.showMessageDialog(null, "Agendado com Sucesso!");
+            mens.setLblMens("AGENDADO COM SUCESSO!");
+            mens.setVisible(true);
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();
             listarAgendaGeral();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
-
+            mens.setLblMens("OCORREU UM ERRO NO SISTEMA");
+            mens.setVisible(true);
         } catch (java.lang.NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
-
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         }
 
     }
@@ -216,21 +223,27 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             agenda.setAnimal(animal);
 
             fachada.salvar(agenda);
-            JOptionPane.showMessageDialog(null, "Edicao concluida!");
+            mens.setLblMens(tPrincipal.getEDICAO());
+            mens.setVisible(true);
+
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();
             listarAgendaGeral();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
         } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "arrayh index !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
 
         } catch (java.lang.NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "null point !");
+            mens.setLblMens(tPrincipal.getCAMPOS());
+            mens.setVisible(true);
 
         }
 
@@ -258,7 +271,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     public final void preencherServicos() {
 
-        servicos = fachada.getAllServico();
+        servicos = fachada.buscarAtivos(true);
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         servicos.forEach((c) -> {
             tPrincipal.getAgenarServico().getComboServico().addItem(c.getDescricao());

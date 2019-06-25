@@ -14,6 +14,7 @@ import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaMensagem;
+import br.com.pbd.view.DiaOpcao;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -53,6 +54,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     private final int salvar = 1, edicao = 2, exclusao = 3;
     private final HashMap<Integer, Boolean> keyEventos;
     private final DiaMensagem mens;
+    private final DiaOpcao opcao;
 
     public Controle(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
@@ -63,6 +65,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         this.fornecedores = new ArrayList<Fornecedor>();
         this.keyEventos = new HashMap<Integer, Boolean>();
         this.mens = new DiaMensagem(tPrincipal, true);
+        this.opcao = new DiaOpcao(tPrincipal, true);
+        
 
         adicionarEvents();
     }
@@ -96,39 +100,65 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         if (e.getSource() == tPrincipal.getcFuncionario().getTabelaFuncionarios()) {
 
             int ro = retornaIndice(tPrincipal.getcFuncionario().getTabelaFuncionarios(), e);
+            funcionario = funcionarios.get(ro);
             if (escolha == edicao) {
                 tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelCadastro());
                 tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(true);
-                funcionario = funcionarios.get(ro);
                 tPrincipal.ativarEdicaoLogin(false);
                 tPrincipal.getcFuncionario().preencherDados(funcionario);
             } else if (escolha == exclusao) {
-
+                opcao.setVisible(true);
+                 if (opcao.getOpcao()==1) {
+                     fachada.remover(funcionario);
+                    funcionarios = fachada.getAllFuncionario();
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarFuncionarios(funcionarios);
+                    opcao.setOpcao(opcao.getCANCELAR());
+                } 
+           
             }
         }
         if (e.getSource() == tPrincipal.getcProfissioanl().getTabelaProfissionais()) {
 
             int ro = retornaIndice(tPrincipal.getcProfissioanl().getTabelaProfissionais(), e);
+            profissional = profissionais.get(ro);
             if (escolha == edicao) {
                 tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelCadastro());
                 tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(true);
-                profissional = profissionais.get(ro);
+
                 tPrincipal.ativarEdicaoLogin(false);
                 tPrincipal.getcProfissioanl().preencherDados(profissional);
             } else if (escolha == exclusao) {
-
+                if (fachada.remover(profissional)) {
+                    profissionais = fachada.getAllProfissionals();
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarProfissionais(profissionais);
+                } else {
+                    mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
+                    mens.setVisible(true);
+                }
             }
         }
         if (e.getSource() == tPrincipal.getcFornecedor().getTabelaFornecedor()) {
 
             int ro = retornaIndice(tPrincipal.getcFornecedor().getTabelaFornecedor(), e);
+            fornecedor = fornecedores.get(ro);
             if (escolha == edicao) {
                 tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelCadastro());
                 tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(true);
-                fornecedor = fornecedores.get(ro);
                 tPrincipal.getcFornecedor().preencherDados(fornecedor);
             } else if (escolha == exclusao) {
-
+                if (fachada.removerFornecedor(fornecedor)) {
+                    fornecedores = fachada.getAllFornecedor();
+                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
+                    mens.setVisible(true);
+                    listarFornecedores(fornecedores);
+                } else {
+                    mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
+                    mens.setVisible(true);
+                }
             }
         }
     }

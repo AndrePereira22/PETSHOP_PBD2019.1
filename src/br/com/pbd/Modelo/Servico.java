@@ -33,6 +33,8 @@ public class Servico implements EntidadeBase {
     private Double valor;
     @Column(name = "duracao", nullable = false)
     private Time duracao;
+    @Column(name = "ativo", insertable = true, nullable = false)
+    private boolean ativo;
 
     @Override
     public Long getId() {
@@ -86,6 +88,20 @@ public class Servico implements EntidadeBase {
      */
     public void setDuracao(Time duracao) {
         this.duracao = duracao;
+    }
+
+    /**
+     * @return the ativo
+     */
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    /**
+     * @param ativo the ativo to set
+     */
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
 }

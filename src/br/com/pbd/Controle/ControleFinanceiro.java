@@ -6,7 +6,6 @@
 package br.com.pbd.Controle;
 
 import br.com.pbd.Dao.DaoAgenda;
-import br.com.pbd.Dao.DaoCaixa;
 import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.GenericDao;
@@ -15,6 +14,7 @@ import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.Loja;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ControleFinanceiro implements ActionListener {
 
+    private final Fachada fachada;
     private final TelaPrincipal tPrincipal;
     private Caixa caixa;
     private Loja loja;
@@ -37,8 +38,9 @@ public class ControleFinanceiro implements ActionListener {
 
     private List<ContaAPagar> contas;
 
-    public ControleFinanceiro(TelaPrincipal tPrincipal) {
+    public ControleFinanceiro(TelaPrincipal tPrincipal,Fachada fachada) {
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
         this.abrirCaixa();
         tPrincipal.getcPagar().getBtnSalvarConta().addActionListener(this);
         tPrincipal.getFinancas().getBtnContaApagar().addActionListener(this);
@@ -69,7 +71,7 @@ public class ControleFinanceiro implements ActionListener {
         Date data = new Date(System.currentTimeMillis());
         Caixa caixaAnterior = null;
         try {
-            caixaAnterior = new DaoCaixa().buscaUltimoCaixa();
+            caixaAnterior = fachada.buscaCaixa();
         } catch (NoResultException n) {
             System.out.println("Caixa anterior nao encontrado");
         }

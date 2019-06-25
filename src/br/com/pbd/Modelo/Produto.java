@@ -33,7 +33,7 @@ public class Produto implements EntidadeBase {
     @Column(name = "quantidae_estoque", precision = 2, scale = 0, nullable = false)
     private int quantidae_estoque;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private GrupoProduto gproduto;
 
     @ManyToOne

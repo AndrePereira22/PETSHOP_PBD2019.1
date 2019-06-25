@@ -5,6 +5,7 @@
  */
 package br.com.pbd.Dao;
 
+import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.sql.SQLConexao;
@@ -36,6 +37,16 @@ public class DaoProduto {
         try {
             query = manager.createQuery("SELECT  produto FROM Produto produto where produto.gproduto=:grupo ");
             query.setParameter("grupo", grupo);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar produtos");
+        }
+        return query.getResultList();
+    }
+    public List<Produto> listarProdutoFornecedor(Fornecedor fornecedor) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  produto FROM Produto produto where produto.fornecedor=:obj ");
+            query.setParameter("obj",fornecedor);
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar produtos");
         }

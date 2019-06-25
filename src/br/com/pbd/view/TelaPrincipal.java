@@ -317,9 +317,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        // TODO add your handling code here:
-
-//        PostgresBackup_Curso pc = new PostgresBackup_Curso();
+    
         // System.exit(WIDTH);
     }//GEN-LAST:event_btnSairActionPerformed
 

@@ -20,7 +20,7 @@ public interface IBusinessAnimal {
 
     public List<Animal> getAll();
 
-    public void ativarDesativar(Animal animal);
+    public boolean remover(Animal animal);
 
     public List<Animal> busca(String nome);
 

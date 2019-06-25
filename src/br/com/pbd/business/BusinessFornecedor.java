@@ -6,8 +6,10 @@
 package br.com.pbd.business;
 
 import br.com.pbd.Dao.DaoFornecedor;
+import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Fornecedor;
+import br.com.pbd.Modelo.Produto;
 import java.util.List;
 
 /**
@@ -29,8 +31,16 @@ public class BusinessFornecedor implements IBusinessFornecedor {
     }
 
     @Override
-    public void ativarDesativar(Fornecedor fornecedor) {
-        new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
+    public boolean remover(Fornecedor fornecedor) {
+
+        List<Produto> lista = new DaoProduto().listarProdutoFornecedor(fornecedor);
+
+        if (lista.isEmpty()) {
+            new GenericDao<Fornecedor>().remover(Fornecedor.class, fornecedor.getId());
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

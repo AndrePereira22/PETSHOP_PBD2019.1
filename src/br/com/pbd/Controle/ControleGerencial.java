@@ -287,6 +287,7 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
     }
     
     private void editarLoja(Loja loja) {
+        if(loja==null) loja = new Loja();
         
         loja.getDados().setBairro(tPrincipal.getcLoja().getTxtBairro().getText());
         loja.getDados().setCelular(tPrincipal.getcLoja().getTxtCelular().getText());

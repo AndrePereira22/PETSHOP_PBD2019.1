@@ -6,6 +6,7 @@
 package br.com.pbd.Dao;
 
 import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
@@ -44,6 +45,26 @@ public class DaoAgenda {
         } catch (IllegalStateException e) {
             query.setParameter("date", data);
             System.out.println("erro ao buscar agendas");
+        }
+        return query.getResultList();
+    }
+    public List<Agenda> buscaAgendaProfissional(Profissional pro) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj");
+            query.setParameter("obj", pro);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar servicos");
+        }
+        return query.getResultList();
+    }
+     public List<Agenda> buscaAgendaAnimal(Animal pro) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.animal =:obj");
+            query.setParameter("obj", pro);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar servicos");
         }
         return query.getResultList();
     }

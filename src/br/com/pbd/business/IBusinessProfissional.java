@@ -18,7 +18,7 @@ public interface IBusinessProfissional {
 
     public List<Profissional> getAll();
 
-    public void ativarDesativar(Profissional profissional);
+    public boolean remover(Profissional profissional);
 
     public List<Profissional> busca(String nome);
     

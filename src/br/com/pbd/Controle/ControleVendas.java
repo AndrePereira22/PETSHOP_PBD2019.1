@@ -6,8 +6,6 @@
  */
 package br.com.pbd.Controle;
 
-import br.com.pbd.Dao.DaoCaixa;
-import br.com.pbd.Dao.GenericDao;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.ItemVenda;
@@ -18,6 +16,7 @@ import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Venda;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaClientes;
+import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.DiaPagamento;
 import br.com.pbd.view.DiaProdutos;
 import br.com.pbd.view.DiaQuantidade;
@@ -37,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -67,10 +65,12 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     private DiaPagamento diaPagamento;
     private DiaProdutos diaProduto;
     private DiaClientes diaClientes;
+    private final DiaMensagem mens;
 
     public ControleVendas(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
+        this.mens = new DiaMensagem(tPrincipal, true);
 
         totalItens = 0;
         ValorTotal = 0.0;
@@ -149,7 +149,8 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
             if (itens == null || itens.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "ADICIONE PRODUTOS !");
+                mens.setLblMens("ADICIONE PRODUTOS");
+                mens.setVisible(true);
 
             } else {
 
@@ -189,15 +190,17 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
             try {
                 venda.setItens(itens);
-                new GenericDao<Venda>().salvar_ou_atualizar(venda);
+                fachada.salvar(venda);
                 saidaDeProdutos(itens);
                 zerarValores();
                 tPrincipal.getVendas().limparComponentes();
 
             } catch (java.lang.IllegalStateException n) {
-                JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+                mens.setLblMens(tPrincipal.getCAMPOS());
+                mens.setVisible(true);
             } catch (javax.persistence.RollbackException roll) {
-                JOptionPane.showMessageDialog(null, roll.getCause());
+                mens.setLblMens(tPrincipal.getCAMPOS());
+                mens.setVisible(true);
             }
 
         }
@@ -269,7 +272,8 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             diaProduto.setVisible(false);
             tPrincipal.getVendas().setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "NAO HA ESSA QUANTIDADE EM ESTOQUE");
+            mens.setLblMens("NÃO HÁ A QUANTIDADE EM ESTOQUE!");
+            mens.setVisible(true);
         }
 
     }
@@ -493,7 +497,8 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         if (numero < itens.get(indiceTemp).getProduto().getQuantidae_estoque()) {
             itens.get(indiceTemp).setQuantidade(numero);
         } else {
-            JOptionPane.showMessageDialog(null, "numero unsuficiente no estoque");
+            mens.setLblMens("NUMERO INSUFICIENTE NO ESTOQUE");
+            mens.setVisible(true);
         }
         listarProdutosAdicionados(itens);
         diaQuantidade.setVisible(false);
@@ -502,7 +507,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     public Caixa buscarCaixa() {
         Caixa caixa = null;
         try {
-            caixa = new DaoCaixa().buscaUltimoCaixa();
+            caixa = fachada.buscaCaixa();
             return caixa;
         } catch (NoResultException n) {
         }

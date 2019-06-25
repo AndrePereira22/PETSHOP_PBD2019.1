@@ -33,8 +33,8 @@ public class BusinessFuncionario implements IBusinessFuncionario {
     }
 
     @Override
-    public void ativarDesativar(Funcionario funcionario) {
-        new GenericDao<Funcionario>().salvar_ou_atualizar(funcionario);
+    public void remover(Funcionario funcionario) {
+        new GenericDao<Funcionario>().remover(Funcionario.class,funcionario.getId());
     }
 
     @Override

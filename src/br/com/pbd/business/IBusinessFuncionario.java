@@ -18,7 +18,7 @@ public interface IBusinessFuncionario {
 
     public List<Funcionario> getAll();
 
-    public void ativarDesativar(Funcionario funcionario);
+    public void remover(Funcionario funcionario);
 
     public List<Funcionario> busca(String nome);
     

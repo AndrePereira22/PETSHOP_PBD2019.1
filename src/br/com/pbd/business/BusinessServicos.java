@@ -15,29 +15,34 @@ import java.util.List;
  * @author Andre-Coude
  */
 public class BusinessServicos implements IBusinessServicos {
-
+    
     @Override
     public void salvar(Servico servico) {
-
+        
         new GenericDao<Servico>().salvar_ou_atualizar(servico);
     }
-
+    
     @Override
     public List<Servico> getAll() {
         return (new GenericDao<Servico>().getAll(Servico.class));
     }
-
+    
     @Override
     public void ativarDesativar(Servico servico) {
-
+        
         new GenericDao<Servico>().salvar_ou_atualizar(servico);
     }
-
+    
     @Override
     public List<Servico> busca(String nome) {
-
+        
         return new DaoServico().Busca(nome);
-
+        
     }
-
+    
+    @Override
+    public List<Servico> buscarAtivos(Boolean ativo) {
+        return new DaoServico().BuscarAtivos(ativo);
+    }
+    
 }

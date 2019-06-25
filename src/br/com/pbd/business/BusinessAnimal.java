@@ -5,10 +5,12 @@
  */
 package br.com.pbd.business;
 
+import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.DaoAnimal;
 import br.com.pbd.Dao.DaoEspecie;
 import br.com.pbd.Dao.DaoRaca;
 import br.com.pbd.Dao.GenericDao;
+import br.com.pbd.Modelo.Agenda;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Raca;
@@ -26,8 +28,16 @@ public class BusinessAnimal implements IBusinessAnimal {
     }
 
     @Override
-    public void ativarDesativar(Animal animal) {
-        new GenericDao<Animal>().salvar_ou_atualizar(animal);
+    public boolean remover(Animal animal) {
+
+        List<Agenda> lista = new DaoAgenda().buscaAgendaAnimal(animal);
+        if (lista.isEmpty()) {
+            new GenericDao<Animal>().remover(Animal.class, animal.getId());
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override
@@ -65,7 +75,8 @@ public class BusinessAnimal implements IBusinessAnimal {
     public List<Raca> buscaRaca(Especie especie) {
         return (new DaoRaca().buscaPorEspecie(especie));
     }
-     @Override
+
+    @Override
     public List<Raca> buscaRaca(String nome) {
         return new DaoRaca().Busca(nome);
     }
@@ -92,7 +103,8 @@ public class BusinessAnimal implements IBusinessAnimal {
     public List<Especie> buscaEspecie(String nome) {
         return (new DaoEspecie().Busca(nome));
     }
-     @Override
+
+    @Override
     public Especie buscar(String nome) {
         return (new DaoEspecie().Buscar(nome));
     }

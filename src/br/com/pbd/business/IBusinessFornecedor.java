@@ -18,7 +18,7 @@ public interface IBusinessFornecedor {
 
     public List<Fornecedor> getAll();
 
-    public void ativarDesativar(Fornecedor fornecedor);
+    public boolean remover(Fornecedor fornecedor);
 
     public List<Fornecedor> busca(String nome);
     
