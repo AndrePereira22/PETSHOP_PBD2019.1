@@ -16,7 +16,7 @@ import br.com.pbd.Modelo.Venda;
  *
  * @author Andre-Coude
  */
-public class BusinessGeral implements IBusinessGeral {
+public class BusinessGeral extends GenericDao<Caixa> implements IBusinessGeral {
 
     @Override
     public void salvar(Loja loja) {
@@ -30,7 +30,7 @@ public class BusinessGeral implements IBusinessGeral {
 
     @Override
     public void salvar(Caixa caixa) {
-        new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
+       salvar_ou_atualizar(caixa);
     }
 
     @Override

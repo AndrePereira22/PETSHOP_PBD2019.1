@@ -16,18 +16,18 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessProfissional implements IBusinessProfissional {
+public class BusinessProfissional extends GenericDao<Profissional> implements IBusinessProfissional {
 
     @Override
     public void salvar(Profissional profissional) {
 
-        new GenericDao<Profissional>().salvar_ou_atualizar(profissional);
+        salvar_ou_atualizar(profissional);
     }
 
     @Override
     public List<Profissional> getAll() {
 
-        return (new GenericDao<Profissional>().getAll(Profissional.class));
+        return (getAll(Profissional.class));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BusinessProfissional implements IBusinessProfissional {
         
      List<AgendaProfissional> lista = new DaoAgenda().buscaAgendaProfissional(profissional);
         if (lista.isEmpty()) {
-            new GenericDao<Profissional>().remover(Profissional.class, profissional.getId());
+            remover(Profissional.class, profissional.getId());
             return true;
         } else {
             return false;

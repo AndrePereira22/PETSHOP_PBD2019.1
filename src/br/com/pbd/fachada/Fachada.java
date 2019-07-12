@@ -5,6 +5,7 @@
  */
 package br.com.pbd.fachada;
 
+import br.com.pbd.Modelo.AgendaAnimal;
 import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Caixa;
@@ -18,8 +19,10 @@ import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Raca;
 import br.com.pbd.Modelo.Servico;
+import br.com.pbd.Modelo.Vacina;
 import br.com.pbd.Modelo.Venda;
 import br.com.pbd.business.BusinessAgenda;
+import br.com.pbd.business.BusinessAgendaAnimal;
 import br.com.pbd.business.BusinessAnimal;
 import br.com.pbd.business.BusinessCliente;
 import br.com.pbd.business.BusinessFornecedor;
@@ -28,7 +31,9 @@ import br.com.pbd.business.BusinessGeral;
 import br.com.pbd.business.BusinessProduto;
 import br.com.pbd.business.BusinessProfissional;
 import br.com.pbd.business.BusinessServicos;
+import br.com.pbd.business.BusinessVacina;
 import br.com.pbd.business.IBusinessAgenda;
+import br.com.pbd.business.IBusinessAgendaAnimal;
 import br.com.pbd.business.IBusinessAnimal;
 import br.com.pbd.business.IBusinessCliente;
 import br.com.pbd.business.IBusinessFornecedor;
@@ -39,6 +44,7 @@ import br.com.pbd.business.IBusinessProfissional;
 import java.sql.Date;
 import java.util.List;
 import br.com.pbd.business.IBusinessServicos;
+import br.com.pbd.business.IBusinessVacina;
 
 /**
  *
@@ -56,6 +62,8 @@ public class Fachada implements IFachada {
     private final IBusinessServicos bServico;
     private final IBusinessProduto bProduto;
     private final IBusinessGeral bGeral;
+    private final IBusinessAgendaAnimal bAgendaAnimal;
+    private final IBusinessVacina bVacina;
 
     public static Fachada getInstance() {
         if (instance == null) {
@@ -75,6 +83,8 @@ public class Fachada implements IFachada {
         this.bAgenda = new BusinessAgenda();
         this.bProduto = new BusinessProduto();
         this.bGeral = new BusinessGeral();
+        this.bAgendaAnimal = new BusinessAgendaAnimal();
+        this.bVacina = new BusinessVacina();
 
     }
 
@@ -90,7 +100,7 @@ public class Fachada implements IFachada {
 
     @Override
     public boolean remover(Animal animal) {
-       return this.bAnimal.remover(animal);
+        return this.bAnimal.remover(animal);
     }
 
     @Override
@@ -151,7 +161,7 @@ public class Fachada implements IFachada {
 
     @Override
     public boolean remover(Profissional profissional) {
-       return  (this.bProfissional.remover(profissional));
+        return (this.bProfissional.remover(profissional));
     }
 
     @Override
@@ -200,9 +210,10 @@ public class Fachada implements IFachada {
     public List<Servico> buscaServico(String nome) {
         return this.bServico.busca(nome);
     }
+
     @Override
     public List<Servico> buscarAtivos(Boolean ativo) {
-      return this.bServico.buscarAtivos(ativo);
+        return this.bServico.buscarAtivos(ativo);
     }
 
     @Override
@@ -348,6 +359,44 @@ public class Fachada implements IFachada {
         this.bGeral.salvar(venda);
     }
 
-    
+    @Override
+    public void salvar(AgendaAnimal agenda) {
+        this.bAgendaAnimal.salvar(agenda);
+    }
+
+    @Override
+    public List<AgendaAnimal> getAll() {
+        return this.bAgendaAnimal.getAll();
+    }
+
+    @Override
+    public void ativarDesativar(AgendaAnimal agenda) {
+        this.bAgendaAnimal.salvar(agenda);
+    }
+
+    @Override
+    public List<AgendaAnimal> busca(Animal animal) {
+        return this.bAgendaAnimal.busca(animal);
+    }
+
+    @Override
+    public void salvar(Vacina vacina) {
+        this.bVacina.salvar(vacina);
+    }
+
+    @Override
+    public void excluir(Vacina vacina) {
+        this.bVacina.excluir(vacina);
+    }
+
+    @Override
+    public List<Vacina> busca(String nome) {
+        return this.bVacina.busca(nome);
+    }
+
+    @Override
+    public List<Vacina> getAllVacina() {
+        return this.bVacina.getAll();
+    }
 
 }

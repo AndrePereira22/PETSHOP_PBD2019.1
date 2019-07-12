@@ -20,30 +20,24 @@ public class Main {
 
     public static void main(String[] s) {
 
-//        SalvarDadosRequiridos.salvarDadosRequiridos();
-//        SalvarDadosRequiridos.procurarLoja();
-//        SalvarDadosRequiridos.procurarAdm();
-//
-//        Fachada fachada = Fachada.getInstance();
-//        TelaPrincipal tPrincipal = new TelaPrincipal();
-//        Controle controle = new Controle(tPrincipal, fachada);
-//        ControleAnimal cAnimal = new ControleAnimal(tPrincipal, fachada);
-//        ControleAgenda cAgenda = new ControleAgenda(tPrincipal, fachada);
-//        ControlPro_Serv cProduto_Servico = new ControlPro_Serv(tPrincipal, fachada);
-//        ControleVendas cVendas = new ControleVendas(tPrincipal, fachada);
-//        ControleGerencial cGerencial = new ControleGerencial(tPrincipal, fachada);
-//        TelaLogin tLogin = new TelaLogin();
-//        ControleLogin cLogin = new ControleLogin(tLogin, tPrincipal);
-//        ControleFinanceiro cFinanceiro = new ControleFinanceiro(tPrincipal, fachada);
-//        cFinanceiro.abrirCaixa();
+        SalvarDadosRequiridos.salvarDadosRequiridos();
+        SalvarDadosRequiridos.procurarLoja();
+        SalvarDadosRequiridos.procurarAdm();
 
-List<ViewProdutos> v = new DaViewProduto().Buscaa("COLEIRA");
+        Fachada fachada = Fachada.getInstance();
+        TelaPrincipal tPrincipal = new TelaPrincipal();
+        Controle controle = new Controle(tPrincipal, fachada);
+        ControleAnimal cAnimal = new ControleAnimal(tPrincipal, fachada);
+        ControleAgenda cAgenda = new ControleAgenda(tPrincipal, fachada);
+        ControlPro_Serv cProduto_Servico = new ControlPro_Serv(tPrincipal, fachada);
+        ControleVendas cVendas = new ControleVendas(tPrincipal, fachada);
+        ControleGerencial cGerencial = new ControleGerencial(tPrincipal, fachada);
+        TelaLogin tLogin = new TelaLogin();
+        ControleLogin cLogin = new ControleLogin(tLogin, tPrincipal);
+        ControleFinanceiro cFinanceiro = new ControleFinanceiro(tPrincipal, fachada);
+        cFinanceiro.abrirCaixa();
 
 
-for(ViewProdutos x:v){
-    System.out.println("br.com.pbd.principal.Main.main()"+x.getNome());
-            
-}
 
     }
 }

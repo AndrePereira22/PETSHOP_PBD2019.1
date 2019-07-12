@@ -38,12 +38,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private final Vacina vacina = new Vacina();
     private final ContasAreceber cReceber = new ContasAreceber();
     private final AgendaAnimal agendaAnimal = new AgendaAnimal();
+    private final AgendarVacina aVacina = new AgendarVacina();
 
     private final CadastroGrupo cGrupo = new CadastroGrupo();
     private HashMap<Integer, Boolean> keyEventos;
     private int start;
-    private final JButton btnExcluir, btnEditar, btnAdicionar;
-    private final Icon editar, excluir, adicionar;
+    private final JButton btnExcluir, btnEditar, btnAdicionar,btnAgendaAnimal;
+    private final Icon editar, excluir, adicionar,iconAgenda;
     private final String EDICAO, CAMPOS, SENHA, CADASTRO;
 
     public TelaPrincipal() {
@@ -80,6 +81,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         ajustarInternalFrame(cLoja);
         ajustarInternalFrame(vacina);
         ajustarInternalFrame(agendaAnimal);
+        ajustarInternalFrame(aVacina);
 
         start = 0;
 
@@ -87,6 +89,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
         excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
         adicionar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+        iconAgenda = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
 
         btnEditar = new JButton(editar);
         btnEditar.setName("editar");
@@ -102,6 +105,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         btnAdicionar.setName("adicionar");
         btnAdicionar.setBorder(null);
         btnAdicionar.setContentAreaFilled(false);
+        
+        btnAgendaAnimal = new JButton(iconAgenda);
+        btnAgendaAnimal.setName("agenda");
+        btnAgendaAnimal.setBorder(null);
+        btnAgendaAnimal.setContentAreaFilled(false);
 
         adicionaEventos();
 
@@ -658,11 +666,28 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             geteProdutos().setVisible(false);
             getGerencia().setVisible(true);
         }
-        if (e.getSource() == getVacina().getBtnSair()) {
+        if (e.getSource() == getVacina().getBtnVoltar()) {
 
             getVacina().setVisible(false);
             getCadastros().setVisible(true);
         }
+        if (e.getSource() ==  getAgendaAnimal().getBtnSair()) {
+            getAgendaAnimal().setVisible(false);
+            getcAnimal().setVisible(true);
+            
+        }
+         if (e.getSource() ==  getAgendaAnimal().getBtnAdicionar()) {
+            getAgendaAnimal().setVisible(false);
+            getaVacina().setVisible(true);
+            
+        }
+          if (e.getSource() ==  getaVacina().getBtnCancelar()) {
+           getaVacina().setVisible(false);
+            getAgendaAnimal().setVisible(true);
+            
+        }
+        
+       
 
     }
 
@@ -681,7 +706,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getcProdutos().getBtnCancelar().addActionListener(this);
         cServicos.getBtnCancelar().addActionListener(this);
         cGrupo.getBtnSair().addActionListener(this);
-        getVacina().getBtnSair().addActionListener(this);
+        getVacina().getBtnVoltar().addActionListener(this);
 
         getServico_Produto().getBtnNovoServico().addActionListener(this);
         getServico_Produto().getBtnNovoProduto().addActionListener(this);
@@ -722,6 +747,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getFinancas().getBtnContasAreceber().addActionListener(this);
         getFinancas().getBtnSair().addActionListener(this);
         geteProdutos().getBtnCancelar().addActionListener(this);
+        
+        getAgendaAnimal().getBtnSair().addActionListener(this);
+         getAgendaAnimal().getBtnAdicionar().addActionListener(this);
+         getaVacina().getBtnCancelar().addActionListener(this);
 
         btnAgenda.addKeyListener(this);
         btnClientes.addKeyListener(this);
@@ -1139,6 +1168,20 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
      */
     public AgendaAnimal getAgendaAnimal() {
         return agendaAnimal;
+    }
+
+    /**
+     * @return the btnAgendaAnimal
+     */
+    public JButton getBtnAgendaAnimal() {
+        return btnAgendaAnimal;
+    }
+
+    /**
+     * @return the aVacina
+     */
+    public AgendarVacina getaVacina() {
+        return aVacina;
     }
 
 }

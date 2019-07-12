@@ -16,18 +16,18 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessFornecedor implements IBusinessFornecedor {
+public class BusinessFornecedor extends GenericDao<Fornecedor> implements IBusinessFornecedor {
 
     @Override
     public void salvar(Fornecedor fornecedor) {
 
-        new GenericDao<Fornecedor>().salvar_ou_atualizar(fornecedor);
+       salvar_ou_atualizar(fornecedor);
     }
 
     @Override
     public List<Fornecedor> getAll() {
 
-        return (new GenericDao<Fornecedor>().getAll(Fornecedor.class));
+        return (getAll(Fornecedor.class));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BusinessFornecedor implements IBusinessFornecedor {
         List<Produto> lista = new DaoProduto().listarProdutoFornecedor(fornecedor);
 
         if (lista.isEmpty()) {
-            new GenericDao<Fornecedor>().remover(Fornecedor.class, fornecedor.getId());
+            remover(Fornecedor.class, fornecedor.getId());
             return true;
         }else{
             return false;

@@ -50,7 +50,7 @@ public class Animal implements EntidadeBase {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
     @JoinColumn(name = "animal_id")
-    private List<Vacina> vacinas;
+    private List<AgendaAnimal> agendas;
 
     @Override
     public Long getId() {
@@ -217,17 +217,17 @@ public class Animal implements EntidadeBase {
     }
 
     /**
-     * @return the vacinas
+     * @return the agendas
      */
-    public List<Vacina> getVacinas() {
-        return vacinas;
+    public List<AgendaAnimal> getAgendas() {
+        return agendas;
     }
 
     /**
-     * @param vacinas the vacinas to set
+     * @param agendas the agendas to set
      */
-    public void setVacinas(List<Vacina> vacinas) {
-        this.vacinas = vacinas;
+    public void setAgendas(List<AgendaAnimal> agendas) {
+        this.agendas = agendas;
     }
 
     

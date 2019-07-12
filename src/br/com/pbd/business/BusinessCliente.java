@@ -16,12 +16,12 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessCliente implements IBusinessCliente {
-
+public class BusinessCliente extends GenericDao<Cliente> implements  IBusinessCliente {
+ 
     @Override
     public void salvar(Cliente cliente) {
 
-        new GenericDao<Cliente>().salvar_ou_atualizar(cliente);
+       salvar_ou_atualizar(cliente);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class BusinessCliente implements IBusinessCliente {
 
         List<Animal> animais = new DaoAnimal().buscaPorCliente(cliente);
         if (animais.isEmpty()) {
-            new GenericDao<Cliente>().remover(Cliente.class, cliente.getId());
+            remover(Cliente.class, cliente.getId());
             return true;
         } else {
             return false;
@@ -39,7 +39,7 @@ public class BusinessCliente implements IBusinessCliente {
 
     @Override
     public List<Cliente> getAll() {
-        return (new GenericDao<Cliente>().getAll(Cliente.class));
+        return (getAll(Cliente.class));
     }
 
     @Override

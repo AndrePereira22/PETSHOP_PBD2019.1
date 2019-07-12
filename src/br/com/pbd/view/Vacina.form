@@ -24,10 +24,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="jPanel1" min="-2" pref="1016" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
+          <Component id="jPanel1" min="-2" pref="1016" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -100,7 +97,6 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel6" max="32767" attributes="0"/>
                       <Component id="jPanel5" alignment="0" pref="981" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
@@ -109,8 +105,6 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -142,6 +136,13 @@
                               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="71" max="32767" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnNovaVacina" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                              <Component id="btnVoltar" min="-2" pref="91" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -150,10 +151,15 @@
                               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="jScrollPane1" pref="297" max="32767" attributes="0"/>
                                   <Component id="jPanel3" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="246" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnVoltar" pref="32" max="32767" attributes="0"/>
+                                  <Component id="btnNovaVacina" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="122" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -251,15 +257,15 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="btnSalvarConta" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="btnSalvarVacina" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                                      <Component id="btnCancelarConta" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="btnCancelarVacina" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="txtValor" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="txtPeriodo" alignment="0" pref="204" max="32767" attributes="0"/>
                                               <Component id="txtDescricao" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="vencimento" alignment="0" pref="204" max="32767" attributes="0"/>
+                                              <Component id="txtDose" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="0" pref="46" max="32767" attributes="0"/>
                                       </Group>
@@ -277,15 +283,15 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="txtValor" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtPeriodo" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="vencimento" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="87" max="32767" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="txtDose" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btnSalvarConta" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnCancelarConta" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnSalvarVacina" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnCancelarVacina" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -300,17 +306,12 @@
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel2">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="VALOR"/>
-                          </Properties>
-                        </Component>
-                        <Component class="com.toedter.calendar.JDateChooser" name="vencimento">
-                          <Properties>
-                            <Property name="enabled" type="boolean" value="false"/>
+                            <Property name="text" type="java.lang.String" value="PERIODO "/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel3">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="DATA DE VENCIMENTO"/>
+                            <Property name="text" type="java.lang.String" value="NUMERO DE DOSES"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtDescricao">
@@ -318,80 +319,41 @@
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtValor">
+                        <Component class="javax.swing.JTextField" name="txtPeriodo">
                           <Properties>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnSalvarConta">
+                        <Component class="javax.swing.JButton" name="btnSalvarVacina">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="SALVAR"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnCancelarConta">
+                        <Component class="javax.swing.JButton" name="btnCancelarVacina">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="CANCELAR"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarContaActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarVacinaActionPerformed"/>
                           </Events>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="txtDose">
                         </Component>
                       </SubComponents>
                     </Container>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JPanel" name="jPanel6">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="cc" red="cc" type="rgb"/>
-                    </Property>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="btnNovaConta" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                              <Component id="btnSair" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnSair" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnNovaConta" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace pref="25" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnSair">
+                    <Component class="javax.swing.JButton" name="btnVoltar">
                       <Properties>
-                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/br/com/pbd/resource/voltar.png"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="SAIR"/>
-                        <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/br/com/pbd/resource/voltar.1.png"/>
-                        </Property>
+                        <Property name="text" type="java.lang.String" value="VOLTAR"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnNovaConta">
+                    <Component class="javax.swing.JButton" name="btnNovaVacina">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="NOVA CONTA"/>
+                        <Property name="text" type="java.lang.String" value="NOVA VACINA"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovaContaActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovaVacinaActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>

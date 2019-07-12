@@ -14,23 +14,22 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessServicos implements IBusinessServicos {
+public class BusinessServicos extends GenericDao<Servico> implements IBusinessServicos {
     
     @Override
     public void salvar(Servico servico) {
-        
-        new GenericDao<Servico>().salvar_ou_atualizar(servico);
+        salvar_ou_atualizar(servico);
     }
     
     @Override
     public List<Servico> getAll() {
-        return (new GenericDao<Servico>().getAll(Servico.class));
+        return (getAll(Servico.class));
     }
     
     @Override
     public void ativarDesativar(Servico servico) {
         
-        new GenericDao<Servico>().salvar_ou_atualizar(servico);
+        salvar_ou_atualizar(servico);
     }
     
     @Override

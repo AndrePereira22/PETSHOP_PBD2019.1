@@ -19,7 +19,7 @@ public class Vacina implements EntidadeBase {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vacina_seq")
     private Long id;
 
-     @Column(name = "codigo", precision = 8, scale = 0, nullable = false)
+    @Column(name = "codigo", precision = 8, scale = 0, nullable = false)
     private int codigo;
     @Column(name = "descricao", length = 20, nullable = false)
     private String nome;
@@ -27,9 +27,6 @@ public class Vacina implements EntidadeBase {
     private String peiodo;
     @Column(name = "doses", precision = 2, scale = 0, nullable = false)
     private int doses;
-
-    @OneToOne
-    private Animal animal;
 
     @Override
     public Long getId() {
@@ -55,21 +52,6 @@ public class Vacina implements EntidadeBase {
      */
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-  
-    /**
-     * @return the animal
-     */
-    public Animal getAnimal() {
-        return animal;
-    }
-
-    /**
-     * @param animal the animal to set
-     */
-    public void setAnimal(Animal animal) {
-        this.animal = animal;
     }
 
     /**

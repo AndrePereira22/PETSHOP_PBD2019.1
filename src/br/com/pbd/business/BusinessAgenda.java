@@ -16,23 +16,23 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessAgenda implements IBusinessAgenda {
+public class BusinessAgenda extends GenericDao<AgendaProfissional> implements IBusinessAgenda {
 
     @Override
     public void salvar(AgendaProfissional agenda) {
 
-        new GenericDao<AgendaProfissional>().salvar_ou_atualizar(agenda);
+        salvar_ou_atualizar(agenda);
     }
 
     @Override
     public List<AgendaProfissional> getAll() {
-        return (new GenericDao<AgendaProfissional>().getAll(AgendaProfissional.class));
+        return (getAll(AgendaProfissional.class));
     }
 
     @Override
     public void ativarDesativar(AgendaProfissional agenda) {
 
-        new GenericDao<AgendaProfissional>().salvar_ou_atualizar(agenda);
+        salvar_ou_atualizar(agenda);
     }
 
     @Override

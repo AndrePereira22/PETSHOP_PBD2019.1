@@ -184,17 +184,11 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             tPrincipal.getAgenda().getComboProfissional();
             listarAgendaGeral();
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | java.lang.NullPointerException n) {
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
         } catch (ArrayIndexOutOfBoundsException e) {
             mens.setLblMens("OCORREU UM ERRO NO SISTEMA");
-            mens.setVisible(true);
-        } catch (java.lang.NullPointerException e) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
         }
 

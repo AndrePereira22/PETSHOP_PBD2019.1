@@ -20,11 +20,11 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessAnimal implements IBusinessAnimal {
+public class BusinessAnimal extends GenericDao<Animal> implements IBusinessAnimal {
 
     @Override
     public void salvar(Animal animal) {
-        new GenericDao<Animal>().salvar_ou_atualizar(animal);
+        salvar_ou_atualizar(animal);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BusinessAnimal implements IBusinessAnimal {
 
         List<AgendaProfissional> lista = new DaoAgenda().buscaAgendaAnimal(animal);
         if (lista.isEmpty()) {
-            new GenericDao<Animal>().remover(Animal.class, animal.getId());
+            remover(Animal.class, animal.getId());
             return true;
         } else {
             return false;
@@ -42,7 +42,7 @@ public class BusinessAnimal implements IBusinessAnimal {
 
     @Override
     public List<Animal> getAll() {
-        return (new GenericDao<Animal>().getAll(Animal.class));
+        return (getAll(Animal.class));
     }
 
     @Override

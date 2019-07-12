@@ -18,10 +18,10 @@ import jdk.nashorn.internal.ir.annotations.Immutable;
 
 @Immutable
 @Entity
-//@Subselect("SELECT * FROM produto")
 public class ViewProdutos {
     
     @Id
+    
     @Column(name = "codigo",nullable=false)
     private int codigo;
     

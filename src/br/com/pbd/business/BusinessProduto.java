@@ -18,18 +18,18 @@ import java.util.List;
  *
  * @author Andre-Coude
  */
-public class BusinessProduto implements IBusinessProduto {
+public class BusinessProduto extends GenericDao<Produto> implements IBusinessProduto {
 
     @Override
     public void salvar(Produto produto) {
 
-        new GenericDao<Produto>().salvar_ou_atualizar(produto);
+       salvar_ou_atualizar(produto);
     }
 
     @Override
     public List<Produto> getAll() {
 
-        return new GenericDao<Produto>().getAll(Produto.class);
+        return  getAll(Produto.class);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class BusinessProduto implements IBusinessProduto {
 
         List<ItemVenda> itens = new DaoVenda().buscaItens(produto);
         if (itens.isEmpty()) {
-            new GenericDao<Produto>().remover(Produto.class, produto.getId());
+            remover(Produto.class, produto.getId());
             return true;
         } else {
             return false;

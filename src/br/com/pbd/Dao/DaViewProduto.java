@@ -32,7 +32,8 @@ public class DaViewProduto {
 
         manager.getTransaction().begin();
 	TypedQuery<ViewProdutos> vp = (TypedQuery<ViewProdutos>)
-                manager.createNativeQuery("select * from viuuprodutos  where nome ='" + nome +"'" ,ViewProdutos.class);
+  manager.createNativeQuery("select * from viewprodutos  where nome ='" + nome +"'" ,
+          ViewProdutos.class);
 	
         
         manager.getTransaction().commit();
