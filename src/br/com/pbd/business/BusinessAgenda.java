@@ -7,7 +7,7 @@ package br.com.pbd.business;
 
 import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.GenericDao;
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Profissional;
 import java.sql.Date;
 import java.util.List;
@@ -19,24 +19,24 @@ import java.util.List;
 public class BusinessAgenda implements IBusinessAgenda {
 
     @Override
-    public void salvar(Agenda agenda) {
+    public void salvar(AgendaProfissional agenda) {
 
-        new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+        new GenericDao<AgendaProfissional>().salvar_ou_atualizar(agenda);
     }
 
     @Override
-    public List<Agenda> getAll() {
-        return (new GenericDao<Agenda>().getAll(Agenda.class));
+    public List<AgendaProfissional> getAll() {
+        return (new GenericDao<AgendaProfissional>().getAll(AgendaProfissional.class));
     }
 
     @Override
-    public void ativarDesativar(Agenda agenda) {
+    public void ativarDesativar(AgendaProfissional agenda) {
 
-        new GenericDao<Agenda>().salvar_ou_atualizar(agenda);
+        new GenericDao<AgendaProfissional>().salvar_ou_atualizar(agenda);
     }
 
     @Override
-    public List<Agenda> busca(Profissional pro,Date data) {
+    public List<AgendaProfissional> busca(Profissional pro,Date data) {
     
     return (new DaoAgenda().buscaAgenda(pro, data));
     

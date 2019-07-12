@@ -1,6 +1,5 @@
 package br.com.pbd.view;
 
-import br.com.pbd.sql.PostgresBackup_Curso;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -30,20 +29,22 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private final Servico_Produto servico_Produto = new Servico_Produto();
     private final CadastroLoja cLoja = new CadastroLoja();
     private final Raca_especie raca_especie = new Raca_especie();
-    private final Agenda agenda = new Agenda();
+    private final AgendaProfissional agenda = new AgendaProfissional();
     private final Vendas vendas = new Vendas();
     private final Gerencia gerencia = new Gerencia();
     private final Financeiro financas = new Financeiro();
     private final EntradaProdutos eProdutos = new EntradaProdutos();
     private final ContasAPagar cPagar = new ContasAPagar();
+    private final Vacina vacina = new Vacina();
     private final ContasAreceber cReceber = new ContasAreceber();
+    private final AgendaAnimal agendaAnimal = new AgendaAnimal();
 
     private final CadastroGrupo cGrupo = new CadastroGrupo();
     private HashMap<Integer, Boolean> keyEventos;
     private int start;
     private final JButton btnExcluir, btnEditar, btnAdicionar;
     private final Icon editar, excluir, adicionar;
-    private final String EDICAO, CAMPOS, SENHA;
+    private final String EDICAO, CAMPOS, SENHA, CADASTRO;
 
     public TelaPrincipal() {
         initComponents();
@@ -55,6 +56,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         this.EDICAO = "EDIÇÃO FINALIZADA!";
         this.CAMPOS = "HÁ CAMPOS OBRIGATORIOS VAZIOS!";
         this.SENHA = "SENHAS DIFERENTES!";
+        this.CADASTRO = "CADASTRO CONCLUIDO!";
 
         ajustarInternalFrame(cAnimal);
         ajustarInternalFrame(cadastros);
@@ -76,6 +78,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         ajustarInternalFrame(cReceber);
         ajustarInternalFrame(cGrupo);
         ajustarInternalFrame(cLoja);
+        ajustarInternalFrame(vacina);
+        ajustarInternalFrame(agendaAnimal);
 
         start = 0;
 
@@ -317,7 +321,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-    
+
         // System.exit(WIDTH);
     }//GEN-LAST:event_btnSairActionPerformed
 
@@ -482,6 +486,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
 
         if (e.getSource() == getCadastros().getBtnFuncionario()) {
             getcFuncionario().setVisible(true);
+        }
+        if (e.getSource() == getCadastros().getBtnVacinas()) {
+            getVacina().setVisible(true);
         }
         if (e.getSource() == getCadastros().getVoltarMenu()) {
             painelMenu.setVisible(true);
@@ -651,6 +658,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             geteProdutos().setVisible(false);
             getGerencia().setVisible(true);
         }
+        if (e.getSource() == getVacina().getBtnSair()) {
+
+            getVacina().setVisible(false);
+            getCadastros().setVisible(true);
+        }
 
     }
 
@@ -663,11 +675,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getCadastros().getBtnEspecie().addActionListener(this);
         getCadastros().getBtnRaca().addActionListener(this);
         getCadastros().getBtnGrupo().addActionListener(this);
+        getCadastros().getBtnVacinas().addActionListener(this);
 
         getAgenda().getBtnSair().addActionListener(this);
         getcProdutos().getBtnCancelar().addActionListener(this);
         cServicos.getBtnCancelar().addActionListener(this);
         cGrupo.getBtnSair().addActionListener(this);
+        getVacina().getBtnSair().addActionListener(this);
 
         getServico_Produto().getBtnNovoServico().addActionListener(this);
         getServico_Produto().getBtnNovoProduto().addActionListener(this);
@@ -927,7 +941,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     /**
      * @return the agenda
      */
-    public Agenda getAgenda() {
+    public AgendaProfissional getAgenda() {
         return agenda;
     }
 
@@ -1065,13 +1079,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }
 
     /**
-     * @return the cPagar
-     */
-    public ContasAPagar getcPagar() {
-        return cPagar;
-    }
-
-    /**
      * @return the cReceber
      */
     public ContasAreceber getcReceber() {
@@ -1104,6 +1111,34 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
      */
     public JButton getBtnAdicionar() {
         return btnAdicionar;
+    }
+
+    /**
+     * @return the CADASTRO
+     */
+    public String getCADASTRO() {
+        return CADASTRO;
+    }
+
+    /**
+     * @return the cPagar
+     */
+    public ContasAPagar getcPagar() {
+        return cPagar;
+    }
+
+    /**
+     * @return the vacina
+     */
+    public Vacina getVacina() {
+        return vacina;
+    }
+
+    /**
+     * @return the agendaAnimal
+     */
+    public AgendaAnimal getAgendaAnimal() {
+        return agendaAnimal;
     }
 
 }

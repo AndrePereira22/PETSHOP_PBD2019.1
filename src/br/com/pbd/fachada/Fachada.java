@@ -5,7 +5,7 @@
  */
 package br.com.pbd.fachada;
 
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Cliente;
@@ -206,24 +206,24 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void salvar(Agenda agenda) {
+    public void salvar(AgendaProfissional agenda) {
         this.bAgenda.salvar(agenda);
 
     }
 
     @Override
-    public List<Agenda> getAllAgenda() {
+    public List<AgendaProfissional> getAllAgenda() {
         return this.bAgenda.getAll();
     }
 
     @Override
-    public void ativarDesativar(Agenda agenda) {
+    public void ativarDesativar(AgendaProfissional agenda) {
         this.bAgenda.ativarDesativar(agenda);
 
     }
 
     @Override
-    public List<Agenda> buscaAgenda(Profissional pro, Date data) {
+    public List<AgendaProfissional> buscaAgenda(Profissional pro, Date data) {
         return this.bAgenda.busca(pro, data);
     }
 

@@ -123,6 +123,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             int ro = retornaIndice(tPrincipal.getcProfissioanl().getTabelaProfissionais(), e);
             profissional = profissionais.get(ro);
+           
+            
             if (escolha == edicao) {
                 tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelCadastro());
                 tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(true);

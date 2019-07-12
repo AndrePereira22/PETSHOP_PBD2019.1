@@ -8,6 +8,7 @@ package br.com.pbd.Dao;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
+import br.com.pbd.Modelo.ViewProdutos;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -25,7 +26,7 @@ public class DaoProduto {
         Query query = null;
         try {
             query = manager.createQuery("SELECT produto FROM Produto produto where produto.nome like '%" + nome + "%'");
-            
+
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar produtos");
         }
@@ -42,11 +43,23 @@ public class DaoProduto {
         }
         return query.getResultList();
     }
+
     public List<Produto> listarProdutoFornecedor(Fornecedor fornecedor) {
         Query query = null;
         try {
             query = manager.createQuery("SELECT  produto FROM Produto produto where produto.fornecedor=:obj ");
-            query.setParameter("obj",fornecedor);
+            query.setParameter("obj", fornecedor);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar produtos");
+        }
+        return query.getResultList();
+    }
+
+    public List<ViewProdutos> buscaView(String nome) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT v FROM view_produtos v where v.nome like '%" + nome + "%'");
+
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar produtos");
         }

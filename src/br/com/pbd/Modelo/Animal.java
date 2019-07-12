@@ -8,6 +8,7 @@ package br.com.pbd.Modelo;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -46,6 +47,10 @@ public class Animal implements EntidadeBase {
 
     @ManyToOne
     private Cliente cliente;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
+    @JoinColumn(name = "animal_id")
+    private List<Vacina> vacinas;
 
     @Override
     public Long getId() {
@@ -211,4 +216,19 @@ public class Animal implements EntidadeBase {
         changeSupport.removePropertyChangeListener(listener);
     }
 
+    /**
+     * @return the vacinas
+     */
+    public List<Vacina> getVacinas() {
+        return vacinas;
+    }
+
+    /**
+     * @param vacinas the vacinas to set
+     */
+    public void setVacinas(List<Vacina> vacinas) {
+        this.vacinas = vacinas;
+    }
+
+    
 }

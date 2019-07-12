@@ -5,7 +5,7 @@
  */
 package br.com.pbd.fachada;
 
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Cliente;
@@ -28,13 +28,13 @@ import java.util.List;
  */
 public interface IFachada {
 
-    public void salvar(Agenda agenda);
+    public void salvar(AgendaProfissional agenda);
 
-    public List<Agenda> getAllAgenda();
+    public List<AgendaProfissional> getAllAgenda();
 
-    public void ativarDesativar(Agenda agenda);
+    public void ativarDesativar(AgendaProfissional agenda);
 
-    public List<Agenda> buscaAgenda(Profissional pro, Date data);
+    public List<AgendaProfissional> buscaAgenda(Profissional pro, Date data);
 
     public void salvar(Animal animal);
 

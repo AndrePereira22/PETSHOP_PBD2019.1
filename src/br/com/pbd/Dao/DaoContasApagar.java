@@ -5,7 +5,7 @@
  */
 package br.com.pbd.Dao;
 
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.sql.SQLConexao;

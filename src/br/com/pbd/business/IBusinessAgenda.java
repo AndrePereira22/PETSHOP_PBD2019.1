@@ -5,7 +5,7 @@
  */
 package br.com.pbd.business;
 
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Profissional;
 import java.sql.Date;
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.List;
  */
 public interface IBusinessAgenda {
     
-     public void salvar(Agenda agenda);
+     public void salvar(AgendaProfissional agenda);
 
-    public List<Agenda> getAll();
+    public List<AgendaProfissional> getAll();
 
-    public void ativarDesativar(Agenda agenda);
+    public void ativarDesativar(AgendaProfissional agenda);
 
-    public List<Agenda> busca(Profissional pro,Date data);
+    public List<AgendaProfissional> busca(Profissional pro,Date data);
     
 }

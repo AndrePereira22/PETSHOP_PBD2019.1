@@ -6,7 +6,7 @@
 package br.com.pbd.view;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 
 public class AgendarServico extends javax.swing.JInternalFrame {
 
@@ -398,7 +398,7 @@ public class AgendarServico extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtRaca;
     // End of variables declaration//GEN-END:variables
 
-     public void preencherDados(Agenda agenda) {
+     public void preencherDados(AgendaProfissional agenda) {
 
         getTxtDono().setText(agenda.getAnimal().getCliente().getNome());
         getTxtProfissional().setText(agenda.getProfissional().getNome());

@@ -296,17 +296,15 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnGrupo" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnRaca" min="-2" pref="98" max="-2" attributes="0"/>
-                                      <EmptySpace pref="82" max="32767" attributes="0"/>
-                                      <Component id="btnEspecie" min="-2" pref="120" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="btnRaca" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <Component id="btnGrupo" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace pref="39" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="btnVacinas" max="32767" attributes="0"/>
+                                  <Component id="btnEspecie" pref="120" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -319,7 +317,10 @@
                                   <Component id="btnEspecie" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="btnGrupo" min="-2" pref="37" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnGrupo" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                  <Component id="btnVacinas" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -343,6 +344,14 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="GRUPO DE PRODUTOS"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="btnVacinas">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="VACINAS"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVacinasActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

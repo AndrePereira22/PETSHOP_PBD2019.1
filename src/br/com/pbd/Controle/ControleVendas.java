@@ -252,22 +252,41 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     public void adicionarItemVenda() {
 
         int numero = 0;
+        boolean existe = false;
         try {
             String n = diaQuantidade.getTxtQuantidade().getText();
             numero = Integer.parseInt(n);
 
         } catch (NumberFormatException | java.lang.NullPointerException erro) {
         }
-        if (numero < produto.getQuantidae_estoque()) {
+        if (numero < produto.getQuantidae_estoque() && numero>0) {
             if (itens == null) {
                 itens = new ArrayList<ItemVenda>();
             }
+            if (itens.isEmpty()) {
+                ItemVenda item = new ItemVenda();
+                item.setQuantidade(numero);
+                item.setProduto(produto);
+                item.setVenda(venda);
+                itens.add(item);
+            }else{
+                for(int i=0; i <itens.size(); i++  ){
+                    if(itens.get(i).getProduto() == produto ){
+                        existe=true;                        int q = itens.get(i).getQuantidade()+numero;
+                        itens.get(i).setQuantidade(q);
+                    }
+                        
+                }
+                if(!existe){
+                    ItemVenda item = new ItemVenda();
+                item.setQuantidade(numero);
+                item.setProduto(produto);
+                item.setVenda(venda);
+                itens.add(item); 
+                }
+                existe=false;
+            }
 
-            ItemVenda item = new ItemVenda();
-            item.setQuantidade(numero);
-            item.setProduto(produto);
-            item.setVenda(venda);
-            itens.add(item);
             diaQuantidade.setVisible(false);
             diaProduto.setVisible(false);
             tPrincipal.getVendas().setVisible(true);

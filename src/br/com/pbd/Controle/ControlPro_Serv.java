@@ -209,7 +209,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             produto.setValorcompra(valorCompra);
 
             fachada.salvar(produto);
-            mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+            mens.setLblMens(tPrincipal.getCADASTRO());
             mens.setVisible(true);
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
@@ -237,7 +237,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
             fachada.salvar(servico);
 
-            mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+            mens.setLblMens(tPrincipal.getCADASTRO());
             mens.setVisible(true);
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
@@ -262,16 +262,13 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
         try {
             fachada.salvar(grupo);
-            mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
+            mens.setLblMens(tPrincipal.getCADASTRO());
             mens.setVisible(true);
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
         }

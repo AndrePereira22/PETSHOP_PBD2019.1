@@ -9,7 +9,7 @@ import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Servico;
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaMensagem;
@@ -42,11 +42,11 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     private final TelaPrincipal tPrincipal;
     List<Profissional> profissionais;
     Profissional profissional;
-    private Agenda agenda;
+    private AgendaProfissional agenda;
     Animal animal;
     List<Animal> animais;
     List<Servico> servicos;
-    List<Agenda> agendas;
+    List<AgendaProfissional> agendas;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
     private final DiaMensagem mens;
@@ -60,7 +60,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         profissionais = new ArrayList<Profissional>();
         animais = new ArrayList<Animal>();
         servicos = new ArrayList<Servico>();
-        agendas = new ArrayList<Agenda>();
+        agendas = new ArrayList<AgendaProfissional>();
 
         adicionarEventos();
 
@@ -144,7 +144,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     private void salvarServico() {
 
-        Agenda agenda = new Agenda();
+        AgendaProfissional agenda = new AgendaProfissional();
         Servico servico = null;
         Animal animal = null;
 
@@ -200,7 +200,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     }
 
-    private void editarServico(Agenda agenda) {
+    private void editarServico(AgendaProfissional agenda) {
 
         Servico servico = null;
 
@@ -295,7 +295,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
                 String[] colunas = new String[]{"HORARIO", "SERVICO", "EDITAR", "EXCLUIR"};
                 Object[][] dados = new Object[agendas.size()][4];
-                for (Agenda a : agendas) {
+                for (AgendaProfissional a : agendas) {
                     dados[i][0] = a.getHorario();
                     dados[i][1] = a.getServico().getDescricao();
                     dados[i][2] = tPrincipal.getBtnEditar();
@@ -334,7 +334,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
             String[] colunas = new String[]{"HORARIO", "SERVICO"};
             Object[][] dados = new Object[agendas.size()][2];
-            for (Agenda a : agendas) {
+            for (AgendaProfissional a : agendas) {
                 dados[i][0] = a.getHorario();
                 dados[i][1] = a.getServico().getDescricao();
 

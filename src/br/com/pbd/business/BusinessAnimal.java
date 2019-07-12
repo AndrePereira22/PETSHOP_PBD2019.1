@@ -10,7 +10,7 @@ import br.com.pbd.Dao.DaoAnimal;
 import br.com.pbd.Dao.DaoEspecie;
 import br.com.pbd.Dao.DaoRaca;
 import br.com.pbd.Dao.GenericDao;
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.Raca;
@@ -30,7 +30,7 @@ public class BusinessAnimal implements IBusinessAnimal {
     @Override
     public boolean remover(Animal animal) {
 
-        List<Agenda> lista = new DaoAgenda().buscaAgendaAnimal(animal);
+        List<AgendaProfissional> lista = new DaoAgenda().buscaAgendaAnimal(animal);
         if (lista.isEmpty()) {
             new GenericDao<Animal>().remover(Animal.class, animal.getId());
             return true;

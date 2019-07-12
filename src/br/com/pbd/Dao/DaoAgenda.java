@@ -5,7 +5,7 @@
  */
 package br.com.pbd.Dao;
 
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.sql.SQLConexao;
@@ -25,7 +25,7 @@ public class DaoAgenda {
    
     
 
-    public List<Agenda> buscaAgenda(Profissional pro, Date data) {
+    public List<AgendaProfissional> buscaAgenda(Profissional pro, Date data) {
         Query query = null;
         try {
             query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj and agenda.data =:date");
@@ -37,7 +37,7 @@ public class DaoAgenda {
         return query.getResultList();
     }
 
-    public List<Agenda> buscarAgendas(Date data) {
+    public List<AgendaProfissional> buscarAgendas(Date data) {
         Query query = null;
         try {
             query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.data =:date");
@@ -48,7 +48,7 @@ public class DaoAgenda {
         }
         return query.getResultList();
     }
-    public List<Agenda> buscaAgendaProfissional(Profissional pro) {
+    public List<AgendaProfissional> buscaAgendaProfissional(Profissional pro) {
         Query query = null;
         try {
             query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj");
@@ -58,7 +58,7 @@ public class DaoAgenda {
         }
         return query.getResultList();
     }
-     public List<Agenda> buscaAgendaAnimal(Animal pro) {
+     public List<AgendaProfissional> buscaAgendaAnimal(Animal pro) {
         Query query = null;
         try {
             query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.animal =:obj");

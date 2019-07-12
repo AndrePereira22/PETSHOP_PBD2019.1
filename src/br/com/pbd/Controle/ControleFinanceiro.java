@@ -9,7 +9,7 @@ import br.com.pbd.Dao.DaoAgenda;
 import br.com.pbd.Dao.DaoContasApagar;
 import br.com.pbd.Dao.DaoFinanceiro;
 import br.com.pbd.Dao.GenericDao;
-import br.com.pbd.Modelo.Agenda;
+import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.ContaAPagar;
 import br.com.pbd.Modelo.Loja;
@@ -34,7 +34,7 @@ public class ControleFinanceiro implements ActionListener {
     private final TelaPrincipal tPrincipal;
     private Caixa caixa;
     private Loja loja;
-    private List<Agenda> agendas;
+    private List<AgendaProfissional> agendas;
 
     private List<ContaAPagar> contas;
 
@@ -157,7 +157,7 @@ public class ControleFinanceiro implements ActionListener {
         }
     }
 
-    private void listarServicos(List<Agenda> lista) {
+    private void listarServicos(List<AgendaProfissional> lista) {
 
         tPrincipal.getFinancas().getTabelaVendas().setDefaultRenderer(Object.class, new Render());
 
@@ -166,7 +166,7 @@ public class ControleFinanceiro implements ActionListener {
         try {
             String[] colunas = new String[]{"VALOR TOTAL", "PAGAMENTO", "CLIENTE", "ANIMAL", "PROFISSIONAL "};
             Object[][] dados = new Object[lista.size()][5];
-            for (Agenda a : lista) {
+            for (AgendaProfissional a : lista) {
                 if (a.getPagamento().getStatus()) {
                     status = "PAGO";
                 } else {

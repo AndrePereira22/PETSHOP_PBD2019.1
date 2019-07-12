@@ -3,7 +3,7 @@
   <persistence-unit name="PBD" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>br.com.pbd.Modelo.Administrador</class>
-    <class>br.com.pbd.Modelo.Agenda</class>
+    <class>br.com.pbd.Modelo.AgendaProfissional</class>
     <class>br.com.pbd.Modelo.Animal</class>
     <class>br.com.pbd.Modelo.Caixa</class>
     <class>br.com.pbd.Modelo.Cliente</class>
@@ -23,7 +23,9 @@
     <class>br.com.pbd.Modelo.Profissional</class>
     <class>br.com.pbd.Modelo.Raca</class>
     <class>br.com.pbd.Modelo.Servico</class>
+    <class>br.com.pbd.Modelo.Vacina</class>
     <class>br.com.pbd.Modelo.Venda</class>
+    <class>br.com.pbd.Modelo.ViewProdutos</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/petshop"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

@@ -30,7 +30,7 @@ public class Produto implements EntidadeBase {
     private Double valorcompra;
     @Column(name = "valor_venda", precision = 4, scale = 2, nullable = false)
     private Double valorvenda;
-    @Column(name = "quantidae_estoque", precision = 2, scale = 0, nullable = false)
+    @Column(name = "quantidade_estoque", precision = 2, scale = 0, nullable = false)
     private int quantidae_estoque;
 
     @OneToOne
