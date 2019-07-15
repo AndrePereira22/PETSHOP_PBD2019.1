@@ -29,7 +29,7 @@ public class BusinessServicos extends GenericDao<Servico> implements IBusinessSe
     @Override
     public void ativarDesativar(Servico servico) {
         
-        salvar_ou_atualizar(servico);
+        remover(Servico.class, servico.getId());
     }
     
     @Override

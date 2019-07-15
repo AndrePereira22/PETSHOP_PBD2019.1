@@ -28,7 +28,7 @@ public class DaoAgenda {
     public List<AgendaProfissional> buscaAgenda(Profissional pro, Date data) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj and agenda.data =:date");
+            query = manager.createQuery("SELECT  agenda FROM AgendaProfissional agenda where agenda.profissional =:obj and agenda.data =:date");
             query.setParameter("obj", pro);
             query.setParameter("date", data);
         } catch (IllegalStateException e) {
@@ -40,7 +40,7 @@ public class DaoAgenda {
     public List<AgendaProfissional> buscarAgendas(Date data) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.data =:date");
+            query = manager.createQuery("SELECT  agenda FROM AgendaProfissional agenda where agenda.data =:date");
             query.setParameter("date", data);
         } catch (IllegalStateException e) {
             query.setParameter("date", data);
@@ -51,7 +51,7 @@ public class DaoAgenda {
     public List<AgendaProfissional> buscaAgendaProfissional(Profissional pro) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT  agenda FROM Agenda agenda where agenda.profissional =:obj");
+            query = manager.createQuery("SELECT  agenda FROM AgendaProfissional agenda where agenda.profissional =:obj");
             query.setParameter("obj", pro);
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar servicos");
@@ -67,6 +67,16 @@ public class DaoAgenda {
             System.out.println("erro ao buscar servicos");
         }
         return query.getResultList();
+    }
+     public AgendaProfissional  bucarPorId(int id) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT p FROM AgendaProfissional p where p.id=:obj");
+            query.setParameter("obj", id);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar produtos");
+        }
+        return (AgendaProfissional) query.getSingleResult();
     }
 
 }

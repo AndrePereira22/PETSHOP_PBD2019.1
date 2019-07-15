@@ -5,12 +5,15 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoAgenda;
+import br.com.pbd.DaoView.DaoViewAgendaProfissional;
 import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Servico;
 import br.com.pbd.Modelo.AgendaProfissional;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.Visao.ViewAgenda;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.TelaPrincipal;
@@ -46,7 +49,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
     Animal animal;
     List<Animal> animais;
     List<Servico> servicos;
-    List<AgendaProfissional> agendas;
+    List<ViewAgenda> viewagendas;
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
     private final DiaMensagem mens;
@@ -60,7 +63,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         profissionais = new ArrayList<Profissional>();
         animais = new ArrayList<Animal>();
         servicos = new ArrayList<Servico>();
-        agendas = new ArrayList<AgendaProfissional>();
+        viewagendas = new ArrayList<ViewAgenda>();
 
         adicionarEventos();
 
@@ -71,11 +74,13 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getAgenda().getTabelaAgenda()) {
 
             int ro = retornaIndice(tPrincipal.getAgenda().getTabelaAgenda(), e);
-            agenda = agendas.get(ro);
+            agenda = new DaoAgenda().bucarPorId(viewagendas.get(ro).getId());
             if (escolha == edicao) {
                 tPrincipal.getAgenarServico().setVisible(true);
                 tPrincipal.getAgenarServico().preencherDados(agenda);
             } else if (escolha == exclusao) {
+                fachada.excluirAgendaProfissional(agenda.getId());
+                listarAgendaGeral();
 
             }
 
@@ -88,13 +93,12 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
         if (e.getSource() == tPrincipal.getBtnAgenda()) {
             if (ControleLogin.getProfissional() == null) {
-                tPrincipal.getAgenda().ativar(true);
-                tPrincipal.getAgenda().getNomeProfissional().setVisible(false);
+                
                 preencherProfissionais();
                 preencherAnimais();
                 preencherServicos();
+                listarAgendaGeral();
             } else {
-                tPrincipal.getAgenda().ativar(false);
                 listaAgendaProfissional(ControleLogin.getProfissional());
             }
         }
@@ -265,7 +269,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
     public final void preencherServicos() {
 
-        servicos = fachada.buscarAtivos(true);
+        servicos = fachada.getAllServico();
         tPrincipal.getAgenarServico().getComboServico().removeAllItems();
         servicos.forEach((c) -> {
             tPrincipal.getAgenarServico().getComboServico().addItem(c.getDescricao());
@@ -283,15 +287,14 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             try {
                 tPrincipal.mudarVisaoData(data);
                 profissional = profissionais.get(indice);
-                agendas = fachada.buscaAgenda(profissional, data);
-
+                viewagendas = new DaoViewAgendaProfissional().buscaAgenda(profissional, data);
                 tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
                 String[] colunas = new String[]{"HORARIO", "SERVICO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[agendas.size()][4];
-                for (AgendaProfissional a : agendas) {
+                Object[][] dados = new Object[viewagendas.size()][4];
+                for (ViewAgenda a : viewagendas) {
                     dados[i][0] = a.getHorario();
-                    dados[i][1] = a.getServico().getDescricao();
+                    dados[i][1] = a.getDescricao();
                     dados[i][2] = tPrincipal.getBtnEditar();
                     dados[i][3] = tPrincipal.getBtnExcluir();
 
@@ -304,9 +307,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
                     }
                 };
                 tPrincipal.getAgenda().getTabelaAgenda().setModel(dataModel);
-            } catch (java.lang.NullPointerException ex) {
-
-            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+            } catch (java.lang.NullPointerException | java.lang.ArrayIndexOutOfBoundsException ex) {
 
             }
 
@@ -322,15 +323,15 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             tPrincipal.mudarVisaoData(data);
             tPrincipal.getAgenda().getNomeProfissional().setText(profissional.getNome());
             tPrincipal.getAgenda().getNomeProfissional().setVisible(true);
-            agendas = fachada.buscaAgenda(profissional, data);
+            viewagendas = new DaoViewAgendaProfissional().buscaAgenda(profissional, data);
 
             tPrincipal.getAgenda().getTabelaAgenda().setDefaultRenderer(Object.class, new Render());
 
             String[] colunas = new String[]{"HORARIO", "SERVICO"};
-            Object[][] dados = new Object[agendas.size()][2];
-            for (AgendaProfissional a : agendas) {
+            Object[][] dados = new Object[viewagendas.size()][2];
+            for (ViewAgenda a : viewagendas) {
                 dados[i][0] = a.getHorario();
-                dados[i][1] = a.getServico().getDescricao();
+                dados[i][1] = a.getDescricao();
 
                 i++;
             }

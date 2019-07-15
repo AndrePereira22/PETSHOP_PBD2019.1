@@ -165,6 +165,13 @@ public class ControleLogin implements ActionListener, KeyListener {
                 tPrincipal.getjLabel2().setText("ADMINISTRADOR");
                 tPrincipal.getjLabel2().setIcon(tLogin.getPro());
                 tPrincipal.ativarBotoesAdm();
+                tPrincipal.getAgenda().ativar(true);
+                tPrincipal.getAgenda().getNomeProfissional().setVisible(false);
+                tPrincipal.getAgenda().getBtnAdicionar().setVisible(true);
+                tPrincipal.getGerencia().getBtnEditar().setVisible(true);
+                tPrincipal.getGerencia().getPainelControleAcesso().setVisible(true);
+                tPrincipal.getGerencia().getPainelControl().setEnabledAt(4, true);
+
                 tLogin.dispose();
                 return true;
             }
@@ -184,6 +191,13 @@ public class ControleLogin implements ActionListener, KeyListener {
                 tPrincipal.getjLabel2().setText(funcionario.getNome());
                 tPrincipal.getjLabel2().setIcon(tLogin.getUser());
                 tPrincipal.ativarBotoesFuncionario();
+                tPrincipal.getAgenda().ativar(true);
+                tPrincipal.getAgenda().getNomeProfissional().setVisible(false);
+                tPrincipal.getAgenda().getBtnAdicionar().setVisible(true);
+                tPrincipal.getGerencia().getBtnEditar().setVisible(false);
+                tPrincipal.getGerencia().getPainelControleAcesso().setVisible(false);
+                tPrincipal.getGerencia().getPainelControl().setEnabledAt(4, false);
+
                 tLogin.dispose();
                 return true;
             }
@@ -202,6 +216,8 @@ public class ControleLogin implements ActionListener, KeyListener {
                 tPrincipal.getjLabel2().setText(getProfissional().getNome());
                 tPrincipal.getjLabel2().setIcon(tLogin.getPro());
                 tPrincipal.ativarBotoesProfissional();
+                tPrincipal.getAgenda().ativar(false);
+                tPrincipal.getAgenda().getBtnAdicionar().setVisible(false);
                 tLogin.dispose();
 
             }

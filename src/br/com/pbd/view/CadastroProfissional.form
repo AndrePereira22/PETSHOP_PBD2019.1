@@ -24,12 +24,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="1008" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="1018" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="571" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="581" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -100,8 +100,8 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnNovoProfissional" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                          <Component id="btnSair" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnSair" min="-2" pref="151" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -126,21 +126,14 @@
                               <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane2" min="-2" pref="324" max="-2" attributes="0"/>
-                                  <EmptySpace min="23" pref="90" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btnSair" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnNovoProfissional" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                              </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="285" max="-2" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnSair" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnNovoProfissional" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -155,9 +148,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaProfissionais">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="cc" red="cc" type="rgb"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder thickness="2"/>
@@ -177,7 +167,7 @@
                             <Column editable="true" title="Excluir" type="java.lang.Object"/>
                           </Table>
                         </Property>
-                        <Property name="rowHeight" type="int" value="40"/>
+                        <Property name="rowHeight" type="int" value="28"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -198,19 +188,24 @@
                 <Component class="javax.swing.JButton" name="btnNovoProfissional">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/proIcon.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/pro.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="NOVO PROFISSIONAL"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
+                    <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/pbd/resource/pro.1.png"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSair">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/voltar.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/rejected.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="SAIR"/>
+                    <Property name="text" type="java.lang.String" value="  SAIR"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/voltar.1.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/rejected.1.png"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -853,10 +848,19 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtUsuarioActionPerformed"/>
                       </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), &quot;u&quot;, &quot; Nome do Usuario&quot;);"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JPasswordField" name="txtSenha">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), &quot;p&quot;, &quot;Senha&quot;);&#xd;&#xa;"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JPasswordField" name="txtConfimarSenha">
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), &quot;p&quot;, &quot;Senha&quot;);&#xd;&#xa;"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel19">
                       <Properties>

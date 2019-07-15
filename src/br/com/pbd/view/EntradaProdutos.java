@@ -64,7 +64,7 @@ public class EntradaProdutos extends javax.swing.JInternalFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("NOVA ENTRADA");
+        jLabel2.setText("NOVA ENTRADA: ");
 
         btnSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/approved.png"))); // NOI18N
@@ -96,7 +96,7 @@ public class EntradaProdutos extends javax.swing.JInternalFrame {
         txtProduto.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("PRODUTO| ");
+        jLabel1.setText("PRODUTO:");
 
         txtCodigo.setEnabled(false);
 

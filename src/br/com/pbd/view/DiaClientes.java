@@ -5,6 +5,8 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.JTextField;
+
 
 /**
  *
@@ -34,7 +36,7 @@ public class DiaClientes extends javax.swing.JDialog {
         btnCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtPesquisa = new javax.swing.JTextField();
+        txtPesquisa = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "lupa2", " Nome ou CPF ");
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaClientes = new javax.swing.JTable();
 

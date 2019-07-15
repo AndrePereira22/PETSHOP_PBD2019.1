@@ -20,7 +20,7 @@ public interface IBusinessAgenda {
 
     public List<AgendaProfissional> getAll();
 
-    public void ativarDesativar(AgendaProfissional agenda);
+    public void excluir(Long id);
 
     public List<AgendaProfissional> busca(Profissional pro,Date data);
     

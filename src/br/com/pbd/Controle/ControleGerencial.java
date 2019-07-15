@@ -49,7 +49,8 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
     private List<Profissional> profissionais;
     private List<Funcionario> funcionarios;
     private Produto produto;
-    private final int reset = 1, edicao = 2, adicionar = 3;
+    private final int reset = 1, edicao = 2, adicionar = 3, excluir = 3;
+    ;
     private int opcao = 0;
     private Funcionario funcionario;
     private Profissional profissional;
@@ -93,13 +94,20 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
         }
         if (e.getSource() == tPrincipal.getVacina().getTabelaVacinas()) {
-            int ro = retornaIndice(tPrincipal.getVacina().getTabelaVacinas(), e);
-            try {
-                vacina = vacinas.get(ro);
-                tPrincipal.getVacina().limparComponentes(true);
-                preencherVacina(vacina);
-            } catch (java.lang.NullPointerException x) {
-            }
+                                System.out.println("br.com.pbd.Controle.ControleGerencial.mouseClicked()");
+
+//            try {
+//                int ro = retornaIndice(tPrincipal.getVacina().getTabelaVacinas(), e);
+//                vacina = vacinas.get(ro);
+//                System.out.println("opcao"+opcao+" edica="+edicao);
+//                if (opcao == edicao) {
+//                    tPrincipal.getVacina().limparComponentes(true);
+//                    tPrincipal.getVacina().preencherVacina(vacina);
+//                } else if (opcao == excluir) {
+//                }
+//            } catch (java.lang.NullPointerException x) {                    System.out.println("br.com.pbd.Controle.ControleGerencial.mouseClicked()");
+//
+//            }
 
         }
         if (e.getSource() == tPrincipal.getGerencia().getTabelaUsuarios()) {
@@ -257,7 +265,7 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
         int i = 0;
         try {
-            String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR", "RESET"};
+            String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR SENHA", "RESETAR SENHA"};
             Object[][] dados = new Object[lista.size()][4];
             for (Funcionario a : lista) {
                 dados[i][0] = a.getNome();
@@ -318,8 +326,8 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
                 dados[i][1] = a.getNome();
                 dados[i][2] = a.getDoses();
                 dados[i][3] = a.getPeiodo();
-                dados[i][4] = tPrincipal.getBtnEditar();
-                dados[i][5] = tPrincipal.getBtnExcluir();
+                dados[i][4] = tPrincipal.getVacina().getBtnEditar();
+                dados[i][5] = tPrincipal.getVacina().getBtnExcluir();
                 i++;
             }
 
@@ -342,14 +350,6 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
             produtos = fachada.buscaGrupo(grupo);
             listarProdutos(produtos);
         }
-
-    }
-
-    public void preencherVacina(Vacina vacina) {
-
-        tPrincipal.getVacina().getTxtDescricao().setText(vacina.getNome());
-        tPrincipal.getVacina().getTxtDoses().setText(vacina.getDoses() + "");
-        tPrincipal.getVacina().getTxtPeriodo().setText(vacina.getPeiodo());
 
     }
 
@@ -502,6 +502,9 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
                 if (boton.getName().equals("editar")) {
                     opcao = edicao;
                 }
+                if (boton.getName().equals("excluir")) {
+                    opcao = excluir;
+                }
             }
         }
         return ro;
@@ -528,6 +531,7 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
         try {
             loja = new DaoLoja().buscaUltimoLoja();
+            tPrincipal.getGerencia().preencherDados(loja);
         } catch (NoResultException n) {
         }
 

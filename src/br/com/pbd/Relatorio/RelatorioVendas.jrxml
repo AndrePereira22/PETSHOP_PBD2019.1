@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="06cfc9ae-7f58-4a11-8158-29bd796bb4db">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Data" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     venda."id" AS venda_id,
+     venda."valor_total" AS venda_valor_total,
+     venda."caixa_id" AS venda_caixa_id,
+     venda."pagamento_id" AS venda_pagamento_id,
+     pagamento."id" AS pagamento_id,
+     pagamento."data" AS pagamento_data,
+     pagamento."forma_pagamento" AS pagamento_forma_pagamento,
+     pagamento."numero_parcelas" AS pagamento_numero_parcelas,
+     pagamento."status" AS pagamento_status,
+     pagamento."valor_total" AS pagamento_valor_total,
+     itemvenda."id" AS itemvenda_id,
+     itemvenda."quantidade" AS itemvenda_quantidade,
+     itemvenda."venda_id" AS itemvenda_venda_id,
+     itemvenda."produto_id" AS itemvenda_produto_id,
+     produto."id" AS produto_id,
+     produto."codigo" AS produto_codigo,
+     produto."fabricante" AS produto_fabricante,
+     produto."nome" AS produto_nome,
+     produto."quantidade_estoque" AS produto_quantidade_estoque,
+     produto."valor_compra" AS produto_valor_compra,
+     produto."valor_venda" AS produto_valor_venda,
+     produto."fornecedor_id" AS produto_fornecedor_id,
+     produto."gproduto_id" AS produto_gproduto_id
+FROM
+     "public"."pagamento" pagamento INNER JOIN "public"."venda" venda ON pagamento."id" = venda."pagamento_id"
+     INNER JOIN "public"."itemvenda" itemvenda ON venda."id" = itemvenda."venda_id"
+     INNER JOIN "public"."produto" produto ON itemvenda."produto_id" = produto."id"
+Where   pagamento."data" = $P{Data} ]]>
+	</queryString>
+	<field name="venda_id" class="java.lang.Long"/>
+	<field name="venda_valor_total" class="java.lang.Double"/>
+	<field name="venda_caixa_id" class="java.lang.Long"/>
+	<field name="venda_pagamento_id" class="java.lang.Long"/>
+	<field name="pagamento_id" class="java.lang.Long"/>
+	<field name="pagamento_data" class="java.sql.Date"/>
+	<field name="pagamento_forma_pagamento" class="java.lang.String"/>
+	<field name="pagamento_numero_parcelas" class="java.lang.Integer"/>
+	<field name="pagamento_status" class="java.lang.Boolean"/>
+	<field name="pagamento_valor_total" class="java.lang.Double"/>
+	<field name="itemvenda_id" class="java.lang.Long"/>
+	<field name="itemvenda_quantidade" class="java.lang.Integer"/>
+	<field name="itemvenda_venda_id" class="java.lang.Long"/>
+	<field name="itemvenda_produto_id" class="java.lang.Long"/>
+	<field name="produto_id" class="java.lang.Long"/>
+	<field name="produto_codigo" class="java.lang.Integer"/>
+	<field name="produto_fabricante" class="java.lang.String"/>
+	<field name="produto_nome" class="java.lang.String"/>
+	<field name="produto_quantidade_estoque" class="java.lang.Integer"/>
+	<field name="produto_valor_compra" class="java.lang.Double"/>
+	<field name="produto_valor_venda" class="java.lang.Double"/>
+	<field name="produto_fornecedor_id" class="java.lang.Long"/>
+	<field name="produto_gproduto_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="21" y="25" width="100" height="20" uuid="901ab85c-edd7-46d0-92ce-d38be303a903"/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="21" y="0" width="100" height="20" uuid="44fac624-1a64-42c5-8c69-675d7c671b7a"/>
+				<textFieldExpression><![CDATA[$F{produto_nome}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

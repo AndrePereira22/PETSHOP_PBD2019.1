@@ -31,7 +31,7 @@ public class Produto implements EntidadeBase {
     @Column(name = "valor_venda", precision = 4, scale = 2, nullable = false)
     private Double valorvenda;
     @Column(name = "quantidade_estoque", precision = 2, scale = 0, nullable = false)
-    private int quantidae_estoque;
+    private int quantidade_estoque;
 
     @OneToOne
     private GrupoProduto gproduto;
@@ -153,14 +153,14 @@ public class Produto implements EntidadeBase {
      * @return the quantidae_estoque
      */
     public int getQuantidae_estoque() {
-        return quantidae_estoque;
+        return quantidade_estoque;
     }
 
     /**
      * @param quantidae_estoque the quantidae_estoque to set
      */
     public void setQuantidae_estoque(int quantidae_estoque) {
-        this.quantidae_estoque = quantidae_estoque;
+        this.quantidade_estoque = quantidae_estoque;
     }
 
     /**

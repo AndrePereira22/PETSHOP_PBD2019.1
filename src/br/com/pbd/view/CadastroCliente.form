@@ -52,7 +52,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="painelItens" pref="998" max="32767" attributes="0"/>
+                  <Component id="painelItens" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -106,21 +106,21 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnCadastrarCliente" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="btnSair" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnSair" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane1" min="-2" pref="813" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="941" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="txtPesquisa" min="-2" pref="264" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="24" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -167,9 +167,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaCliente">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="cc" red="cc" type="rgb"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder thickness="2"/>
@@ -189,7 +186,7 @@
                             <Column editable="true" title="Excluir" type="java.lang.Object"/>
                           </Table>
                         </Property>
-                        <Property name="rowHeight" type="int" value="40"/>
+                        <Property name="rowHeight" type="int" value="28"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -197,19 +194,27 @@
                 <Component class="javax.swing.JButton" name="btnCadastrarCliente">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/clienteIcon.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/cliente.1.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="CADASTRAR CLIENTE"/>
+                    <Property name="text" type="java.lang.String" value="  CADASTRAR CLIENTE"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
+                    <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/pbd/resource/cliente.png"/>
+                    </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarClienteActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSair">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/voltar.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/rejected.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="SAIR"/>
+                    <Property name="text" type="java.lang.String" value="    SAIR"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/voltar.1.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/rejected.1.png"/>
                     </Property>
                   </Properties>
                 </Component>

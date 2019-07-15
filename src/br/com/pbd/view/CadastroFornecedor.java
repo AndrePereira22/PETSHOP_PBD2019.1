@@ -145,7 +145,6 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         painelFornecedor.setBackground(new java.awt.Color(255, 255, 255));
         painelFornecedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tabelaFornecedor.setBackground(new java.awt.Color(204, 204, 255));
         tabelaFornecedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         tabelaFornecedor.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         tabelaFornecedor.setModel(new javax.swing.table.DefaultTableModel(
@@ -163,29 +162,32 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                 "Nome", "Sexo", "Data Nascimento", "CPF", "RG", "Editar", "Excluir"
             }
         ));
-        tabelaFornecedor.setRowHeight(40);
+        tabelaFornecedor.setRowHeight(28);
         jScrollPane2.setViewportView(tabelaFornecedor);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel16.setText("Pesquisar");
 
-        btnNovoFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/clienteIcon.png"))); // NOI18N
-        btnNovoFornecedor.setText("NOVO FORNECEDOR");
+        btnNovoFornecedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/commerce.png"))); // NOI18N
+        btnNovoFornecedor.setText("CADASTRAR FORNECEDOR");
+        btnNovoFornecedor.setContentAreaFilled(false);
+        btnNovoFornecedor.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/commerce.1.png"))); // NOI18N
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
-        btnSair.setText("SAIR");
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
+        btnSair.setText("  SAIR");
+        btnSair.setContentAreaFilled(false);
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
 
         javax.swing.GroupLayout painelFornecedorLayout = new javax.swing.GroupLayout(painelFornecedor);
         painelFornecedor.setLayout(painelFornecedorLayout);
         painelFornecedorLayout.setHorizontalGroup(
             painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFornecedorLayout.createSequentialGroup()
-                .addContainerGap(580, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovoFornecedor)
-                .addGap(54, 54, 54)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSair)
+                .addGap(90, 90, 90))
             .addGroup(painelFornecedorLayout.createSequentialGroup()
                 .addGroup(painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFornecedorLayout.createSequentialGroup()
@@ -196,25 +198,22 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
                     .addGroup(painelFornecedorLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         painelFornecedorLayout.setVerticalGroup(
             painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFornecedorLayout.createSequentialGroup()
-                .addGroup(painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(painelFornecedorLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSair))
-                    .addGroup(painelFornecedorLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNovoFornecedor)))
-                .addGap(30, 30, 30))
+                .addGap(27, 27, 27)
+                .addGroup(painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(painelFornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSair)
+                    .addComponent(btnNovoFornecedor))
+                .addGap(14, 14, 14))
         );
 
         painelItens.addTab("FORNECEDORES", painelFornecedor);
@@ -536,11 +535,11 @@ public class CadastroFornecedor extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
         );
 
         pack();

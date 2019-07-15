@@ -34,7 +34,7 @@ public interface IFachada {
 
     public List<AgendaProfissional> getAllAgenda();
 
-    public void ativarDesativar(AgendaProfissional agenda);
+   public void excluirAgendaProfissional(Long id);
 
     public List<AgendaProfissional> buscaAgenda(Profissional pro, Date data);
 

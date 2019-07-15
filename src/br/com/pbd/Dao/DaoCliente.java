@@ -6,6 +6,7 @@
 package br.com.pbd.Dao;
 
 import br.com.pbd.Modelo.Cliente;
+import br.com.pbd.Modelo.Produto;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,4 +29,15 @@ public class DaoCliente {
             }
             return query.getResultList();
         }
+    
+    public Cliente bucarPorId(int id) {
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT p FROM Cliente p where p.id=:obj");
+            query.setParameter("obj", id);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar produtos");
+        }
+        return (Cliente) query.getSingleResult();
+    }
 }

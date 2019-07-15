@@ -250,8 +250,9 @@
         <Component class="javax.swing.JButton" name="btnSair">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/pbd/resource/exit.png"/>
+              <Image iconType="3" name="/br/com/pbd/resource/arrow (1).png"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="SAIR"/>
             <Property name="alignmentX" type="float" value="20.0"/>
             <Property name="alignmentY" type="float" value="30.0"/>
             <Property name="borderPainted" type="boolean" value="false"/>
@@ -262,14 +263,14 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="850" y="480" width="120" height="70"/>
+              <AbsoluteConstraints x="870" y="500" width="140" height="70"/>
             </Constraint>
           </Constraints>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/br/com/pbd/resource/proIcon.png"/>
+              <Image iconType="3" name="/br/com/pbd/resource/client.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="USER"/>
           </Properties>

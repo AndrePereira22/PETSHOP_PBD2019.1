@@ -5,6 +5,9 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoCliente;
+import br.com.pbd.DaoView.DaoViewCliente;
+import br.com.pbd.DaoView.DaoViewCliente;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Dados;
 import br.com.pbd.Modelo.Fornecedor;
@@ -12,6 +15,7 @@ import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Render;
+import br.com.pbd.Visao.ViewCliente;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.DiaOpcao;
@@ -42,7 +46,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
     private final Fachada fachada;
     private final TelaPrincipal tPrincipal;
-    private List<Cliente> clientes;
+    private List<ViewCliente> viewclientes;
     private List<Funcionario> funcionarios;
     private List<Profissional> profissionais;
     private List<Fornecedor> fornecedores;
@@ -59,7 +63,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
     public Controle(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
-        this.clientes = new ArrayList<Cliente>();
+        this.viewclientes = new ArrayList<ViewCliente>();
         this.funcionarios = new ArrayList<Funcionario>();
         this.profissionais = new ArrayList<Profissional>();
         this.fornecedores = new ArrayList<Fornecedor>();
@@ -76,8 +80,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         if (e.getSource() == tPrincipal.getcCliente().getTabelaCliente()) {
 
             int ro = retornaIndice(tPrincipal.getcCliente().getTabelaCliente(), e);
-            cliente = clientes.get(ro);
-
+            cliente = new DaoCliente().bucarPorId(viewclientes.get(ro).getId());
+            
             if (escolha == edicao) {
                 tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCadastro());
                 tPrincipal.getcCliente().getPainelCadastro().setEnabled(true);
@@ -86,10 +90,10 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             } else if (escolha == exclusao) {
 
                 if (fachada.removerCliente(cliente)) {
-                    clientes = fachada.getAllCliente();
+                    viewclientes = new DaoViewCliente().getAllView();
                     mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
                     mens.setVisible(true);
-                    listarClientes(clientes);
+                    listarClientes(viewclientes);
                 } else {
                     mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
                     mens.setVisible(true);
@@ -173,8 +177,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             tPrincipal.getcCliente().limparComponentes();
         }
         if (e.getSource() == tPrincipal.getBtnClientes()) {
-            clientes = fachada.getAllCliente();
-            listarClientes(clientes);
+            viewclientes = new DaoViewCliente().getAllView();
+            listarClientes(viewclientes);
         }
 
         if (e.getSource() == tPrincipal.getcCliente().getBtnSalvar()) {
@@ -304,8 +308,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             mens.setVisible(true);
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
-            clientes = fachada.getAllCliente();
-            listarClientes(clientes);
+            viewclientes = new DaoViewCliente().getAllView();
+            listarClientes(viewclientes);
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
@@ -509,19 +513,19 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         }
     }
 
-    public void listarClientes(List<Cliente> lista) {
+    public void listarClientes(List<ViewCliente> lista) {
 
         tPrincipal.getcCliente().getTabelaCliente().setDefaultRenderer(Object.class, new Render());
         int i = 0;
         try {
             String[] colunas = new String[]{"NOME", "SEXO", "DATA DE NASCIMENTO", "CPF", "CELULAR", "EDITAR", "EXCLUIR"};
             Object[][] dados = new Object[lista.size()][7];
-            for (Cliente a : lista) {
+            for (ViewCliente a : lista) {
                 dados[i][0] = a.getNome();
                 dados[i][1] = a.getSexo();
                 dados[i][2] = a.getNascimento();
                 dados[i][3] = a.getCpf();
-                dados[i][4] = a.getDados().getCelular();
+                dados[i][4] = a.getCelular();
                 dados[i][5] = tPrincipal.getBtnEditar();
                 dados[i][6] = tPrincipal.getBtnExcluir();
                 i++;
@@ -667,8 +671,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             mens.setVisible(true);
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
-            clientes = fachada.getAllCliente();
-            listarClientes(clientes);
+            viewclientes = new DaoViewCliente().getAllView();
+            listarClientes(viewclientes);
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
@@ -831,8 +835,8 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         if (e.getSource() == tPrincipal.getcCliente().getTxtPesquisa()) {
             String nome = tPrincipal.getcCliente().getTxtPesquisa().getText();
-            clientes = fachada.buscaCliente(nome);
-            listarClientes(clientes);
+            viewclientes = new DaoViewCliente().Busca(nome);
+            listarClientes(viewclientes);
         }
         if (e.getSource() == tPrincipal.getcFuncionario().getTxtPesquisa()) {
             String nome = tPrincipal.getcFuncionario().getTxtPesquisa().getText();

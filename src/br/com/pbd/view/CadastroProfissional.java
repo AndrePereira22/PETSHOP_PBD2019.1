@@ -6,6 +6,7 @@
 package br.com.pbd.view;
 
 import br.com.pbd.Modelo.Profissional;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 /**
@@ -84,9 +85,11 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
         painelLogin = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JPasswordField();
-        txtConfimarSenha = new javax.swing.JPasswordField();
+        txtUsuario = new br.com.pbd.Modelo.JTextFieldHint(new JTextField(), "u", " Nome do Usuario");
+        txtSenha = new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), "p", "Senha");
+        ;
+        txtConfimarSenha = new br.com.pbd.Modelo.JPassWordFieldHint(new JPasswordField(), "p", "Senha");
+        ;
         jLabel19 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -102,7 +105,6 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
         painelProfissional.setBackground(new java.awt.Color(255, 255, 255));
         painelProfissional.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tabelaProfissionais.setBackground(new java.awt.Color(204, 204, 255));
         tabelaProfissionais.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         tabelaProfissionais.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         tabelaProfissionais.setModel(new javax.swing.table.DefaultTableModel(
@@ -119,18 +121,21 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
                 "Nome", "Sexo", "Data Nascimento", "CPF", "RG", "Editar", "Excluir"
             }
         ));
-        tabelaProfissionais.setRowHeight(40);
+        tabelaProfissionais.setRowHeight(28);
         jScrollPane2.setViewportView(tabelaProfissionais);
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setText("Pesquisar");
 
-        btnNovoProfissional.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/proIcon.png"))); // NOI18N
+        btnNovoProfissional.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/pro.png"))); // NOI18N
         btnNovoProfissional.setText("NOVO PROFISSIONAL");
+        btnNovoProfissional.setContentAreaFilled(false);
+        btnNovoProfissional.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/pro.1.png"))); // NOI18N
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
-        btnSair.setText("SAIR");
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
+        btnSair.setText("  SAIR");
+        btnSair.setContentAreaFilled(false);
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
 
         javax.swing.GroupLayout painelProfissionalLayout = new javax.swing.GroupLayout(painelProfissional);
         painelProfissional.setLayout(painelProfissionalLayout);
@@ -139,8 +144,8 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelProfissionalLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovoProfissional)
-                .addGap(44, 44, 44)
-                .addComponent(btnSair)
+                .addGap(18, 18, 18)
+                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(104, 104, 104))
             .addGroup(painelProfissionalLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
@@ -159,17 +164,13 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
                 .addGroup(painelProfissionalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(painelProfissionalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelProfissionalLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 90, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelProfissionalLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(painelProfissionalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSair)
-                            .addComponent(btnNovoProfissional))
-                        .addGap(34, 34, 34))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(painelProfissionalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSair)
+                    .addComponent(btnNovoProfissional))
+                .addGap(34, 34, 34))
         );
 
         painelItens.addTab("PROFISSIONAIS", painelProfissional);
@@ -601,11 +602,11 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
         );
 
         pack();

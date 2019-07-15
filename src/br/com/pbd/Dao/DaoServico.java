@@ -20,24 +20,25 @@ public class DaoServico {
     private static final EntityManager manager = SQLConexao.getEntityManager();
 
     public List<Servico> Busca(String nome) {
-            Query query = null;
-            try {
-                query = manager.createQuery("SELECT  s FROM Servico s where s.nome like '%" + nome + "%' ");
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  s FROM Servico s where s.nome like '%" + nome + "%' ");
 
-            } catch (IllegalStateException e) {
-                System.out.println("erro ao buscar racas");
-            }
-            return query.getResultList();
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar racas");
         }
+        return query.getResultList();
+    }
+
     public List<Servico> BuscarAtivos(Boolean ativo) {
-            Query query = null;
-            try {
-                query = manager.createQuery("SELECT  s FROM Servico s where s.ativo=:ativo ");
-query.setParameter("ativo", ativo);
-            } catch (IllegalStateException e) {
-                System.out.println("erro ao buscar racas");
-            }
-            return query.getResultList();
+        Query query = null;
+        try {
+            query = manager.createQuery("SELECT  s FROM Servico s where s.ativo=:ativo ");
+            query.setParameter("ativo", ativo);
+        } catch (IllegalStateException e) {
+            System.out.println("erro ao buscar racas");
         }
+        return query.getResultList();
+    }
 
 }

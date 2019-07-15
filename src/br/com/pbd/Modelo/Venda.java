@@ -36,9 +36,7 @@ public class Venda implements EntidadeBase {
 
     @Column(name = "valor_total", precision = 6, scale = 2, nullable = false)
     private Double valortotal;
-    @Column(name = "horario", nullable = false)
-    private Time hora;
-
+ 
     @OneToOne(cascade = CascadeType.ALL)
     private Pagamento pagamento;
 
@@ -80,21 +78,6 @@ public class Venda implements EntidadeBase {
     public void setValortotal(Double valortotal) {
         this.valortotal = valortotal;
     }
-
-    /**
-     * @return the hora
-     */
-    public Time getHora() {
-        return hora;
-    }
-
-    /**
-     * @param hora the hora to set
-     */
-    public void setHora(Time hora) {
-        this.hora = hora;
-    }
-
 
     /**
      * @return the pagamento

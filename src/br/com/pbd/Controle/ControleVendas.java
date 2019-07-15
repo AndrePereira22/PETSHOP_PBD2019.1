@@ -6,6 +6,10 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.Dao.DaoCliente;
+import br.com.pbd.DaoView.DaoViewProduto;
+import br.com.pbd.Dao.DaoProduto;
+import br.com.pbd.DaoView.DaoViewCliente;
 import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.ItemVenda;
@@ -14,6 +18,8 @@ import br.com.pbd.Modelo.Parcela;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Venda;
+import br.com.pbd.Visao.ViewCliente;
+import br.com.pbd.Visao.ViewProduto;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaClientes;
 import br.com.pbd.view.DiaMensagem;
@@ -51,8 +57,9 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     private Pagamento pagamento;
     private Cliente cliente;
     private List<ItemVenda> itens;
+    private List<ViewCliente> viewclientes;
     private List<Cliente> clientes;
-    private List<Produto> produtos;
+    private List<ViewProduto> viewProdutos;
     private List<Parcela> parcelas;
     private int totalItens;
     private Double ValorTotal, ValorFinal;
@@ -76,6 +83,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         ValorTotal = 0.0;
         calendario = new GregorianCalendar();
         parcelas = new ArrayList<Parcela>();
+        clientes = new ArrayList<Cliente>();
         keyEventos = new HashMap<Integer, Boolean>();
         diaQuantidade = new DiaQuantidade(tPrincipal, true);
         diaPagamento = new DiaPagamento(tPrincipal, true);
@@ -88,11 +96,13 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         if (e.getSource() == diaProduto.getTabelaItens()) {
 
             int ro = retornaIndice(diaProduto.getTabelaItens(), e);
             if (opcao == adicao) {
-                produto = produtos.get(ro);
+                int id = viewProdutos.get(ro).getId();
+                produto = new DaoProduto().bucarPorId(id);
                 diaQuantidade.setVisible(true);
 
             }
@@ -112,15 +122,16 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
             int ro = retornaIndice(diaClientes.getTabelaClientes(), e);
             if (opcao == adicao) {
-                cliente = clientes.get(ro);
+                if (!clientes.isEmpty()) {
+                    clientes.clear();
+                }
+                cliente = new DaoCliente().bucarPorId(viewclientes.get(ro).getId());
+                clientes.add(cliente);
                 tPrincipal.getVendas().getTxtClienteVenda().setText(cliente.getNome());
                 diaClientes.setVisible(false);
                 tPrincipal.getVendas().setVisible(true);
-
             }
-
         }
-
     }
 
     @Override
@@ -129,7 +140,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         if (e.getSource() == tPrincipal.getBtnVendas()) {
             venda = new Venda();
             itens = new ArrayList<ItemVenda>();
-            produtos = new ArrayList<Produto>();
+            viewProdutos = new ArrayList<ViewProduto>();
             totalItens = 0;
             produto = new Produto();
 
@@ -138,13 +149,13 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
             ValorTotal = 0.0;
             totalItens = 0;
-            produtos = fachada.getAllProduto();
-            listarProdutos(produtos);
+            viewProdutos = new DaoViewProduto().getAllView();
+            listarProdutos(viewProdutos);
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnClientes()) {
 
-            clientes = fachada.getAllCliente();
-            listarClientes(clientes);
+            viewclientes = new DaoViewCliente().getAllView();
+            listarClientes(viewclientes);
 
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
@@ -181,7 +192,6 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             if (venda == null) {
                 venda = new Venda();
             }
-            venda.setHora(new Time(Integer.MIN_VALUE));
             venda.setValortotal(ValorFinal);
             venda.setPagamento(pagamento);
             pagamento.setParcelas(parcelas);
@@ -259,7 +269,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
         } catch (NumberFormatException | java.lang.NullPointerException erro) {
         }
-        if (numero < produto.getQuantidae_estoque() && numero>0) {
+        if (numero < produto.getQuantidae_estoque() && numero > 0) {
             if (itens == null) {
                 itens = new ArrayList<ItemVenda>();
             }
@@ -269,22 +279,23 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
                 item.setProduto(produto);
                 item.setVenda(venda);
                 itens.add(item);
-            }else{
-                for(int i=0; i <itens.size(); i++  ){
-                    if(itens.get(i).getProduto() == produto ){
-                        existe=true;                        int q = itens.get(i).getQuantidade()+numero;
+            } else {
+                for (int i = 0; i < itens.size(); i++) {
+                    if (itens.get(i).getProduto() == produto) {
+                        existe = true;
+                        int q = itens.get(i).getQuantidade() + numero;
                         itens.get(i).setQuantidade(q);
                     }
-                        
+
                 }
-                if(!existe){
+                if (!existe) {
                     ItemVenda item = new ItemVenda();
-                item.setQuantidade(numero);
-                item.setProduto(produto);
-                item.setVenda(venda);
-                itens.add(item); 
+                    item.setQuantidade(numero);
+                    item.setProduto(produto);
+                    item.setVenda(venda);
+                    itens.add(item);
                 }
-                existe=false;
+                existe = false;
             }
 
             diaQuantidade.setVisible(false);
@@ -297,18 +308,20 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
     }
 
-    private void listarProdutos(List<Produto> produtos) {
+    private void listarProdutos(List<ViewProduto> lista) {
         diaProduto.getTabelaItens().setDefaultRenderer(Object.class, new Render());
 
         int i = 0;
         try {
-            String[] colunas = new String[]{"Nome", "FABRICANTE", "VALOR DE VENDA", "ADICIONAR"};
-            Object[][] dados = new Object[produtos.size()][4];
-            for (Produto a : produtos) {
-                dados[i][0] = a.getDescricao();
-                dados[i][1] = a.getFabricante();
-                dados[i][2] = a.getValorvenda();
-                dados[i][3] = tPrincipal.getVendas().getBtnAdicionarProduto();
+            String[] colunas = new String[]{"CODIG0", "Nome", "FABRICANTE", "VALOR DE VENDA", "ESTOQUE", "ADICIONAR"};
+            Object[][] dados = new Object[lista.size()][6];
+            for (ViewProduto a : lista) {
+                dados[i][0] = a.getCodigo();
+                dados[i][1] = a.getNome();
+                dados[i][2] = a.getFabricante();
+                dados[i][3] = a.getValor_venda() + "";
+                dados[i][4] = a.getQuantidade_estoque();
+                dados[i][5] = tPrincipal.getVendas().getBtnAdicionarProduto();
 
                 i++;
             }
@@ -363,19 +376,19 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
 
     }
 
-    private void listarClientes(List<Cliente> itens) {
+    private void listarClientes(List<ViewCliente> itens) {
         diaClientes.getTabelaClientes().setDefaultRenderer(Object.class, new Render());
 
         int i = 0;
         try {
             String[] colunas = new String[]{"Nome", "CPF", "NASCIMENTO", "SEXO", "ESCOLHER"};
             Object[][] dados = new Object[itens.size()][5];
-            for (Cliente item : itens) {
+            for (ViewCliente item : itens) {
                 dados[i][0] = item.getNome();
                 dados[i][1] = item.getCpf();
                 dados[i][2] = item.getNascimento();
                 dados[i][3] = item.getSexo();
-                dados[i][4] = tPrincipal.getBtnAdicionar();
+                dados[i][4] = tPrincipal.getVendas().getBtnAdd();
 
                 i++;
             }
@@ -428,17 +441,18 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         keyEventos.put(e.getKeyCode(), true);
 
         if (e.getSource() == diaClientes.getTxtPesquisa()) {
-            clientes = fachada.buscaCliente(diaClientes.getTxtPesquisa().getText());
-            listarClientes(clientes);
+            viewclientes = new DaoViewCliente().Busca(diaClientes.getTxtPesquisa().getText());
+            listarClientes(viewclientes);
         }
+
         if (e.getSource() == diaProduto.getTxtPesquisa()) {
             String busca = diaProduto.getTxtPesquisa().getText();
             try {
 
             } catch (NumberFormatException x) {
             }
-            produtos = fachada.buscaProduto(busca);
-            listarProdutos(produtos);
+            viewProdutos = new DaoViewProduto().Busca(busca);
+            listarProdutos(viewProdutos);
 
         }
 
@@ -481,9 +495,8 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         itens.forEach((item) -> {
             int quantidade = item.getQuantidade();
             int quantidadeEstoque = item.getProduto().getQuantidae_estoque();
-            Produto produto = item.getProduto();
-            produto.setQuantidae_estoque(quantidadeEstoque - quantidade);
-
+            int novo = quantidadeEstoque - quantidade;
+            item.getProduto().setQuantidae_estoque(novo);
             fachada.salvar(produto);
 
         });

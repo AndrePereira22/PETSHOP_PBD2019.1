@@ -143,7 +143,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         }
 
-        if (e.getSource() == tPrincipal.getRaca_especie().getBtnSairR()) {
+        if (e.getSource() == tPrincipal.getRaca_especie().getBtnSair()) {
             tPrincipal.getRaca_especie().setVisible(false);
             tPrincipal.getCadastros().setVisible(true);
         }
@@ -375,7 +375,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                     dados[i][4] = a.getCor();
                     dados[i][5] = a.getRaca().getNome();
                     dados[i][6] = a.getCliente().getNome();
-                    dados[i][7] = tPrincipal.getBtnAgendaAnimal();
+                    dados[i][7] = tPrincipal.getVacina().getBtnVacina();
                     dados[i][8] = tPrincipal.getBtnEditar();
                     dados[i][9] = tPrincipal.getBtnExcluir();
 
@@ -463,16 +463,15 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"NOME", "VACINA", "CODIGO", "NUMEO DA DOSE", "DATA", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[lista.size()][7];
+                String[] colunas = new String[]{"NOME", "VACINA", "NUMEO DA DOSE", "DATA", "EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[lista.size()][6];
                 for (AgendaAnimal a : lista) {
                     dados[i][0] = a.getAnimal().getNome();
                     dados[i][1] = a.getVacina().getNome();
-                    dados[i][2] = a.getVacina().getCodigo();
-                    dados[i][3] = a.getNumero_dose() + "";
-                    dados[i][4] = a.getData();
-                    dados[i][5] = tPrincipal.getBtnEditar();
-                    dados[i][6] = tPrincipal.getBtnExcluir();
+                    dados[i][2] = a.getNumero_dose() + "";
+                    dados[i][3] = a.getData();
+                    dados[i][4] = tPrincipal.getBtnEditar();
+                    dados[i][5] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }
@@ -653,7 +652,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                     escolha = EDICAO;
                 } else if (boton.getName().equals("excluir")) {
                     escolha = EXCLUSAO;
-                } else if (boton.getName().equals("agenda")) {
+                } else if (boton.getName().equals("vacina")) {
                     escolha = AGENDA;
                 } else {
                     escolha = 0;
@@ -709,7 +708,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
         tPrincipal.getCadastros().getBtnEspecie().addActionListener(this);
         tPrincipal.getRaca_especie().getBtnNovaRaca().addActionListener(this);
         tPrincipal.getRaca_especie().getBtnSairE().addActionListener(this);
-        tPrincipal.getRaca_especie().getBtnSairR().addActionListener(this);
+        tPrincipal.getRaca_especie().getBtnSair().addActionListener(this);
         tPrincipal.getRaca_especie().getBtnNovaEspecie().addActionListener(this);
         tPrincipal.getRaca_especie().getTabelaRacas().addMouseListener(this);
         tPrincipal.getcAnimal().getTabelaAnimais().addMouseListener(this);

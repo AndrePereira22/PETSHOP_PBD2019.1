@@ -5,11 +5,14 @@
  */
 package br.com.pbd.Controle;
 
+import br.com.pbd.DaoView.DaoViewProduto;
+import br.com.pbd.Dao.DaoProduto;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Servico;
+import br.com.pbd.Visao.ViewProduto;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.DiaOpcao;
@@ -42,7 +45,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
     List<GrupoProduto> grupos;
     private GrupoProduto grupo;
     List<Fornecedor> fornecedores;
-    private List<Produto> produtos;
+    private List<ViewProduto> viewprodutos;
     private Produto produto;
     private List<Servico> servicos;
     private Servico servico;
@@ -59,7 +62,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
         grupos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
-        produtos = new ArrayList<Produto>();
+        viewprodutos = new ArrayList<ViewProduto>();
         produto = new Produto();
         grupo = new GrupoProduto();
         servico = new Servico();
@@ -73,15 +76,17 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getServico_Produto().getTabelaProdutos()) {
 
             int ro = retornaIndice(tPrincipal.getServico_Produto().getTabelaProdutos(), e);
-            produto = produtos.get(ro);
 
             if (escolha == edicao) {
+            produto = new DaoProduto().bucarPorId(viewprodutos.get(ro).getId());
+
                 tPrincipal.getServico_Produto().setVisible(false);
                 tPrincipal.getcProdutos().setVisible(true);
                 tPrincipal.getcProdutos().preencherDados(produto);
+
             } else if (escolha == exclusao) {
                 if (fachada.excluir(produto)) {
-                    produtos = fachada.getAllProduto();
+                    viewprodutos = new DaoViewProduto().getAllView();
                     mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
                     mens.setVisible(true);
                     listarProdutos();
@@ -94,23 +99,25 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getServico_Produto().getTabelaServicos()) {
 
             int ro = retornaIndice(tPrincipal.getServico_Produto().getTabelaServicos(), e);
-            servico = servicos.get(ro);
-            if (escolha == edicao) {
-                tPrincipal.getServico_Produto().setVisible(false);
-                tPrincipal.getcServicos().setVisible(true);
-                tPrincipal.getcServicos().preencherDados(servico);
-            } else if (escolha == exclusao) {
-                opcao.setVisible(true);
-                if (opcao.getOpcao() == 1) {
-                    servico.setAtivo(false);
+            try {
+                servico = servicos.get(ro);
+                if (escolha == edicao) {
+                    tPrincipal.getServico_Produto().setVisible(false);
+                    tPrincipal.getcServicos().setVisible(true);
+                    tPrincipal.getcServicos().preencherDados(servico);
+                } else if (escolha == exclusao) {
+
                     fachada.ativarDesativar(servico);
-                    servicos = fachada.buscarAtivos(true);
+                    servicos = fachada.getAllServico();
                     mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
                     mens.setVisible(true);
                     listarServicos(servicos);
                     opcao.setOpcao(opcao.getCANCELAR());
+
                 }
+            } catch (ArrayIndexOutOfBoundsException x) {
             }
+
         }
         if (e.getSource() == tPrincipal.getcGrupo().getTabelaGrupos()) {
 
@@ -166,7 +173,9 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         }
         if (e.getSource() == tPrincipal.getBtnProdutos_serv()) {
             listarProdutos();
-            servicos = fachada.buscarAtivos(true);
+            preencherFornecedores();
+            preencherGrupo();
+            servicos = fachada.getAllServico();
             listarServicos(servicos);
         }
 
@@ -241,16 +250,10 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             mens.setVisible(true);
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
-            servicos = fachada.buscarAtivos(true);
+            servicos = fachada.getAllServico();
             listarServicos(servicos);
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (NumberFormatException roll) {
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | NumberFormatException n) {
             mens.setLblMens(tPrincipal.getCAMPOS());
             mens.setVisible(true);
         }
@@ -277,23 +280,22 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
     public void listarProdutos() {
 
-        produtos = fachada.getAllProduto();
-        if (!produtos.isEmpty()) {
+        viewprodutos = new DaoViewProduto().getAllView();
+        if (!viewprodutos.isEmpty()) {
             tPrincipal.getServico_Produto().getTabelaProdutos().setDefaultRenderer(Object.class, new Render());
 
             int i = 0;
             try {
-                String[] colunas = new String[]{"CODIGO", "NOME", "FABRICANTE", "VALOR DE VENDA", "FORNECEDOR", "GRUPO", "EDITAR", "EXCLUIR"};
-                Object[][] dados = new Object[produtos.size()][8];
-                for (Produto a : produtos) {
+                String[] colunas = new String[]{"CODIGO", "NOME", "FABRICANTE", "VALOR DE VENDA", "FORNECEDOR", "EDITAR", "EXCLUIR"};
+                Object[][] dados = new Object[viewprodutos.size()][7];
+                for (ViewProduto a : viewprodutos) {
                     dados[i][0] = a.getCodigo();
-                    dados[i][1] = a.getDescricao();
+                    dados[i][1] = a.getNome();
                     dados[i][2] = a.getFabricante();
-                    dados[i][3] = a.getValorvenda();
-                    dados[i][4] = a.getFornecedor().getNomefantasia();
-                    dados[i][5] = a.getGproduto().getDescricao();
-                    dados[i][6] = tPrincipal.getBtnEditar();
-                    dados[i][7] = tPrincipal.getBtnExcluir();
+                    dados[i][3] = a.getValor_venda() + "";
+                    dados[i][4] = a.getNome_fantasia();
+                    dados[i][5] = tPrincipal.getBtnEditar();
+                    dados[i][6] = tPrincipal.getBtnExcluir();
 
                     i++;
                 }

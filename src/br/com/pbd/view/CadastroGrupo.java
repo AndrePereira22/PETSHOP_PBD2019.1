@@ -57,7 +57,6 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tabelaGrupos.setBackground(new java.awt.Color(204, 204, 255));
         tabelaGrupos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         tabelaGrupos.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         tabelaGrupos.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,7 +73,7 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
                 "DESCRIÇÃO", "EDITAR", "EXCLUIR"
             }
         ));
-        tabelaGrupos.setRowHeight(40);
+        tabelaGrupos.setRowHeight(28);
         jScrollPane1.setViewportView(tabelaGrupos);
 
         btnPesquisar.setText("OK");
@@ -136,9 +135,10 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
             }
         });
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
         btnSair.setText("SAIR");
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSair.setContentAreaFilled(false);
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -166,7 +166,7 @@ public class CadastroGrupo extends javax.swing.JInternalFrame {
                         .addGap(43, 43, 43)
                         .addComponent(btnSair))
                     .addComponent(painelGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -5,6 +5,10 @@
  */
 package br.com.pbd.view;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 /**
  *
  * @author Glenda Alves de Lima
@@ -14,8 +18,30 @@ public class Vacina extends javax.swing.JInternalFrame {
     /**
      * Creates new form TelaCadastroCliente
      */
+    private final JButton btnVacina, btnEditar, btnExcluir;
+    private final Icon vacina, editar, excluir;
+
     public Vacina() {
         initComponents();
+
+        vacina = new ImageIcon(getClass().getResource("/br/com/pbd/resource/vaccine.png"));
+        editar = new ImageIcon(getClass().getResource("/br/com/pbd/resource/edit.png"));
+        excluir = new ImageIcon(getClass().getResource("/br/com/pbd/resource/lixo.png"));
+
+        btnVacina = new JButton(vacina);
+        btnVacina.setName("vacina");
+        btnVacina.setBorder(null);
+        btnVacina.setContentAreaFilled(false);
+
+        btnEditar = new JButton(editar);
+        btnEditar.setName("editar");
+        btnEditar.setBorder(null);
+        btnEditar.setContentAreaFilled(false);
+
+        btnExcluir = new JButton(excluir);
+        btnExcluir.setName("excluir");
+        btnExcluir.setBorder(null);
+        btnExcluir.setContentAreaFilled(false);
     }
 
     /**
@@ -74,7 +100,6 @@ public class Vacina extends javax.swing.JInternalFrame {
             .addGap(0, 54, Short.MAX_VALUE)
         );
 
-        tabelaVacinas.setBackground(new java.awt.Color(204, 204, 255));
         tabelaVacinas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         tabelaVacinas.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         tabelaVacinas.setModel(new javax.swing.table.DefaultTableModel(
@@ -92,7 +117,7 @@ public class Vacina extends javax.swing.JInternalFrame {
                 "DESCRIÇÃO", "DATA"
             }
         ));
-        tabelaVacinas.setRowHeight(25);
+        tabelaVacinas.setRowHeight(35);
         jScrollPane1.setViewportView(tabelaVacinas);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Nova conta"));
@@ -117,6 +142,8 @@ public class Vacina extends javax.swing.JInternalFrame {
                 btnCancelarVacinaActionPerformed(evt);
             }
         });
+
+        txtDose.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -157,14 +184,17 @@ public class Vacina extends javax.swing.JInternalFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtDose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvarVacina)
                     .addComponent(btnCancelarVacina))
                 .addContainerGap())
         );
 
+        btnVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
         btnVoltar.setText("VOLTAR");
+        btnVoltar.setContentAreaFilled(false);
+        btnVoltar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
 
         btnNovaVacina.setText("NOVA VACINA");
         btnNovaVacina.addActionListener(new java.awt.event.ActionListener() {
@@ -182,14 +212,13 @@ public class Vacina extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(btnNovaVacina)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(71, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnNovaVacina)
-                .addGap(52, 52, 52)
-                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,13 +226,17 @@ public class Vacina extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(92, 92, 92)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                    .addComponent(btnNovaVacina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(122, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(btnNovaVacina, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnVoltar))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout painelEstoqueLayout = new javax.swing.GroupLayout(painelEstoque);
@@ -296,7 +329,13 @@ public class Vacina extends javax.swing.JInternalFrame {
 
     }
 
-   
+    public void preencherVacina(br.com.pbd.Modelo.Vacina vacina) {
+
+        getTxtDescricao().setText(vacina.getNome());
+        getTxtDoses().setText(vacina.getDoses() + "");
+        getTxtPeriodo().setText(vacina.getPeiodo());
+
+    }
 
     /**
      * @return the btnVoltar
@@ -322,7 +361,7 @@ public class Vacina extends javax.swing.JInternalFrame {
     /**
      * @return the txtDoses
      */
-    public  javax.swing.JTextField getTxtDoses() {
+    public javax.swing.JTextField getTxtDoses() {
         return txtDose;
     }
 
@@ -354,5 +393,25 @@ public class Vacina extends javax.swing.JInternalFrame {
         return btnSalvarVacina;
     }
 
-   
+    /**
+     * @return the btnVacina
+     */
+    public JButton getBtnVacina() {
+        return btnVacina;
+    }
+
+    /**
+     * @return the btnEditar
+     */
+    public JButton getBtnEditar() {
+        return btnEditar;
+    }
+
+    /**
+     * @return the btnExcluir
+     */
+    public JButton getBtnExcluir() {
+        return btnExcluir;
+    }
+
 }

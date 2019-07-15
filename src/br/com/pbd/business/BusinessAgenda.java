@@ -30,9 +30,9 @@ public class BusinessAgenda extends GenericDao<AgendaProfissional> implements IB
     }
 
     @Override
-    public void ativarDesativar(AgendaProfissional agenda) {
+    public void excluir(Long id) {
 
-        salvar_ou_atualizar(agenda);
+        remover(AgendaProfissional.class, id);
     }
 
     @Override

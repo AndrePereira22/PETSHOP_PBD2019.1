@@ -108,7 +108,6 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
         painelFuncionario.setBackground(new java.awt.Color(255, 255, 255));
         painelFuncionario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        tabelaFuncionarios.setBackground(new java.awt.Color(204, 204, 255));
         tabelaFuncionarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         tabelaFuncionarios.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         tabelaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -125,17 +124,21 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                 "Nome", "Sexo", "Data Nascimento", "CPF", "RG", "Editar", "Excluir"
             }
         ));
-        tabelaFuncionarios.setRowHeight(40);
+        tabelaFuncionarios.setRowHeight(28);
         jScrollPane2.setViewportView(tabelaFuncionarios);
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("Pesquisar");
 
-        btnNovoFuncionario.setText("NOVO FUNCIONARIO");
+        btnNovoFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/func.png"))); // NOI18N
+        btnNovoFuncionario.setText("  CADASTRAR FUNCIONARIO");
+        btnNovoFuncionario.setContentAreaFilled(false);
+        btnNovoFuncionario.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/func.1.png"))); // NOI18N
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
-        btnSair.setText("SAIR");
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
+        btnSair.setText("  SAIR");
+        btnSair.setContentAreaFilled(false);
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
 
         javax.swing.GroupLayout painelFuncionarioLayout = new javax.swing.GroupLayout(painelFuncionario);
         painelFuncionario.setLayout(painelFuncionarioLayout);
@@ -144,9 +147,9 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFuncionarioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNovoFuncionario)
-                .addGap(58, 58, 58)
-                .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92))
+                .addGap(18, 18, 18)
+                .addComponent(btnSair)
+                .addGap(100, 100, 100))
             .addGroup(painelFuncionarioLayout.createSequentialGroup()
                 .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFuncionarioLayout.createSequentialGroup()
@@ -157,7 +160,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                     .addGroup(painelFuncionarioLayout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 952, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         painelFuncionarioLayout.setVerticalGroup(
             painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,15 +170,12 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
                     .addComponent(jLabel19)
                     .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelFuncionarioLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(126, 126, 126))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFuncionarioLayout.createSequentialGroup()
-                        .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnSair)
-                            .addComponent(btnNovoFuncionario))
-                        .addGap(49, 49, 49))))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addGroup(painelFuncionarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNovoFuncionario)
+                    .addComponent(btnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         painelItens.addTab("FUNCIONARIOS", painelFuncionario);
@@ -572,7 +572,7 @@ public class CadastroFuncionario extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelItens, javax.swing.GroupLayout.PREFERRED_SIZE, 988, Short.MAX_VALUE)
+                .addComponent(painelItens)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

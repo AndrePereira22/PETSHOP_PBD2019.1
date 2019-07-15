@@ -49,7 +49,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="painelItens" pref="988" max="32767" attributes="0"/>
+                  <Component id="painelItens" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -100,9 +100,9 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnNovoFuncionario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
-                          <Component id="btnSair" min="-2" pref="104" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnSair" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -117,7 +117,7 @@
                                   <Component id="jScrollPane2" min="-2" pref="952" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="18" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -130,19 +130,13 @@
                               <Component id="txtPesquisa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jScrollPane2" min="-2" pref="322" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btnSair" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnNovoFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                              </Group>
+                          <Component id="jScrollPane2" min="-2" pref="273" max="-2" attributes="0"/>
+                          <EmptySpace pref="68" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnNovoFuncionario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSair" alignment="3" min="-2" pref="73" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -157,9 +151,6 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaFuncionarios">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="ff" green="cc" red="cc" type="rgb"/>
-                        </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                             <LineBorder thickness="2"/>
@@ -179,7 +170,7 @@
                             <Column editable="true" title="Excluir" type="java.lang.Object"/>
                           </Table>
                         </Property>
-                        <Property name="rowHeight" type="int" value="40"/>
+                        <Property name="rowHeight" type="int" value="28"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -199,17 +190,25 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="btnNovoFuncionario">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="NOVO FUNCIONARIO"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/pbd/resource/func.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="  CADASTRAR FUNCIONARIO"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
+                    <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/br/com/pbd/resource/func.1.png"/>
+                    </Property>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnSair">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/voltar.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/rejected.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="SAIR"/>
+                    <Property name="text" type="java.lang.String" value="  SAIR"/>
+                    <Property name="contentAreaFilled" type="boolean" value="false"/>
                     <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/br/com/pbd/resource/voltar.1.png"/>
+                      <Image iconType="3" name="/br/com/pbd/resource/rejected.1.png"/>
                     </Property>
                   </Properties>
                 </Component>

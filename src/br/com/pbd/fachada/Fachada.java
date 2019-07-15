@@ -228,8 +228,8 @@ public class Fachada implements IFachada {
     }
 
     @Override
-    public void ativarDesativar(AgendaProfissional agenda) {
-        this.bAgenda.ativarDesativar(agenda);
+   public void excluirAgendaProfissional(Long id){
+        this.bAgenda.excluir(id);
 
     }
 

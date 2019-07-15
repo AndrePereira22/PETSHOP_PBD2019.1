@@ -8,7 +8,7 @@ package br.com.pbd.Dao;
 import br.com.pbd.Modelo.Fornecedor;
 import br.com.pbd.Modelo.GrupoProduto;
 import br.com.pbd.Modelo.Produto;
-import br.com.pbd.Modelo.ViewProdutos;
+import br.com.pbd.Visao.ViewProduto;
 import br.com.pbd.sql.SQLConexao;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -55,14 +55,14 @@ public class DaoProduto {
         return query.getResultList();
     }
 
-    public List<ViewProdutos> buscaView(String nome) {
+    public Produto bucarPorId(int id) {
         Query query = null;
         try {
-            query = manager.createQuery("SELECT v FROM view_produtos v where v.nome like '%" + nome + "%'");
-
+            query = manager.createQuery("SELECT p FROM Produto p where p.id=:obj");
+            query.setParameter("obj", id);
         } catch (IllegalStateException e) {
             System.out.println("erro ao buscar produtos");
         }
-        return query.getResultList();
+        return (Produto) query.getSingleResult();
     }
 }

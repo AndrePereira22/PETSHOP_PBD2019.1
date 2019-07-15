@@ -26,10 +26,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private final CadastroServicos cServicos = new CadastroServicos();
     private final CadastroProdutos cProdutos = new CadastroProdutos();
     private final AgendarServico agenarServico = new AgendarServico();
-    private final Servico_Produto servico_Produto = new Servico_Produto();
+    private final Servico_Pro servico_Produto = new Servico_Pro();
     private final CadastroLoja cLoja = new CadastroLoja();
-    private final Raca_especie raca_especie = new Raca_especie();
-    private final AgendaProfissional agenda = new AgendaProfissional();
+    private final Especie_Raca raca_especie = new Especie_Raca();
+    private final AgendaPro agenda = new AgendaPro();
     private final Vendas vendas = new Vendas();
     private final Gerencia gerencia = new Gerencia();
     private final Financeiro financas = new Financeiro();
@@ -239,7 +239,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         });
         painelMenu.add(btnFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 280, 75));
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/exit.png"))); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/arrow (1).png"))); // NOI18N
+        btnSair.setText("SAIR");
         btnSair.setAlignmentX(20.0F);
         btnSair.setAlignmentY(30.0F);
         btnSair.setBorderPainted(false);
@@ -249,9 +250,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
                 btnSairActionPerformed(evt);
             }
         });
-        painelMenu.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 480, 120, 70));
+        painelMenu.add(btnSair, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 500, 140, 70));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/proIcon.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/client.png"))); // NOI18N
         jLabel2.setText("USER");
         painelMenu.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 300, -1));
 
@@ -438,7 +439,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getBtnVendas().setSelected(false);
         getBtnClientes().setEnabled(true);
         getBtnClientes().setSelected(false);
-        getBtnGerencia().setEnabled(false);
+        getBtnGerencia().setEnabled(true);
         getBtnGerencia().setSelected(false);
         getBtnFinanceiro().setEnabled(true);
         getBtnFinanceiro().setSelected(false);
@@ -686,7 +687,18 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
             getAgendaAnimal().setVisible(true);
             
         }
+           if (e.getSource() ==  getcPagar().getBtnSair()) {
+            getcPagar().setVisible(false);
+            getFinancas().setVisible(true);
+            
+        }
+           if (e.getSource() ==  getcReceber().getBtnSair()) {
+             getcReceber().setVisible(false);
+            getFinancas().setVisible(true);
+            
+        }
         
+          
        
 
     }
@@ -751,6 +763,9 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         getAgendaAnimal().getBtnSair().addActionListener(this);
          getAgendaAnimal().getBtnAdicionar().addActionListener(this);
          getaVacina().getBtnCancelar().addActionListener(this);
+         
+         getcPagar().getBtnSair().addActionListener(this);
+         getcReceber().getBtnSair().addActionListener(this);
 
         btnAgenda.addKeyListener(this);
         btnClientes.addKeyListener(this);
@@ -963,14 +978,14 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     /**
      * @return the servico_Produto
      */
-    public Servico_Produto getServico_Produto() {
+    public Servico_Pro getServico_Produto() {
         return servico_Produto;
     }
 
     /**
      * @return the agenda
      */
-    public AgendaProfissional getAgenda() {
+    public AgendaPro getAgenda() {
         return agenda;
     }
 
@@ -1047,7 +1062,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     /**
      * @return the raca_especie
      */
-    public Raca_especie getRaca_especie() {
+    public Especie_Raca getRaca_especie() {
         return raca_especie;
     }
 

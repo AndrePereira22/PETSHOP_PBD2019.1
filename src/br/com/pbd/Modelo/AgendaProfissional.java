@@ -23,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @SequenceGenerator(name = "agenda_seq", sequenceName = "agenda_seq", initialValue = 1, allocationSize = 1)
-@Table(name = "agenda")
+@Table(name = "agenda_profissional")
 public class AgendaProfissional implements EntidadeBase {
 
     @Id
