@@ -65,7 +65,7 @@ public class TelaLogin extends javax.swing.JFrame {
 
         painelPrincipal.setBackground(new java.awt.Color(204, 204, 255));
 
-        painelSecundario.setBackground(new java.awt.Color(0, 102, 102));
+        painelSecundario.setBackground(new java.awt.Color(0, 51, 51));
 
         jLabel3.setText("CONTROLE DE ACESSO :");
 

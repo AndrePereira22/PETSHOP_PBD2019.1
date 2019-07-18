@@ -9,6 +9,7 @@ import br.com.pbd.Modelo.Caixa;
 import br.com.pbd.sql.SQLConexao;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,6 +29,15 @@ public class DaoCaixa {
             System.out.println("erro ao buscar servicos");
         }
         return (Caixa) query.getSingleResult();
+
+    }
+    public void Busca(Long id) {
+
+        manager.getTransaction().begin();
+        TypedQuery<Double> vp = (TypedQuery<Double>)
+                manager.createNativeQuery("select lucro("+id+")",Double.class);
+
+        manager.getTransaction().commit();
 
     }
 }

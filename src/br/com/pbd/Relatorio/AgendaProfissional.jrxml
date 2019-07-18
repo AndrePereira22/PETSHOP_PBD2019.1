@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fb681fc-e4db-4d48-af7c-25445e5e8ac9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="data" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     agenda_profissional."id" AS agenda_profissional_id,
+     agenda_profissional."anotacao" AS agenda_profissional_anotacao,
+     agenda_profissional."data" AS agenda_profissional_data,
+     agenda_profissional."horario" AS agenda_profissional_horario,
+     agenda_profissional."animal_id" AS agenda_profissional_animal_id,
+     agenda_profissional."pagamento_id" AS agenda_profissional_pagamento_id,
+     agenda_profissional."profissional_id" AS agenda_profissional_profissional_id,
+     agenda_profissional."servico_id" AS agenda_profissional_servico_id,
+     servico."id" AS servico_id,
+     servico."ativo" AS servico_ativo,
+     servico."descricao" AS servico_descricao,
+     servico."duracao" AS servico_duracao,
+     servico."valor" AS servico_valor,
+     animal."id" AS animal_id,
+     animal."apelido" AS animal_apelido,
+     animal."cor" AS animal_cor,
+     animal."nascimento" AS animal_nascimento,
+     animal."nome" AS animal_nome,
+     animal."observacao" AS animal_observacao,
+     animal."peso_kg" AS animal_peso_kg,
+     animal."sexo" AS animal_sexo,
+     animal."cliente_id" AS animal_cliente_id,
+     animal."raca_id" AS animal_raca_id,
+     raca."id" AS raca_id,
+     raca."descricao" AS raca_descricao,
+     raca."nome" AS raca_nome,
+     raca."especie_id" AS raca_especie_id,
+     profissional."id" AS profissional_id,
+     profissional."cpf" AS profissional_cpf,
+     profissional."crmv" AS profissional_crmv,
+     profissional."nascimento" AS profissional_nascimento,
+     profissional."nome" AS profissional_nome,
+     profissional."rg" AS profissional_rg,
+     profissional."sexo" AS profissional_sexo,
+     profissional."tipo" AS profissional_tipo,
+     profissional."dados_id" AS profissional_dados_id,
+     profissional."login_id" AS profissional_login_id
+FROM
+     "public"."servico" servico INNER JOIN "public"."agenda_profissional" agenda_profissional ON servico."id" = agenda_profissional."servico_id"
+     INNER JOIN "public"."animal" animal ON agenda_profissional."animal_id" = animal."id"
+     INNER JOIN "public"."profissional" profissional ON agenda_profissional."profissional_id" = profissional."id"
+     INNER JOIN "public"."raca" raca ON animal."raca_id" = raca."id"
+where  profissional."id"=$P{id} AND agenda_profissional."data"=$P{data}]]>
+	</queryString>
+	<field name="agenda_profissional_id" class="java.lang.Long"/>
+	<field name="agenda_profissional_anotacao" class="java.lang.String"/>
+	<field name="agenda_profissional_data" class="java.sql.Date"/>
+	<field name="agenda_profissional_horario" class="java.sql.Time"/>
+	<field name="agenda_profissional_animal_id" class="java.lang.Long"/>
+	<field name="agenda_profissional_pagamento_id" class="java.lang.Long"/>
+	<field name="agenda_profissional_profissional_id" class="java.lang.Long"/>
+	<field name="agenda_profissional_servico_id" class="java.lang.Long"/>
+	<field name="servico_id" class="java.lang.Long"/>
+	<field name="servico_ativo" class="java.lang.Boolean"/>
+	<field name="servico_descricao" class="java.lang.String"/>
+	<field name="servico_duracao" class="java.sql.Time"/>
+	<field name="servico_valor" class="java.lang.Double"/>
+	<field name="animal_id" class="java.lang.Long"/>
+	<field name="animal_apelido" class="java.lang.String"/>
+	<field name="animal_cor" class="java.lang.String"/>
+	<field name="animal_nascimento" class="java.sql.Date"/>
+	<field name="animal_nome" class="java.lang.String"/>
+	<field name="animal_observacao" class="java.lang.String"/>
+	<field name="animal_peso_kg" class="java.lang.Double"/>
+	<field name="animal_sexo" class="java.lang.String"/>
+	<field name="animal_cliente_id" class="java.lang.Long"/>
+	<field name="animal_raca_id" class="java.lang.Long"/>
+	<field name="raca_id" class="java.lang.Long"/>
+	<field name="raca_descricao" class="java.lang.String"/>
+	<field name="raca_nome" class="java.lang.String"/>
+	<field name="raca_especie_id" class="java.lang.Long"/>
+	<field name="profissional_id" class="java.lang.Long"/>
+	<field name="profissional_cpf" class="java.lang.String"/>
+	<field name="profissional_crmv" class="java.lang.String"/>
+	<field name="profissional_nascimento" class="java.sql.Date"/>
+	<field name="profissional_nome" class="java.lang.String"/>
+	<field name="profissional_rg" class="java.lang.String"/>
+	<field name="profissional_sexo" class="java.lang.String"/>
+	<field name="profissional_tipo" class="java.lang.String"/>
+	<field name="profissional_dados_id" class="java.lang.Long"/>
+	<field name="profissional_login_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="23" width="281" height="35" uuid="f31b2c86-af66-40a0-a08c-806203a622c9"/>
+				<textElement>
+					<font fontName="Comic Sans MS" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENDA DE SERVIÇOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="0" width="137" height="80" uuid="b77b43f4-ccba-43d5-bb6a-8c105b13eda0"/>
+				<imageExpression><![CDATA["C:\\Users\\Andre-Coude\\Documents\\NetBeansProjects\\PETSHOP\\src\\br\\com\\pbd\\resource\\LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="15" width="100" height="20" uuid="b039640f-d97c-4f7a-a35c-a2f167063c32"/>
+				<text><![CDATA[PROFISSIONAL :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="149" y="15" width="111" height="20" uuid="05f40fd3-3874-431c-9e4a-1267c0f501fd"/>
+				<textFieldExpression><![CDATA[$F{profissional_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="15" width="42" height="20" uuid="5e4899fe-5ee2-4975-a17e-614c0ba0db1e"/>
+				<text><![CDATA[DATA :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="342" y="15" width="100" height="20" uuid="2a0879e3-54fb-4a70-a946-5fb56128649e"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{agenda_profissional_data})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="41" width="54" height="20" uuid="dbe78207-cc15-477e-b0ae-858a60faae33"/>
+				<text><![CDATA[HORARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="114" y="41" width="66" height="20" uuid="0133c9ad-1468-4296-992a-2d92959304b7"/>
+				<text><![CDATA[SERVIÇO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="41" width="66" height="20" uuid="1f1375d8-5400-442f-b32d-3caa89cc2f99"/>
+				<text><![CDATA[DURAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="284" y="33" width="58" height="20" uuid="234f5bb2-8dc7-46c6-a686-d3033f8a5e7b"/>
+				<text><![CDATA[ANIMAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="33" width="69" height="20" uuid="b17a7d47-e463-4e9c-ae1f-1fa1cfd089ac"/>
+				<text><![CDATA[RAÇA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="33" width="75" height="20" uuid="2e5f27a5-22f8-427b-a60e-9a7b170f05b1"/>
+				<text><![CDATA[ANOTAÇÃO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="25" y="0" width="44" height="20" uuid="7d7636b3-2ff4-4997-8de2-93f47e2155d2"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("HH:mm:ss").format($F{agenda_profissional_horario})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="0" width="56" height="20" uuid="44b19e02-481b-46e0-a009-4ae5ddf7d9b0"/>
+				<textFieldExpression><![CDATA[$F{servico_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="0" width="66" height="20" uuid="892700ae-8ffc-45d9-98c5-8390c3771b2e"/>
+				<textFieldExpression><![CDATA[$F{servico_duracao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="0" width="58" height="20" uuid="e0c18d04-208d-4b26-ae29-4cab64164ef3"/>
+				<textFieldExpression><![CDATA[$F{animal_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="0" width="69" height="20" uuid="86c8af98-5db5-400e-9d5d-4a68ff79dec4"/>
+				<textFieldExpression><![CDATA[$F{raca_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="0" width="75" height="20" uuid="81f8e239-3d73-4ed9-a011-2d08267e2cd0"/>
+				<textFieldExpression><![CDATA[$F{agenda_profissional_anotacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

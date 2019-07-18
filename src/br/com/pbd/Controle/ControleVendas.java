@@ -56,6 +56,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     private Venda venda;
     private Pagamento pagamento;
     private Cliente cliente;
+    private Caixa caixa;
     private List<ItemVenda> itens;
     private List<ViewCliente> viewclientes;
     private List<Cliente> clientes;
@@ -138,11 +139,15 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == tPrincipal.getBtnVendas()) {
-            venda = new Venda();
-            itens = new ArrayList<ItemVenda>();
-            viewProdutos = new ArrayList<ViewProduto>();
-            totalItens = 0;
-            produto = new Produto();
+           // if (caixa.getStatus()) {
+                venda = new Venda();
+                itens = new ArrayList<ItemVenda>();
+                viewProdutos = new ArrayList<ViewProduto>();
+                totalItens = 0;
+                produto = new Produto();
+//            } else {
+//                mens.mostrarCaixa();
+//            }
 
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnPesquisar()) {
@@ -160,8 +165,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         }
         if (e.getSource() == tPrincipal.getVendas().getBtnFinalizarVenda()) {
             if (itens == null || itens.isEmpty()) {
-                mens.setLblMens("ADICIONE PRODUTOS");
-                mens.setVisible(true);
+                mens.mostrarAddProduto();
 
             } else {
 
@@ -201,16 +205,16 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             try {
                 venda.setItens(itens);
                 fachada.salvar(venda);
+                
+                //exibir(venda.getid);
                 saidaDeProdutos(itens);
                 zerarValores();
                 tPrincipal.getVendas().limparComponentes();
 
             } catch (java.lang.IllegalStateException n) {
-                mens.setLblMens(tPrincipal.getCAMPOS());
-                mens.setVisible(true);
+                mens.mostrarCamposInvalidos();
             } catch (javax.persistence.RollbackException roll) {
-                mens.setLblMens(tPrincipal.getCAMPOS());
-                mens.setVisible(true);
+                mens.mostrarCamposInvalidos();
             }
 
         }
@@ -302,8 +306,7 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
             diaProduto.setVisible(false);
             tPrincipal.getVendas().setVisible(true);
         } else {
-            mens.setLblMens("NÃO HÁ A QUANTIDADE EM ESTOQUE!");
-            mens.setVisible(true);
+            mens.mostrarSemEstoque();
         }
 
     }
@@ -529,15 +532,14 @@ public class ControleVendas extends MouseAdapter implements ActionListener, KeyL
         if (numero < itens.get(indiceTemp).getProduto().getQuantidae_estoque()) {
             itens.get(indiceTemp).setQuantidade(numero);
         } else {
-            mens.setLblMens("NUMERO INSUFICIENTE NO ESTOQUE");
-            mens.setVisible(true);
+            mens.mostrarSemEstoque();
         }
         listarProdutosAdicionados(itens);
         diaQuantidade.setVisible(false);
     }
 
     public Caixa buscarCaixa() {
-        Caixa caixa = null;
+        caixa = null;
         try {
             caixa = fachada.buscaCaixa();
             return caixa;

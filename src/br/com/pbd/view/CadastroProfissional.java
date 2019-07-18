@@ -96,7 +96,7 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
 
         setPreferredSize(new java.awt.Dimension(1034, 610));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(1024, 600));
 
         painelItens.setEnabled(false);
@@ -132,10 +132,10 @@ public class CadastroProfissional extends javax.swing.JInternalFrame {
         btnNovoProfissional.setContentAreaFilled(false);
         btnNovoProfissional.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/pro.1.png"))); // NOI18N
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
-        btnSair.setText("  SAIR");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
+        btnSair.setText(" VOLTAR");
         btnSair.setContentAreaFilled(false);
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
 
         javax.swing.GroupLayout painelProfissionalLayout = new javax.swing.GroupLayout(painelProfissional);
         painelProfissional.setLayout(painelProfissionalLayout);

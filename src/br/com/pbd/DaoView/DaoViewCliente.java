@@ -41,4 +41,16 @@ public class DaoViewCliente {
         return vp.getResultList();
     }
 
+    public void criar() {
+
+        manager.getTransaction().begin();
+        TypedQuery<ViewCliente> vp = (TypedQuery<ViewCliente>) manager.createNativeQuery("CREATE OR REPLACE VIEW public.view_cliente AS \n"
+                + " SELECT c.id,c.rg,c.cpf,c.nascimento,c.nome,c.sexo,\n"
+                + "    d.celular,d.rua\n"
+                + "   FROM cliente c, dados d\n"
+                + "  WHERE c.dados_id = d.id;", ViewCliente.class);
+
+        manager.getTransaction().commit();
+
+    }
 }

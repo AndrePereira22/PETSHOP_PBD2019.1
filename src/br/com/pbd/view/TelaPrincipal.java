@@ -45,7 +45,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     private int start;
     private final JButton btnExcluir, btnEditar, btnAdicionar,btnAgendaAnimal;
     private final Icon editar, excluir, adicionar,iconAgenda;
-    private final String EDICAO, CAMPOS, SENHA, CADASTRO;
+   
 
     public TelaPrincipal() {
         initComponents();
@@ -53,11 +53,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
         Dimension tamTela = kit.getScreenSize();
         this.setSize(tamTela);
         this.setExtendedState(MAXIMIZED_BOTH);
-
-        this.EDICAO = "EDIÇÃO FINALIZADA!";
-        this.CAMPOS = "HÁ CAMPOS OBRIGATORIOS VAZIOS!";
-        this.SENHA = "SENHAS DIFERENTES!";
-        this.CADASTRO = "CADASTRO CONCLUIDO!";
 
         ajustarInternalFrame(cAnimal);
         ajustarInternalFrame(cadastros);
@@ -1130,40 +1125,13 @@ public class TelaPrincipal extends javax.swing.JFrame implements ActionListener,
     }
 
     /**
-     * @return the EDICAO
-     */
-    public String getEDICAO() {
-        return EDICAO;
-    }
-
-    /**
-     * @return the CAMPOS
-     */
-    public String getCAMPOS() {
-        return CAMPOS;
-    }
-
-    /**
-     * @return the SENHA
-     */
-    public String getSENHA() {
-        return SENHA;
-    }
-
-    /**
      * @return the btnAdicionar
      */
     public JButton getBtnAdicionar() {
         return btnAdicionar;
     }
 
-    /**
-     * @return the CADASTRO
-     */
-    public String getCADASTRO() {
-        return CADASTRO;
-    }
-
+   
     /**
      * @return the cPagar
      */

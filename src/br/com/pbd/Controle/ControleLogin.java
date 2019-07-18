@@ -10,6 +10,8 @@ import br.com.pbd.Modelo.Administrador;
 import br.com.pbd.Modelo.Funcionario;
 import br.com.pbd.Modelo.Login;
 import br.com.pbd.Modelo.Profissional;
+import br.com.pbd.fachada.Fachada;
+import br.com.pbd.view.DiaLogin;
 import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.DiaSair;
 import br.com.pbd.view.TelaLogin;
@@ -32,6 +34,7 @@ import javax.persistence.NoResultException;
  */
 public class ControleLogin implements ActionListener, KeyListener {
 
+    private final Fachada fachada;
     private final TelaLogin tLogin;
     private final TelaPrincipal tPrincipal;
     private static Funcionario funcionario;
@@ -41,21 +44,26 @@ public class ControleLogin implements ActionListener, KeyListener {
     private Object objeto;
     private final DiaMensagem mensagem;
     private final DiaSair sair;
+    private final DiaLogin novo;
 
-    public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal) {
+    public ControleLogin(TelaLogin tLogin, TelaPrincipal tPrincipal, Fachada fachada) {
         this.tLogin = tLogin;
         this.tPrincipal = tPrincipal;
+        this.fachada = fachada;
         keyEventos = new HashMap<Integer, Boolean>();
         mensagem = new DiaMensagem(this.tLogin, true);
         sair = new DiaSair(this.tPrincipal, true);
+        novo = new DiaLogin(this.tLogin, true);
 
         tLogin.getBtnAcessar().addActionListener(this);
         tLogin.getSenha().addKeyListener(this);
         tLogin.getLogin().addKeyListener(this);
         mensagem.getBtnOk().addKeyListener(this);
+        mensagem.getBtnOk().addActionListener(this);
         tPrincipal.getBtnSair().addActionListener(this);
         sair.getBtnLogoof().addActionListener(this);
         sair.getBtnSair().addActionListener(this);
+        novo.getBtnOk().addActionListener(this);
     }
 
     @Override
@@ -64,8 +72,12 @@ public class ControleLogin implements ActionListener, KeyListener {
         if (e.getSource() == tLogin.getBtnAcessar()) {
             logar();
         }
+
         if (e.getSource() == tPrincipal.getBtnSair()) {
             sair.setVisible(true);
+        }
+        if (e.getSource() == mensagem.getBtnOk()) {
+            mensagem.setVisible(false);
         }
         if (e.getSource() == sair.getBtnLogoof()) {
             sair.setVisible(false);
@@ -200,6 +212,7 @@ public class ControleLogin implements ActionListener, KeyListener {
 
                 tLogin.dispose();
                 return true;
+
             }
         } catch (NoResultException n) {
             return false;
@@ -252,4 +265,74 @@ public class ControleLogin implements ActionListener, KeyListener {
         return profissional;
     }
 
+    private void salvarNovaSenha(Profissional p) {
+//        // criptografar senha
+//        String senha = new String(novo.getTxtSenha().getPassword());
+//        String confirmSenha = new String(novo.getTxtConfimarSenha().getPassword());
+//        String senhaHex = "";
+//        try {
+//
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//
+//            byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
+//            StringBuilder ab = new StringBuilder();
+//
+//            for (byte b : messageDigest) {
+//                ab.append(String.format("%02X", 0xFF & b));
+//
+//            }
+//            senhaHex = ab.toString();
+//        } catch (NoSuchAlgorithmException ex) {
+//            Logger.getLogger(ControleLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(ControleLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        p.getLogin().setSenha(senhaHex);
+//        p.getLogin().setReset(false);
+//
+//        if (senha.equals(confirmSenha)) {
+//            fachada.salvar(p);
+//            novo.setVisible(false);
+//            mensagem.mostrarConfirmacao();
+//        } else {
+//            mensagem.mostrarSenha();
+//        }
+//    }
+
+//    private void salvarNovaSenha(Funcionario p) {
+//        // criptografar senha
+//        String senha = new String(novo.getTxtSenha().getPassword());
+//        String confirmSenha = new String(novo.getTxtConfimarSenha().getPassword());
+//        String senhaHex = "";
+//        try {
+//
+//            MessageDigest md = MessageDigest.getInstance("SHA-256");
+//
+//            byte messageDigest[] = md.digest(senha.getBytes("UTF-8"));
+//            StringBuilder ab = new StringBuilder();
+//
+//            for (byte b : messageDigest) {
+//                ab.append(String.format("%02X", 0xFF & b));
+//
+//            }
+//            senhaHex = ab.toString();
+//        } catch (NoSuchAlgorithmException ex) {
+//            Logger.getLogger(ControleLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (UnsupportedEncodingException ex) {
+//            Logger.getLogger(ControleLogin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//        p.getLogin().setSenha(senhaHex);
+//        p.getLogin().setReset(false);
+//
+//        if (senha.equals(confirmSenha)) {
+//            fachada.salvar(p);
+//            novo.setVisible(false);
+//            mensagem.mostrarConfirmacao();
+//        } else {
+//            mensagem.mostrarSenha();
+//        }
+//    }
+    }
 }

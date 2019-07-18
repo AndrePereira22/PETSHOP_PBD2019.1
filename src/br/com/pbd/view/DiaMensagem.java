@@ -14,9 +14,27 @@ public class DiaMensagem extends javax.swing.JDialog {
     /**
      * Creates new form DiaPagamento
      */
+    private final String EDICAO, CAMPOS, SENHA, CADASTRO, EXCLUSAO, ERRO, ERROLOGIN,
+            CADASTREPRO, AGENDADO, EXCLUSAONAO, ADDPRODUTO, SEMESTOQUE,RESET,CAIXAFECHADO;
+
     public DiaMensagem(javax.swing.JFrame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        this.EDICAO = "EDIÇÃO FINALIZADA!";
+        this.CAMPOS = "HÁ CAMPOS OBRIGATORIOS VAZIOS!";
+        this.SENHA = "SENHAS DIFERENTES!";
+        this.CADASTRO = "CADASTRO CONCLUIDO!";
+        this.EXCLUSAO = "EXCLUSAO FINALIZADA!";
+        this.EXCLUSAONAO = "EXCLUSAO NAO PERMITIDA!";
+        this.ADDPRODUTO = "adicione produtos!";
+        this.SEMESTOQUE = "NÃO HÁ A QUANTIDADE EM ESTOQUE!";
+        this.ERRO = "OCORREU UM ERRO!";
+        this.ERROLOGIN = "erro ao salvar Login!";
+        this.CADASTREPRO = "CADASTRE UM PROFISSIONAL!";
+        this.AGENDADO = "agenda com sucesso!";
+           this.RESET = "Reset concluido!";
+           this.CAIXAFECHADO = "CAIXA FECHADO";
     }
 
     /**
@@ -37,7 +55,7 @@ public class DiaMensagem extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnOk.setText("OK");
@@ -48,7 +66,7 @@ public class DiaMensagem extends javax.swing.JDialog {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/animal.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/animal.1.png"))); // NOI18N
 
         lblMens.setBackground(new java.awt.Color(255, 0, 0));
         lblMens.setFont(new java.awt.Font("Baskerville Old Face", 0, 14)); // NOI18N
@@ -153,6 +171,73 @@ public class DiaMensagem extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblMens;
     // End of variables declaration//GEN-END:variables
+
+    public void mostrarCamposInvalidos() {
+        setLblMens(CAMPOS);
+        setVisible(true);
+    }
+    public void mostrarReset() {
+        setLblMens(RESET);
+        setVisible(true);
+    }
+
+    public void mostrarErro() {
+        setLblMens(ERRO);
+        setVisible(true);
+    }
+    public void mostrarSemEstoque() {
+        setLblMens(SEMESTOQUE);
+        setVisible(true);
+    }
+
+    public void mostrarExclusaoNao() {
+        setLblMens(EXCLUSAONAO);
+        setVisible(true);
+    }
+
+    public void mostrarAddProduto() {
+        setLblMens(ADDPRODUTO);
+        setVisible(true);
+    }
+
+    public void mostrarErroLogin() {
+        setLblMens(ERROLOGIN);
+        setVisible(true);
+    }
+
+    public void mostrarAgendado() {
+        setLblMens(AGENDADO);
+        setVisible(true);
+    }
+
+    public void mostrarEdicao() {
+        setLblMens(EDICAO);
+        setVisible(true);
+    }
+
+    public void mostrarCadastrePRO() {
+        setLblMens(CADASTREPRO);
+        setVisible(true);
+    }
+
+    public void mostrarSenha() {
+        setLblMens(SENHA);
+        setVisible(true);
+    }
+
+    public void mostrarConfirmacao() {
+        setLblMens(CADASTRO);
+        setVisible(true);
+    }
+
+    public void mostrarExclusao() {
+        setLblMens(EXCLUSAO);
+        setVisible(true);
+    }
+    public void mostrarCaixa() {
+        setLblMens(CAIXAFECHADO);
+        setVisible(true);
+    }
 
     /**
      * @return the btnOk

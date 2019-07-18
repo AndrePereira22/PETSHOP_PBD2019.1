@@ -12,6 +12,7 @@ import br.com.pbd.Modelo.Pagamento;
 import br.com.pbd.Modelo.Profissional;
 import br.com.pbd.Modelo.Servico;
 import br.com.pbd.Modelo.AgendaProfissional;
+import br.com.pbd.Modelo.ManipularImagem;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Visao.ViewAgenda;
 import br.com.pbd.fachada.Fachada;
@@ -23,17 +24,29 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -93,7 +106,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
         if (e.getSource() == tPrincipal.getBtnAgenda()) {
             if (ControleLogin.getProfissional() == null) {
-                
+
                 preencherProfissionais();
                 preencherAnimais();
                 preencherServicos();
@@ -106,6 +119,28 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         if (e.getSource() == tPrincipal.getAgenarServico().getBtnCancelar()) {
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
+
+        }
+        if (e.getSource() == tPrincipal.getAgenda().getBtnRelatorio()) {
+            if (ControleLogin.getProfissional() == null) {
+
+                Profissional p = profissionais.get(tPrincipal.getAgenda().getComboProfissional().getSelectedIndex());
+                try {
+                    exibirAgenda(p.getId());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JRException ex) {
+                    Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    exibirAgenda(ControleLogin.getProfissional().getId());
+                } catch (SQLException ex) {
+                    Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JRException ex) {
+                    Logger.getLogger(ControleAgenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
         }
 
@@ -127,8 +162,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
 
                 tPrincipal.getAgenarServico().setVisible(true);
             } else {
-                mens.setLblMens("CADASTRE UM PROFISSIONAL!");
-                mens.setVisible(true);
+                mens.mostrarCadastrePRO();
             }
 
         }
@@ -181,19 +215,16 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             agenda.setPagamento(pagamento);
 
             fachada.salvar(agenda);
-            mens.setLblMens("AGENDADO COM SUCESSO!");
-            mens.setVisible(true);
+            mens.mostrarAgendado();
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();
             listarAgendaGeral();
 
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | java.lang.NullPointerException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (ArrayIndexOutOfBoundsException e) {
-            mens.setLblMens("OCORREU UM ERRO NO SISTEMA");
-            mens.setVisible(true);
+            mens.mostrarErro();
         }
 
     }
@@ -221,28 +252,15 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             agenda.setAnimal(animal);
 
             fachada.salvar(agenda);
-            mens.setLblMens(tPrincipal.getEDICAO());
-            mens.setVisible(true);
+            mens.mostrarEdicao();
 
             tPrincipal.getAgenarServico().setVisible(false);
             tPrincipal.getAgenda().setVisible(true);
             tPrincipal.getAgenda().getComboProfissional();
             listarAgendaGeral();
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-
-        } catch (java.lang.NullPointerException e) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | ArrayIndexOutOfBoundsException | java.lang.NullPointerException n) {
+            mens.mostrarCamposInvalidos();
         }
 
     }
@@ -255,6 +273,11 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
             tPrincipal.getAgenarServico().getAreaNotasAnimal().setText(animal.getObservacao());
             tPrincipal.getAgenarServico().getTxtRaca().setText(animal.getRaca().getNome());
             tPrincipal.getAgenarServico().getTxtDono().setText(animal.getCliente().getNome());
+            try {
+                ManipularImagem.exibiImagemLabel(animal.getImagem(), tPrincipal.getAgenarServico().getLblImagem());
+
+            } catch (java.lang.NullPointerException e) {
+            }
         }
     }
 
@@ -412,6 +435,7 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
         tPrincipal.getAgenarServico().getComboAnimal().addActionListener(this);
         tPrincipal.getAgenarServico().getBtnCancelar().addActionListener(this);
         tPrincipal.getAgenda().getTabelaAgenda().addMouseListener(this);
+        tPrincipal.getAgenda().getBtnRelatorio().addActionListener(this);
 
         tPrincipal.getAgenda().getCalenario().getDayChooser().addPropertyChangeListener("day", new PropertyChangeListener() {
             @Override
@@ -423,5 +447,22 @@ public class ControleAgenda extends MouseAdapter implements ActionListener {
                 }
             }
         });
+    }
+
+    public void exibirAgenda(Long id) throws SQLException, JRException {
+
+        java.util.Date data = tPrincipal.getAgenda().getCalenario().getDate();
+
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/petshop", "postgres", "glenda");
+        InputStream fonte = ControleRelatorio.class.getResourceAsStream("/br/com/pbd/Relatorio/AgendaProfissional.jasper");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        map.put("data", data);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fonte);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
+        JasperViewer jrviewer = new JasperViewer(jasperPrint, false);
+        jrviewer.setVisible(true);
+        jrviewer.toFront();
+
     }
 }

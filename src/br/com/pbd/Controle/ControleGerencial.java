@@ -17,6 +17,7 @@ import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Vacina;
 import br.com.pbd.fachada.Fachada;
 import br.com.pbd.view.DiaLogin;
+import br.com.pbd.view.DiaMensagem;
 import br.com.pbd.view.TelaPrincipal;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +56,7 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
     private Funcionario funcionario;
     private Profissional profissional;
     private final DiaLogin diaSenha;
+    private final DiaMensagem mens;
     private final String FUNCIONARIO = "FUNCIONARIO", PROFISSIONAL = "PROFISSIONAL";
     private List<Vacina> vacinas;
 
@@ -62,6 +64,7 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
         diaSenha = new DiaLogin(tPrincipal, true);
+        mens = new DiaMensagem(tPrincipal, true);
 
         tPrincipal.getBtnGerencia().addActionListener(this);
         tPrincipal.getGerencia().getBtnEditar().addActionListener(this);
@@ -94,30 +97,36 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
         }
         if (e.getSource() == tPrincipal.getVacina().getTabelaVacinas()) {
-                                System.out.println("br.com.pbd.Controle.ControleGerencial.mouseClicked()");
 
-//            try {
-//                int ro = retornaIndice(tPrincipal.getVacina().getTabelaVacinas(), e);
-//                vacina = vacinas.get(ro);
-//                System.out.println("opcao"+opcao+" edica="+edicao);
-//                if (opcao == edicao) {
-//                    tPrincipal.getVacina().limparComponentes(true);
-//                    tPrincipal.getVacina().preencherVacina(vacina);
-//                } else if (opcao == excluir) {
-//                }
-//            } catch (java.lang.NullPointerException x) {                    System.out.println("br.com.pbd.Controle.ControleGerencial.mouseClicked()");
-//
-//            }
+            try {
+                int ro = retornaIndice(tPrincipal.getVacina().getTabelaVacinas(), e);
+                vacina = vacinas.get(ro);
+                if (opcao == edicao) {
+                    tPrincipal.getVacina().limparComponentes(true);
+                    tPrincipal.getVacina().preencherVacina(vacina);
+                } else if (opcao == excluir) {
+                }
+            } catch (java.lang.NullPointerException x) {
+
+            }
 
         }
         if (e.getSource() == tPrincipal.getGerencia().getTabelaUsuarios()) {
             int ro = retornaIndice(tPrincipal.getGerencia().getTabelaUsuarios(), e);
 
             String user = tPrincipal.getGerencia().getComboUsuario().getSelectedItem().toString();
-            if (user.equals(FUNCIONARIO)) {
-                controleSenhaFu(ro);
-            } else if (user.equals(PROFISSIONAL)) {
-                controleSenhaPro(ro);
+            if (opcao == reset) {
+                if (user.equals(FUNCIONARIO)) {
+                    funcionario = funcionarios.get(ro);
+                    funcionario.getLogin().setReset(true);
+                    fachada.salvar(funcionario);
+                    
+                } else if (user.equals(PROFISSIONAL)) {
+                   profissional = profissionais.get(ro);
+                   profissional.getLogin().setReset(true);
+                   fachada.salvar(profissional);
+                }
+                mens.mostrarReset();
             }
         }
 
@@ -265,13 +274,12 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
         int i = 0;
         try {
-            String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR SENHA", "RESETAR SENHA"};
-            Object[][] dados = new Object[lista.size()][4];
+            String[] colunas = new String[]{"NOME", "FUNÇÃO","RESET DE SENHA"};
+            Object[][] dados = new Object[lista.size()][3];
             for (Funcionario a : lista) {
                 dados[i][0] = a.getNome();
                 dados[i][1] = a.getTipo();
-                dados[i][2] = tPrincipal.getGerencia().getBtnEdicao();
-                dados[i][3] = tPrincipal.getGerencia().getBtnReset();
+                dados[i][2] = tPrincipal.getGerencia().getBtnReset();
                 i++;
             }
 
@@ -292,13 +300,12 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
         int i = 0;
         try {
-            String[] colunas = new String[]{"NOME", "FUNÇÃO", "EDITAR", "RESET"};
-            Object[][] dados = new Object[lista.size()][4];
+            String[] colunas = new String[]{"NOME", "FUNÇÃO", "RESET DE SENHA"};
+            Object[][] dados = new Object[lista.size()][3];
             for (Profissional a : lista) {
                 dados[i][0] = a.getNome();
                 dados[i][1] = a.getTipo();
-                dados[i][2] = tPrincipal.getGerencia().getBtnEdicao();
-                dados[i][3] = tPrincipal.getGerencia().getBtnReset();
+                dados[i][2] = tPrincipal.getGerencia().getBtnReset();
                 i++;
             }
 
@@ -497,7 +504,6 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
                 }
                 if (boton.getName().equals("salvar")) {
                     opcao = reset;
-
                 }
                 if (boton.getName().equals("editar")) {
                     opcao = edicao;
@@ -537,24 +543,6 @@ public class ControleGerencial extends MouseAdapter implements ActionListener {
 
     }
 
-    public void controleSenhaFu(int ro) {
-
-        if (opcao == edicao) {
-            funcionario = funcionarios.get(ro);
-            diaSenha.setVisible(true);
-        } else if (opcao == reset) {
-
-        }
-    }
-
-    public void controleSenhaPro(int ro) {
-
-        if (opcao == edicao) {
-            profissional = profissionais.get(ro);
-            diaSenha.setVisible(true);
-        } else if (opcao == reset) {
-
-        }
-    }
+  
 
 }

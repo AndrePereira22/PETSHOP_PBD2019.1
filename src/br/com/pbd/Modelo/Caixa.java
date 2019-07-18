@@ -36,6 +36,8 @@ public class Caixa implements EntidadeBase {
     private Double valorabertura;
     @Column(name = "valor_fechamento", precision = 6, scale = 2, nullable = false)
     private Double valorfechamento;
+     @Column(name = "lucro", precision = 6, scale = 2, nullable = false)
+    private Double lucro;
     @Column(name = "status", insertable = true, nullable = false)
     private Boolean status;
     @Column(name = "data", columnDefinition = "DATE DEFAULT CURRENT_DATE", nullable = false)
@@ -142,6 +144,20 @@ public class Caixa implements EntidadeBase {
      */
     public void setVendas(List<Venda> vendas) {
         this.vendas = vendas;
+    }
+
+    /**
+     * @return the lucro
+     */
+    public Double getLucro() {
+        return lucro;
+    }
+
+    /**
+     * @param lucro the lucro to set
+     */
+    public void setLucro(Double lucro) {
+        this.lucro = lucro;
     }
 
 }

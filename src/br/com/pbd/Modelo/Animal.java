@@ -47,6 +47,9 @@ public class Animal implements EntidadeBase {
 
     @ManyToOne
     private Cliente cliente;
+    
+     @Column(name = "imagem", nullable = false)
+    private byte[] imagem;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
     @JoinColumn(name = "animal_id")
@@ -228,6 +231,20 @@ public class Animal implements EntidadeBase {
      */
     public void setAgendas(List<AgendaAnimal> agendas) {
         this.agendas = agendas;
+    }
+
+    /**
+     * @return the imagem
+     */
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    /**
+     * @param imagem the imagem to set
+     */
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 
     

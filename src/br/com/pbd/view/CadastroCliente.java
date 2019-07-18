@@ -88,7 +88,7 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
 
         setPreferredSize(new java.awt.Dimension(1034, 610));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(1040, 610));
 
         painelItens.setBackground(new java.awt.Color(204, 204, 255));
@@ -130,10 +130,15 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
-        btnSair.setText("    SAIR");
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
+        btnSair.setText("    VOLTAR");
         btnSair.setContentAreaFilled(false);
-        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
+        btnSair.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelClienteLayout = new javax.swing.GroupLayout(painelCliente);
         painelCliente.setLayout(painelClienteLayout);
@@ -557,6 +562,10 @@ public class CadastroCliente extends javax.swing.JInternalFrame {
     private void btnCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarClienteActionPerformed
         Apenasnumero(getTxtPesquisa());        // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarClienteActionPerformed
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSairActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -22,23 +22,34 @@ public class DaoViewProduto {
     public List<ViewProduto> getAllView() {
 
         manager.getTransaction().begin();
-	TypedQuery<ViewProduto> vp = (TypedQuery<ViewProduto>) manager.createNativeQuery("select * from public.view_produtos",ViewProduto.class);
-	manager.getTransaction().commit();
-       
+        TypedQuery<ViewProduto> vp = (TypedQuery<ViewProduto>) manager.createNativeQuery("select * from public.view_produto", ViewProduto.class);
+        manager.getTransaction().commit();
+
         return vp.getResultList();
     }
 
     public List<ViewProduto> Busca(String nome) {
 
         manager.getTransaction().begin();
-	TypedQuery<ViewProduto> vp = (TypedQuery<ViewProduto>)
-  manager.createNativeQuery("select * from view_produtos  where nome like '%" + nome + "%'" ,
-          ViewProduto.class);
-	
-        
+        TypedQuery<ViewProduto> vp = (TypedQuery<ViewProduto>) manager.createNativeQuery("select * from view_produto  where nome like '%" + nome + "%'",
+                ViewProduto.class);
+
         manager.getTransaction().commit();
-       
+
         return vp.getResultList();
     }
-    
+
+    public void criar() {
+
+        manager.getTransaction().begin();
+        TypedQuery<ViewProduto> vp = (TypedQuery<ViewProduto>) manager.createNativeQuery("CREATE OR REPLACE VIEW  view_produtos\n"
+                + "\n"
+                + "AS SELECT  p.id, p.codigo,p.nome,p.fabricante, p.quantidade_estoque,p.valor_venda,f.nome_fantasia\n"
+                + "FROM Produto p, Fornecedor f\n"
+                + "\n"
+                + "WHERE  p.fornecedor_id =f.id", ViewProduto.class);
+
+        manager.getTransaction().commit();
+
+    }
 }

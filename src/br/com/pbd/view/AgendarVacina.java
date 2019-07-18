@@ -271,6 +271,25 @@ public class AgendarVacina extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtAnimal;
     // End of variables declaration//GEN-END:variables
 
+    public void preencherDados(br.com.pbd.Modelo.AgendaAnimal a) {
+
+        getTxtAnimal().setText(a.getAnimal().getNome());
+
+        for (int c = 0; c < getComboNumeroDose().getItemCount(); c++) {
+
+            if (getComboNumeroDose().getItemAt(c).equals(a.getNumero_dose() + "")) {
+                getComboNumeroDose().setSelectedItem(getComboNumeroDose().getItemAt(c));
+            }
+        }
+        for (int c = 0; c < getComboVacina().getItemCount(); c++) {
+
+            if (getComboVacina().getItemAt(c).equals(a.getVacina().getNome())) {
+                getComboVacina().setSelectedItem(getComboVacina().getItemAt(c));
+            }
+        }
+
+    }
+
     /**
      * @return the btnCancelar
      */

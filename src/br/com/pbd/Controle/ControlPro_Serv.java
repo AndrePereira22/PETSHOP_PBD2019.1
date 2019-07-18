@@ -52,13 +52,11 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
     private int escolha;
     private final int salvar = 1, edicao = 2, exclusao = 3;
     private final DiaMensagem mens;
-    private final DiaOpcao opcao;
 
     public ControlPro_Serv(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
         this.mens = new DiaMensagem(tPrincipal, true);
-        this.opcao = new DiaOpcao(tPrincipal, true);
 
         grupos = new ArrayList<GrupoProduto>();
         fornecedores = new ArrayList<Fornecedor>();
@@ -78,7 +76,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             int ro = retornaIndice(tPrincipal.getServico_Produto().getTabelaProdutos(), e);
 
             if (escolha == edicao) {
-            produto = new DaoProduto().bucarPorId(viewprodutos.get(ro).getId());
+                produto = new DaoProduto().bucarPorId(viewprodutos.get(ro).getId());
 
                 tPrincipal.getServico_Produto().setVisible(false);
                 tPrincipal.getcProdutos().setVisible(true);
@@ -109,10 +107,8 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
                     fachada.ativarDesativar(servico);
                     servicos = fachada.getAllServico();
-                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
-                    mens.setVisible(true);
+                    mens.mostrarExclusao();
                     listarServicos(servicos);
-                    opcao.setOpcao(opcao.getCANCELAR());
 
                 }
             } catch (ArrayIndexOutOfBoundsException x) {
@@ -218,14 +214,12 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             produto.setValorcompra(valorCompra);
 
             fachada.salvar(produto);
-            mens.setLblMens(tPrincipal.getCADASTRO());
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarProdutos();
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | NumberFormatException | ArrayIndexOutOfBoundsException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         }
 
     }
@@ -243,19 +237,15 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             valorServico = Double.parseDouble(valor);
             servico.setValor(valorServico);
             servico.setDuracao(ConverterTime(tPrincipal.getcServicos().getComboDuracao().getSelectedItem().toString()));
-
             fachada.salvar(servico);
-
-            mens.setLblMens(tPrincipal.getCADASTRO());
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcServicos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             servicos = fachada.getAllServico();
             listarServicos(servicos);
 
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | NumberFormatException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         }
     }
 
@@ -265,15 +255,13 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
         try {
             fachada.salvar(grupo);
-            mens.setLblMens(tPrincipal.getCADASTRO());
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
 
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         }
 
     }
@@ -420,22 +408,13 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             servico.setValor(valorServico);
 
             fachada.salvar(servico);
-            mens.setLblMens(tPrincipal.getEDICAO());
-            mens.setVisible(true);
-            tPrincipal.getcServicos().setVisible(false);
+            mens.mostrarEdicao();
             tPrincipal.getServico_Produto().setVisible(true);
             servicos = fachada.buscarAtivos(true);
             listarServicos(servicos);
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (NumberFormatException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | NumberFormatException n) {
+            mens.mostrarCamposInvalidos();
         }
     }
 
@@ -449,8 +428,7 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
         try {
 
         } catch (ArrayIndexOutOfBoundsException erro) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         }
 
         String vCompra = tPrincipal.getcProdutos().getTxtValorCompra().getText();
@@ -473,21 +451,13 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
             produto.setGproduto(grupo);
 
             fachada.salvar(produto);
-            mens.setLblMens(tPrincipal.getEDICAO());
-            mens.setVisible(true);
+            mens.mostrarEdicao();
             tPrincipal.getcProdutos().setVisible(false);
             tPrincipal.getServico_Produto().setVisible(true);
             listarProdutos();
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (NumberFormatException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | NumberFormatException n) {
+            mens.mostrarCamposInvalidos();
         }
     }
 
@@ -497,18 +467,13 @@ public class ControlPro_Serv extends MouseAdapter implements ActionListener {
 
         try {
             fachada.salvar(grupo);
-            mens.setLblMens(tPrincipal.getEDICAO());
-            mens.setVisible(true);
+            mens.mostrarEdicao();
             tPrincipal.getcGrupo().ativarComponentes(false);
             tPrincipal.getcGrupo().limparComponentes();
             listarGrupos();
 
-        } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
-        } catch (javax.persistence.RollbackException roll) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
+                 mens.mostrarCamposInvalidos();
         }
 
     }

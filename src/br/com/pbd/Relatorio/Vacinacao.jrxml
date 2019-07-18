@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce6308f7-395f-4bff-abe2-45bf955b0bcd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="50"/>
+	<parameter name="id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     animal."id" AS animal_id,
+     animal."apelido" AS animal_apelido,
+     animal."cor" AS animal_cor,
+     animal."nascimento" AS animal_nascimento,
+     animal."nome" AS animal_nome,
+     animal."observacao" AS animal_observacao,
+     animal."peso_kg" AS animal_peso_kg,
+     animal."sexo" AS animal_sexo,
+     animal."cliente_id" AS animal_cliente_id,
+     animal."raca_id" AS animal_raca_id,
+     agenda_animal."id" AS agenda_animal_id,
+     agenda_animal."data" AS agenda_animal_data,
+     agenda_animal."numero_dose" AS agenda_animal_numero_dose,
+     agenda_animal."animal_id" AS agenda_animal_animal_id,
+     agenda_animal."vacina_id" AS agenda_animal_vacina_id,
+     vacina."id" AS vacina_id,
+     vacina."codigo" AS vacina_codigo,
+     vacina."doses" AS vacina_doses,
+     vacina."descricao" AS vacina_descricao,
+     vacina."periodo" AS vacina_periodo
+FROM
+     "public"."animal" animal INNER JOIN "public"."agenda_animal" agenda_animal ON animal."id" = agenda_animal."animal_id"
+     INNER JOIN "public"."vacina" vacina ON agenda_animal."vacina_id" = vacina."id"
+where animal."id"=$P{id}]]>
+	</queryString>
+	<field name="animal_id" class="java.lang.Long"/>
+	<field name="animal_apelido" class="java.lang.String"/>
+	<field name="animal_cor" class="java.lang.String"/>
+	<field name="animal_nascimento" class="java.sql.Date"/>
+	<field name="animal_nome" class="java.lang.String"/>
+	<field name="animal_observacao" class="java.lang.String"/>
+	<field name="animal_peso_kg" class="java.lang.Double"/>
+	<field name="animal_sexo" class="java.lang.String"/>
+	<field name="animal_cliente_id" class="java.lang.Long"/>
+	<field name="animal_raca_id" class="java.lang.Long"/>
+	<field name="agenda_animal_id" class="java.lang.Long"/>
+	<field name="agenda_animal_data" class="java.sql.Date"/>
+	<field name="agenda_animal_numero_dose" class="java.lang.Integer"/>
+	<field name="agenda_animal_animal_id" class="java.lang.Long"/>
+	<field name="agenda_animal_vacina_id" class="java.lang.Long"/>
+	<field name="vacina_id" class="java.lang.Long"/>
+	<field name="vacina_codigo" class="java.lang.Integer"/>
+	<field name="vacina_doses" class="java.lang.Integer"/>
+	<field name="vacina_descricao" class="java.lang.String"/>
+	<field name="vacina_periodo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="170" y="10" width="281" height="55" uuid="e3aa094d-e3f5-41a0-bfbf-652076a8612e"/>
+				<textElement>
+					<font fontName="Californian FB" size="30" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Agenda de vacinação]]></text>
+			</staticText>
+			<image>
+				<reportElement x="9" y="10" width="115" height="65" uuid="eb99a7d1-d04f-410c-9ca0-f1c6ce2068d4"/>
+				<imageExpression><![CDATA["C:\\Users\\Andre-Coude\\Documents\\NetBeansProjects\\PETSHOP\\src\\br\\com\\pbd\\resource\\LOGO.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="170" y="17" width="45" height="20" uuid="73192af5-cc1c-40d5-87b7-93285ea3f973"/>
+				<text><![CDATA[Animal :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="215" y="17" width="181" height="20" uuid="e0995389-1a27-4cd5-843c-295f73637ec8"/>
+				<textFieldExpression><![CDATA[$F{animal_nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="407" y="17" width="79" height="20" uuid="923d9cae-2a85-422c-9d47-3964ee7d76b0"/>
+				<text><![CDATA[Total de doses :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="17" width="53" height="20" uuid="bcc87c7d-0d9f-454a-8d1e-362af13fd695"/>
+				<textFieldExpression><![CDATA[$F{vacina_doses}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="75" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="51" width="69" height="20" uuid="e6cd79b2-70a3-4bd2-a071-c70c9d7b069e"/>
+				<text><![CDATA[Data :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="51" width="79" height="20" uuid="477d3f2b-731a-4105-a8df-71d933589d69"/>
+				<text><![CDATA[Vacina :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="53" width="100" height="20" uuid="82c30941-e807-43e4-98ad-1764b0140b2d"/>
+				<text><![CDATA[Numero da Dose :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="51" width="100" height="20" uuid="778c4e05-6ce5-402d-99f3-492aa91608d6"/>
+				<text><![CDATA[Nome animal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="51" width="69" height="20" uuid="210a0a53-f39d-4f69-854f-c2a580097b56"/>
+				<text><![CDATA[Sexo :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="73" width="555" height="1" uuid="f5e7bd5d-b13e-4af8-b85e-92ec6ea83337"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="9" y="10" width="69" height="20" uuid="32a11195-856a-4176-a19e-22a82723ee95"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{agenda_animal_data})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="95" y="10" width="75" height="20" uuid="70a46c74-73c6-42e1-9b1c-2b4749f863d7"/>
+				<textFieldExpression><![CDATA[$F{vacina_descricao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="185" y="10" width="64" height="20" uuid="94a7e96b-d5eb-408d-bd14-e76c599b3a00"/>
+				<textFieldExpression><![CDATA[$F{agenda_animal_numero_dose}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="296" y="10" width="121" height="20" uuid="e13c36b4-4ad9-4fa2-b6ec-a1f2a4dbed2c"/>
+				<textFieldExpression><![CDATA[$F{animal_nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="439" y="10" width="100" height="20" uuid="3d099826-7147-44e0-b43a-7bc1cc6a43ee"/>
+				<textFieldExpression><![CDATA[$F{animal_sexo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

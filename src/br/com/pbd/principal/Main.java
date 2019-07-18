@@ -7,6 +7,7 @@ import br.com.pbd.Controle.ControleFinanceiro;
 import br.com.pbd.Controle.ControleGerencial;
 import br.com.pbd.Controle.ControleLogin;
 import br.com.pbd.Controle.ControlPro_Serv;
+import br.com.pbd.Controle.ControleRelatorio;
 import br.com.pbd.Controle.ControleVendas;
 import br.com.pbd.Modelo.SalvarDadosRequiridos;
 import br.com.pbd.fachada.Fachada;
@@ -30,29 +31,10 @@ public class Main {
         ControleVendas cVendas = new ControleVendas(tPrincipal, fachada);
         ControleGerencial cGerencial = new ControleGerencial(tPrincipal, fachada);
         TelaLogin tLogin = new TelaLogin();
-        ControleLogin cLogin = new ControleLogin(tLogin, tPrincipal);
+        ControleLogin cLogin = new ControleLogin(tLogin, tPrincipal,fachada);
         ControleFinanceiro cFinanceiro = new ControleFinanceiro(tPrincipal, fachada);
+        ControleRelatorio cRelatorio = new ControleRelatorio(tPrincipal,fachada);
         cFinanceiro.abrirCaixa();
         
-        
-        
-// public void exibirRelatorioFuncionario() throws SQLException, JRException {
-//
-//     
-//       Conection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/PBD", "postgres", "123");
-//        InputStream fonte = ControleRelatorios.class.getResourceAsStream("/br/com/pbd/RelatoriosView/RelatorioFuncionario.jasper");
-//      Map<String, Object>   map = new HashMap<String, Object>();
-//        map.put("D", principal.getRelatorios().getRelatorioFuncionario().getCalendarioIn().getDate());
-//        map.put("DataFinal", principal.getRelatorios().getRelatorioFuncionario().getCalendarioFin().getDate());
-//        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fonte);
-//        jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
-//        JasperViewer jrviewer = new JasperViewer(jasperPrint, false);
-//        jrviewer.setVisible(true);
-//        jrviewer.toFront();
-//
-//    }
-
-
-
     }
 }

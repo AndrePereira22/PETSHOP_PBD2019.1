@@ -205,10 +205,11 @@ public class Cadastros extends javax.swing.JInternalFrame {
 
         voltarMenu.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         voltarMenu.setForeground(new java.awt.Color(255, 255, 255));
-        voltarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.png"))); // NOI18N
+        voltarMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.png"))); // NOI18N
         voltarMenu.setText("VOLTAR AO MENU");
+        voltarMenu.setBorderPainted(false);
         voltarMenu.setContentAreaFilled(false);
-        voltarMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/rejected.1.png"))); // NOI18N
+        voltarMenu.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/pbd/resource/voltar.1.png"))); // NOI18N
         voltarMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 voltarMenuActionPerformed(evt);
@@ -261,7 +262,7 @@ public class Cadastros extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

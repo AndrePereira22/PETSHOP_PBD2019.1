@@ -45,6 +45,7 @@ public class AgendarServico extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         areaObservacao = new javax.swing.JTextArea();
         jPanel12 = new javax.swing.JPanel();
+        lblImagem = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtRaca = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JToggleButton();
@@ -158,11 +159,11 @@ public class AgendarServico extends javax.swing.JInternalFrame {
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 217, Short.MAX_VALUE)
+            .addComponent(lblImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 174, Short.MAX_VALUE)
+            .addComponent(lblImagem, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
         );
 
         jLabel4.setText("RAÇA :");
@@ -268,12 +269,12 @@ public class AgendarServico extends javax.swing.JInternalFrame {
                     .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(btnCancelar)
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelCadastroLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(painelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtRaca, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
+                            .addComponent(jLabel4)))
+                    .addComponent(jPanel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(160, 160, 160))
         );
         painelCadastroLayout.setVerticalGroup(
@@ -392,6 +393,7 @@ public class AgendarServico extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblImagem;
     private javax.swing.JPanel painelCadastro;
     private javax.swing.JTextField txtDono;
     private javax.swing.JTextField txtProfissional;
@@ -500,6 +502,13 @@ public class AgendarServico extends javax.swing.JInternalFrame {
      */
     public javax.swing.JTextField getTxtProfissional() {
         return txtProfissional;
+    }
+
+    /**
+     * @return the lblImagem
+     */
+    public javax.swing.JLabel getLblImagem() {
+        return lblImagem;
     }
 
     

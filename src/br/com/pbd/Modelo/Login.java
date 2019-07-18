@@ -18,22 +18,24 @@ import javax.persistence.Table;
  * @author Andre-Coude
  */
 @Entity
-@SequenceGenerator(name="login_seq",sequenceName="login_seq", initialValue=1,allocationSize=1)
+@SequenceGenerator(name = "login_seq", sequenceName = "login_seq", initialValue = 1, allocationSize = 1)
 @Table(name = "login")
-public class Login  implements EntidadeBase{
+public class Login implements EntidadeBase {
 
-     @Id
-     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="login_seq")
-     private Long id;
-       
-     @Column(name = "usuario", length = 15, nullable = false,unique=true)
-     private String usuario;
-     @Column(name = "senha", length = 100, nullable = false)
-     private String senha;
-     
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "login_seq")
+    private Long id;
+
+    @Column(name = "usuario", length = 15, nullable = false, unique = true)
+    private String usuario;
+    @Column(name = "senha", length = 100, nullable = false)
+    private String senha;
+    @Column(name = "reset", insertable = false, nullable = false)
+    private Boolean reset;
+
     @Override
     public Long getId() {
-    return id;
+        return id;
     }
 
     /**
@@ -70,5 +72,19 @@ public class Login  implements EntidadeBase{
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
+    /**
+     * @return the reset
+     */
+    public Boolean getReset() {
+        return reset;
+    }
+
+    /**
+     * @param reset the reset to set
+     */
+    public void setReset(Boolean reset) {
+        this.reset = reset;
+    }
+
 }

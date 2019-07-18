@@ -9,6 +9,7 @@ import br.com.pbd.Modelo.Animal;
 import br.com.pbd.Modelo.Cliente;
 import br.com.pbd.Modelo.Especie;
 import br.com.pbd.Modelo.AgendaAnimal;
+import br.com.pbd.Modelo.ManipularImagem;
 import br.com.pbd.Modelo.Raca;
 import br.com.pbd.Modelo.Render;
 import br.com.pbd.Modelo.Vacina;
@@ -21,12 +22,26 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -44,6 +59,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
     private List<Vacina> vacinas;
     private List<Animal> animais;
     private List<AgendaAnimal> agendas;
+    private AgendaAnimal agendaAnimal;
     private Animal animal;
     private int escolha;
     private final int SALVAR = 1, EDICAO = 2, EXCLUSAO = 3, AGENDA = 4;
@@ -88,12 +104,10 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             } else if (escolha == EXCLUSAO) {
                 if (fachada.remover(animal)) {
                     animais = fachada.getAllAnimal();
-                    mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
-                    mens.setVisible(true);
+                    mens.mostrarExclusao();
                     listarTabelaAnimais(animais);
                 } else {
-                    mens.getLblMens().setText("EXCLUSÃO NAO PERMITIDA");
-                    mens.setVisible(true);
+                    mens.mostrarExclusaoNao();
                 }
             } else if (escolha == AGENDA) {
                 tPrincipal.getcAnimal().setVisible(false);
@@ -101,6 +115,13 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
                 agendas = fachada.busca(animal);
                 listarTabelaAgenda(agendas);
+                vacinas = fachada.getAllVacina();
+                preencherVacinas(vacinas);
+//                 try {
+//                ManipularImagem.exibiImagemLabel(animal.getImagem(), tPrincipal.getAgenarServico().getLblImagem());
+//
+//            } catch (java.lang.NullPointerException e) {
+//            }
 
             }
 
@@ -127,19 +148,48 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             }
 
         }
+        if (e.getSource() == tPrincipal.getAgendaAnimal().getTabelaAgenda()) {
+            int ro = retornaIndice(tPrincipal.getAgendaAnimal().getTabelaAgenda(), e);
+            agendaAnimal = agendas.get(ro);
+            if (escolha == EDICAO) {
+                tPrincipal.getaVacina().preencherDados(agendaAnimal);
+                tPrincipal.getAgendaAnimal().setVisible(false);
+                tPrincipal.getaVacina().setVisible(true);
+
+            } else if (escolha == EXCLUSAO) {
+
+            }
+
+        }
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        
+        if (e.getSource() == tPrincipal.getAgendaAnimal().getBtnPrint()) {
+            try {
+                exibirAgenda(animal.getId());
+            } catch (SQLException ex) {
+                Logger.getLogger(ControleAnimal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JRException ex) {
+                Logger.getLogger(ControleAnimal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         if (e.getSource() == tPrincipal.getAgendaAnimal().getBtnAdicionar()) {
+            escolha = SALVAR;
             vacinas = fachada.getAllVacina();
             preencherVacinas(vacinas);
 
         }
         if (e.getSource() == tPrincipal.getaVacina().getBtnSalvar()) {
-            salvarVacinacao();
+            if (escolha == EDICAO) {
+                editarVacinacao(agendaAnimal);
+            } else if (escolha == SALVAR) {
+                salvarVacinacao();
+            }
 
         }
 
@@ -248,6 +298,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         }
         animal.setPesokg(pesokg);
+        animal.setImagem(ManipularImagem.getImgBytes(tPrincipal.getcAnimal().getImagem()));
 
         try {
 
@@ -260,17 +311,17 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             animal.setRaca(raca);
 
             fachada.salvar(animal);
-            JOptionPane.showMessageDialog(null, "Animal cadastrado!");
+            mens.mostrarConfirmacao();
             tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
             tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarCamposInvalidos();
 
         } catch (java.lang.ArrayIndexOutOfBoundsException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarErro();
 
         }
 
@@ -283,15 +334,15 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         try {
             fachada.salvarEspecie(especie);
-            JOptionPane.showMessageDialog(null, "Especie cadastrado!");
+            mens.mostrarConfirmacao();
             tPrincipal.getRaca_especie().AtivarComponenteEspecie(false);
             tPrincipal.getRaca_especie().limparComponentes();
             preencherEspecie();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarErro();
         }
 
     }
@@ -309,15 +360,15 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             raca.setEspecie(especie);
 
             fachada.salvarRaca(raca);
-            JOptionPane.showMessageDialog(null, "Raça cadastrada!");
+            mens.mostrarConfirmacao();
             tPrincipal.getRaca_especie().AtivarComponenteRaca(false);
             tPrincipal.getRaca_especie().limparComponentes();
             preencherRaca();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarErro();
         }
 
     }
@@ -339,20 +390,46 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             agenda.setNumero_dose(numeroDose);
 
             fachada.salvar(agenda);
-            mens.setLblMens("AGENDADO COM SUCESSO!");
-            mens.setVisible(true);
+            mens.mostrarAgendado();
             tPrincipal.getaVacina().setVisible(false);
             tPrincipal.getAgendaAnimal().setVisible(true);
-            agendas= fachada.getAll();
+            agendas = fachada.getAll();
             listarTabelaAgenda(agendas);
-            
 
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | java.lang.NullPointerException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (ArrayIndexOutOfBoundsException e) {
-            mens.setLblMens("OCORREU UM ERRO NO SISTEMA");
-            mens.setVisible(true);
+            mens.mostrarErro();
+        }
+
+    }
+
+    public void editarVacinacao(AgendaAnimal agenda) {
+
+        try {
+            String dose = tPrincipal.getaVacina().getComboNumeroDose().getSelectedItem().toString();
+            int indice = tPrincipal.getaVacina().getComboVacina().getSelectedIndex();
+            int numeroDose = Integer.parseInt(dose);
+            java.sql.Date data = ConverterData(tPrincipal.getaVacina().getData().getDate());
+
+            Vacina vacina = vacinas.get(indice);
+
+            agenda.setAnimal(animal);
+            agenda.setVacina(vacina);
+            agenda.setData(data);
+            agenda.setNumero_dose(numeroDose);
+
+            fachada.salvar(agenda);
+            mens.mostrarEdicao();
+            tPrincipal.getaVacina().setVisible(false);
+            tPrincipal.getAgendaAnimal().setVisible(true);
+            agendas = fachada.getAll();
+            listarTabelaAgenda(agendas);
+
+        } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | java.lang.NullPointerException n) {
+            mens.mostrarCamposInvalidos();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            mens.mostrarErro();
         }
 
     }
@@ -573,14 +650,14 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                 animal.setCliente(cli);
             }
             fachada.salvar(animal);
-            JOptionPane.showMessageDialog(null, "Edição finalizada!");
+            mens.mostrarEdicao();
             tPrincipal.getcAnimal().getPainelItens().setSelectedComponent(tPrincipal.getcAnimal().getPainelAnimail());
             tPrincipal.getcAnimal().getPainelCadastro().setEnabled(false);
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException | ArrayIndexOutOfBoundsException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarErro();
         }
 
     }
@@ -597,13 +674,13 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
             raca.setEspecie(especie);
 
             fachada.salvarRaca(raca);
-            JOptionPane.showMessageDialog(null, "Ediçao concluida!");
+            mens.mostrarEdicao();
             tPrincipal.getRaca_especie().AtivarComponenteRaca(false);
             tPrincipal.getRaca_especie().limparComponentes();
             preencherRaca();
 
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException | ArrayIndexOutOfBoundsException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarCamposInvalidos();
         }
 
     }
@@ -614,15 +691,15 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
 
         try {
             fachada.salvarEspecie(especie);
-            JOptionPane.showMessageDialog(null, "Edicao concluida!");
+            mens.mostrarEdicao();
             tPrincipal.getRaca_especie().AtivarComponenteEspecie(false);
             tPrincipal.getRaca_especie().limparComponentes();
             preencherEspecie();
 
         } catch (java.lang.IllegalStateException n) {
-            JOptionPane.showMessageDialog(null, "VOCE PRECISA PREENCHER TODOS OS CAMPOS !");
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            JOptionPane.showMessageDialog(null, roll.getCause());
+            mens.mostrarErro();
         }
 
     }
@@ -655,7 +732,7 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
                 } else if (boton.getName().equals("vacina")) {
                     escolha = AGENDA;
                 } else {
-                    escolha = 0;
+                    escolha = SALVAR;
                 }
             }
         }
@@ -714,10 +791,26 @@ public class ControleAnimal extends MouseAdapter implements ActionListener, KeyL
         tPrincipal.getcAnimal().getTabelaAnimais().addMouseListener(this);
         tPrincipal.getcAnimal().getTxtPesquisa().addKeyListener(this);
         tPrincipal.getRaca_especie().getTabelaEspecie().addMouseListener(this);
+        tPrincipal.getAgendaAnimal().getTabelaAgenda().addMouseListener(this);
         tPrincipal.getRaca_especie().getTxtPesquizaRaca().addKeyListener(this);
         tPrincipal.getRaca_especie().getTxtPesquisaEspecie().addKeyListener(this);
         tPrincipal.getAgendaAnimal().getBtnAdicionar().addActionListener(this);
         tPrincipal.getaVacina().getBtnSalvar().addActionListener(this);
+        tPrincipal.getAgendaAnimal().getBtnPrint().addActionListener(this);
+
+    }
+    public void exibirAgenda(Long id) throws SQLException, JRException {
+
+       
+        Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/petshop", "postgres", "glenda");
+        InputStream fonte = ControleRelatorio.class.getResourceAsStream("/br/com/pbd/Relatorio/Vacinacao.jasper");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fonte);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, conn);
+        JasperViewer jrviewer = new JasperViewer(jasperPrint, false);
+        jrviewer.setVisible(true);
+        jrviewer.toFront();
 
     }
 }

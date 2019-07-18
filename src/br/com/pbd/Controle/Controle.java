@@ -70,7 +70,6 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
         this.keyEventos = new HashMap<Integer, Boolean>();
         this.mens = new DiaMensagem(tPrincipal, true);
         this.opcao = new DiaOpcao(tPrincipal, true);
-        
 
         adicionarEvents();
     }
@@ -81,7 +80,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             int ro = retornaIndice(tPrincipal.getcCliente().getTabelaCliente(), e);
             cliente = new DaoCliente().bucarPorId(viewclientes.get(ro).getId());
-            
+
             if (escolha == edicao) {
                 tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCadastro());
                 tPrincipal.getcCliente().getPainelCadastro().setEnabled(true);
@@ -112,23 +111,22 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 tPrincipal.getcFuncionario().preencherDados(funcionario);
             } else if (escolha == exclusao) {
                 opcao.setVisible(true);
-                 if (opcao.getOpcao()==1) {
-                     fachada.remover(funcionario);
+                if (opcao.getOpcao() == 1) {
+                    fachada.remover(funcionario);
                     funcionarios = fachada.getAllFuncionario();
                     mens.getLblMens().setText("EXCLUSAO FINALIZADA!");
                     mens.setVisible(true);
                     listarFuncionarios(funcionarios);
                     opcao.setOpcao(opcao.getCANCELAR());
-                } 
-           
+                }
+
             }
         }
         if (e.getSource() == tPrincipal.getcProfissioanl().getTabelaProfissionais()) {
 
             int ro = retornaIndice(tPrincipal.getcProfissioanl().getTabelaProfissionais(), e);
             profissional = profissionais.get(ro);
-           
-            
+
             if (escolha == edicao) {
                 tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelCadastro());
                 tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(true);
@@ -209,8 +207,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 case edicao:
                     editarFuncionario(funcionario);
                     break;
-                default:
-                    break;
+
             }
         }
 
@@ -237,8 +234,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 case edicao:
                     editarFornecedor(fornecedor);
                     break;
-                default:
-                    break;
+
             }
         }
 
@@ -263,8 +259,7 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
                 case edicao:
                     editarProfissional(profissional);
                     break;
-                default:
-                    break;
+              
             }
 
         }
@@ -304,15 +299,13 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             fachada.salvar(cliente);
 
-            mens.setLblMens(tPrincipal.getcCliente().getCADASTRO());
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
             viewclientes = new DaoViewCliente().getAllView();
             listarClientes(viewclientes);
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (java.lang.NullPointerException roll) {
             mens.setLblMens("SELECIONE A DATA DE NASCIMENTO!");
             mens.setVisible(true);
@@ -373,25 +366,20 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             if (senha.equals(confirmSenha)) {
                 fachada.salvar(funcionario);
 
-                mens.setLblMens(tPrincipal.getcFuncionario().getCADASTRO());
-                mens.setVisible(true);
+                mens.mostrarConfirmacao();
                 tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
                 tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
                 funcionarios = fachada.getAllFuncionario();
                 listarFuncionarios(funcionarios);
             } else {
-                mens.setLblMens(tPrincipal.getSENHA());
-                mens.setVisible(true);
+                mens.mostrarSenha();
             }
         } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            mens.getLblMens().setText("ERRO!");
-            mens.setVisible(true);
+            mens.mostrarErro();
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
-            mens.setLblMens("ERRO AO SALVAR LOGIN!");
-            mens.setVisible(true);
+            mens.mostrarErroLogin();
         }
     }
 
@@ -421,19 +409,16 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         try {
             fachada.salvar(fornecedor);
-            mens.getLblMens().setText("FORNECEDOR CADASTRADO!");
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
             fornecedores = fachada.getAllFornecedor();;
             listarFornecedores(fornecedores);
         } catch (java.lang.IllegalStateException n) {
 
-            mens.getLblMens().setText(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            mens.getLblMens().setText("ERRO!");
-            mens.setVisible(true);
+            mens.mostrarErro();
         }
     }
 
@@ -667,15 +652,13 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
             fachada.salvar(cliente);
 
-            mens.setLblMens(tPrincipal.getEDICAO());
-            mens.setVisible(true);
+            mens.mostrarEdicao();
             tPrincipal.getcCliente().getPainelItens().setSelectedComponent(tPrincipal.getcCliente().getPainelCliente());
             tPrincipal.getcCliente().getPainelCadastro().setEnabled(false);
             viewclientes = new DaoViewCliente().getAllView();
             listarClientes(viewclientes);
         } catch (java.lang.IllegalStateException | javax.persistence.RollbackException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         }
 
     }
@@ -704,18 +687,15 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             funcionario.setNascimento(nascimento);
             fachada.salvar(funcionario);
 
-            mens.setLblMens(tPrincipal.getEDICAO());
-            mens.setVisible(true);
+            mens.mostrarEdicao();
             tPrincipal.getcFuncionario().getPainelItens().setSelectedComponent(tPrincipal.getcFuncionario().getPainelFuncionario());
             tPrincipal.getcFuncionario().getPainelCadastro().setEnabled(false);
             funcionarios = fachada.getAllFuncionario();
             listarFuncionarios(funcionarios);
         } catch (java.lang.IllegalStateException n) {
-            mens.setLblMens(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            mens.getLblMens().setText("ERRO!");
-            mens.setVisible(true);
+            mens.mostrarErro();
         }
     }
 
@@ -741,18 +721,15 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
 
         try {
             fachada.salvar(forn);
-            mens.getLblMens().setText("SUCESSO!");
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcFornecedor().getPainelItens().setSelectedComponent(tPrincipal.getcFornecedor().getPainelFornecedor());
             tPrincipal.getcFornecedor().getPainelCadastro().setEnabled(false);
             fornecedores = fachada.getAllFornecedor();
             listarFornecedores(fornecedores);
         } catch (java.lang.IllegalStateException n) {
-            mens.getLblMens().setText(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            mens.getLblMens().setText("ERRO!");
-            mens.setVisible(true);
+            mens.mostrarErro();
 
         }
     }
@@ -786,18 +763,15 @@ public class Controle extends MouseAdapter implements ActionListener, KeyListene
             pro.setNascimento(nascimento);
 
             fachada.salvar(pro);
-            mens.getLblMens().setText("SUCESSO!");
-            mens.setVisible(true);
+            mens.mostrarConfirmacao();
             tPrincipal.getcProfissioanl().getPainelItens().setSelectedComponent(tPrincipal.getcProfissioanl().getPainelProfissional());
             tPrincipal.getcProfissioanl().getPainelCadastro().setEnabled(false);
             profissionais = fachada.getAllProfissionals();
             listarProfissionais(profissionais);
         } catch (java.lang.IllegalStateException n) {
-            mens.getLblMens().setText(tPrincipal.getCAMPOS());
-            mens.setVisible(true);
+            mens.mostrarCamposInvalidos();
         } catch (javax.persistence.RollbackException roll) {
-            mens.getLblMens().setText("ERRRO!");
-            mens.setVisible(true);
+            mens.mostrarErro();
         }
     }
 

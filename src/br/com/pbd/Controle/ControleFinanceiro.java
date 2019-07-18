@@ -38,7 +38,7 @@ public class ControleFinanceiro implements ActionListener {
 
     private List<ContaAPagar> contas;
 
-    public ControleFinanceiro(TelaPrincipal tPrincipal,Fachada fachada) {
+    public ControleFinanceiro(TelaPrincipal tPrincipal, Fachada fachada) {
         this.tPrincipal = tPrincipal;
         this.fachada = fachada;
         this.abrirCaixa();
@@ -73,12 +73,10 @@ public class ControleFinanceiro implements ActionListener {
         try {
             caixaAnterior = fachada.buscaCaixa();
         } catch (NoResultException n) {
-            System.out.println("Caixa anterior nao encontrado");
         }
         try {
             caixa = new DaoFinanceiro().buscarCaixa(data);
         } catch (NoResultException n) {
-            System.out.println("Caixa do dia nao encontrado");
         }
 
         if (caixa == null) {
@@ -99,6 +97,8 @@ public class ControleFinanceiro implements ActionListener {
             caixa.setStatus(Boolean.TRUE);
             new GenericDao<Caixa>().salvar_ou_atualizar(caixa);
         }
+
+        exibirCaixa(caixa);
 
     }
 
@@ -215,6 +215,12 @@ public class ControleFinanceiro implements ActionListener {
         if (tipo.equals("VENDAS")) {
 
         }
+    }
+
+    private void exibirCaixa(Caixa caixa) {
+
+        tPrincipal.getFinancas().getLabelData().setText(caixa.getData() + "");
+        tPrincipal.getFinancas().getLabelDinheiro().setText(caixa.getValorfechamento() + "");
     }
 
 }

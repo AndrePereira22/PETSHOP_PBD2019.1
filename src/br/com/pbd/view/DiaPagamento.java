@@ -51,7 +51,7 @@ public class DiaPagamento extends javax.swing.JDialog {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         btnFinalizar.setText("FINALIZAR");
@@ -79,7 +79,7 @@ public class DiaPagamento extends javax.swing.JDialog {
         comboFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DINHEIRO", "CARTÃO - DEBIDO", "CARTÃO - CREDITO" }));
 
         radioAvista.setBackground(new java.awt.Color(0, 51, 51));
-        radioAvista.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        radioAvista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioAvista.setForeground(new java.awt.Color(255, 255, 255));
         radioAvista.setSelected(true);
         radioAvista.setText("A VISTA");
@@ -90,7 +90,7 @@ public class DiaPagamento extends javax.swing.JDialog {
         });
 
         radioAprazo.setBackground(new java.awt.Color(0, 51, 51));
-        radioAprazo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        radioAprazo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioAprazo.setForeground(new java.awt.Color(255, 255, 255));
         radioAprazo.setText("A PRAZO");
         radioAprazo.addActionListener(new java.awt.event.ActionListener() {

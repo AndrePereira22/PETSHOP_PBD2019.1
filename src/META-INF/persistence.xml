@@ -29,6 +29,7 @@
     <class>br.com.pbd.Visao.ViewProduto</class>
     <class>br.com.pbd.Visao.ViewCliente</class>
     <class>br.com.pbd.Visao.ViewAgenda</class>
+    <class>br.com.pbd.Modelo.ImgAnimal</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/petshop"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
